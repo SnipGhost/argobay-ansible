@@ -35,4 +35,17 @@
   shell: "raspi-config nonint do_hostname {{ HOSTNAME }}"
   when: pi_hostname.stdout != HOSTNAME
 
-- reboot:
+- name: Configurate WiFi
+  shell: "raspi-config nonint do_wifi_ssid_passphrase {{ ap_ssid }} {{ ap_pass }} && raspi-config nonint do_wifi_country {{ ap_code }}"
+
+- name: Write dhcpcd config for static IP
+  template:
+    src: dhcpcd.conf.j2
+    dest: /etc/dhcpcd.conf
+    backup: yes
+    mode: 0664
+    owner: root
+    group: netdev
+
+- shell: "reboot"
+  ignore_errors: yes

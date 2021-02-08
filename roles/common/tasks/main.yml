@@ -56,6 +56,28 @@
     state: present
   with_items: "{{ admins }}"
 
+- name: Change passwords for admin
+  user:
+    name: "{{ item.name }}"
+    state: present
+    password: "{{ '%s' | format(passwords[item.name]) | password_hash('sha512') }}"
+  with_items: "{{ admins }}"
+  when: set_passwords | default('no') | bool
+
+- name: Change password for root
+  user:
+    name: root
+    state: present
+    password: "{{ '%s' | format(passwords['root']) | password_hash('sha512') }}"
+  when: set_passwords | default('no') | bool
+
+- name: Change password for pi user
+  user:
+    name: pi
+    state: present
+    password: "{{ '%s' | format(passwords['pi']) | password_hash('sha512') }}"
+  when: "inventory_hostname in groups['raspberry_pi'] and (set_passwords | default('no') | bool)"
+
 - name: Add public keys to authorized_key files
   authorized_key:
     user: "{{ item.name }}"

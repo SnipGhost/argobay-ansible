@@ -26,6 +26,10 @@
     group: netdev
   when: "inventory_hostname in groups['raspberry_pi']"
 
+- name: Configurate WiFi
+  shell: "raspi-config nonint do_wifi_ssid_passphrase {{ ap_ssid }} {{ ap_pass }}"
+  when: "inventory_hostname in groups['raspberry_pi']"
+
 - name: Install Golang
   unarchive:
     src: "https://golang.org/dl/go1.15.6.linux-armv6l.tar.gz"

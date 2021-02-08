@@ -134,3 +134,11 @@
     dest: /usr/local/
     remote_src: yes
   when: "inventory_hostname in groups['raspberry_pi']"
+
+- name: Create tmux-env
+  copy:
+    src: tmux-env.sh
+    dest: /usr/bin/tmux-env
+    mode: 0755
+    owner: root
+    group: root

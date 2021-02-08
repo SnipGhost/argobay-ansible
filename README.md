@@ -4,6 +4,9 @@ Playbooks require secret variables:
 - ansible_become_pass
 - service_vip_password
 - public_vip_password
+- ap_ssid
+- ap_pass
+- ap_code
 - passwords
 
 passwords is dictionary:
@@ -16,4 +19,9 @@ passwords:
 To change passwords run:
 ```bash
 ansible-playbook setup.yml --tags common -e "set_passwords=yes"
+```
+
+To provision Raspberry Pi host:
+```bash
+ansible-playbook provision.yml -e "HOSTNAME=itsuki" -i 192.168.8.184,
 ```

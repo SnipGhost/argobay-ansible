@@ -1,0 +1,38 @@
+---
+- name: Set Boot behaviour
+  shell: "raspi-config nonint do_boot_behaviour {{ BOOTBEHAVIOUR }}"
+
+- name: Change timezone
+  shell: "raspi-config nonint do_change_timezone {{ TIMEZONE }}"
+
+- name: Update APT cache
+  apt:
+    update_cache: yes
+
+- name: APT upgrade
+  apt:
+    upgrade: yes
+
+- name: Add ansible user
+  user:
+    name: ansible
+    state: present
+    password: "{{ '%s' | format(passwords['ansible']) | password_hash('sha512') }}"
+
+- name: Add ansible user to sudoers
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^ansible\s'
+    line: 'ansible ALL=(ALL) ALL'
+
+- name: Get hostname
+  shell: "raspi-config nonint get_hostname"
+  register: pi_hostname
+  changed_when: False
+
+- name: Change hostname
+  shell: "raspi-config nonint do_hostname {{ HOSTNAME }}"
+  when: pi_hostname.stdout != HOSTNAME
+
+- reboot:

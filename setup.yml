@@ -9,7 +9,6 @@
       tags: iptables
     - name: keepalived
       tags: keepalived
-      when: keepalived_vips is defined
 
 - hosts: dns_servers
   roles:

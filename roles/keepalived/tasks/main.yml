@@ -4,12 +4,27 @@
     name:
       - keepalived
     state: present
+  when: keepalived_vips is defined
 
 - name: Create config
   template:
     src: keepalived.conf.j2
     dest: /etc/keepalived/keepalived.conf
   notify: keepalived_restart
+  when: keepalived_vips is defined
+
+- name: Check that config file exists
+  stat:
+    path: /etc/keepalived/keepalived.conf
+  register: stat_result
+  when: keepalived_vips is not defined
+
+- name: Stop keepalived service
+  service:
+    name: keepalived
+    state: stopped
+    enabled: no
+  when: keepalived_vips is not defined and stat_result.stat.exists
 
 - meta: flush_handlers
 
@@ -18,3 +33,4 @@
     name: keepalived
     state: started
     enabled: yes
+  when: keepalived_vips is defined

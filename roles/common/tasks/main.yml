@@ -27,7 +27,7 @@
   when: "inventory_hostname in groups['raspberry_pi']"
 
 - name: Configurate WiFi
-  shell: "raspi-config nonint do_wifi_ssid_passphrase {{ ap_ssid }} {{ ap_pass }}"
+  shell: "raspi-config nonint do_wifi_ssid_passphrase {{ ap_ssid }} {{ ap_pass }} && raspi-config nonint do_wifi_country {{ ap_code }}"
   when: "inventory_hostname in groups['raspberry_pi']"
 
 - name: Install Golang

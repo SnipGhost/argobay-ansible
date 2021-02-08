@@ -1,0 +1,20 @@
+proc_version: armv7
+has_fan: true
+
+keepalived_vips:
+  - id: "{{ public_vip_id }}"
+    name: public_vip
+    ip: "{{ public_vip_ip }}"
+    mask: "{{ public_vip_mask }}"
+    priority: 100
+    state: BACKUP
+    iface: eth0
+    password: "{{ public_vip_password }}"
+  - id: "{{ service_vip_id }}"
+    name: service_vip
+    ip: "{{ service_vip_ip }}"
+    mask: "{{ service_vip_mask }}"
+    priority: 200
+    state: MASTER
+    iface: eth0
+    password: "{{ service_vip_password }}"

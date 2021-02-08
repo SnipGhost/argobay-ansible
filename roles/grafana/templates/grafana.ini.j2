@@ -1,0 +1,9 @@
+[paths]
+data = {{ data_path }}/grafana/
+
+[server]
+protocol = http
+http_port = 3000
+domain = {{ grafana_domain }}
+root_url = https://%(domain)s/
+enable_gzip = false

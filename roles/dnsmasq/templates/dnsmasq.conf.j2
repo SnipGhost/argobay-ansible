@@ -1,0 +1,6 @@
+domain=local
+addn-hosts={{ dnsmasq_records_file }}
+interface={{ ansible_default_ipv4.interface }}
+{% for server in dnsmasq_servers %}
+server={{ server }}
+{% endfor %}

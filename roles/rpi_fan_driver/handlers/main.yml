@@ -1,0 +1,16 @@
+---
+- name: Restart RPi-FanDriver service
+  service:
+    name: fan-driver
+    state: restarted
+  listen: fan_driver_restart
+
+- name: Reload RPi-FanDriver service
+  service:
+    name: fan-driver
+    state: reloaded
+  listen: fan_driver_reload
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+  listen: systemd_reload

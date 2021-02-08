@@ -1,0 +1,7 @@
+dnsmasq_servers:
+  - 8.8.8.8
+  - 8.8.4.4
+
+dnsmasq_exporter_commit: "7245dc21212f7d78a49ff05baa0364a386bfd6c8"
+dnsmasq_records_file: /etc/cluster-hosts
+external_connections: false

@@ -1,0 +1,37 @@
+---
+- hosts: all
+  roles:
+    - name: common
+      tags: common
+    - name: sshd
+      tags: sshd
+    - name: iptables
+      tags: iptables
+    - name: keepalived
+      tags: keepalived
+      when: keepalived_vips is defined
+
+- hosts: dns_servers
+  roles:
+    - name: dnsmasq
+      tags: dnsmasq
+
+- hosts: monitoring_servers
+  roles:
+    - name: prometheus
+      tags: prometheus
+    - name: grafana
+      tags: grafana
+
+- hosts: all
+  roles:
+    - name: node_exporter
+      tags: node_exporter
+
+- hosts: raspberry_pi
+  roles:
+    - name: rpi_fan_driver
+      tags: rpi_fan_driver
+      when: has_fan | default('false') | bool
+    - name: rpi_exporter
+      tags: rpi_exporter

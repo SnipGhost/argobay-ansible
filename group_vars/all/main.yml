@@ -1,0 +1,37 @@
+admins:
+  - { name: mak, color: "01;33m", comment: "Mikhail Kucherenko", key: "https://github.com/snipghost.keys"}
+  - { name: horifox, color: "01;32m", comment: "Tagir Khanmurzin", key: "https://github.com/horifox.keys"}
+
+data_path: "/mnt/data"
+prometheus_data_retention: "60d"
+prometheus_version: "2.23.0"
+prometheus_jobs:
+  - { name: rpi, port: 9243, group: raspberry_pi }
+  - { name: node, port: 9100, group: all }
+
+rpi_exporter_version: 0.6.0
+node_exporter_version: 1.0.1
+
+dnsmasq_records_file: /etc/cluster-hosts
+dnsmasq_hosts:
+  - { rec: [{ip: 192.168.8.50, type: e}, {ip: 192.168.8.60, type: w}], name: asuna }
+  - { rec: [{ip: 192.168.8.51, type: e}, {ip: 192.168.8.61, type: w}], name: ichika }
+  - { rec: [{ip: 192.168.8.52, type: e}, {ip: 192.168.8.62, type: w}], name: nino }
+  - { rec: [{ip: 192.168.8.53, type: e}, {ip: 192.168.8.63, type: w}], name: miku }
+  - { rec: [{ip: 192.168.8.54, type: e}, {ip: 192.168.8.64, type: w}], name: yotsuba }
+  - { rec: [{ip: 192.168.8.55, type: e}, {ip: 192.168.8.65, type: w}], name: itsuki }
+  - { rec: [{ip: 192.168.8.56, type: e}, {ip: 192.168.8.66, type: w}], name: rikka }
+  - { rec: [{ip: 192.168.8.57, type: e}, {ip: 192.168.8.67, type: w}], name: metroid }
+  - { rec: [{ip: 192.168.8.30, type: e}, {ip: 192.168.8.40, type: w}], name: yukinon }
+
+default_gw: 192.168.8.1
+subnet_mask: 24
+secondary_dns: 8.8.8.8
+
+public_vip_id: 1
+public_vip_ip: 192.168.8.11
+public_vip_mask: "{{ subnet_mask }}"
+
+service_vip_id: 2
+service_vip_ip: 192.168.8.12
+service_vip_mask: "{{ subnet_mask }}"

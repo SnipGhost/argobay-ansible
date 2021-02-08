@@ -1,0 +1,15 @@
+- name: Restart dnsmasq service
+  service:
+    name: dnsmasq
+    state: restarted
+  listen: dnsmasq_restart
+
+- name: Restart dnsmasq_exporter service
+  service:
+    name: dnsmasq_exporter
+    state: restarted
+  listen: dnsmasq_exporter_restart
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+  listen: systemd_reload

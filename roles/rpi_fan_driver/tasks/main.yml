@@ -1,0 +1,31 @@
+---
+- name: Install RPi-FanDriver script
+  get_url:
+    url: "https://raw.githubusercontent.com/SnipGhost/RPi-FanDriver/master/fan_driver.py"
+    dest: /usr/sbin/fan_driver.py
+    mode: 0755
+  notify: fan_driver_restart
+
+- name: Install RPi-FanDriver systemd-unit
+  get_url:
+    url: https://raw.githubusercontent.com/SnipGhost/RPi-FanDriver/master/fan-driver.service
+    dest: /etc/systemd/system/fan-driver.service
+    mode: 0644
+  notify: systemd_reload
+
+- name: Create config
+  template:
+    src: fan_driver.config.json.j2
+    dest: /etc/fan_driver.config.json
+    backup: yes
+    mode: 0644
+  notify: fan_driver_reload
+
+- meta: flush_handlers
+
+- name: Start RPi-FanDriver service
+  service:
+    name: fan-driver
+    state: started
+    enabled: yes
+

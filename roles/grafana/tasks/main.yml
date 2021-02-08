@@ -1,0 +1,45 @@
+---
+- name: Copy repo file
+  copy:
+    src: grafana.list
+    dest: /etc/apt/sources.list.d/grafana.list
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Add an APT signing key
+  apt_key:
+    url: https://packages.grafana.com/gpg.key
+    state: present
+
+- name: Update APT cache
+  apt:
+    update_cache: yes
+
+- name: Install packages
+  package:
+    name:
+      - grafana
+    state: present
+
+- name: Copy config file
+  template:
+    src: grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
+  notify: grafana_restart
+
+- name: Creates data directory
+  file: 
+    path: "{{ data_path }}/grafana/"
+    state: directory
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0755
+
+- meta: flush_handlers
+
+- name: Start Grafana service
+  service:
+    name: grafana-server
+    state: started
+    enabled: yes

@@ -1,0 +1,23 @@
+---
+- name: Install packages
+  package:
+    name:
+      - iptables-persistent
+    state: present
+
+- name: Create rules files
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/iptables/{{ item }}"
+  with_items:
+    - rules.v4
+    - rules.v6
+  notify: iptables_reload
+
+- name: Auto-load rules on boot
+  copy:
+    src: iptables
+    dest: /etc/network/if-up.d/iptables
+    owner: root
+    group: root
+    mode: 0755

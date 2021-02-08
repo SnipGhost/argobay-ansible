@@ -1,0 +1,20 @@
+{% for vip in keepalived_vips %}
+vrrp_instance {{ vip.name }} {
+    state {{ vip.state | default("BACKUP") }}
+    interface {{ vip.iface | default("eth0") }}
+    virtual_router_id {{ vip.id }}
+    priority {{ vip.priority | default(100) }}
+    advert_int {{ vip.advert_int | default(1) }}
+    authentication {
+        auth_type PASS
+        auth_pass {{ vip.password }}
+    }
+
+    use_vmac
+
+   virtual_ipaddress {
+       {{ vip.ip }}/{{ vip.mask }} dev {{ vip.iface }} label {{ vip.iface }}:{{ vip.id }}
+    }
+}
+
+{% endfor %}

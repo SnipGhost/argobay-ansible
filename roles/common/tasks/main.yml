@@ -1,0 +1,136 @@
+---
+- name: Update APT cache
+  apt:
+    update_cache: yes
+
+- name: Install packages
+  package:
+    name:
+      - python-apt
+      - python3-pip
+      - git
+      - vim
+      - nano
+      - tmux
+      - dnsutils
+      - tcpdump
+    state: present
+
+- name: Ensure groups wheel and remote exists
+  group:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - wheel
+    - remote
+
+- name: Add ansible user to wheel and remote
+  user:
+    name: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    groups: adm,wheel,remote,systemd-journal
+    append: yes
+    state: present
+
+- name: Edit sudoers file
+  copy:
+    src: sudoers
+    dest: /etc/sudoers
+    backup: yes
+    mode: 0440
+    owner: root
+    group: root
+
+- name: Remove pi-nopasswd rule
+  file:
+    dest: /etc/sudoers.d/010_pi-nopasswd
+    state: absent
+
+- name: Add admin users
+  user:
+    name: "{{ item.name }}"
+    groups: wheel,remote
+    append: yes
+    shell: /bin/bash
+    comment: "{{ item.comment }}"
+    state: present
+  with_items: "{{ admins }}"
+
+- name: Add public keys to authorized_key files
+  authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: "{{ item.key }}"
+  with_items: "{{ admins }}"
+
+- name: Write .bashrc for admin users
+  template:
+    src: bashrc.j2
+    dest: "/home/{{ item.name }}/.bashrc"
+    backup: yes
+    mode: 0644
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  with_items: "{{ admins }}"
+
+- name: Write .vimrc for admin users
+  copy:
+    src: vimrc
+    dest: "/home/{{ item.name }}/.vimrc"
+    backup: yes
+    mode: 0644
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  with_items: "{{ admins }}"
+
+- name: Write .bashrc for pi user
+  vars:
+    item:
+      color: "01;32m"
+  template:
+    src: bashrc.j2
+    dest: "/home/pi/.bashrc"
+    backup: yes
+    mode: 0644
+    owner: pi
+    group: pi
+  when: "inventory_hostname in groups['raspberry_pi']"
+
+- name: Write .vimrc for pi user
+  copy:
+    src: vimrc
+    dest: "/home/pi/.vimrc"
+    backup: yes
+    mode: 0644
+    owner: pi
+    group: pi
+  when: "inventory_hostname in groups['raspberry_pi']"
+
+- name: Write .rc for root
+  copy:
+    src: "{{ item }}"
+    dest: "/root/.{{ item }}"
+    backup: yes
+    mode: 0644
+    owner: root
+    group: root
+  with_items:
+    - bashrc
+    - vimrc
+
+- name: Write dhcpcd config for static IP
+  template:
+    src: dhcpcd.conf.j2
+    dest: /etc/dhcpcd.conf
+    backup: yes
+    mode: 0664
+    owner: root
+    group: netdev
+  when: "inventory_hostname in groups['raspberry_pi']"
+
+- name: Install Golang
+  unarchive:
+    src: "https://golang.org/dl/go1.15.6.linux-armv6l.tar.gz"
+    dest: /usr/local/
+    remote_src: yes
+  when: "inventory_hostname in groups['raspberry_pi']"

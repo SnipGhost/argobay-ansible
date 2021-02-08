@@ -1,0 +1,4 @@
+fan_driver_temp_max: 57
+fan_driver_temp_min: 45
+fan_driver_delay: 1
+fan_driver_control_pin: 21

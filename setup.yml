@@ -32,6 +32,5 @@
   roles:
     - name: rpi_fan_driver
       tags: rpi_fan_driver
-      when: has_fan | default('false') | bool
     - name: rpi_exporter
       tags: rpi_exporter

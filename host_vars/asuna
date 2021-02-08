@@ -1,5 +1,5 @@
 proc_version: armv7
-has_fan: true
+has_fan: false
 
 keepalived_vips:
   - id: "{{ public_vip_id }}"

@@ -5,6 +5,7 @@
     dest: /usr/sbin/fan_driver.py
     mode: 0755
   notify: fan_driver_restart
+  when: has_fan | default('false') | bool
 
 - name: Install RPi-FanDriver systemd-unit
   get_url:
@@ -12,6 +13,7 @@
     dest: /etc/systemd/system/fan-driver.service
     mode: 0644
   notify: systemd_reload
+  when: has_fan | default('false') | bool
 
 - name: Create config
   template:
@@ -20,6 +22,20 @@
     backup: yes
     mode: 0644
   notify: fan_driver_reload
+  when: has_fan | default('false') | bool
+
+- name: Check that systemd unit exists
+  stat:
+    path: /etc/systemd/system/fan-driver.service
+  register: stat_result
+  when: not (has_fan | default('false') | bool)
+
+- name: Stop RPi-FanDriver service
+  service:
+    name: fan-driver
+    state: stopped
+    enabled: no
+  when: not (has_fan | default('false') | bool) and stat_result.stat.exists
 
 - meta: flush_handlers
 
@@ -28,4 +44,5 @@
     name: fan-driver
     state: started
     enabled: yes
+  when: has_fan | default('false') | bool
 

@@ -1,0 +1,132 @@
+---
+- name: Ensure groups wheel and remote exists
+  group:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - wheel
+    - remote
+
+- name: Add ansible user to wheel and remote
+  user:
+    name: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    groups: adm,wheel,remote,systemd-journal
+    append: yes
+    state: present
+
+- name: Edit sudoers file
+  copy:
+    src: sudoers
+    dest: /etc/sudoers
+    backup: yes
+    mode: 0440
+    owner: root
+    group: root
+
+- name: Remove pi-nopasswd rule
+  file:
+    dest: /etc/sudoers.d/010_pi-nopasswd
+    state: absent
+
+- name: Add admin users
+  user:
+    name: "{{ item.name }}"
+    groups: wheel,remote
+    append: yes
+    shell: /bin/bash
+    comment: "{{ item.comment }}"
+    state: present
+  with_items: "{{ admins }}"
+
+- name: Change passwords for admin
+  user:
+    name: "{{ item.name }}"
+    state: present
+    password: "{{ '%s' | format(passwords[item.name]) | password_hash('sha512') }}"
+  with_items: "{{ admins }}"
+  when: set_passwords | default('no') | bool
+
+- name: Change password for root
+  user:
+    name: root
+    state: present
+    password: "{{ '%s' | format(passwords['root']) | password_hash('sha512') }}"
+  when: set_passwords | default('no') | bool
+
+- name: Change password for pi user
+  user:
+    name: pi
+    state: present
+    password: "{{ '%s' | format(passwords['pi']) | password_hash('sha512') }}"
+  when: "inventory_hostname in groups['raspberry_pi'] and (set_passwords | default('no') | bool)"
+
+- name: Add public keys to authorized_key files
+  authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: "{{ item.key }}"
+  with_items: "{{ admins }}"
+
+- name: Write .bashrc for admin users
+  template:
+    src: bashrc.j2
+    dest: "/home/{{ item.name }}/.bashrc"
+    backup: yes
+    mode: 0644
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  with_items: "{{ admins }}"
+
+- name: Write .vimrc for admin users
+  copy:
+    src: vimrc
+    dest: "/home/{{ item.name }}/.vimrc"
+    backup: yes
+    mode: 0644
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  with_items: "{{ admins }}"
+
+- name: Write .bashrc for pi user
+  vars:
+    item:
+      color: "01;32m"
+  template:
+    src: bashrc.j2
+    dest: "/home/pi/.bashrc"
+    backup: yes
+    mode: 0644
+    owner: pi
+    group: pi
+  when: "inventory_hostname in groups['raspberry_pi']"
+
+- name: Write .vimrc for pi user
+  copy:
+    src: vimrc
+    dest: "/home/pi/.vimrc"
+    backup: yes
+    mode: 0644
+    owner: pi
+    group: pi
+  when: "inventory_hostname in groups['raspberry_pi']"
+
+- name: Write .rc for root
+  copy:
+    src: "{{ item }}"
+    dest: "/root/.{{ item }}"
+    backup: yes
+    mode: 0644
+    owner: root
+    group: root
+  with_items:
+    - bashrc
+    - vimrc
+
+- name: Create tmux-env
+  copy:
+    src: tmux-env.sh
+    dest: /usr/bin/tmux-env
+    mode: 0755
+    owner: root
+    group: root

@@ -26,7 +26,8 @@
 -A OUTPUT -j valid-states
 -A OUTPUT -j outgoing-services
 -A incoming-ssh -s 192.168.8.0/24 -m conntrack --ctstate NEW,ESTABLISHED -m comment --comment "Local SSH" -j ACCEPT
--A incoming-ssh -s 192.168.2.0/24 -m conntrack --ctstate NEW,ESTABLISHED -m comment --comment "VPN SSH" -j ACCEPT
+-A incoming-ssh -s 192.168.9.0/24 -m conntrack --ctstate NEW,ESTABLISHED -m comment --comment "Local VPN SSH" -j ACCEPT
+-A incoming-ssh -s 192.168.2.0/24 -m conntrack --ctstate NEW,ESTABLISHED -m comment --comment "Golovanova VPN SSH" -j ACCEPT
 -A incoming-ssh -j DROP
 -A incoming-local -s 192.168.8.0/24 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 -A incoming-local -j DROP

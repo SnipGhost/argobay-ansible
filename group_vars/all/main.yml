@@ -12,18 +12,6 @@ prometheus_jobs:
 rpi_exporter_version: 0.6.0
 node_exporter_version: 1.0.1
 
-dnsmasq_records_file: /etc/cluster-hosts
-dnsmasq_hosts:
-  - { rec: [{ip: 192.168.8.50, type: e, main: yes}, {ip: 192.168.8.60, type: w}], name: asuna }
-  - { rec: [{ip: 192.168.8.51, type: e, main: yes}, {ip: 192.168.8.61, type: w}], name: ichika }
-  - { rec: [{ip: 192.168.8.52, type: e, main: yes}, {ip: 192.168.8.62, type: w}], name: nino }
-  - { rec: [{ip: 192.168.8.53, type: e, main: yes}, {ip: 192.168.8.63, type: w}], name: miku }
-  - { rec: [{ip: 192.168.8.54, type: e, main: yes}, {ip: 192.168.8.64, type: w}], name: yotsuba }
-  - { rec: [{ip: 192.168.8.55, type: e}, {ip: 192.168.8.65, type: w, main: yes}], name: itsuki }
-  - { rec: [{ip: 192.168.8.56, type: e}, {ip: 192.168.8.66, type: w, main: yes}], name: rikka }
-  - { rec: [{ip: 192.168.8.57, type: e}, {ip: 192.168.8.67, type: w, main: yes}], name: metroid }
-  - { rec: [{ip: 192.168.8.30, type: e}, {ip: 192.168.8.40, type: w, main: yes}], name: yukinon }
-
 default_gw: 192.168.8.1
 subnet_mask: 24
 secondary_dns: 8.8.8.8
@@ -35,3 +23,17 @@ public_vip_mask: "{{ subnet_mask }}"
 service_vip_id: 2
 service_vip_ip: 192.168.8.12
 service_vip_mask: "{{ subnet_mask }}"
+
+dnsmasq_records_file: /etc/cluster-hosts
+dnsmasq_hosts:
+  - { rec: [{ip: "{{service_vip_ip}}", type: ml}], name: service.assol }
+  - { rec: [{ip: "{{public_vip_ip}}", type: ml}], name: public.assol }
+  - { rec: [{ip: 192.168.8.50, type: e, main: yes}, {ip: 192.168.8.60, type: w}], name: asuna }
+  - { rec: [{ip: 192.168.8.51, type: e, main: yes}, {ip: 192.168.8.61, type: w}], name: ichika }
+  - { rec: [{ip: 192.168.8.52, type: e, main: yes}, {ip: 192.168.8.62, type: w}], name: nino }
+  - { rec: [{ip: 192.168.8.53, type: e, main: yes}, {ip: 192.168.8.63, type: w}], name: miku }
+  - { rec: [{ip: 192.168.8.54, type: e, main: yes}, {ip: 192.168.8.64, type: w}], name: yotsuba }
+  - { rec: [{ip: 192.168.8.55, type: e}, {ip: 192.168.8.65, type: w, main: yes}], name: itsuki }
+  - { rec: [{ip: 192.168.8.56, type: e}, {ip: 192.168.8.66, type: w, main: yes}], name: rikka }
+  - { rec: [{ip: 192.168.8.57, type: e}, {ip: 192.168.8.67, type: w, main: yes}], name: metroid }
+  - { rec: [{ip: 192.168.8.30, type: e}, {ip: 192.168.8.40, type: w, main: yes}], name: yukinon }

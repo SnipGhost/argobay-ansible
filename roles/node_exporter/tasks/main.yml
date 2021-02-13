@@ -37,7 +37,9 @@
   template:
     src: init.service.j2
     dest: /etc/systemd/system/node_exporter.service
-  notify: systemd_reload
+  notify:
+    - systemd_reload
+    - node_exporter_restart
 
 - meta: flush_handlers
 

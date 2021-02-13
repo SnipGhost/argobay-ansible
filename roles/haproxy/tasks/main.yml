@@ -1,0 +1,51 @@
+---
+- name: Installing HAProxy
+  package:
+    name: haproxy
+    state: present
+
+- name: Generate mysqlchk config
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    owner: root
+    group: root
+    backup: yes
+  with_items:
+    - { src: mysqlchk.socket, dest: /lib/systemd/system/mysqlchk.socket, mode: '0644' }
+    - { src: mysqlchk@.service, dest: /lib/systemd/system/mysqlchk@.service, mode: '0644' }
+    - { src: clustercheck.conf, dest: /etc/clustercheck.conf, mode: '0640' }
+  notify: restart mysqlchk.socket
+
+- name: Copy clustercheck script
+  copy:
+    src: clustercheck
+    dest: /usr/bin/clustercheck
+    owner: root
+    group: root
+    mode: '0750'
+
+- name: Start and enable mysqlchk
+  systemd:
+    name: mysqlchk.socket
+    enabled: yes
+    state: started
+
+- name: Generate config
+  vars:
+    mysql_server_names: "{{ groups['db_servers'] }}"
+    memcached_server_names: "{{ groups['cache_servers'] }}"
+  template:
+    src: haproxy.cfg
+    dest: /etc/haproxy/haproxy.cfg
+    backup: yes
+  notify: haproxy_reload
+
+- meta: flush_handlers
+
+- name: Start and enable HAProxy
+  systemd:
+    name: haproxy
+    enabled: yes
+    state: started

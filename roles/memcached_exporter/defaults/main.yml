@@ -1,0 +1,6 @@
+---
+serviceName: memcached_exporter
+userId: prometheus
+groupId: prometheus
+exec_command: /usr/local/bin/memcached_exporter
+memcached_exporter_version: 0.8.0

@@ -1,0 +1,9 @@
+[Unit]
+Description=MariaDB Galera Cluster node check socket
+
+[Socket]
+ListenStream={{ mariadb_proxy_check_port }}
+Accept=yes
+
+[Install]
+WantedBy=sockets.target

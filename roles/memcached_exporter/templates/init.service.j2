@@ -1,0 +1,13 @@
+[Unit]
+Description=Prometheus Memcached Exporter
+After=network.target
+
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+Restart=always
+ExecStart=/usr/local/bin/memcached_exporter --web.listen-address=0.0.0.0:9150
+
+[Install]
+WantedBy=multi-user.target

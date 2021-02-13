@@ -1,0 +1,41 @@
+---
+- name: Installing Memcached
+  package:
+    name: memcached
+    state: latest
+  with_items:
+    - memcached
+    - libmemcached-tools
+  notify:
+    - restart memcached
+
+- name: Creating memcached user group
+  group: name="{{groupId}}"
+
+- name: Creating memcached user
+  user:
+    name: "{{userId}}"
+    group: "{{groupId}}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{userId}} nologin User"
+    createhome: "no"
+    state: present
+
+- name: Push config for Memcached
+  template:
+    src: memcached.conf
+    dest: /etc/memcached.conf
+    owner: memcached
+    group: memcached
+    mode: 0644
+  notify:
+    - restart memcached
+
+- meta: flush_handlers
+
+- name: Start and enable Memcached
+  systemd:
+    name: memcached
+    enabled: yes
+    state: started

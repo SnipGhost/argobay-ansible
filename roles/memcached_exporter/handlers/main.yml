@@ -1,0 +1,10 @@
+---
+- name: Reload systemd
+  command: systemctl daemon-reload
+  listen: systemd_reload
+
+- name: Restart memcached_exporter service
+  service:
+    name: memcached_exporter
+    state: restarted
+  listen: memcached_exporter_restart

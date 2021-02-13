@@ -1,0 +1,56 @@
+---
+- name: Creating memcached_exporter user group
+  group: name="{{groupId}}"
+
+- name: Creating memcached_exporter user
+  user:
+    name: "{{userId}}"
+    group: "{{groupId}}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{userId}} nologin User"
+    createhome: "no"
+    state: present
+
+- name: Install prometheus memcached exporter
+  unarchive:
+    src: "https://github.com/prometheus/memcached_exporter/releases/download/v{{ memcached_exporter_version }}/memcached_exporter-{{ memcached_exporter_version }}.linux-{{ proc_version }}.tar.gz"
+    dest: /tmp/
+    remote_src: yes
+
+- name: Copy prometheus memcached exporter file to bin
+  copy:
+    src: "/tmp/memcached_exporter-{{ memcached_exporter_version }}.linux-{{ proc_version }}/memcached_exporter"
+    dest: "/usr/local/bin/memcached_exporter"
+    owner: "{{userId}}"
+    group: "{{groupId}}"
+    remote_src: yes
+    mode: 0755
+  notify: memcached_exporter_restart
+
+- name: Delete memcached exporter tmp folder
+  file:
+    path: '/tmp/memcached_exporter-{{ memcached_exporter_version }}.linux-{{ proc_version }}'
+    state: absent
+
+- name: Copy systemd init file
+  template:
+    src: init.service.j2
+    dest: /etc/systemd/system/memcached_exporter.service
+  notify:
+    - systemd_reload
+    - memcached_exporter_restart
+
+- meta: flush_handlers
+
+- name: Start memcached_exporter service
+  service:
+    name: memcached_exporter
+    state: started
+    enabled: yes
+
+- name: Check if memcached exporter emits metrices
+  uri:
+    url: http://127.0.0.1:9150/metrics
+    method: GET
+    status_code: 200

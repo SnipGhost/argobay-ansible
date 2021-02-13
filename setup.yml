@@ -3,5 +3,5 @@
 - import_playbook: service.yml
 - import_playbook: monitoring_servers.yml
 - import_playbook: raspberry.yml
-- import_playbook: db_servers.yml
+- import_playbook: storage_servers.yml
 - import_playbook: web_servers.yml

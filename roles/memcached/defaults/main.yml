@@ -1,0 +1,7 @@
+---
+userId:              memcached
+groupId:             memcached
+memcached_user:      memcached
+memcached_port:      11211
+memcached_max_conn:  1024
+memcached_cachesize: 128

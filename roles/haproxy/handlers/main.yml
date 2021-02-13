@@ -1,0 +1,10 @@
+- name: reload haproxy
+  systemd:
+    name: haproxy
+    state: reloaded
+  listen: haproxy_reload
+
+- name: restart mysqlchk.socket
+  systemd:
+    name: mysqlchk.socket
+    state: restarted

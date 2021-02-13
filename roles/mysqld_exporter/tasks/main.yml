@@ -40,6 +40,7 @@
     - systemd_reload
     - mysqld_exporter_restart
 
+# Access from any HAProxy!
 - name: Add clustercheck user
   command: '/usr/bin/mysql -ne "{{ item }}"'
   with_items:

@@ -1,10 +1,10 @@
 ---
-- name: Restart MariaDB
+- name: Reload MariaDB
   systemd:
     name: mariadb
-    state: restarted
+    state: reloaded
   when: not mariadb_rejoin
-  listen: mariadb_restart
+  listen: mariadb_reload
 
 - name: Reload systemd
   command: systemctl daemon-reload

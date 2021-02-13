@@ -34,7 +34,7 @@
     dest: /etc/systemd/system/mariadb.service.d/
   notify:
     - daemon_reload
-    - mariadb_restart
+    - mariadb_reload
 
 - name: Push main config
   vars:
@@ -46,7 +46,7 @@
     owner: root
     group: root
     backup: yes
-  notify: mariadb_restart
+  notify: mariadb_reload
 
 - name: Initialize datadir
   shell: /usr/bin/mysql_install_db --user=mysql --datadir=/mnt/data/mysql --auth-root-authentication-method=socket
@@ -90,6 +90,14 @@
     - "GRANT USAGE ON *.* to sst_user@'%' IDENTIFIED BY '{{ mariadb_sst_pass }}';"
     - "GRANT ALL PRIVILEGES on *.* to sst_user@'%';"
     - "FLUSH PRIVILEGES;"
+  changed_when: False
+
+- name: Add clustercheck users
+  shell:
+    /usr/bin/mysql -ne "GRANT PROCESS ON *.* TO '{{ mariadb_clustercheck.user }}'@'{{ item }}' IDENTIFIED BY '{{ mariadb_clustercheck.pass }}';"
+  with_items:
+    - "{{ groups['all'] }}"
+    - localhost
   changed_when: False
 
 - meta: flush_handlers

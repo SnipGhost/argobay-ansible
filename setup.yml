@@ -17,12 +17,7 @@
     - name: dnsmasq
       tags: dnsmasq
 
-- hosts: monitoring_servers
-  roles:
-    - name: prometheus
-      tags: prometheus
-    - name: grafana
-      tags: grafana
+- import_playbook: monitoring_servers.yml
 
 - hosts: all
   roles:
@@ -35,3 +30,10 @@
       tags: rpi_fan_driver
     - name: rpi_exporter
       tags: rpi_exporter
+
+- import_playbook: db_servers.yml
+
+- hosts: web_servers
+  roles:
+    - name: nginx
+      tags: nginx

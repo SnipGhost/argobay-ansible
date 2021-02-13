@@ -1,0 +1,7 @@
+---
+- hosts: db_servers
+  roles:
+    - name: mariadb
+      tags: mariadb
+    - name: mysqld_exporter
+      tags: mysqld_exporter

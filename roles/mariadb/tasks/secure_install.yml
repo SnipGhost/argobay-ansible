@@ -1,0 +1,60 @@
+---
+- name: Push root .my.cnf config file
+  template:
+    src: my.cnf
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0600
+  notify: mariadb_restart
+
+# TODO: Handle old-root unknown password case
+
+# - name: Set root password part-1
+#   mysql_user:
+#     login_password: "{{ mariadb_old_pass }}"
+#     check_implicit_admin: yes
+#     name: root
+#     host: "{{ item }}"
+#     password: "{{ mariadb_root_pass }}"
+#     state: present 
+#   with_items:
+#     - localhost
+
+# - name: Set root password part-2
+#   mysql_user:
+#     login_password: "{{ mariadb_root_pass }}"
+#     check_implicit_admin: yes
+#     name: root
+#     host: "{{ item }}"
+#     password: "{{ mariadb_root_pass }}"
+#     state: present 
+#   with_items:
+#     - 127.0.0.1
+#     - ::1
+
+- name: Reload privilege tables
+  command: '/usr/bin/mysql -ne "{{ item }}"'
+  with_items:
+    FLUSH PRIVILEGES;
+  changed_when: False
+
+- name: Remove anonymous users
+  command: '/usr/bin/mysql -ne "{{ item }}"'
+  with_items:
+    DELETE FROM mysql.user WHERE User='';
+  changed_when: False
+
+- name: Disallow root login remotely
+  command: '/usr/bin/mysql -ne "{{ item }}"'
+  with_items:
+    DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+  changed_when: False
+
+# Deleting of test database in databases role
+
+- name: Reload privilege tables
+  command: '/usr/bin/mysql -ne "{{ item }}"'
+  with_items:
+    FLUSH PRIVILEGES;
+  changed_when: False

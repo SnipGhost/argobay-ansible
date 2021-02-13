@@ -8,9 +8,11 @@ prometheus_version: "2.23.0"
 prometheus_jobs:
   - { name: rpi, port: 9243, group: raspberry_pi }
   - { name: node, port: 9100, group: all }
+  - { name: mysql, port: 9104, group: db_servers }
 
 rpi_exporter_version: 0.6.0
 node_exporter_version: 1.0.1
+mysqld_exporter_version: 0.12.1
 
 default_gw: 192.168.8.1
 subnet_mask: 24
@@ -24,10 +26,15 @@ service_vip_id: 2
 service_vip_ip: 192.168.8.12
 service_vip_mask: "{{ subnet_mask }}"
 
+private_vip_id: 3
+private_vip_ip: 192.168.8.13
+private_vip_mask: "{{ subnet_mask }}"
+
 dnsmasq_records_file: /etc/cluster-hosts
 dnsmasq_hosts:
-  - { rec: [{ip: "{{service_vip_ip}}", type: ml}], name: service.assol }
-  - { rec: [{ip: "{{public_vip_ip}}", type: ml}], name: public.assol }
+  - { rec: [{ip: "{{service_vip_ip}}", type: vip}], name: service }
+  - { rec: [{ip: "{{public_vip_ip}}", type: vip}], name: public }
+  - { rec: [{ip: "{{private_vip_ip}}", type: vip}], name: private }
   - { rec: [{ip: 192.168.8.50, type: e, main: yes}, {ip: 192.168.8.60, type: w}], name: asuna }
   - { rec: [{ip: 192.168.8.51, type: e, main: yes}, {ip: 192.168.8.61, type: w}], name: ichika }
   - { rec: [{ip: 192.168.8.52, type: e, main: yes}, {ip: 192.168.8.62, type: w}], name: nino }
@@ -37,3 +44,23 @@ dnsmasq_hosts:
   - { rec: [{ip: 192.168.8.56, type: e}, {ip: 192.168.8.66, type: w, main: yes}], name: rikka }
   - { rec: [{ip: 192.168.8.57, type: e}, {ip: 192.168.8.67, type: w, main: yes}], name: metroid }
   - { rec: [{ip: 192.168.8.30, type: e}, {ip: 192.168.8.40, type: w, main: yes}], name: yukinon }
+
+# haproxy_bind_ip: 0.0.0.0
+# haproxy_stat_uri: /haproxy_stats
+# haproxy_stat_host: 0.0.0.0
+# haproxy_stat_port: 9000
+# haproxy_stat_user: haproxy_user
+# haproxy_stat_pass: haproxy_pass
+
+mariadb_cluster_name: GaleraCluster
+mariadb_bind_address: 0.0.0.0
+mariadb_max_conn:     2048
+mariadb_pool_size:    122M
+mariadb_gcache_size:  200M
+mariadb_gcache_page:  200M
+mariadb_datadir:      /mnt/data/mysql
+mariadb_socket:       /var/run/mysqld/mysqld.sock
+
+mariadb_proxy_port: 3307
+mariadb_proxy_port_ro: 3308
+mariadb_proxy_check_port: 9200

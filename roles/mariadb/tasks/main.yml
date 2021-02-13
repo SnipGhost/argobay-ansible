@@ -1,0 +1,107 @@
+---
+- name: Install MariaDB packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - mariadb-server
+    - rsync
+    - galera
+    - python-pymysql
+    - python3-pymysql
+
+- name: Create path for data directory
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode | default('0750') }}"
+  with_items:
+    - path: "{{ mariadb_datadir }}"
+      owner: mysql
+      group: mysql
+    - path: /etc/mysql/conf.d
+      owner: mysql
+      group: mysql
+    - path: /var/lib/prometheus
+      owner: mysql
+      group: mysql
+
+- name: Increase open files limits for mariadb
+  copy:
+    src: files/limits.conf
+    dest: /etc/systemd/system/mariadb.service.d/
+  notify:
+    - daemon_reload
+    - mariadb_restart
+
+- name: Push main config
+  vars:
+    server_names: "{{ groups['db_servers'] }}"
+  template:
+    src: cluster.cnf
+    dest: /etc/mysql/mariadb.conf.d/90-cluster.cnf
+    mode: 0644
+    owner: root
+    group: root
+    backup: yes
+  notify: mariadb_restart
+
+- name: Initialize datadir
+  shell: /usr/bin/mysql_install_db --user=mysql --datadir=/mnt/data/mysql --auth-root-authentication-method=socket
+  when: mariadb_init | default(false) | bool
+
+- name: Enable mariadb
+  systemd:
+    name: mariadb
+    enabled: yes
+
+- name: Stop cluster on slaves
+  systemd:
+    name: mariadb
+    state: stopped
+  when:  mariadb_rejoin | bool and not(db_master | default(false) | bool)
+
+- name: Stop cluster on master
+  systemd:
+    name: mariadb
+    state: stopped
+  when:  mariadb_rejoin | bool and (db_master | default(false) | bool)
+
+- name: Start cluster on master
+  command: /usr/bin/galera_new_cluster
+  when: mariadb_rejoin | bool and (db_master | default(false) | bool)
+
+- name: Start cluster on slaves
+  systemd:
+    name: mariadb
+    state: started
+  when: mariadb_rejoin | bool and not(db_master | default(false) | bool)
+
+# Replaced shell: mysql_secure_installation
+- name: Run mysql_secure_installation
+  include_tasks: secure_install.yml
+  when: mariadb_secure | default('false') | bool
+
+- name: Add replication user
+  command: '/usr/bin/mysql -ne "{{ item }}"'
+  with_items:
+    - "GRANT USAGE ON *.* to sst_user@'%' IDENTIFIED BY '{{ mariadb_sst_pass }}';"
+    - "GRANT ALL PRIVILEGES on *.* to sst_user@'%';"
+    - "FLUSH PRIVILEGES;"
+  changed_when: False
+
+- meta: flush_handlers
+
+- name: Check cluster
+  command: '/usr/bin/mysql -ne "{{ item }}"'
+  with_items:
+    - "SHOW STATUS LIKE 'wsrep_cluster_size';"
+  register: cluster_status
+  changed_when: False
+
+- name: Print cluster status
+  debug:
+    var: cluster_status.results[0].stdout_lines[1]
+  changed_when: False

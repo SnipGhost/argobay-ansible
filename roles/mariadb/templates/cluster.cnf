@@ -1,0 +1,36 @@
+[mysqld]
+bind-address = {{ mariadb_bind_address }}
+binlog_format = ROW
+datadir = {{ mariadb_datadir | default('/var/lib/mysql') }}
+
+default-storage-engine = innodb
+innodb_file_per_table =	on
+innodb_autoinc_lock_mode = 2
+innodb_buffer_pool_size = {{ mariadb_pool_size }}
+innodb_flush_log_at_trx_commit = 0
+
+max_connections	= {{ mariadb_max_conn }}
+socket = {{ mariadb_socket }}
+tmpdir = /tmp
+user = mysql
+
+net_read_timeout = 3600
+net_write_timeout = 3600
+
+# collation-server = utf8_general_ci
+# character-set-server = utf8
+
+[galera]
+wsrep_on = ON
+wsrep_provider = /usr/lib/galera/libgalera_smm.so
+wsrep_provider_options = "gcache.size={{ mariadb_gcache_size }}; gcache.page_size={{ mariadb_gcache_page }}"
+wsrep_cluster_address = "gcomm://{% for host in server_names -%}{{ lookup('dig', host) }},{%- endfor %}"
+wsrep_cluster_name = "{{ mariadb_cluster_name }}"
+wsrep_node_address = "{{ lookup('dig', inventory_hostname) }}"
+wsrep_node_name = "{{ ansible_hostname }}"
+wsrep_sst_method = rsync
+wsrep_sst_auth = sst_user:{{ mariadb_sst_pass }}
+
+[mysql_safe]
+log-error = /var/log/mysqld.log
+pid-file = /var/run/mysqld/mysqld.pid

@@ -17,7 +17,7 @@
 -A INPUT -p udp -m udp --dport 53 -m comment --comment DNS -j incoming-local
 -A INPUT -p tcp -m tcp --dport 9090 -m comment --comment Prometheus -j incoming-local
 -A INPUT -p tcp -m tcp --dport 3000 -m comment --comment Grafana -j incoming-local
--A INPUT -p tcp -m multiport --dports 9100,9121,9243 -m comment --comment Exporters -j incoming-local
+-A INPUT -p tcp -m multiport --dports 9100,9104,9121,9243 -m comment --comment Exporters -j incoming-local
 -A INPUT -p tcp -m multiport --dports 3306,4444,4567,4568 -m comment --comment "MySQL/Galera" -j incoming-local
 -A INPUT -p udp -m udp --dport 4567 -m comment --comment "MySQL/Galera" -j incoming-local
 -A INPUT -p tcp -m multiport --dports 6379,16379 -m comment --comment Redis -j incoming-local

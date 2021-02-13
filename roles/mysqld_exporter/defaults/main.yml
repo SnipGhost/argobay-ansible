@@ -1,0 +1,10 @@
+---
+serviceName: mysqld_exporter
+userId: prometheus
+groupId: prometheus
+exec_command: /usr/local/bin/mysqld_exporter
+mysqld_exporter_version: 0.12.1
+
+mariadb_clustercheck:
+  user: clustercheckuser
+  pass: clustercheckpass

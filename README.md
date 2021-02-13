@@ -25,3 +25,8 @@ To provision Raspberry Pi host:
 ```bash
 ansible-playbook provision.yml -e "HOSTNAME=itsuki" -i 192.168.8.184,
 ```
+
+Install mariadb first time:
+```bash
+ansible-playbook db_servers.yml -e "mariadb_secure=yes mariadb_rejoin=yes mariadb_init=yes"
+```

@@ -1,0 +1,7 @@
+---
+- hosts: monitoring_servers
+  roles:
+    - name: prometheus
+      tags: prometheus
+    - name: grafana
+      tags: grafana

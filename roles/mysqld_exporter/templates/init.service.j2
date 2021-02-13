@@ -1,10 +1,10 @@
 [Unit]
 Description=Prometheus MySQL Exporter
 After=network.target
-User=prometheus
-Group=prometheus
 
 [Service]
+User=prometheus
+Group=prometheus
 Type=simple
 Restart=always
 ExecStart=/usr/local/bin/mysqld_exporter \

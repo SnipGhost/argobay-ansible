@@ -24,9 +24,6 @@
     - path: /etc/mysql/conf.d
       owner: mysql
       group: mysql
-    - path: /var/lib/prometheus
-      owner: mysql
-      group: mysql
 
 - name: Increase open files limits for mariadb
   copy:
@@ -82,7 +79,7 @@
 # Replaced shell: mysql_secure_installation
 - name: Run mysql_secure_installation
   include_tasks: secure_install.yml
-  when: mariadb_secure | default('false') | bool
+  when: (mariadb_secure | default('false') | bool) and (db_master | default(false) | bool)
 
 - name: Add replication user
   command: '/usr/bin/mysql -ne "{{ item }}"'
@@ -91,14 +88,25 @@
     - "GRANT ALL PRIVILEGES on *.* to sst_user@'%';"
     - "FLUSH PRIVILEGES;"
   changed_when: False
+  when: (db_master | default(false) | bool)
 
-- name: Add clustercheck users
+- name: Add clustercheckuser@hostname
   shell:
-    /usr/bin/mysql -ne "GRANT PROCESS ON *.* TO '{{ mariadb_clustercheck.user }}'@'{{ item }}' IDENTIFIED BY '{{ mariadb_clustercheck.pass }}';"
+    /usr/bin/mysql -ne "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO '{{ mariadb_clustercheck.user }}'@'{{ item }}' IDENTIFIED BY '{{ mariadb_clustercheck.pass }}';"
   with_items:
-    - "{{ groups['all'] }}"
     - localhost
+    - "{{ groups['all'] }}"
   changed_when: False
+  when: (db_master | default(false) | bool)
+
+- name: Add clustercheckuser@address
+  shell:
+    /usr/bin/mysql -ne "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO '{{ mariadb_clustercheck.user }}'@'{{ lookup('dig', item) }}' IDENTIFIED BY '{{ mariadb_clustercheck.pass }}';"
+  with_items:
+    - localhost
+    - "{{ groups['all'] }}"
+  changed_when: False
+  when: (db_master | default(false) | bool)
 
 - meta: flush_handlers
 

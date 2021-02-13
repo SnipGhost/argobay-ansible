@@ -11,6 +11,18 @@
     createhome: "no"
     state: present
 
+- name: Create path for config directory
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode | default('0750') }}"
+  with_items:
+    - path: /var/lib/prometheus
+      owner: prometheus
+      group: prometheus
+
 - name: Install prometheus mysqld exporter
   unarchive:
     src: "https://github.com/prometheus/mysqld_exporter/releases/download/v{{ mysqld_exporter_version }}/mysqld_exporter-{{ mysqld_exporter_version }}.linux-{{ proc_version }}.tar.gz"
@@ -39,14 +51,6 @@
   notify:
     - systemd_reload
     - mysqld_exporter_restart
-
-# Access from any HAProxy!
-- name: Add clustercheck user
-  command: '/usr/bin/mysql -ne "{{ item }}"'
-  with_items:
-    - "GRANT PROCESS ON *.* TO '{{ mariadb_clustercheck.user }}'@'localhost' IDENTIFIED BY '{{ mariadb_clustercheck.pass }}';"
-    - "FLUSH PRIVILEGES;"
-  changed_when: False
 
 - name: Push my.cnf for mysqld_exporter
   template:

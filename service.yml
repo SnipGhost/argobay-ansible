@@ -1,0 +1,5 @@
+---
+- hosts: dns_servers
+  roles:
+    - name: dnsmasq
+      tags: dnsmasq

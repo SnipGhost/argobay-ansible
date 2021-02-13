@@ -2,6 +2,7 @@ proc_version: armv7
 has_fan: true
 
 keepalived_vips:
+
   - id: "{{ public_vip_id }}"
     name: public_vip
     ip: "{{ public_vip_ip }}"

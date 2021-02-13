@@ -1,39 +1,7 @@
 ---
-- hosts: all
-  roles:
-    - name: common
-      tags: common
-    - name: users
-      tags: users
-    - name: sshd
-      tags: sshd
-    - name: iptables
-      tags: iptables
-    - name: keepalived
-      tags: keepalived
-
-- hosts: dns_servers
-  roles:
-    - name: dnsmasq
-      tags: dnsmasq
-
+- import_playbook: all_hosts.yml
+- import_playbook: service.yml
 - import_playbook: monitoring_servers.yml
-
-- hosts: all
-  roles:
-    - name: node_exporter
-      tags: node_exporter
-
-- hosts: raspberry_pi
-  roles:
-    - name: rpi_fan_driver
-      tags: rpi_fan_driver
-    - name: rpi_exporter
-      tags: rpi_exporter
-
+- import_playbook: raspberry.yml
 - import_playbook: db_servers.yml
-
-- hosts: web_servers
-  roles:
-    - name: nginx
-      tags: nginx
+- import_playbook: web_servers.yml

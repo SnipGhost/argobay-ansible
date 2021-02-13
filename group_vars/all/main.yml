@@ -71,5 +71,3 @@ haproxy_bind_ip: 0.0.0.0
 haproxy_stat_uri: /haproxy_stats
 haproxy_stat_host: 0.0.0.0
 haproxy_stat_port: 9000
-haproxy_stat_user: haproxy_user
-haproxy_stat_pass: haproxy_pass

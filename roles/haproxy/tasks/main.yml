@@ -31,6 +31,14 @@
     name: mysqlchk.socket
     enabled: yes
     state: started
+  when: mariadb_l7_check | default(true) | bool
+
+- name: Stop and disable mysqlchk
+  systemd:
+    name: mysqlchk.socket
+    enabled: no
+    state: stopped
+  when: not (mariadb_l7_check | default(true) | bool)
 
 - name: Generate config
   vars:

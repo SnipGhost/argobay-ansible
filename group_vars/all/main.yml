@@ -61,6 +61,7 @@ mariadb_socket:       /var/run/mysqld/mysqld.sock
 mariadb_proxy_port: 3307
 mariadb_proxy_port_ro: 3308
 mariadb_proxy_check_port: 9200
+mariadb_l7_check: no
 
 memcached_user:      memcached
 memcached_port:      11211

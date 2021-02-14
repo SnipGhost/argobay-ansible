@@ -10,6 +10,7 @@ prometheus_jobs:
   - { name: haproxy, port: 9101, group: all }
   - { name: mysql, port: 9104, group: db_servers }
   - { name: memcached, port: 9150, group: cache_servers }
+  # - { name: dnsmasq, port: 9153, group: dns_servers }
   - { name: rpi, port: 9243, group: raspberry_pi }
 
 rpi_exporter_version: 0.6.0
@@ -35,6 +36,7 @@ private_vip_ip: 192.168.8.13
 private_vip_mask: "{{ subnet_mask }}"
 
 dnsmasq_records_file: /etc/cluster-hosts
+dnsmasq_exporter_enabled: no
 dnsmasq_hosts:
   - { rec: [{ip: "{{service_vip_ip}}", type: vip}], name: service }
   - { rec: [{ip: "{{public_vip_ip}}", type: vip}], name: public }

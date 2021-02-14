@@ -1,0 +1,33 @@
+---
+- name: Install dnsmasq_exporter binary
+  # Builded from sources for armv6l
+  copy:
+    src: dnsmasq_exporter
+    dest: /usr/bin/dnsmasq_exporter
+    mode: 0755
+  notify: dnsmasq_exporter_restart
+  when: dnsmasq_exporter_enabled | default(true) | bool
+
+- name: Install dnsmasq_exporter systemd-unit
+  get_url:
+    url: "https://raw.githubusercontent.com/google/dnsmasq_exporter/{{ dnsmasq_exporter_commit }}/dnsmasq_exporter.service"
+    dest: /etc/systemd/system/dnsmasq_exporter.service
+    mode: 0644
+  notify: systemd_reload
+  when: dnsmasq_exporter_enabled | default(true) | bool
+
+- meta: flush_handlers
+
+- name: Start dnsmasq_exporter service
+  service:
+    name: dnsmasq_exporter
+    state: started
+    enabled: yes
+  when: dnsmasq_exporter_enabled | default(true) | bool
+
+- name: Stop dnsmasq_exporter service
+  service:
+    name: dnsmasq_exporter
+    state: stopped
+    enabled: no
+  when: not (dnsmasq_exporter_enabled | default(true) | bool)

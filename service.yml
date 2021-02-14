@@ -3,3 +3,5 @@
   roles:
     - name: dnsmasq
       tags: dnsmasq
+    - name: dnsmasq_exporter
+      tags: dnsmasq_exporter

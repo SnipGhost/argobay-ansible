@@ -6,15 +6,17 @@ data_path: "/mnt/data"
 prometheus_data_retention: "60d"
 prometheus_version: "2.23.0"
 prometheus_jobs:
-  - { name: rpi, port: 9243, group: raspberry_pi }
   - { name: node, port: 9100, group: all }
+  - { name: haproxy, port: 9101, group: all }
   - { name: mysql, port: 9104, group: db_servers }
   - { name: memcached, port: 9150, group: cache_servers }
+  - { name: rpi, port: 9243, group: raspberry_pi }
 
 rpi_exporter_version: 0.6.0
 node_exporter_version: 1.0.1
 mysqld_exporter_version: 0.12.1
 memcached_exporter_version: 0.8.0
+haproxy_exporter_version: 0.12.0
 
 default_gw: 192.168.8.1
 subnet_mask: 24

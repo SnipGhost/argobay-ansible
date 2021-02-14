@@ -1,0 +1,6 @@
+---
+serviceName: haproxy_exporter
+userId: haproxy
+groupId: haproxy
+exec_command: "/usr/local/bin/haproxy_exporter --haproxy.scrape-uri=unix:/var/lib/haproxy/stats"
+haproxy_exporter_version: 0.12.0

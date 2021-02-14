@@ -1,0 +1,10 @@
+---
+- name: Reload systemd
+  command: systemctl daemon-reload
+  listen: systemd_reload
+
+- name: Restart haproxy_exporter service
+  service:
+    name: haproxy_exporter
+    state: restarted
+  listen: haproxy_exporter_restart

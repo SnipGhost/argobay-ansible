@@ -13,5 +13,7 @@
       tags: keepalived
     - name: haproxy
       tags: haproxy
+    - name: haproxy_exporter
+      tags: haproxy_exporter
     - name: node_exporter
       tags: node_exporter

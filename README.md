@@ -22,6 +22,8 @@ passwords:
   user_2: encrypted_string_y
 ```
 
+## Use-cases
+
 To update all components on production:
 ```bash
 ansible-playbook setup.yml
@@ -41,3 +43,22 @@ Install mariadb first time [ATTENTION!]:
 ```bash
 ansible-playbook storage_servers.yml -e "mariadb_secure=yes mariadb_rejoin=yes mariadb_init=yes"
 ```
+
+## Add new service role checklist
+
+- Pull binary/script application
+- Create application config
+- Create application systemd unit
+- Add nginx site config if needed
+- Create DB if needed
+- Change iptables for application
+- Add new variables to group_vars
+- Test application
+- Pull exporter
+- Create exporter systemd unit
+- Change iptables for exporter
+- Add exporter to prometheus_jobs
+- Test exporter
+- Commit
+- Test all
+- Push

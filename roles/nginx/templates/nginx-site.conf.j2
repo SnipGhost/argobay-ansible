@@ -1,0 +1,65 @@
+upstream {{ item.name }} {
+{% for host in groups[item.group | default(item.name)] %}
+	server {{ lookup('dig', host) }}:{{ item.port }};
+{% endfor %}
+}
+
+{% if item.server_name | default(false) %}
+{% if item.redirect | default(false) %}
+server {
+	listen {{ item.ip }}:{{ item.http_port | default(80) }};
+	server_name {{ item.server_name }};
+
+{% for whitelist_name in item.whitelist|default([]) %}
+	include /etc/nginx/whitelist/{{ whitelist_name }}.conf;
+{% endfor %}
+	include /etc/nginx/whitelist/main.conf;
+
+	location / {
+		return 301 https://$host$request_uri;
+	}
+}
+{% endif %}
+server {
+{% if not item.redirect | default(false) %}
+	listen {{ item.ip }}:{{ item.http_port | default(80) }};
+{% endif %}
+{% if item.ssl_certificate | default(false) %}
+	listen {{ item.ip }}:{{ item.https_port | default(443) }} ssl;
+
+	ssl_certificate     {{ item.ssl_certificate }};
+	ssl_certificate_key {{ item.ssl_certificate_key }};
+{% endif %}
+
+{% for whitelist_name in item.whitelist|default([]) %}
+	include /etc/nginx/whitelist/{{ whitelist_name }}.conf;
+{% endfor %}
+	include /etc/nginx/whitelist/main.conf;
+
+	access_log /var/log/nginx/{{ item.name }}.access.log main;
+	error_log /var/log/nginx/{{ item.name }}.error.log;
+
+	server_name {{ item.server_name }};
+
+	client_max_body_size {{ item.client_max_body_size | default('100M') }};
+
+	location / {
+		proxy_pass         http://{{ item.name }};
+		proxy_http_version 1.1;
+		proxy_set_header   Host              $http_host;
+		proxy_set_header   Upgrade           $http_upgrade;
+		proxy_set_header   Connection        $connection_upgrade;
+		proxy_set_header   X-Real-IP         $remote_addr;
+		proxy_set_header   X-Forwarded-Proto $scheme;
+		proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+	}
+
+{% if item.static_root | default(false) %}
+	location {{ item.static_path | default('static') }} {
+		root      {{ item.static_root }};
+		index     {{ item.static_index | default('index.html') }};
+		try_files $uri $uri/ =404;
+	}
+{% endif %}
+}
+{% endif %}

@@ -61,7 +61,10 @@ mariadb_gcache_size:  200M
 mariadb_gcache_page:  200M
 mariadb_datadir:      /mnt/data/mysql
 mariadb_socket:       /var/run/mysqld/mysqld.sock
-mariadb_safe_hosts:   "192.168.8.5_"
+mariadb_safe_hosts:
+  - "localhost"
+  - "127.0.0.1"
+  - "192.168.8.5_" 
 
 mariadb_proxy_port: 3307
 mariadb_proxy_port_ro: 3308

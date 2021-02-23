@@ -18,4 +18,6 @@ mariadb_clustercheck:
   user: clustercheckuser
   pass: clustercheckpass
 
-mariadb_safe_hosts: "%"
+mariadb_safe_hosts:
+  - "localhost"
+  - "127.0.0.1"

@@ -89,14 +89,11 @@
 - name: Revoke all grant for sst_user
   command: "/usr/bin/mysql -ne \"DROP USER '{{ item.split('\t')[1] }}'@'{{ item.split('\t')[0] }}';\""
   with_items: "{{ stuff.stdout_lines }}"
-  when: (db_master | default(false) | bool)
+  when: (db_master | default(false) | bool) and (item.split('\t')[0] not in mariadb_safe_hosts)
 
 - name: Add replication user
-  command: '/usr/bin/mysql -ne "{{ item }}"'
-  with_items:
-    - "GRANT USAGE ON *.* to sst_user@'{{ mariadb_safe_hosts }}' IDENTIFIED BY '{{ mariadb_sst_pass }}';"
-    - "GRANT ALL PRIVILEGES on *.* to sst_user@'{{ mariadb_safe_hosts }}';"
-    - "FLUSH PRIVILEGES;"
+  command: "/usr/bin/mysql -ne \"GRANT USAGE ON *.* to sst_user@'{{ item }}' IDENTIFIED BY '{{ mariadb_sst_pass }}'; GRANT ALL PRIVILEGES on *.* to sst_user@'{{ item }}';\""
+  with_items: "{{ mariadb_safe_hosts }}"
   changed_when: False
   when: (db_master | default(false) | bool)
 
@@ -110,15 +107,12 @@
 - name: Revoke all grant for cluster_check_user
   command: "/usr/bin/mysql -ne \"DROP USER '{{ item.split('\t')[1] }}'@'{{ item.split('\t')[0] }}';\""
   with_items: "{{ stuff.stdout_lines }}"
-  when: (db_master | default(false) | bool)
+  when: (db_master | default(false) | bool) and (item.split('\t')[0] not in mariadb_safe_hosts)
 
 - name: Add cluster_check_user
   shell:
     /usr/bin/mysql -ne "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO '{{ mariadb_clustercheck.user }}'@'{{ item }}' IDENTIFIED BY '{{ mariadb_clustercheck.pass }}';"
-  with_items:
-    - "localhost"
-    - "127.0.0.1"
-    - "{{ mariadb_safe_hosts }}"
+  with_items: "{{ mariadb_safe_hosts }}"
   changed_when: False
   when: (db_master | default(false) | bool)
 

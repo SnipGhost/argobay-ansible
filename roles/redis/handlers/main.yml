@@ -1,0 +1,6 @@
+---
+- name: Restart the Redis service
+  service:
+    name: redis-server
+    state: restarted
+  listen: redis_restart

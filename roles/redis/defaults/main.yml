@@ -1,0 +1,7 @@
+---
+userId: redis
+groupId: redis
+data_path: /mnt/data
+redis_bind_addr: 127.0.0.1
+redis_bind_port: 6379
+redis_db_count: 5

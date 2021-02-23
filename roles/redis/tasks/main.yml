@@ -1,0 +1,27 @@
+---
+- name: Install packages
+  package:
+    name: redis-server
+    state: present
+
+- name: Copy config file
+  template:
+    src: redis.conf.j2
+    dest: /etc/redis/redis.conf
+  notify: redis_restart
+
+- name: Creates data directory
+  file: 
+    path: "{{ data_path }}/redis/"
+    state: directory
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0755
+
+- meta: flush_handlers
+
+- name: Start Redis service
+  service:
+    name: redis-server
+    state: started
+    enabled: yes

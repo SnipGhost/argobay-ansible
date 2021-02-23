@@ -92,7 +92,7 @@
   when: (db_master | default(false) | bool) and (item.split('\t')[0] not in mariadb_safe_hosts)
 
 - name: Add replication user
-  command: "/usr/bin/mysql -ne \"GRANT USAGE ON *.* to sst_user@'{{ item }}' IDENTIFIED BY '{{ mariadb_sst_pass }}'; GRANT ALL PRIVILEGES on *.* to sst_user@'{{ item }}';\""
+  command: "/usr/bin/mysql -ne \"GRANT USAGE ON *.* TO sst_user@'{{ item }}' IDENTIFIED BY '{{ mariadb_sst_pass }}' WITH GRANT OPTION; GRANT ALL PRIVILEGES on *.* to sst_user@'{{ item }}';\""
   with_items: "{{ mariadb_safe_hosts }}"
   changed_when: False
   when: (db_master | default(false) | bool)

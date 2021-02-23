@@ -1,7 +1,10 @@
 ## TODO list
 
-- Fix daemon-reload handlers order
-- Remake dnsmasq_exporter
+- Fix HAProxy stats stuck
+- Add smart uwsgi systemd script
+- Add user & db creation for marusya_skill
+- Fix 0.7 packet/sec drop on eth0
 - Upgrade Redis to sentinel master-slave [replication](https://rtfm.co.ua/redis-replikaciya-chast-2-master-slave-replikaciya-i-redis-sentinel/)
 - Add keepalived_exporter
-- Fix 0.7 packet/sec drop on eth0
+- Fix daemon-reload handlers order
+- Remake dnsmasq_exporter

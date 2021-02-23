@@ -1,0 +1,14 @@
+---
+- name: Install uwsgi
+  package:
+    name: uwsgi
+    state: present
+  with_items:
+    - uwsgi
+    - uwsgi-plugin-python3
+
+- name: Start and enable uwsgi-apps
+  sytemd:
+    name: uwsgi
+    state: started
+    enabled: yes

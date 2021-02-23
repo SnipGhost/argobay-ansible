@@ -3,3 +3,5 @@
   roles:
     - name: nginx
       tags: nginx
+    - name: uwsgi
+      tags: uwsgi

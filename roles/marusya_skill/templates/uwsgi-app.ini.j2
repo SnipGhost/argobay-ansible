@@ -1,0 +1,22 @@
+[uwsgi]
+name = {{ app_name }}
+uid = assol
+gid = assol
+
+master = true
+workers = 2
+threads = 2
+
+http-socket = {{ marusya_skill_host }}:{{ marusya_skill_port }}
+buffer-size = {{ marusya_skill_buffer_size }}
+
+need-app = true
+lazy-apps = true
+
+chdir = {{ marusya_skill_bindir }}
+logto2 = {{ marusya_skill_logdir }}/app.log
+
+home = {{ marusya_skill_bindir }}/env
+plugin = python3
+callable = app
+wsgi-file = {{ marusya_skill_bindir }}/run.py

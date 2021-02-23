@@ -2,5 +2,5 @@
 - hosts: all
   tasks:
     - debug:
-        msg: "{{ lookup('dig', item) }}"
+        msg: "{{ lookup('dig', item, '@' + service_vip_ip) }}"
       with_items: "{{ groups['all'] }}"

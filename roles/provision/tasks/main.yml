@@ -5,6 +5,9 @@
 - name: Change timezone
   shell: "raspi-config nonint do_change_timezone {{ TIMEZONE }}"
 
+- name: Change locale
+  shell: "raspi-config nonint do_change_locale {{ LOCALE }}"
+
 - name: Update APT cache
   apt:
     update_cache: yes

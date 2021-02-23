@@ -17,3 +17,5 @@ mariadb_datadir:      /var/lib/mysql
 mariadb_clustercheck:
   user: clustercheckuser
   pass: clustercheckpass
+
+mariadb_safe_hosts: "%"

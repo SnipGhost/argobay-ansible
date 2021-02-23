@@ -31,7 +31,6 @@
     dest: /etc/systemd/system/mariadb.service.d/
   notify:
     - daemon_reload
-    - mariadb_reload
 
 - name: Push main config
   vars:
@@ -43,7 +42,6 @@
     owner: root
     group: root
     backup: yes
-  notify: mariadb_reload
 
 - name: Initialize datadir
   shell: /usr/bin/mysql_install_db --user=mysql --datadir=/mnt/data/mysql --auth-root-authentication-method=socket
@@ -81,30 +79,46 @@
   include_tasks: secure_install.yml
   when: (mariadb_secure | default('false') | bool) and (db_master | default(false) | bool)
 
+- name: Retrieve sst_user grants from mysql
+  command: "mysql -e \"select Host, User from mysql.user where User = 'sst_user';\" --batch --skip-column-names"
+  register: stuff
+  check_mode: no
+  changed_when: False
+  when: (db_master | default(false) | bool)
+
+- name: Revoke all grant for sst_user
+  command: "/usr/bin/mysql -ne \"DROP USER '{{ item.split('\t')[1] }}'@'{{ item.split('\t')[0] }}';\""
+  with_items: "{{ stuff.stdout_lines }}"
+  when: (db_master | default(false) | bool)
+
 - name: Add replication user
   command: '/usr/bin/mysql -ne "{{ item }}"'
   with_items:
-    - "GRANT USAGE ON *.* to sst_user@'%' IDENTIFIED BY '{{ mariadb_sst_pass }}';"
-    - "GRANT ALL PRIVILEGES on *.* to sst_user@'%';"
+    - "GRANT USAGE ON *.* to sst_user@'{{ mariadb_safe_hosts }}' IDENTIFIED BY '{{ mariadb_sst_pass }}';"
+    - "GRANT ALL PRIVILEGES on *.* to sst_user@'{{ mariadb_safe_hosts }}';"
     - "FLUSH PRIVILEGES;"
   changed_when: False
   when: (db_master | default(false) | bool)
 
-- name: Add clustercheckuser@hostname
-  shell:
-    /usr/bin/mysql -ne "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO '{{ mariadb_clustercheck.user }}'@'{{ item }}' IDENTIFIED BY '{{ mariadb_clustercheck.pass }}';"
-  with_items:
-    - localhost
-    - "{{ groups['all'] }}"
+- name: Retrieve cluster_check_user grants from mysql
+  command: "mysql -e \"select Host, User from mysql.user where User = '{{ mariadb_clustercheck.user }}';\" --batch --skip-column-names"
+  register: stuff
+  check_mode: no
   changed_when: False
   when: (db_master | default(false) | bool)
 
-- name: Add clustercheckuser@address
+- name: Revoke all grant for cluster_check_user
+  command: "/usr/bin/mysql -ne \"DROP USER '{{ item.split('\t')[1] }}'@'{{ item.split('\t')[0] }}';\""
+  with_items: "{{ stuff.stdout_lines }}"
+  when: (db_master | default(false) | bool)
+
+- name: Add cluster_check_user
   shell:
-    /usr/bin/mysql -ne "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO '{{ mariadb_clustercheck.user }}'@'{{ lookup('dig', item) }}' IDENTIFIED BY '{{ mariadb_clustercheck.pass }}';"
+    /usr/bin/mysql -ne "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO '{{ mariadb_clustercheck.user }}'@'{{ item }}' IDENTIFIED BY '{{ mariadb_clustercheck.pass }}';"
   with_items:
-    - localhost
-    - "{{ groups['all'] }}"
+    - "localhost"
+    - "127.0.0.1"
+    - "{{ mariadb_safe_hosts }}"
   changed_when: False
   when: (db_master | default(false) | bool)
 

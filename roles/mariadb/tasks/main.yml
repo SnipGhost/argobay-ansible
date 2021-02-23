@@ -80,7 +80,7 @@
   when: (mariadb_secure | default('false') | bool) and (db_master | default(false) | bool)
 
 - name: Retrieve sst_user grants from mysql
-  command: "mysql -e \"select Host, User from mysql.user where User = 'sst_user';\" --batch --skip-column-names"
+  command: "/usr/bin/mysql -e \"select Host, User from mysql.user where User = 'sst_user';\" --batch --skip-column-names"
   register: stuff
   check_mode: no
   changed_when: False
@@ -98,7 +98,7 @@
   when: (db_master | default(false) | bool)
 
 - name: Retrieve cluster_check_user grants from mysql
-  command: "mysql -e \"select Host, User from mysql.user where User = '{{ mariadb_clustercheck.user }}';\" --batch --skip-column-names"
+  command: "/usr/bin/mysql -e \"select Host, User from mysql.user where User = '{{ mariadb_clustercheck.user }}';\" --batch --skip-column-names"
   register: stuff
   check_mode: no
   changed_when: False

@@ -6,9 +6,14 @@
     - name: mysqld_exporter
       tags: mysqld_exporter
 
-- hosts: cache_servers
+- hosts: memcached_servers
   roles:
     - name: memcached
       tags: memcached
     - name: memcached_exporter
       tags: memcached_exporter
+
+- hosts: redis_servers
+  roles:
+    - name: redis
+      tags: redis

@@ -1,7 +1,17 @@
 domain=local
 no-hosts
 addn-hosts={{ dnsmasq_records_file }}
-interface={{ ansible_default_ipv4.interface }}
+interface={{ dnsmasq_iface }}
 {% for server in dnsmasq_servers %}
 server={{ server }}
 {% endfor %}
+
+{% if dnsmasq_logging | default(false) | bool %}
+log-queries
+log-facility=/var/log/dnsmasq/dnsmasq.log
+log-async=50
+{% else %}
+#log-queries
+#log-facility=/var/log/dnsmasq/dnsmasq.log
+#log-async=50
+{% endif %}

@@ -37,6 +37,7 @@ private_vip_mask: "{{ subnet_mask }}"
 
 dnsmasq_records_file: /etc/cluster-hosts
 dnsmasq_exporter_enabled: no
+dnsmasq_logging: no
 dnsmasq_iface: eth0:{{ service_vip_id }}
 dnsmasq_hosts:
   - { rec: [{ip: "{{service_vip_ip}}", type: vip}], name: service }

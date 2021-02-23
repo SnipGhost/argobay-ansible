@@ -1,6 +1,6 @@
 {% for host in dnsmasq_hosts %}
 {% for rec in host.rec %}
-{{ rec.ip }}{% if rec.main | default('no') | bool %} {{ host.name }}{% endif %} {{ host.name }}.{{ rec.type }}
+{{ rec.ip }}{% if rec.main | default('no') | bool %} {{ host.name }} {{ host.name }}.local{% endif %} {{ host.name }}.{{ rec.type }}
 {% endfor %}
 
 {% endfor %}

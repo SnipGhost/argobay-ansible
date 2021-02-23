@@ -22,6 +22,14 @@
     backup: yes
   notify: dnsmasq_restart
 
+- name: Create path for log directory
+  file:
+    path: /var/log/dnsmasq
+    state: directory
+    owner: root
+    group: root
+    mode: "0775"
+
 - meta: flush_handlers
 
 - name: Start dnsmasq service

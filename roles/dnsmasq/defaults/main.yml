@@ -1,6 +1,8 @@
+dnsmasq_iface: eth0
 dnsmasq_servers:
   - 8.8.8.8
   - 8.8.4.4
 
 dnsmasq_records_file: /etc/cluster-hosts
 external_connections: false
+dnsmasq_logging: false

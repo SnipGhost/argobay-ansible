@@ -43,7 +43,8 @@
 - name: Generate config
   vars:
     mysql_server_names: "{{ groups['db_servers'] }}"
-    memcached_server_names: "{{ groups['cache_servers'] }}"
+    memcached_server_names: "{{ groups['memcached_servers'] }}"
+    redis_server_names: "{{ groups['redis_servers'] }}"
   template:
     src: haproxy.cfg
     dest: /etc/haproxy/haproxy.cfg

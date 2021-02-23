@@ -5,3 +5,5 @@ marusya_skill_buffer_size: 65535
 marusya_skill_logdir: /var/log/marusya_skill
 marusya_skill_bindir: /usr/local/bin/marusya_skill
 marusya_skill_confdir: /etc/assol
+
+smarthome_port: 4050

@@ -53,6 +53,10 @@
 -A INPUT -p tcp -m multiport --dports {{ marusya_skill_port | default(5000) }},8080 -m comment --comment "Marusya skill" -j incoming-local
 {% endif %}
 
+{% if inventory_hostname in groups['smarthome'] %}
+-A INPUT -p tcp -m tcp --dport {{ smarthome_port | default(4050) }} -m comment --comment "SmartHome API" -j incoming-local
+{% endif %}
+
 -A INPUT -p tcp -m tcp --dport 9100 -m comment --comment node_exporter -j incoming-local
 -A INPUT -p tcp -m tcp --dport 9000 -m comment --comment "HAProxy dashboard" -j incoming-local
 -A INPUT -p tcp -m tcp --dport 9101 -m comment --comment haproxy_exporter -j incoming-local

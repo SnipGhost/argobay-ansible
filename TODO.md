@@ -1,7 +1,8 @@
 ## TODO list
 
 - Add smart uwsgi systemd script
-- Add user & db creation for marusya_skill
+- Add db creation for marusya_skill
+- Add nginx & SSL support
 - Fix 0.7 packet/sec drop on eth0
 - Upgrade Redis to sentinel master-slave [replication](https://rtfm.co.ua/redis-replikaciya-chast-2-master-slave-replikaciya-i-redis-sentinel/)
 - Add keepalived_exporter

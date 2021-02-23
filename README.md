@@ -14,6 +14,9 @@ Playbooks require secret variables:
 - mariadb_clustercheck.pass
 - haproxy_stat_user
 - haproxy_stat_pass
+- marusya_skill_db_name
+- marusya_skill_db_user
+- marusya_skill_db_pass
 
 passwords is dictionary with user passwords:
 ```yml
@@ -62,3 +65,8 @@ ansible-playbook storage_servers.yml -e "mariadb_secure=yes mariadb_rejoin=yes m
 - Commit
 - Test all
 - Push
+
+## FAQ
+
+### HAProxy stats page stuck loading
+Re-auth on HAProxy stats page with http://user:pass@host:port/haproxy_stats

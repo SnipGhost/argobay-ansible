@@ -1,6 +1,5 @@
 ## TODO list
 
-- Fix HAProxy stats stuck
 - Add smart uwsgi systemd script
 - Add user & db creation for marusya_skill
 - Fix 0.7 packet/sec drop on eth0

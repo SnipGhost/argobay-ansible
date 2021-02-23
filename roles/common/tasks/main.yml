@@ -7,6 +7,7 @@
   package:
     name:
       - python-apt
+      - python-pip
       - python3-pip
       - git
       - vim
@@ -15,6 +16,11 @@
       - dnsutils
       - tcpdump
     state: present
+
+- name: Install virtualenv via pip
+  pip:
+    name: virtualenv
+    executable: pip3
 
 - name: Install Golang
   unarchive:

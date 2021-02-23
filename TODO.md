@@ -1,7 +1,5 @@
 ## TODO list
 
-- Add defaults to HAProxy role
-- Change ports in HAProxy config to vars
 - Fix db grant scripts & user@host underscore in host
 - Fix daemon-reload handlers order
 - Remake dnsmasq_exporter

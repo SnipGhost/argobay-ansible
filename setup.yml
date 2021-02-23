@@ -1,7 +1,7 @@
 ---
 - import_playbook: all_hosts.yml
 - import_playbook: service.yml
-- import_playbook: monitoring_servers.yml
+- import_playbook: monitoring.yml
 - import_playbook: raspberry.yml
-- import_playbook: storage_servers.yml
-# - import_playbook: web_servers.yml
+- import_playbook: storage.yml
+# - import_playbook: web.yml

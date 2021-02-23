@@ -9,7 +9,7 @@ prometheus_jobs:
   - { name: node, port: 9100, group: all }
   - { name: haproxy, port: 9101, group: all }
   - { name: mysql, port: 9104, group: db_servers }
-  - { name: memcached, port: 9150, group: cache_servers }
+  - { name: memcached, port: 9150, group: memcached_servers }
   # - { name: dnsmasq, port: 9153, group: dns_servers }
   - { name: rpi, port: 9243, group: raspberry_pi }
 

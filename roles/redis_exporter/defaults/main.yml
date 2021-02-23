@@ -1,0 +1,5 @@
+---
+serviceName: redis_exporter
+userId: prometheus
+groupId: prometheus
+redis_exporter_version: 1.17.1

@@ -17,3 +17,5 @@
   roles:
     - name: redis
       tags: redis
+    - name: redis_exporter
+      tags: redis_exporter

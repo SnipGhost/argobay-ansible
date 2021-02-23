@@ -71,8 +71,8 @@
     owner: assol
     group: assol
   with_items:
-    - { src: app.config.json, dest: skill.config.json }
-    - { src: vocabulary.json, dest: skill.vocabulary.json }
+    - { src: app.config.json.j2, dest: skill.config.json }
+    - { src: vocabulary.json.j2, dest: skill.vocabulary.json }
 
 - name: Create venv and install requirements
   pip: 
@@ -81,19 +81,25 @@
     virtualenv_python: python3.7
 
 - name: Retrieve db user grants from mysql
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host 127.0.0.1 -P {{ mariadb_proxy_port }} -e "select Host, User from mysql.user where User = '{{ marusya_skill_db_user }}';" --batch --skip-column-names
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -e "select Host, User from mysql.user where User = '{{ marusya_skill_db_user }}';" --batch --skip-column-names
   register: stuff
   check_mode: no
   changed_when: False
   when: (inventory_hostname == groups.marusya_skill[0])
 
 - name: Revoke all grant for db user
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host 127.0.0.1 -P {{ mariadb_proxy_port }} -ne "DROP USER '{{ item.split('\t')[1] }}'@'{{ item.split('\t')[0] }}';"
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "DROP USER '{{ item.split('\t')[1] }}'@'{{ item.split('\t')[0] }}';"
   with_items: "{{ stuff.stdout_lines }}"
   when: (inventory_hostname == groups.marusya_skill[0]) and (item.split('\t')[0] not in mariadb_safe_hosts)
 
 - name: Add db user to mysql
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host 127.0.0.1 -P {{ mariadb_proxy_port }} -ne "GRANT SELECT, INSERT, DELETE, UPDATE ON {{ marusya_skill_db_name }}.* TO '{{ marusya_skill_db_user }}'@'{{ item }}' IDENTIFIED BY '{{ marusya_skill_db_pass }}';"
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "GRANT SELECT, INSERT, DELETE, UPDATE ON {{ marusya_skill_db_name }}.* TO '{{ marusya_skill_db_user }}'@'{{ item }}' IDENTIFIED BY '{{ marusya_skill_db_pass }}';"
   with_items: "{{ mariadb_safe_hosts }}"
   changed_when: False
   when: (inventory_hostname == groups.marusya_skill[0])
+
+- name: Re-create db
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < /usr/local/bin/{{ app_name }}/setup/marusyatech.sql 
+  when: (inventory_hostname == groups.marusya_skill[0]) and (marusya_skill_setup | default(false) | bool)
+
+# TODO

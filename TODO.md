@@ -1,7 +1,6 @@
 ## TODO list
 
 - Add smart uwsgi systemd script
-- Add db creation for marusya_skill
 - Add nginx & SSL support
 - Backup Grafana data
 - Fix 0.7 packet/sec drop on eth0

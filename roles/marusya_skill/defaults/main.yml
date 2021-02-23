@@ -19,3 +19,7 @@ redis_proxy_host: 127.0.0.1
 redis_proxy_port: 6379
 
 marusya_skill_name: "ассоль"
+marusya_skill_setup: no
+
+smarthome_host: 127.0.0.1
+smarthome_port: 4050

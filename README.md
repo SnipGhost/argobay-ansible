@@ -44,7 +44,12 @@ ansible-playbook provision.yml -e "HOSTNAME=itsuki" -i 192.168.8.184,
 
 Install mariadb first time [ATTENTION!]:
 ```bash
-ansible-playbook storage_servers.yml -e "mariadb_secure=yes mariadb_rejoin=yes mariadb_init=yes"
+ansible-playbook storage.yml -e "mariadb_secure=yes mariadb_rejoin=yes mariadb_init=yes"
+```
+
+To re-setup marusya_skill [ATTENTION!]:
+```bash
+ansible-playbook assol.yml -e "marusya_skill_setup=yes"
 ```
 
 ## Add new service role checklist

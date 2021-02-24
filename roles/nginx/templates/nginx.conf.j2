@@ -1,6 +1,6 @@
 {{ ansible_managed | comment }}
 
-user  nginx  nginx;
+user  {{ userId }}  {{ groupId }};
 
 worker_processes auto;
 

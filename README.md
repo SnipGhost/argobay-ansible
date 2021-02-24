@@ -75,3 +75,11 @@ ansible-playbook assol.yml -e "marusya_skill_setup=yes"
 
 ### HAProxy stats page stuck loading
 Re-auth on HAProxy stats page with http://user:pass@host:port/haproxy_stats
+
+### Renew wildcard cert
+```bash
+certbot certonly -a certbot-dns-freenom:dns-freenom --certbot-dns-freenom:dns-freenom-credentials /etc/letsencrypt/freenomdns.cfg   --certbot-dns-freenom:dns-freenom-propagation-seconds 600 -d "*.assol.ml" -d "assol.ml"
+```
+
+### Certbot import error
+Install last certbot-nginx from pypi: https://pypi.org/project/certbot-nginx/#files

@@ -81,6 +81,9 @@
 -A incoming-local -s 192.168.8.0/24 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 -A incoming-local -j DROP
 
+{% for cidr in external_blacklist | default([]) %}
+-A incoming-external -s {{ cidr }} -j DROP
+{% endfor %}
 -A incoming-external -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 -A incoming-external -j DROP
 

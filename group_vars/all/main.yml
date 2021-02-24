@@ -21,30 +21,40 @@ memcached_exporter_version: 0.8.0
 haproxy_exporter_version: 0.12.0
 redis_exporter_version: 1.17.1
 
+grafana_domain: grafana.assol.ml
+
 default_gw: 192.168.8.1
 subnet_mask: 24
 secondary_dns: 8.8.8.8
 
+# External dashboards
 public_vip_id: 1
 public_vip_ip: 192.168.8.11
 public_vip_mask: "{{ subnet_mask }}"
 
+# DNS & subservices
 service_vip_id: 2
 service_vip_ip: 192.168.8.12
 service_vip_mask: "{{ subnet_mask }}"
 
+# Internal dashboards & SmartHome
 private_vip_id: 3
 private_vip_ip: 192.168.8.13
 private_vip_mask: "{{ subnet_mask }}"
+
+# Internal dashboards & SmartHome
+monitoring_vip_id: 4
+monitoring_vip_ip: 192.168.8.14
+monitoring_vip_mask: "{{ subnet_mask }}"
 
 dnsmasq_records_file: /etc/cluster-hosts
 dnsmasq_exporter_enabled: no
 dnsmasq_logging: no
 dnsmasq_iface: eth0:{{ service_vip_id }}
 dnsmasq_hosts:
-  - { rec: [{ip: "{{service_vip_ip}}", type: vip}], name: service }
-  - { rec: [{ip: "{{public_vip_ip}}", type: vip}], name: public }
-  - { rec: [{ip: "{{private_vip_ip}}", type: vip}], name: private }
+  - { rec: [{ip: "{{service_vip_ip}}", type: i}], name: service }
+  - { rec: [{ip: "{{public_vip_ip}}", type: i}], name: public }
+  - { rec: [{ip: "{{private_vip_ip}}", type: i}], name: private }
   - { rec: [{ip: 192.168.8.50, type: e, main: yes}, {ip: 192.168.8.60, type: w}], name: asuna }
   - { rec: [{ip: 192.168.8.51, type: e, main: yes}, {ip: 192.168.8.61, type: w}], name: ichika }
   - { rec: [{ip: 192.168.8.52, type: e, main: yes}, {ip: 192.168.8.62, type: w}], name: nino }
@@ -90,3 +100,50 @@ haproxy_bind_ip: 0.0.0.0
 haproxy_stat_uri: /haproxy_stats
 haproxy_stat_host: 0.0.0.0
 haproxy_stat_port: 9000
+
+default_cert: /etc/letsencrypt/live/assol.ml/fullchain.pem
+default_cert_key: /etc/letsencrypt/live/assol.ml/privkey.pem
+
+nginx_sites:
+  - name: external-dashboard
+    addr: "{{ public_vip_ip }}"
+    static_root: /var/www/html
+    static_path: /
+    redirect: yes
+    server_name: assol.ml
+    ssl_certificate: "{{ default_cert }}"
+    ssl_certificate_key: "{{ default_cert_key }}"
+    whitelist:
+      - external
+      - vpn
+  - name: marusya_skill
+    addr: "{{ public_vip_ip }}"
+    port: 5000
+    redirect: yes
+    server_name: marusya.assol.ml
+    ssl_certificate: "{{ default_cert }}"
+    ssl_certificate_key: "{{ default_cert_key }}"
+    whitelist:
+      - external
+      - vpn
+  - name: grafana
+    group: monitoring_servers
+    addr: "{{ public_vip_ip }}"
+    port: 3000
+    redirect: yes
+    server_name: grafana.assol.ml
+    ssl_certificate: "{{ default_cert }}"
+    ssl_certificate_key: "{{ default_cert_key }}"
+    whitelist:
+      - external
+      - vpn
+
+external_blacklist:
+  - 198.16.0.0/16       # Amsterdam Browsec VPN (test)
+  - 220.145.227.70/32   # pmadmin|phpmyadmin
+  - 185.142.236.43/32   # robots.txt|sitemap.xml
+  - 46.101.146.208/32   # masscan
+  - 139.59.226.79/32    # masscan
+  - 209.97.134.32/32    # masscan
+  - 35.195.161.121/32   # masscan
+  - 208.91.111.234/32   # autoprpv

@@ -29,10 +29,10 @@ Port 22
 
 # Authentication:
 
-#LoginGraceTime 2m
+LoginGraceTime 30s
 PermitRootLogin no
 #StrictModes yes
-#MaxAuthTries 6
+MaxAuthTries 6
 #MaxSessions 10
 AllowGroups remote
 
@@ -55,7 +55,7 @@ AllowGroups remote
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-#PasswordAuthentication yes
+PasswordAuthentication no
 #PermitEmptyPasswords no
 
 # Change to yes to enable challenge-response passwords (beware issues with
@@ -83,7 +83,7 @@ ChallengeResponseAuthentication no
 # If you just want the PAM account and session checks to run without
 # PAM authentication, then enable this but set PasswordAuthentication
 # and ChallengeResponseAuthentication to 'no'.
-UsePAM yes
+UsePAM no
 
 AllowAgentForwarding yes
 #AllowTcpForwarding yes

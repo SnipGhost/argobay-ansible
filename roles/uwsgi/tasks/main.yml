@@ -8,7 +8,9 @@
     - uwsgi-plugin-python3
 
 - name: Start and enable uwsgi-apps
-  sytemd:
+  systemd:
     name: uwsgi
     state: started
     enabled: yes
+
+# TODO

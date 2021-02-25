@@ -1,8 +1,56 @@
+###############################################################################
+# Main options
+###############################################################################
 admins:
-  - { name: mak, color: "01;33m", comment: "Mikhail Kucherenko", key: "https://github.com/snipghost.keys"}
-  - { name: horifox, color: "01;32m", comment: "Tagir Khanmurzin", key: "https://github.com/horifox.keys"}
-
+  - name: mak
+    color: "01;33m"
+    comment: "Mikhail Kucherenko"
+    key: "https://github.com/snipghost.keys"
+  - name: horifox
+    color: "01;32m"
+    comment: "Tagir Khanmurzin"
+    key: "https://github.com/horifox.keys"
+###############################################################################
+# Path to SSD-disks for all disk-based services
 data_path: "/mnt/data"
+###############################################################################
+# Network
+default_gw: 192.168.8.1
+subnet_mask: 24
+secondary_dns: 8.8.8.8
+#=====================================#
+# External dashboards
+public_vip_id:     1
+public_vip_ip:     192.168.8.11
+#=====================================#
+# DNS & subservices
+service_vip_id:    2
+service_vip_ip:    192.168.8.12
+#=====================================#
+# Internal dashboards & SmartHome
+private_vip_id:    3
+private_vip_ip:    192.168.8.13
+#=====================================#
+# Monitoring services only
+monitoring_vip_id: 4
+monitoring_vip_ip: 192.168.8.14
+#=====================================#
+# All dev-environment
+dev_vip_id:        5
+dev_vip_ip:        192.168.8.15
+#=====================================#
+# Machine learning services
+research_vip_id:   6
+research_vip_ip:   192.168.8.16
+###############################################################################
+# Local DNS via dnsmasq
+dnsmasq_records_file: /etc/cluster-hosts
+dnsmasq_exporter_enabled: no
+dnsmasq_logging: no
+dnsmasq_iface: eth0:{{ service_vip_id }}
+# DNS records in dns.yml
+###############################################################################
+# Prometheus
 prometheus_data_retention: "60d"
 prometheus_version: "2.23.0"
 prometheus_jobs:
@@ -13,58 +61,18 @@ prometheus_jobs:
   - { name: memcached, port: 9150, group: memcached_servers }
   # - { name: dnsmasq, port: 9153, group: dns_servers }
   - { name: rpi, port: 9243, group: raspberry_pi }
-
+###############################################################################
+# Prometheus exporter's version
 rpi_exporter_version: 0.6.0
 node_exporter_version: 1.0.1
 mysqld_exporter_version: 0.12.1
 memcached_exporter_version: 0.8.0
 haproxy_exporter_version: 0.12.0
 redis_exporter_version: 1.17.1
-
+###############################################################################
+# Grafana
 grafana_domain: grafana.assol.ml
-
-default_gw: 192.168.8.1
-subnet_mask: 24
-secondary_dns: 8.8.8.8
-
-# External dashboards
-public_vip_id: 1
-public_vip_ip: 192.168.8.11
-public_vip_mask: "{{ subnet_mask }}"
-
-# DNS & subservices
-service_vip_id: 2
-service_vip_ip: 192.168.8.12
-service_vip_mask: "{{ subnet_mask }}"
-
-# Internal dashboards & SmartHome
-private_vip_id: 3
-private_vip_ip: 192.168.8.13
-private_vip_mask: "{{ subnet_mask }}"
-
-# Internal dashboards & SmartHome
-monitoring_vip_id: 4
-monitoring_vip_ip: 192.168.8.14
-monitoring_vip_mask: "{{ subnet_mask }}"
-
-dnsmasq_records_file: /etc/cluster-hosts
-dnsmasq_exporter_enabled: no
-dnsmasq_logging: no
-dnsmasq_iface: eth0:{{ service_vip_id }}
-dnsmasq_hosts:
-  - { rec: [{ip: "{{service_vip_ip}}", type: i}], name: service }
-  - { rec: [{ip: "{{public_vip_ip}}", type: i}], name: public }
-  - { rec: [{ip: "{{private_vip_ip}}", type: i}], name: private }
-  - { rec: [{ip: 192.168.8.50, type: e, main: yes}, {ip: 192.168.8.60, type: w}], name: asuna }
-  - { rec: [{ip: 192.168.8.51, type: e, main: yes}, {ip: 192.168.8.61, type: w}], name: ichika }
-  - { rec: [{ip: 192.168.8.52, type: e, main: yes}, {ip: 192.168.8.62, type: w}], name: nino }
-  - { rec: [{ip: 192.168.8.53, type: e, main: yes}, {ip: 192.168.8.63, type: w}], name: miku }
-  - { rec: [{ip: 192.168.8.54, type: e, main: yes}, {ip: 192.168.8.64, type: w}], name: yotsuba }
-  - { rec: [{ip: 192.168.8.55, type: e}, {ip: 192.168.8.65, type: w, main: yes}], name: itsuki }
-  - { rec: [{ip: 192.168.8.56, type: e}, {ip: 192.168.8.66, type: w, main: yes}], name: rikka }
-  - { rec: [{ip: 192.168.8.57, type: e}, {ip: 192.168.8.67, type: w, main: yes}], name: metroid }
-  - { rec: [{ip: 192.168.8.30, type: e}, {ip: 192.168.8.40, type: w, main: yes}], name: yukinon }
-
+###############################################################################
 mariadb_cluster_name: GaleraCluster
 mariadb_bind_address: 0.0.0.0
 mariadb_max_conn:     2048
@@ -77,33 +85,36 @@ mariadb_safe_hosts:
   - "localhost"
   - "127.0.0.1"
   - "192.168.8.5_" 
-
-mariadb_proxy_port: 3307
-mariadb_proxy_port_ro: 3308
+# MariaDB proxy options
+mariadb_proxy_port:       3307
+mariadb_proxy_port_ro:    3308
 mariadb_proxy_check_port: 9200
-mariadb_l7_check: no
-
+mariadb_l7_check:         no
+###############################################################################
+# Memcached
 memcached_user:      memcached
 memcached_port:      11211
 memcached_max_conn:  1024
 memcached_cachesize: 128
-
+# Memcached proxy options
 memcached_proxy_port: 11311
-
+###############################################################################
+# Redis
 redis_bind_addr: 0.0.0.0
 redis_bind_port: 6379
 redis_db_count:  5
-
+# Redis proxy options
 redis_proxy_port: 6380
-
-haproxy_bind_ip: 0.0.0.0
-haproxy_stat_uri: /haproxy_stats
+###############################################################################
+# HAProxy
+haproxy_bind_ip:   0.0.0.0
+haproxy_stat_uri:  /haproxy_stats
 haproxy_stat_host: 0.0.0.0
 haproxy_stat_port: 9000
-
-default_cert: /etc/nginx/certs/assol.ml.fullchain.pem
+###############################################################################
+# NGINX options
+default_cert:     /etc/nginx/certs/assol.ml.fullchain.pem
 default_cert_key: /etc/nginx/certs/assol.ml.privkey.pem
-
 nginx_sites:
   - name: external-dashboard
     server_name: assol.ml
@@ -122,14 +133,15 @@ nginx_sites:
       - marusya
       - vpn
   - name: grafana
-    server_name: grafana.assol.ml
+    server_name: "{{ grafana_domain }}"
     addr: "{{ public_vip_ip }}"
     group: monitoring_servers
     port: 3000
     whitelist:
       - external
       - vpn
-
+###############################################################################
+# Affect Nginx-ACL & iptables
 external_blacklist:
   - 198.16.0.0/16       # Amsterdam Browsec VPN (test)
   - 220.145.227.70/32   # pmadmin|phpmyadmin
@@ -139,3 +151,4 @@ external_blacklist:
   - 209.97.134.32/32    # masscan
   - 35.195.161.121/32   # masscan
   - 208.91.111.234/32   # autoprpv
+###############################################################################

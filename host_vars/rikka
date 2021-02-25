@@ -1,2 +1,12 @@
 proc_version: armv7
-has_fan: true
+has_fan: yes
+
+keepalived_vips:
+
+  - id: "{{ dev_vip_id }}"
+    name: dev_vip
+    ip: "{{ dev_vip_ip }}"
+    priority: 200
+    state: MASTER
+    iface: eth0
+    password: "{{ dev_vip_password }}"

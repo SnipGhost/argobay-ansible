@@ -42,13 +42,13 @@ slaac private
                                                                                           
 # Static IP eth configuration:               
 interface eth0
-static ip_address={{ lookup('dig', HOSTNAME + '.e') }}/{{ subnet_mask }}
+static ip_address={{ lookup('dig', HOSTNAME + '.e') }}/{{ subnet_mask | default("24") }}
 static routers={{ default_gw }}
 static domain_name_servers={{ service_vip_ip }} {{ secondary_dns }}
                                              
 # Static IP wifi configuration:              
 interface wlan0
-static ip_address={{ lookup('dig', HOSTNAME + '.w') }}/{{ subnet_mask }}
+static ip_address={{ lookup('dig', HOSTNAME + '.w') }}/{{ subnet_mask | default("24") }}
 static routers={{ default_gw }}
 static domain_name_servers={{ service_vip_ip }} {{ secondary_dns }}
                                                                                           

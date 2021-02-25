@@ -1,0 +1,97 @@
+###############################################################################
+# DNS records generator
+###############################################################################
+dnsmasq_hosts:
+  #========================================================
+  # VIP records
+  - name: public
+    rec:
+      - { ip: "{{public_vip_ip}}", type: i }
+      
+  - name: service 
+    rec:
+      - { ip: "{{service_vip_ip}}", type: i }
+
+  - name: private
+    rec:
+      - { ip: "{{private_vip_ip}}", type: i }
+
+  - name: monitoring
+    rec:
+      - { ip: "{{monitoring_vip_ip}}", type: i }
+
+  - name: dev 
+    rec:
+      - { ip: "{{dev_vip_ip}}", type: i }
+
+  #========================================================
+  # Internal subdomain records
+
+  - name: grafana
+    rec:
+      - { ip: "{{public_vip_ip}}", type: assol.ml }
+
+  - name: prometheus
+    rec:
+      - { ip: "{{monitoring_vip_ip}}", type: assol.ml }
+
+  - name: smarthome
+    rec:
+      - { ip: "{{private_vip_ip}}", type: assol.ml }
+
+  - name: marusya
+    rec:
+      - { ip: "{{public_vip_ip}}", type: assol.ml }
+
+  #========================================================
+  # Servers interfaces
+
+  - name: asuna 
+    rec:
+      - { ip: 192.168.8.50, type: e, main: yes }
+      - { ip: 192.168.8.60, type: w }
+
+  - name: ichika
+    rec:
+      - { ip: 192.168.8.51, type: e, main: yes }
+      - { ip: 192.168.8.61, type: w }
+
+  - name: nino
+    rec:
+      - { ip: 192.168.8.52, type: e, main: yes }
+      - { ip: 192.168.8.62, type: w }
+
+  - name: miku
+    rec:
+      - { ip: 192.168.8.53, type: e, main: yes }
+      - { ip: 192.168.8.63, type: w }
+
+  - name: yotsuba
+    rec:
+      - { ip: 192.168.8.54, type: e, main: yes }
+      - { ip: 192.168.8.64, type: w }
+
+  - name: itsuki
+    rec:
+      - { ip: 192.168.8.55, type: e, main: yes }
+      - { ip: 192.168.8.65, type: w }
+
+  - name: rikka
+    rec:
+      - { ip: 192.168.8.56, type: e, main: yes }
+      - { ip: 192.168.8.66, type: w }
+
+  - name: metroid
+    rec:
+      - { ip: 192.168.8.57, type: e }
+      - { ip: 192.168.8.67, type: w, main: yes }
+
+  - name: yukinon
+    rec:
+      - { ip: 192.168.8.30, type: e }
+      - { ip: 192.168.8.40, type: w, main: yes }
+
+  - name: raphtalia
+    rec:
+      - { ip: 192.168.8.31, type: e }
+      - { ip: 192.168.8.41, type: w, main: yes }

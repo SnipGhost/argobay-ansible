@@ -1,2 +1,12 @@
 proc_version: armv6
-has_fan: false
+has_fan: no
+
+keepalived_vips:
+
+  - id: "{{ dev_vip_id }}"
+    name: dev_vip
+    ip: "{{ dev_vip_ip }}"
+    priority: 150
+    state: BACKUP
+    iface: eth0
+    password: "{{ dev_vip_password }}"

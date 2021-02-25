@@ -1,13 +1,12 @@
 proc_version: armv7
-has_fan: true
-external_connections: true
+has_fan: yes
+external_connections: yes
 
 keepalived_vips:
 
   - id: "{{ public_vip_id }}"
     name: public_vip
     ip: "{{ public_vip_ip }}"
-    mask: "{{ public_vip_mask }}"
     priority: 200
     state: MASTER
     iface: eth0

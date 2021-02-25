@@ -1,3 +1,4 @@
+# Only first setup variables for RaspberryPi
 LOCALE: en_US.UTF-8
 TIMEZONE: "Europe/Moscow"
 BOOTBEHAVIOUR: "B1"

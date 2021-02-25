@@ -1,6 +1,5 @@
 ## TODO list
 
-- Redefine vips
 - Make hosts option for nginx_sites
 - Create dashboard role
 - Add smart uwsgi systemd script

@@ -1,24 +1,29 @@
 proc_version: armv7
-has_fan: false
-
+has_fan: yes
 open_proxy_ports: yes
 
 keepalived_vips:
 
+  - id: "{{ monitoring_vip_id }}"
+    name: monitoring_vip
+    ip: "{{ monitoring_vip_ip }}"
+    priority: 200
+    state: MASTER
+    iface: eth0
+    password: "{{ monitoring_vip_password }}"
+
   - id: "{{ service_vip_id }}"
     name: service_vip
     ip: "{{ service_vip_ip }}"
-    mask: "{{ service_vip_mask }}"
     priority: 200
     state: MASTER
     iface: eth0
     password: "{{ service_vip_password }}"
 
-  - id: "{{ monitoring_vip_id }}"
-    name: monitoring_vip
-    ip: "{{ monitoring_vip_ip }}"
-    mask: "{{ monitoring_vip_mask }}"
-    priority: 200
-    state: MASTER
+  - id: "{{ private_vip_id }}"
+    name: private_vip
+    ip: "{{ private_vip_ip }}"
+    priority: 180
+    state: BACKUP
     iface: eth0
-    password: "{{ monitoring_vip_password }}"
+    password: "{{ private_vip_password }}"

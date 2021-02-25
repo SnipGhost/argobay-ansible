@@ -13,7 +13,7 @@ vrrp_instance {{ vip.name }} {
     use_vmac
 
    virtual_ipaddress {
-       {{ vip.ip }}/{{ vip.mask }} dev {{ vip.iface }} label {{ vip.iface }}:{{ vip.id }}
+       {{ vip.ip }}/{{ vip.mask | default(subnet_mask) }} dev {{ vip.iface }} label {{ vip.iface }}:{{ vip.id }}
     }
 }
 

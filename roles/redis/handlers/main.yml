@@ -1,4 +1,8 @@
 ---
+- name: Reload systemd
+  command: systemctl daemon-reload
+  listen: systemd_reload
+
 - name: Restart the Redis service
   service:
     name: redis-server

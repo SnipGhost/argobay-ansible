@@ -66,7 +66,7 @@
     mode: 0644
   with_fileglob:
     - ../templates/acl/*.j2
-  notify: nginx_reload
+  notify: nginx_restart
 
 - name: Configure certs
   template:

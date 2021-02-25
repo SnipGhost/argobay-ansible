@@ -110,6 +110,7 @@ nginx_sites:
     addr: "{{ public_vip_ip }}"
     static_root: /var/www/html
     static_path: /
+    default: yes
     whitelist:
       - external
       - vpn

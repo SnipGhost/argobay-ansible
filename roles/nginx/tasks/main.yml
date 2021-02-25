@@ -54,6 +54,11 @@
     mode: 0644
   notify: nginx_reload
 
+- name: Disable nginx default site
+  file:
+    dest: /etc/nginx/sites-enabled/default
+    state: absent
+
 - name: Configure nginx whitelist/blacklist
   template:
     src: "{{ item }}"
@@ -67,7 +72,7 @@
   template:
     src: "{{ item }}"
     dest: "/etc/nginx/certs/{{ item | basename }}"
-    mode: 0644
+    mode: 0640
   with_fileglob:
     - ../templates/certs/*
   notify: nginx_reload

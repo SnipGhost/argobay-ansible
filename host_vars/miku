@@ -1,5 +1,6 @@
 proc_version: armv7
 has_fan: true
+external_connections: yes
 
 keepalived_vips:
 

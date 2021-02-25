@@ -1,0 +1,8 @@
+---
+- name: Manage ip_nonlocal_bind
+  sysctl:
+    sysctl_file: /etc/sysctl.d/99-sysctl.conf
+    sysctl_set: yes
+    name: net.ipv4.ip_nonlocal_bind
+    value: '1'
+    state: present

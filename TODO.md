@@ -1,6 +1,5 @@
 ## TODO list
 
-- Add net.ipv4.ip_nonlocal_bind to sysctl
 - Add smart uwsgi systemd script
 - Backup Grafana data
 - Fix 0.7 packet/sec drop on eth0

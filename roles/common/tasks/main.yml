@@ -28,3 +28,6 @@
     dest: /usr/local/
     remote_src: yes
   when: "inventory_hostname in groups['raspberry_pi']"
+
+- name: Manage sysctl
+  include_tasks: sysctl.yml

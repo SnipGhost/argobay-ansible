@@ -11,4 +11,5 @@ marusya_skill_bindir: /usr/local/bin/marusya_skill
 marusya_skill_confdir: /etc/assol
 ###############################################################################
 # SmartHome API
+smarthome_host: 192.168.8.50
 smarthome_port: 4050

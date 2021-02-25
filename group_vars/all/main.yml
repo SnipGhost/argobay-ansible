@@ -125,20 +125,37 @@ nginx_sites:
     whitelist:
       - external
       - vpn
+  - name: haproxy
+    server_name: haproxy_{{ inventory_hostname }}.assol.ml
+    addr: "{{ lookup('dig', inventory_hostname) }}"
+    add_path: /haproxy_stats
+    local: yes
+    port: 9000
+    whitelist:
+      - vpn
   - name: marusya_skill
     server_name: marusya.assol.ml
     addr: "{{ public_vip_ip }}"
     port: 5000
+    hosts: public_hosts
     whitelist:
       - marusya
-      - vpn
   - name: grafana
     server_name: "{{ grafana_domain }}"
     addr: "{{ public_vip_ip }}"
     group: monitoring_servers
     port: 3000
+    hosts: public_hosts
     whitelist:
       - external
+      - vpn
+  - name: prometheus
+    server_name: prometheus.assol.ml
+    addr: "{{ monitoring_vip_ip }}"
+    group: monitoring_servers
+    port: 9090
+    hosts: monitoring_servers
+    whitelist:
       - vpn
 ###############################################################################
 # Affect Nginx-ACL & iptables

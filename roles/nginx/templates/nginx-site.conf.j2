@@ -1,8 +1,12 @@
 {% if item.port is defined %}
 upstream {{ item.name }} {
+{% if item.local | default(false) | bool %}
+	server 127.0.0.1:{{ item.port }};
+{% else %}
 {% for host in groups[item.group | default(item.name)] %}
 	server {{ lookup('dig', host) }}:{{ item.port }};
 {% endfor %}
+{% endif %}
 }
 {% endif %}
 
@@ -50,7 +54,7 @@ server {
 
 {% if item.port is defined %}
 	location / {
-		proxy_pass         http://{{ item.name }};
+		proxy_pass         http://{{ item.name }}{% if item.add_path | default(false) %}{{ item.add_path }}{% endif %};
 		proxy_http_version 1.1;
 		proxy_set_header   Host              $http_host;
 		proxy_set_header   Upgrade           $http_upgrade;

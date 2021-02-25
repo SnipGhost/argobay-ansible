@@ -1,7 +1,6 @@
 ## TODO list
 
 - Fix iptables 80/443 for VPN
-- Make hosts option for nginx_sites
 - Create dashboard role
 - Add smart uwsgi systemd script
 - Backup Grafana data

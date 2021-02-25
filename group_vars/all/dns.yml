@@ -44,6 +44,24 @@ dnsmasq_hosts:
       - { ip: "{{public_vip_ip}}", type: assol.ml }
 
   #========================================================
+  # IoT devices
+  
+  - name: pilot
+    rec:
+      - { ip: 192.168.8.201, type: i }
+      - { ip: 192.168.8.201, type: assol.ml }
+  
+  - name: main.light
+    rec:
+      - { ip: 192.168.8.117, type: i }
+      - { ip: 192.168.8.117, type: assol.ml }
+
+  - name: small.light
+    rec:
+      - { ip: 192.168.8.235, type: i }
+      - { ip: 192.168.8.235, type: assol.ml }
+
+  #========================================================
   # Servers interfaces
 
   - name: asuna 

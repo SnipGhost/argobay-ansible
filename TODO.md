@@ -1,5 +1,8 @@
 ## TODO list
 
+- Redefine vips
+- Make hosts option for nginx_sites
+- Create dashboard role
 - Add smart uwsgi systemd script
 - Backup Grafana data
 - Fix 0.7 packet/sec drop on eth0

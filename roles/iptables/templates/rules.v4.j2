@@ -5,6 +5,7 @@
 :OUTPUT DROP [0:0]
 :incoming-ssh - [0:0]
 :incoming-local - [0:0]
+:incoming-local-http - [0:0]
 :incoming-external - [0:0]
 :valid-states - [0:0]
 :outgoing-services - [0:0]
@@ -67,7 +68,7 @@
 -A INPUT -p tcp -m tcp --dport 6380 -m comment --comment redis_proxy -j incoming-local
 {% endif %}
 
--A INPUT -p tcp -m multiport --dports 80,443 -m comment --comment Web -j {% if external_connections | default('false') | bool %}incoming-external{% else %}incoming-local{% endif %}{{ "" }}
+-A INPUT -p tcp -m multiport --dports 80,443 -m comment --comment Web -j {% if external_connections | default('false') | bool %}incoming-external{% else %}incoming-local-http{% endif %}{{ "" }}
 
 -A OUTPUT -o lo -m comment --comment "Accept all on loopback" -j ACCEPT
 -A OUTPUT -j valid-states
@@ -77,6 +78,11 @@
 -A incoming-ssh -s 192.168.9.0/24 -m conntrack --ctstate NEW,ESTABLISHED -m comment --comment "Local VPN SSH" -j ACCEPT
 -A incoming-ssh -s 192.168.2.0/24 -m conntrack --ctstate NEW,ESTABLISHED -m comment --comment "Golovanova VPN SSH" -j ACCEPT
 -A incoming-ssh -j DROP
+
+-A incoming-local-http -s 192.168.8.0/24 -m conntrack --ctstate NEW,ESTABLISHED -m comment --comment "Local" -j ACCEPT
+-A incoming-local-http -s 192.168.9.0/24 -m conntrack --ctstate NEW,ESTABLISHED -m comment --comment "Local VPN" -j ACCEPT
+-A incoming-local-http -s 192.168.2.0/24 -m conntrack --ctstate NEW,ESTABLISHED -m comment --comment "Golovanova VPN" -j ACCEPT
+-A incoming-local-http -j DROP
 
 -A incoming-local -s 192.168.8.0/24 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 -A incoming-local -j DROP

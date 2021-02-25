@@ -1,6 +1,6 @@
 ## TODO list
 
-- Fix iptables 80/443 for VPN
+- Aliases for git
 - Create dashboard role
 - Add smart uwsgi systemd script
 - Backup Grafana data

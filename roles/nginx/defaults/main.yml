@@ -1,2 +1,7 @@
 userId: nginx
 groupId: nginx
+
+python_certbot_nginx_url: https://files.pythonhosted.org/packages/09/05/cf4ee904d6d6167cfd15eb7df2d287d2361d0423299de1dd3b6b197986b6/certbot-nginx-1.12.0.tar.gz
+
+default_cert: /etc/nginx/certs/fullchain.pem
+default_cert_key: /etc/nginx/certs/privkey.pem

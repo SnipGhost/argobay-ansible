@@ -1,2 +1,5 @@
 secret.yml
 *.pyc
+*.pem
+*.key
+*.crt

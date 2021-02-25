@@ -1,8 +1,16 @@
 ---
-- name: Install nginx
+- name: Install nginx & certbot
   package:
-    name: nginx
+    name: "{{ item }}"
     state: latest
+  with_items:
+    - nginx
+    - certbot
+
+- name: Install certbot plugins
+  pip:
+    name: "['{{ python_certbot_nginx_url }}', 'certbot-dns-freenom']"
+    executable: pip3
 
 - name: Creating nginx user group
   group: name="{{groupId}}"
@@ -33,10 +41,11 @@
     group: root
     mode: 0775
   with_items:
-    - /etc/nginx/acl/
+    - /etc/nginx/acl
     - /etc/nginx/conf.d
     - /etc/nginx/sites-available
     - /etc/nginx/sites-enabled
+    - /etc/nginx/certs
 
 - name: Configure nginx default site
   template:
@@ -52,6 +61,15 @@
     mode: 0644
   with_fileglob:
     - ../templates/acl/*.j2
+  notify: nginx_reload
+
+- name: Configure certs
+  template:
+    src: "{{ item }}"
+    dest: "/etc/nginx/certs/{{ item | basename }}"
+    mode: 0644
+  with_fileglob:
+    - ../templates/certs/*
   notify: nginx_reload
 
 - name: Configure nginx main sites

@@ -1,4 +1,6 @@
 server {
+	listen 0.0.0.0:80 default_server;
+	listen 0.0.0.0:443 default_server;
 {% for vip in keepalived_vips %}
 	listen {{ vip.ip }}:80 default_server;
 	listen {{ vip.ip }}:443 default_server;

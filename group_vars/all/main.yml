@@ -101,39 +101,30 @@ haproxy_stat_uri: /haproxy_stats
 haproxy_stat_host: 0.0.0.0
 haproxy_stat_port: 9000
 
-default_cert: /etc/letsencrypt/live/assol.ml/fullchain.pem
-default_cert_key: /etc/letsencrypt/live/assol.ml/privkey.pem
+default_cert: /etc/nginx/certs/assol.ml.fullchain.pem
+default_cert_key: /etc/nginx/certs/assol.ml.privkey.pem
 
 nginx_sites:
   - name: external-dashboard
+    server_name: assol.ml
     addr: "{{ public_vip_ip }}"
     static_root: /var/www/html
     static_path: /
-    redirect: yes
-    server_name: assol.ml
-    ssl_certificate: "{{ default_cert }}"
-    ssl_certificate_key: "{{ default_cert_key }}"
     whitelist:
       - external
       - vpn
   - name: marusya_skill
+    server_name: marusya.assol.ml
     addr: "{{ public_vip_ip }}"
     port: 5000
-    redirect: yes
-    server_name: marusya.assol.ml
-    ssl_certificate: "{{ default_cert }}"
-    ssl_certificate_key: "{{ default_cert_key }}"
     whitelist:
-      - external
+      - marusya
       - vpn
   - name: grafana
-    group: monitoring_servers
-    addr: "{{ public_vip_ip }}"
-    port: 3000
-    redirect: yes
     server_name: grafana.assol.ml
-    ssl_certificate: "{{ default_cert }}"
-    ssl_certificate_key: "{{ default_cert_key }}"
+    addr: "{{ public_vip_ip }}"
+    group: monitoring_servers
+    port: 3000
     whitelist:
       - external
       - vpn

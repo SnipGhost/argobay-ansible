@@ -25,6 +25,8 @@ passwords:
   user_2: encrypted_string_y
 ```
 
++ ssl cert & key from {{default_cert}} & {{default_cert_key}}
+
 ## Use-cases
 
 To update all components on production:

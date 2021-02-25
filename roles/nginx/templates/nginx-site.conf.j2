@@ -7,9 +7,9 @@ upstream {{ item.name }} {
 {% endif %}
 
 {% if item.server_name | default(false) %}
-{% if item.redirect | default(false) %}
+{% if item.redirect | default(true) %}
 server {
-	listen {{ item.addr }}:{{ item.http_port | default(80) }};
+	listen {{ item.addr | default("0.0.0.0") }}:{{ item.http_port | default(80) }};
 	server_name {{ item.server_name }};
 
 	include /etc/nginx/acl/blacklist.conf;
@@ -22,16 +22,17 @@ server {
 		return 301 https://$host$request_uri;
 	}
 }
+
 {% endif %}
 server {
-{% if not item.redirect | default(false) %}
-	listen {{ item.addr }}:{{ item.http_port | default(80) }};
+{% if not item.redirect | default(true) %}
+	listen {{ item.addr | default("0.0.0.0") }}:{{ item.http_port | default(80) }};
 {% endif %}
-{% if item.ssl_certificate | default(false) %}
-	listen {{ item.addr }}:{{ item.https_port | default(443) }} ssl;
+{% if item.ssl | default(true) | bool %}
+	listen {{ item.addr | default("0.0.0.0") }}:{{ item.https_port | default(443) }} ssl;
 
-	ssl_certificate     {{ item.ssl_certificate }};
-	ssl_certificate_key {{ item.ssl_certificate_key }};
+	ssl_certificate     {{ item.ssl_certificate | default(default_cert) }};
+	ssl_certificate_key {{ item.ssl_certificate_key | default(default_cert_key) }};
 {% endif %}
 
 	include /etc/nginx/acl/blacklist.conf;

@@ -137,7 +137,7 @@ nginx_sites:
   - name: marusya_skill
     server_name: marusya.assol.ml
     addr: "{{ public_vip_ip }}"
-    local: yes
+    # local: yes # No load balancing, only failover
     port: 5000
     hosts: public_hosts
     whitelist:
@@ -164,7 +164,7 @@ nginx_sites:
     addr: "{{ private_vip_ip }}"
     static_root: /usr/local/bin/smarthome/static
     static_path: /static
-    local: yes
+    # local: yes # No load balancing, only failover
     port: 4050
     hosts: private_hosts
     whitelist:

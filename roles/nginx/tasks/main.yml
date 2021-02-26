@@ -95,6 +95,25 @@
     mode: 0644
     state: link
   with_items: "{{ nginx_sites }}"
+  when: inventory_hostname in groups[item.hosts | default('web_servers')]
+  notify: nginx_reload
+
+- name: Find all enabled sites
+  shell: ls -1 /etc/nginx/sites-enabled/
+  register: all_contents
+  changed_when: False
+
+- name: Aggregate valid sites
+  set_fact:
+    valid: "{{ valid | default([]) + [item.name] }}"
+  with_items: "{{ nginx_sites }}"
+  when: inventory_hostname in groups[item.hosts | default('web_servers')] 
+
+- name: Disable wrong sites
+  file:
+    dest: /etc/nginx/sites-enabled/{{ item }}
+    state: absent
+  with_items: "{{ all_contents.stdout_lines | difference(valid) }}"
   notify: nginx_reload
 
 - meta: flush_handlers

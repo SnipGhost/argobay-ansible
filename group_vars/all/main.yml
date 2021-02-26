@@ -115,6 +115,7 @@ haproxy_stat_port: 9000
 # NGINX options
 default_cert:     /etc/nginx/certs/assol.ml.fullchain.pem
 default_cert_key: /etc/nginx/certs/assol.ml.privkey.pem
+# Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
   - name: external-dashboard
     server_name: assol.ml

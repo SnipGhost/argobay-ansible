@@ -85,3 +85,6 @@ certbot certonly -a certbot-dns-freenom:dns-freenom --certbot-dns-freenom:dns-fr
 
 ### Certbot import error
 Install last certbot-nginx from pypi: https://pypi.org/project/certbot-nginx/#files
+
+### Marusya skill tester
+https://skill-tester.marusia.mail.ru

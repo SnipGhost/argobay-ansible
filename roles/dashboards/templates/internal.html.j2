@@ -1,0 +1,107 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Проект Ассоль</title>
+	<style>
+		body {
+			background-color: #18181a;
+			color: #66a5dc;
+			font-family: "Courier New";
+			font-weight: bold;
+		}
+		.logo {
+			background-image: url('img/logo.jpg');
+			background-size: cover;
+			border-radius: 50%;
+			width: 100%;
+			height: 100%;
+			border: 4px solid #66a5dc;
+		}
+		.title {
+			margin-top: 20px;
+			text-align: center;
+			font-size: 25px;
+		}
+		.centurion {
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 5vh;
+			width: 25vh;
+			height: 25vh;
+		}
+		.footer {
+			position: fixed;
+			bottom: 2vh;
+			left: 2vw;
+			width: 96vw;
+		}
+		.left {
+			float: left;
+			color: #ad85ee;
+		}
+		.right {
+			float: right;
+			color: #7ac86b;
+		}
+		.content {
+			width: 890px;
+			margin-top: 20vh;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		.link {
+			display: inline-block;
+			width: 100px;
+			height: 100px;
+			text-decoration: none;
+			color: #66a5dc;
+			margin: 0 20px;
+		}
+		.link p {
+			text-align: center;
+			margin: 0;
+			margin-top: 10px;
+		}
+		.link div {
+			width: 70px;
+			height: 70px;
+			background-size: cover;
+			background-position: center;
+			margin-left: auto;
+			margin-right: auto;
+			display: block;
+			border-radius: 30%;
+		}
+	</style>
+</head>
+<body>
+	<div class="centurion">
+		<div class="logo"></div>
+	</div>
+	<div class="title">Проект Ассоль<br>Внутренняя панель</div>
+	<div class="content">
+		<a class="link" href="https://grafana.assol.ml/">
+			<div style="background-image: url('img/grafana.svg');"></div><p>Grafana</p>
+		</a>
+		<a class="link" href="https://prometheus.assol.ml/">
+			<div style="background-image: url('img/prometheus.svg');"></div><p>Prometheus</p>
+		</a>
+		<a class="link" href="https://marusya.assol.ml/">
+			<div style="background-image: url('img/marusya.png');"></div><p>Маруся</p>
+		</a>
+		<a class="link" href="https://smarthome.assol.ml/">
+			<div style="background-image: url('img/smarthome.svg');"></div><p>SmartHome</p>
+		</a>
+		<a class="link" href="https://haproxy_nino.assol.ml/">
+			<div style="background-image: url('img/haproxy.png');"></div><p>HAProxy</p>
+		</a>
+		<a class="link" href="https://assol.ml/">
+			<div style="background-image: url('img/external.png');"></div><p>External</p>
+		</a>
+	</div>
+	<div class="footer">
+		<div class="left">v0.1</div>
+		<div class="right">{{ inventory_hostname }}</div>
+	</div>
+</body>
+</html>

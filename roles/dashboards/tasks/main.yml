@@ -1,0 +1,40 @@
+---
+- name: Create path for working directory
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode | default('0775') }}"
+  with_items:
+    - path: "{{ dashboard_path }}"
+      owner: root
+      group: root
+
+- name: Copy img files for external
+  copy:
+    src: files/external/
+    dest: "{{ dashboard_path }}external"
+
+- name: Copy img files for internal
+  copy:
+    src: files/internal/
+    dest: "{{ dashboard_path }}internal"
+  when: inventory_hostname in groups['private_hosts']
+
+- name: Create index.html for external
+  template:
+    src: external.html.j2
+    dest: "{{ dashboard_path }}external/index.html"
+    mode: 0664
+    owner: root
+    group: root
+
+- name: Create index.html for internal
+  template:
+    src: internal.html.j2
+    dest: "{{ dashboard_path }}internal/index.html"
+    mode: 0664
+    owner: root
+    group: root
+  when: inventory_hostname in groups['private_hosts']

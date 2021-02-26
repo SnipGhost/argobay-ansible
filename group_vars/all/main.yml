@@ -115,17 +115,27 @@ haproxy_stat_port: 9000
 # NGINX options
 default_cert:     /etc/nginx/certs/assol.ml.fullchain.pem
 default_cert_key: /etc/nginx/certs/assol.ml.privkey.pem
+dashboard_path:   /var/www/html/
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
   - name: external-dashboard
     server_name: assol.ml
     addr: "{{ public_vip_ip }}"
-    static_root: /var/www/html
+    static_root: "{{ dashboard_path }}external/"
     static_path: /
     static_hard: yes
     default: yes
     whitelist:
       - external
+      - vpn
+  - name: internal-dashboard
+    server_name: internal.assol.ml
+    addr: "{{ private_vip_ip }}"
+    static_root: "{{ dashboard_path }}internal/"
+    static_path: /
+    static_hard: yes
+    hosts: private_hosts
+    whitelist:
       - vpn
   - name: haproxy
     server_name: haproxy_{{ inventory_hostname }}.assol.ml
@@ -161,7 +171,7 @@ nginx_sites:
     whitelist:
       - vpn
   - name: smarthome
-    server_name: smarhome.assol.ml
+    server_name: smarthome.assol.ml
     addr: "{{ private_vip_ip }}"
     static_root: /usr/local/bin/smarthome/static
     static_path: /static

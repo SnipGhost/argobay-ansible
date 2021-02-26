@@ -42,10 +42,14 @@ dnsmasq_hosts:
   - name: marusya
     rec:
       - { ip: "{{public_vip_ip}}", type: assol.ml }
+  
+  - name: internal
+    rec:
+      - { ip: "{{private_vip_ip}}", type: assol.ml }
 
   #========================================================
   # IoT devices
-  
+
   - name: pilot
     rec:
       - { ip: 192.168.8.201, type: i }

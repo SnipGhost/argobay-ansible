@@ -17,6 +17,9 @@ Playbooks require secret variables:
 - marusya_skill_db_name
 - marusya_skill_db_user
 - marusya_skill_db_pass
+- smarthome_db_name
+- smarthome_db_user
+- smarthome_db_pass
 
 passwords is dictionary with user passwords:
 ```yml

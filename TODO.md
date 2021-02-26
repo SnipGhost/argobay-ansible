@@ -2,7 +2,6 @@
 
 - ntpd
 - Aliases for git
-- Create dashboard role
 - Backup Grafana data
 - Add nginx_exporter
 - Fix 0.7 packet/sec drop on eth0

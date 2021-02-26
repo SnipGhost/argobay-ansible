@@ -10,6 +10,8 @@
     dest: /usr/local/bin/{{ app_name }}
     clone: yes
     update: yes
+  notify:
+    - app_restart
 
 - name: Creating assol user group
   group: name="{{groupId}}"
@@ -38,15 +40,19 @@
     mode: 0644
     owner: root
     group: root
+  notify:
+    - app_restart
 
 - name: Create a symbolic link in apps-enabled
-  ansible.builtin.file:
+  file:
     src: /etc/uwsgi/apps-available/{{ app_name }}.ini
     dest: /etc/uwsgi/apps-enabled/{{ app_name }}.ini
     owner: root
     group: root
     mode: 0644
     state: link
+  notify:
+    - app_restart
 
 - name: Create path for working directory
   file:
@@ -73,6 +79,8 @@
   with_items:
     - { src: app.config.json.j2, dest: skill.config.json }
     - { src: vocabulary.json.j2, dest: skill.vocabulary.json }
+  notify:
+    - app_restart
 
 - name: Copy vocabulary
   ansible.builtin.copy:
@@ -82,12 +90,16 @@
     owner: assol
     group: assol
     remote_src: yes
+  notify:
+    - app_restart
 
 - name: Create venv and install requirements
   pip: 
     requirements: /usr/local/bin/{{ app_name }}/requirements.txt
     virtualenv: /usr/local/bin/{{ app_name }}/env
     virtualenv_python: python3.7
+  notify:
+    - app_restart
 
 - name: Retrieve db user grants from mysql
   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -e "select Host, User from mysql.user where User = '{{ marusya_skill_db_user }}';" --batch --skip-column-names
@@ -111,4 +123,10 @@
   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < /usr/local/bin/{{ app_name }}/setup/marusyatech.sql 
   when: (inventory_hostname == groups.marusya_skill[0]) and (marusya_skill_setup | default(false) | bool)
 
-# TODO
+- meta: flush_handlers
+
+- name: Start and enable uwsgi-app
+  systemd:
+    name: uwsgi-app@marusya_skill
+    state: started
+    enabled: yes

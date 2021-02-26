@@ -1,0 +1,22 @@
+[uwsgi]
+name = {{ app_name }}
+uid = assol
+gid = assol
+
+master = true
+workers = 2
+threads = 2
+
+http-socket = {{ smarthome_host }}:{{ smarthome_port }}
+buffer-size = {{ smarthome_buffer_size }}
+
+need-app = true
+lazy-apps = true
+
+chdir = {{ smarthome_bindir }}
+logto2 = {{ smarthome_logdir }}/app.log
+
+home = {{ smarthome_bindir }}/env
+plugin = python3
+callable = app
+wsgi-file = {{ smarthome_bindir }}/run.py

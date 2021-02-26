@@ -11,5 +11,10 @@ marusya_skill_bindir: /usr/local/bin/marusya_skill
 marusya_skill_confdir: /etc/assol
 ###############################################################################
 # SmartHome API
+smarthome_git: https://github.com/HoriFox/SmartHomeApi.git
 smarthome_host: "{{ private_vip_ip }}"
 smarthome_port: 4050
+smarthome_buffer_size: 65535
+smarthome_logdir: /var/log/smarthome
+smarthome_bindir: /usr/local/bin/smarthome
+smarthome_confdir: /etc/assol

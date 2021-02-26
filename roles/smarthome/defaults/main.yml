@@ -1,0 +1,18 @@
+userId: assol
+groupId: assol
+app_name: smarthome
+smarthome_git: https://github.com/HoriFox/SmartHomeApi.git
+smarthome_host: 127.0.0.1
+smarthome_port: 4050
+smarthome_buffer_size: 65535
+smarthome_logdir: /var/log/smarthome
+smarthome_bindir: /usr/local/bin/smarthome
+smarthome_confdir: /etc/assol
+
+mariadb_proxy_host: 127.0.0.1
+mariadb_proxy_port: 3306
+mariadb_safe_hosts:
+  - "localhost"
+  - "127.0.0.1"
+
+smarthome_setup: no

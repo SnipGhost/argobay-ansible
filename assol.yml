@@ -3,3 +3,8 @@
   roles:
     - name: marusya_skill
       tags: marusya_skill
+
+- hosts: smarthome
+  roles:
+    - name: smarthome
+      tags: smarthome

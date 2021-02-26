@@ -51,7 +51,12 @@ ansible-playbook storage.yml -e "mariadb_secure=yes mariadb_rejoin=yes mariadb_i
 
 To re-setup marusya_skill [ATTENTION!]:
 ```bash
-ansible-playbook assol.yml -e "marusya_skill_setup=yes"
+ansible-playbook assol.yml --tags marusya_skill -e "marusya_skill_setup=yes"
+```
+
+To re-setup smarthome [ATTENTION!]:
+```bash
+ansible-playbook assol.yml --tags smarthome -e "smarthome_setup=yes"
 ```
 
 ## Add new service role checklist

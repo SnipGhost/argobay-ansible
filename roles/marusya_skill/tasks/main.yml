@@ -6,7 +6,7 @@
 
 - name: Clone repo
   git:
-    repo: "{{ app_git }}"
+    repo: "{{ marusya_skill_git }}"
     dest: /usr/local/bin/{{ app_name }}
     clone: yes
     update: yes
@@ -78,7 +78,6 @@
     group: assol
   with_items:
     - { src: app.config.json.j2, dest: skill.config.json }
-    - { src: vocabulary.json.j2, dest: skill.vocabulary.json }
   notify:
     - app_restart
 
@@ -109,7 +108,9 @@
   when: (inventory_hostname == groups.marusya_skill[0])
 
 - name: Revoke all grant for db user
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "DROP USER '{{ item.split('\t')[1] }}'@'{{ item.split('\t')[0] }}';"
+  vars:
+    userhost: "'{{ item.split('\t')[1] }}'@'{{ item.split('\t')[0] }}'"
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "DROP USER {{ userhost }};"
   with_items: "{{ stuff.stdout_lines }}"
   when: (inventory_hostname == groups.marusya_skill[0]) and (item.split('\t')[0] not in mariadb_safe_hosts)
 
@@ -127,6 +128,6 @@
 
 - name: Start and enable uwsgi-app
   systemd:
-    name: uwsgi-app@marusya_skill
+    name: "uwsgi-app@{{ app_name }}"
     state: started
     enabled: yes

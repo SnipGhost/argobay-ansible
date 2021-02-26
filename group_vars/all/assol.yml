@@ -2,8 +2,8 @@
 # Assol project options
 ###############################################################################
 # Marusya skill API
-app_git: https://github.com/HoriFox/MarusyaSkill.git
-marusya_skill_host: 0.0.0.0
+marusya_skill_git: https://github.com/HoriFox/MarusyaSkill.git
+marusya_skill_host: "{{ public_vip_ip }}"
 marusya_skill_port: 5000
 marusya_skill_buffer_size: 65535
 marusya_skill_logdir: /var/log/marusya_skill
@@ -11,5 +11,5 @@ marusya_skill_bindir: /usr/local/bin/marusya_skill
 marusya_skill_confdir: /etc/assol
 ###############################################################################
 # SmartHome API
-smarthome_host: 192.168.8.50
+smarthome_host: "{{ private_vip_ip }}"
 smarthome_port: 4050

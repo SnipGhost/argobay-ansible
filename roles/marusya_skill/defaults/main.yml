@@ -1,7 +1,7 @@
 userId: assol
 groupId: assol
 app_name: marusya_skill
-app_git: https://github.com/SnipGhost/MarusyaSkill.git
+marusya_skill_git: https://github.com/SnipGhost/MarusyaSkill.git
 marusya_skill_host: 0.0.0.0
 marusya_skill_port: 5000
 marusya_skill_buffer_size: 65535

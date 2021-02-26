@@ -1,16 +1,44 @@
 ---
 - name: Install uwsgi
   package:
-    name: uwsgi
+    name: "{{ item }}"
     state: present
   with_items:
     - uwsgi
     - uwsgi-plugin-python3
 
-- name: Start and enable uwsgi-apps
+- name: Creating node_exporter user group
+  group: name="{{groupId}}"
+  become: true
+
+- name: Creating node_exporter user
+  user:
+    name: "{{userId}}"
+    group: "{{groupId}}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{userId}} nologin User"
+    createhome: "no"
+    state: present
+
+- name: Stop and disable uwsgi
   systemd:
     name: uwsgi
+    state: stopped
+    enabled: no
+
+- name: Add uwsgi systemd services
+  copy:
+    src: "files/{{ item }}"
+    dest: "/etc/systemd/system/"
+  with_items:
+    - uwsgi-app@.service
+    - uwsgi-apps.target
+  notify:
+    - reload systemd
+
+- name: Start and enable uwsgi-apps
+  systemd:
+    name: uwsgi-apps.target
     state: started
     enabled: yes
-
-# TODO

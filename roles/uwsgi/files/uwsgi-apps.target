@@ -1,0 +1,5 @@
+[Unit]
+Description=uwgi-apps target allowing to start/stop all uwsgi-app@.service instances at once
+
+[Install]
+WantedBy=multi-user.target

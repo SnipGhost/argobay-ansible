@@ -80,7 +80,10 @@ Re-auth on HAProxy stats page with http://user:pass@host:port/haproxy_stats
 
 ### Renew wildcard cert
 ```bash
-certbot certonly -a certbot-dns-freenom:dns-freenom --certbot-dns-freenom:dns-freenom-credentials /etc/letsencrypt/freenomdns.cfg   --certbot-dns-freenom:dns-freenom-propagation-seconds 600 -d "*.assol.ml" -d "assol.ml"
+certbot certonly -a certbot-dns-freenom:dns-freenom \
+  --certbot-dns-freenom:dns-freenom-credentials /etc/letsencrypt/freenomdns.cfg \
+  --certbot-dns-freenom:dns-freenom-propagation-seconds 600 \
+  -d "*.*.assol.ml" -d "*.assol.ml" -d "assol.ml"
 ```
 
 ### Certbot import error

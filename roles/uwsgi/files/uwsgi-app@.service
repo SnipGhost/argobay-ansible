@@ -1,0 +1,15 @@
+[Unit]
+Description=%i uWSGI app
+After=syslog.target
+PartOf=uwsgi-apps.target
+
+[Service]
+Type=simple
+Restart=always
+KillSignal=SIGINT
+ExecStartPre=/bin/mkdir -p /run/uwsgi
+ExecStartPre=/bin/chown -R uwsgi:uwsgi /run/uwsgi
+ExecStart=/usr/bin/uwsgi \
+	--ini /etc/uwsgi/apps-enabled/%i.ini \
+	--pidfile /run/uwsgi/%i.pid
+ExecReload=/bin/kill -HUP $MAINPID

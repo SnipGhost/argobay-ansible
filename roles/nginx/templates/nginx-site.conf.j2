@@ -67,7 +67,7 @@ server {
 
 {% if item.static_root | default(false) %}
 	location {{ item.static_path | default('static') }} {
-		root      {{ item.static_root }};
+		alias     {{ item.static_root }};
 		index     {{ item.static_index | default('index.html') }};
 		try_files $uri $uri/ =404;
 	}

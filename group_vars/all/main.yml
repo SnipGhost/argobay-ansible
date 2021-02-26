@@ -158,6 +158,16 @@ nginx_sites:
     hosts: monitoring_servers
     whitelist:
       - vpn
+  - name: smarthome
+    server_name: smarhome.assol.ml
+    addr: "{{ private_vip_ip }}"
+    static_root: /usr/local/bin/smarthome/static
+    static_path: /static/
+    local: yes
+    port: 4050
+    hosts: private_hosts
+    whitelist:
+      - vpn
 ###############################################################################
 # Affect Nginx-ACL & iptables
 external_blacklist:

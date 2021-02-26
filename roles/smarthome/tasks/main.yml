@@ -81,6 +81,14 @@
   notify:
     - app_restart
 
+- name: Reset static
+  file:
+    dest: /usr/local/bin/{{ app_name }}/static
+    owner: root
+    group: assol
+    mode: u=rwX,g=rX,o=rX
+    recurse: yes
+
 - name: Create venv and install requirements
   pip: 
     requirements: /usr/local/bin/{{ app_name }}/requirements.txt

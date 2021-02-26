@@ -119,9 +119,10 @@ default_cert_key: /etc/nginx/certs/assol.ml.privkey.pem
 nginx_sites:
   - name: external-dashboard
     server_name: assol.ml
-    addr: 0.0.0.0
+    addr: "{{ public_vip_ip }}"
     static_root: /var/www/html
     static_path: /
+    static_hard: yes
     default: yes
     whitelist:
       - external

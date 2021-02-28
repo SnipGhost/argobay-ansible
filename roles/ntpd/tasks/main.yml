@@ -1,0 +1,29 @@
+---
+- name: Install chronyd
+  yum:
+    name: chrony
+    state: latest
+
+- name: Delete old config
+  file:
+    path: /etc/chronyd.conf
+    state: absent
+  notify:
+    - restart chronyd
+
+- name: Pushed config for chronyd
+  template:
+    src: chronyd.conf
+    dest: /etc/chrony/chrony.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - restart chronyd
+
+- name: Start and enable chronyd
+  systemd:
+    name: chronyd
+    enabled: yes
+    state: started

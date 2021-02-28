@@ -1,6 +1,5 @@
 ## TODO list
 
-- ntpd
 - Aliases for git
 - Backup Grafana data
 - Add nginx_exporter

@@ -1,0 +1,4 @@
+---
+ntpd_servers:
+  - ntp1.mail.ru
+  - ntp2.mail.ru

@@ -43,6 +43,11 @@ dev_vip_ip:        192.168.8.15
 research_vip_id:   6
 research_vip_ip:   192.168.8.16
 ###############################################################################
+# Chronyd options
+ntpd_servers:
+  - ntp1.mail.ru
+  - ntp2.mail.ru
+###############################################################################
 # Local DNS via dnsmasq
 dnsmasq_records_file: /etc/cluster-hosts
 dnsmasq_exporter_enabled: no

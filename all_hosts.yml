@@ -9,6 +9,8 @@
       tags: sshd
     - name: iptables
       tags: iptables
+    - name: ntpd
+      tags: ntpd
     - name: keepalived
       tags: keepalived
     - name: haproxy

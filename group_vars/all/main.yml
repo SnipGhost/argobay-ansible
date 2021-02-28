@@ -220,4 +220,6 @@ external_blacklist:
   - 209.97.134.32/32    # masscan
   - 35.195.161.121/32   # masscan
   - 208.91.111.234/32   # autoprpv
+  - 173.242.104.172/32  # winnti-scanner-victims-will-be-notified
+  - 60.60.141.209/32    # artemis.pokeradio.net
 ###############################################################################

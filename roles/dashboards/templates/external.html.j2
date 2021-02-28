@@ -10,12 +10,10 @@
 			font-weight: bold;
 		}
 		.logo {
-			background-image: url('img/logo.jpg');
+			background-image: url('img/logo.png');
 			background-size: cover;
-			border-radius: 50%;
 			width: 100%;
 			height: 100%;
-			border: 4px solid #66a5dc;
 		}
 		.title {
 			margin-top: 20px;
@@ -51,7 +49,7 @@
 		<div class="title">Проект Ассоль<br>Внешняя панель</div>
 	</div>
 	<div class="footer">
-		<div class="left">Художник иллюстрации: Трубецкая Светлана</div>
+		<div class="left">{{ project_version }}</div>
 		<div class="right">{{ inventory_hostname }}</div>
 	</div>
 </body>

@@ -118,41 +118,6 @@ default_cert_key: /etc/nginx/certs/assol.ml.privkey.pem
 dashboard_path:   /var/www/html/
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
-  - name: external-dashboard
-    server_name: assol.ml
-    addr: "{{ public_vip_ip }}"
-    static_root: "{{ dashboard_path }}external/"
-    static_path: /
-    static_hard: yes
-    default: yes
-    whitelist:
-      - external
-      - vpn
-  - name: internal-dashboard
-    server_name: internal.assol.ml
-    addr: "{{ private_vip_ip }}"
-    static_root: "{{ dashboard_path }}internal/"
-    static_path: /
-    static_hard: yes
-    hosts: private_hosts
-    whitelist:
-      - vpn
-  - name: haproxy
-    server_name: haproxy_{{ inventory_hostname }}.assol.ml
-    addr: "{{ lookup('dig', inventory_hostname) }}"
-    add_path: /haproxy_stats
-    local: yes
-    port: 9000
-    whitelist:
-      - vpn
-  - name: marusya_skill
-    server_name: marusya.assol.ml
-    addr: "{{ public_vip_ip }}"
-    # local: yes # No load balancing, only failover
-    port: 5000
-    hosts: public_hosts
-    whitelist:
-      - marusya
   - name: grafana
     server_name: "{{ grafana_domain }}"
     addr: "{{ public_vip_ip }}"
@@ -162,6 +127,9 @@ nginx_sites:
     whitelist:
       - external
       - vpn
+    display:
+      name: Grafana
+      icon: grafana.svg
   - name: prometheus
     server_name: prometheus.assol.ml
     addr: "{{ monitoring_vip_ip }}"
@@ -170,6 +138,9 @@ nginx_sites:
     hosts: monitoring_servers
     whitelist:
       - vpn
+    display:
+      name: Prometheus
+      icon: prometheus.svg
   - name: smarthome
     server_name: smarthome.assol.ml
     addr: "{{ private_vip_ip }}"
@@ -180,6 +151,59 @@ nginx_sites:
     hosts: private_hosts
     whitelist:
       - vpn
+    display:
+      name: SmartHome
+      icon: smarthome.svg
+  - name: marusya_skill
+    server_name: marusya.assol.ml
+    addr: "{{ public_vip_ip }}"
+    # local: yes # No load balancing, only failover
+    port: 5000
+    hosts: public_hosts
+    whitelist:
+      - marusya
+    display:
+      name: Маруся
+      icon: marusya.png
+  - name: haproxy
+    server_name: haproxy_{{ inventory_hostname }}.assol.ml
+    addr: "{{ lookup('dig', inventory_hostname) }}"
+    add_path: /haproxy_stats
+    local: yes
+    port: 9000
+    whitelist:
+      - vpn
+    display:
+      name: HAProxy
+      icon: haproxy.png
+  - name: external-dashboard
+    server_name: assol.ml
+    addr: "{{ public_vip_ip }}"
+    static_root: "{{ dashboard_path }}external/"
+    static_path: /
+    static_hard: yes
+    default: yes
+    whitelist:
+      - external
+      - vpn
+    display:
+      name: External
+      icon: external.png
+  - name: internal-dashboard
+    server_name: internal.assol.ml
+    addr: "{{ private_vip_ip }}"
+    static_root: "{{ dashboard_path }}internal/"
+    static_path: /
+    static_hard: yes
+    hosts: private_hosts
+    whitelist:
+      - vpn
+###############################################################################
+# Dashboards only
+display_only_sites:
+  - name: Trello
+    addr: https://trello.com/b/m4jVATDW/assolml
+    icon: trello-logo.png
 ###############################################################################
 # Affect Nginx-ACL & iptables
 external_blacklist:

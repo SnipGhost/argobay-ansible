@@ -10,12 +10,10 @@
 			font-weight: bold;
 		}
 		.logo {
-			background-image: url('img/logo.jpg');
+			background-image: url('img/logo.png');
 			background-size: cover;
-			border-radius: 50%;
 			width: 100%;
 			height: 100%;
-			border: 4px solid #66a5dc;
 		}
 		.title {
 			margin-top: 20px;
@@ -43,11 +41,12 @@
 			float: right;
 			color: #7ac86b;
 		}
+		.wrapper {
+			text-align: center;
+		}
 		.content {
-			width: 890px;
+			display: inline-block;
 			margin-top: 20vh;
-			margin-left: auto;
-			margin-right: auto;
 		}
 		.link {
 			display: inline-block;
@@ -55,7 +54,7 @@
 			height: 100px;
 			text-decoration: none;
 			color: #66a5dc;
-			margin: 0 20px;
+			margin: 20px;
 		}
 		.link p {
 			text-align: center;
@@ -79,28 +78,24 @@
 		<div class="logo"></div>
 	</div>
 	<div class="title">Проект Ассоль<br>Внутренняя панель</div>
-	<div class="content">
-		<a class="link" href="https://grafana.assol.ml/">
-			<div style="background-image: url('img/grafana.svg');"></div><p>Grafana</p>
-		</a>
-		<a class="link" href="https://prometheus.assol.ml/">
-			<div style="background-image: url('img/prometheus.svg');"></div><p>Prometheus</p>
-		</a>
-		<a class="link" href="https://marusya.assol.ml/">
-			<div style="background-image: url('img/marusya.png');"></div><p>Маруся</p>
-		</a>
-		<a class="link" href="https://smarthome.assol.ml/">
-			<div style="background-image: url('img/smarthome.svg');"></div><p>SmartHome</p>
-		</a>
-		<a class="link" href="https://haproxy_nino.assol.ml/">
-			<div style="background-image: url('img/haproxy.png');"></div><p>HAProxy</p>
-		</a>
-		<a class="link" href="https://assol.ml/">
-			<div style="background-image: url('img/external.png');"></div><p>External</p>
-		</a>
+	<div class="wrapper">
+		<div class="content">
+{% for site in nginx_sites %}
+{% if site.display is defined %}
+			<a class="link" href="https://{{ site.server_name }}/" target="_blank">
+				<div style="background-image: url('{{ 'img/' + site.display.icon | default('img/logo.png') }}');"></div><p>{{ site.display.name | default(site.name) }}</p>
+			</a>
+{% endif %}
+{% endfor %}
+{% for site in display_only_sites %}
+			<a class="link" href="{{ site.addr }}" target="_blank">
+				<div style="background-image: url('{{ 'img/' + site.icon | default('img/logo.png') }}');"></div><p>{{ site.name }}</p>
+			</a>
+{% endfor %}
+		</div>
 	</div>
 	<div class="footer">
-		<div class="left">v0.1</div>
+		<div class="left">{{ project_version }}</div>
 		<div class="right">{{ inventory_hostname }}</div>
 	</div>
 </body>

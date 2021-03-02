@@ -102,3 +102,17 @@ Install last certbot-nginx from pypi: https://pypi.org/project/certbot-nginx/#fi
 
 ### Naming
 [StarWars example](https://namingschemes.com/Star_Wars)
+
+### GitHub auth/credentials
+Not recommended password auth:
+```
+# File: ~/.netrc
+machine github.com
+login GIHUB_LOGIN
+password GIHUB_PASSOWORD
+```
+
+Import ssh-key to ssh-agent (see `ssh-add -L`) and set ssh-origin
+```bash
+git remote set-url origin git@github.com:SnipGhost/assol-ansible.git 
+```

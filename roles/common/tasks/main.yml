@@ -1,4 +1,9 @@
 ---
+- name: Create hosts file
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+
 - name: Update APT cache
   apt:
     update_cache: yes

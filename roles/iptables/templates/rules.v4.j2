@@ -51,11 +51,13 @@
 {% endif %}
 
 {% if inventory_hostname in groups['marusya_skill'] %}
--A INPUT -p tcp -m multiport --dports {{ marusya_skill_port | default(5000) }},8080 -m comment --comment "Marusya skill" -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ marusya_skill_port | default(5000) }} -m comment --comment "Marusya skill" -j incoming-local
+-A INPUT -p tcp -m tcp --dport 8080 -m comment --comment "Marusya skill DEV" -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['smarthome'] %}
 -A INPUT -p tcp -m tcp --dport {{ smarthome_port | default(4050) }} -m comment --comment "SmartHome API" -j incoming-local
+-A INPUT -p tcp -m tcp --dport 4060 -m comment --comment "SmartHome API DEV" -j incoming-local
 {% endif %}
 
 -A INPUT -p tcp -m tcp --dport 9100 -m comment --comment node_exporter -j incoming-local

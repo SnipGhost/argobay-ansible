@@ -193,6 +193,7 @@ nginx_sites:
     static_root: "{{ dashboard_path }}external/"
     static_path: /
     static_hard: yes
+    ignore_not_found: yes
     whitelist:
       - external
       - vpn

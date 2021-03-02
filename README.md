@@ -98,7 +98,7 @@ certbot certonly -a certbot-dns-freenom:dns-freenom \
 Install last certbot-nginx from pypi: https://pypi.org/project/certbot-nginx/#files
 
 ### Marusya skill tester
-https://skill-tester.marusia.mail.ru
+[Skill tester](https://skill-tester.marusia.mail.ru)
 
 ### Naming
-https://namingschemes.com/Star_Wars
+[StarWars example](https://namingschemes.com/Star_Wars)

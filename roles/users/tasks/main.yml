@@ -15,6 +15,13 @@
     append: yes
     state: present
 
+- name: Add public keys to authorized_key for ansible
+  authorized_key:
+    user: "{{ ansible_user }}"
+    state: present
+    key: "{{ item.key }}"
+  with_items: "{{ admins }}"
+
 - name: Edit sudoers file
   copy:
     src: sudoers
@@ -82,6 +89,16 @@
   copy:
     src: vimrc
     dest: "/home/{{ item.name }}/.vimrc"
+    backup: yes
+    mode: 0644
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  with_items: "{{ admins }}"
+
+- name: Write .gitconfig for admin users
+  template:
+    src: gitconfig.j2
+    dest: "/home/{{ item.name }}/.gitconfig"
     backup: yes
     mode: 0644
     owner: "{{ item.name }}"

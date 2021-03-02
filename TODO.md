@@ -1,10 +1,10 @@
 ## TODO list
 
 - Add DEV
+- Ensure logrotate
 - Add deb-package repo
 - Add servers dashboard
-- Collect logs to one server maybe rsyslog
-- Aliases for git
+- Collect logs to one server with rsyslog
 - Backup Grafana data
 - Add nginx_exporter
 - Fix 0.7 packet/sec drop on eth0

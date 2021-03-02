@@ -5,10 +5,13 @@ admins:
   - name: mak
     color: "01;33m"
     comment: "Mikhail Kucherenko"
+    email: "makucherenko@list.ru"
     key: "https://github.com/snipghost.keys"
   - name: horifox
     color: "01;32m"
     comment: "Tagir Khanmurzin"
+    email: "lhorifoxl@gmail.com"
+    git_name: HoriFox
     key: "https://github.com/horifox.keys"
 ###############################################################################
 # Path to SSD-disks for all disk-based services

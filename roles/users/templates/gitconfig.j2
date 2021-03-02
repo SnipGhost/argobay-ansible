@@ -1,0 +1,18 @@
+[color]
+        ui = true
+
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[user]
+	name = {{ item.git_name | default(item.comment) }}
+	email = {{ item.email }}
+[alias]
+	hist = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	st = status
+	co = checkout
+	ci = commit
+	br = branch
+	type = cat-file -t
+	dump = cat-file -p

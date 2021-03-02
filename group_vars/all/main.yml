@@ -65,6 +65,7 @@ prometheus_jobs:
   - { name: node, port: 9100, group: all }
   - { name: haproxy, port: 9101, group: all }
   - { name: mysql, port: 9104, group: db_servers }
+  - { name: nginx, port: 9113, group: web_servers }
   - { name: redis, port: 9121, group: redis_servers }
   - { name: memcached, port: 9150, group: memcached_servers }
   # - { name: dnsmasq, port: 9153, group: dns_servers }
@@ -77,6 +78,7 @@ mysqld_exporter_version: 0.12.1
 memcached_exporter_version: 0.8.0
 haproxy_exporter_version: 0.12.0
 redis_exporter_version: 1.17.1
+nginx_exporter_scrape_uri: http://127.0.0.1/stub_status
 ###############################################################################
 # Grafana
 grafana_domain: grafana.assol.ml
@@ -121,9 +123,10 @@ haproxy_stat_host: 0.0.0.0
 haproxy_stat_port: 9000
 ###############################################################################
 # NGINX options
-default_cert:     /etc/nginx/certs/assol.ml.fullchain.pem
-default_cert_key: /etc/nginx/certs/assol.ml.privkey.pem
-dashboard_path:   /var/www/html/
+default_cert:         /etc/nginx/certs/assol.ml.fullchain.pem
+default_cert_key:     /etc/nginx/certs/assol.ml.privkey.pem
+dashboard_path:       /var/www/html/
+nginx_enable_default: yes
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
   - name: grafana
@@ -190,7 +193,6 @@ nginx_sites:
     static_root: "{{ dashboard_path }}external/"
     static_path: /
     static_hard: yes
-    default: yes
     whitelist:
       - external
       - vpn

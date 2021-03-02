@@ -70,6 +70,10 @@
 -A INPUT -p tcp -m tcp --dport 6380 -m comment --comment redis_proxy -j incoming-local
 {% endif %}
 
+{% if inventory_hostname in groups['web_servers'] %}
+-A INPUT -p tcp -m tcp --dport 9113 -m comment --comment "nginx_exporter" -j incoming-local
+{% endif %}
+
 -A INPUT -p tcp -m multiport --dports 80,443 -m comment --comment Web -j {% if external_connections | default('false') | bool %}incoming-external{% else %}incoming-local-http{% endif %}{{ "" }}
 
 -A OUTPUT -o lo -m comment --comment "Accept all on loopback" -j ACCEPT

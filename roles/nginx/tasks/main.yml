@@ -54,11 +54,6 @@
     mode: 0644
   notify: nginx_reload
 
-- name: Disable nginx default site
-  file:
-    dest: /etc/nginx/sites-enabled/default
-    state: absent
-
 - name: Configure nginx whitelist/blacklist
   template:
     src: "{{ item }}"
@@ -105,7 +100,7 @@
 
 - name: Aggregate valid sites
   set_fact:
-    valid: "{{ valid | default([]) + [item.name] }}"
+    valid: "{{ valid | default(['default']) + [item.name] }}"
   with_items: "{{ nginx_sites }}"
   when: inventory_hostname in groups[item.hosts | default('web_servers')] 
 
@@ -114,6 +109,24 @@
     dest: /etc/nginx/sites-enabled/{{ item }}
     state: absent
   with_items: "{{ all_contents.stdout_lines | difference(valid) }}"
+  notify: nginx_reload
+
+- name: Disable nginx default site
+  file:
+    dest: /etc/nginx/sites-enabled/default
+    state: absent
+  when: not nginx_enable_default | default(false) | bool
+  notify: nginx_reload
+
+- name: Enable nginx default site
+  file:
+    src: /etc/nginx/sites-available/default
+    dest: /etc/nginx/sites-enabled/default
+    owner: root
+    group: root
+    mode: 0644
+    state: link
+  when: nginx_enable_default | default(false) | bool
   notify: nginx_reload
 
 - meta: flush_handlers

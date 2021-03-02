@@ -3,6 +3,8 @@
   roles:
     - name: nginx
       tags: nginx
+    - name: nginx_exporter
+      tags: nginx_exporter
     - name: dashboards
       tags: dashboards
     - name: uwsgi

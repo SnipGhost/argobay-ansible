@@ -1,3 +1,5 @@
-allow 188.244.6.41/32; # Local NAT
-allow 192.168.8.0/24;  # Local
+allow 127.0.0.1/32;    # Local loopback
+allow 172.0.1.1/32;    # Local loopback
+allow 192.168.8.0/24;  # LAN
+allow 188.244.6.41/32; # Maryno.net NAT
 deny all;

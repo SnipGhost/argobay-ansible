@@ -70,7 +70,7 @@ server {
 		{% if item.static_hard | default(false) | bool %}root{% else %}alias{% endif %}     {{ item.static_root }};
 		index     {{ item.static_index | default('index.html') }};
 {% if item.ignore_not_found | default(false) | bool %}
-		try_files '' /index.html =404;
+		try_files $uri $uri/ {{ item.not_found | default('/index.html') }} =404;
 {% else %}
 		try_files $uri $uri/ =404;
 {% endif %}

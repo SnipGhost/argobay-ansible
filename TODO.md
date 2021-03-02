@@ -1,5 +1,9 @@
 ## TODO list
 
+- Add DEV
+- Add deb-package repo
+- Add servers dashboard
+- Collect logs to one server maybe rsyslog
 - Aliases for git
 - Backup Grafana data
 - Add nginx_exporter

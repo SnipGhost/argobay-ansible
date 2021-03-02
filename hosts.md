@@ -65,9 +65,6 @@
 - HAProxy
 - Ceph
 
-<!-- ## Raphtalia
-- rsyncd -->
-
 ---
 
 # DEV

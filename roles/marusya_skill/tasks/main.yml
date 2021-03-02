@@ -76,6 +76,7 @@
     mode: 0660
     owner: assol
     group: assol
+    backup: yes
   with_items:
     - { src: app.config.json.j2, dest: skill.config.json }
   notify:
@@ -89,6 +90,7 @@
     owner: assol
     group: assol
     remote_src: yes
+    backup: yes
   notify:
     - app_restart
 

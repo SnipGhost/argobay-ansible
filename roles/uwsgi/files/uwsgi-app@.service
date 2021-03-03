@@ -6,6 +6,8 @@ PartOf=uwsgi-apps.target
 [Service]
 Type=simple
 Restart=always
+StartLimitBurst=3
+StartLimitIntervalSec=30
 KillSignal=SIGINT
 ExecStartPre=/bin/mkdir -p /run/uwsgi
 ExecStartPre=/bin/chown -R uwsgi:uwsgi /run/uwsgi

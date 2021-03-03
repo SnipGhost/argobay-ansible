@@ -1,6 +1,7 @@
 ## TODO list
 
 - Add DEV
+- Swagger
 - Ensure logrotate
 - Add deb-package repo
 - Add servers dashboard

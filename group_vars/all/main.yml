@@ -228,4 +228,15 @@ external_blacklist:
   - 208.91.111.234/32   # autoprpv
   - 173.242.104.172/32  # winnti-scanner-victims-will-be-notified
   - 60.60.141.209/32    # artemis.pokeradio.net
+  - 209.141.60.60/32    # artemis.pokeradio.net
+  - 52.42.79.222/32     # try wordpress/wp-login
+  - 222.186.136.150/32  # unknown
+  - 192.241.218.199/32  # try /owa/auth/logon.aspx
+  - 138.68.249.116/32   # strange request
+  - 139.162.145.250/32  # strange request
+  - 192.241.228.12/32   # strange request
+  - 193.118.53.210/32   # strange request
+  - 201.245.168.163/32  # strange request
+  - 39.96.137.146/32    # strange request
+  - 39.96.139.120/32    # strange request
 ###############################################################################

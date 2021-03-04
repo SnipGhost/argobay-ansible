@@ -20,7 +20,7 @@
   copy:
     src: files/internal/
     dest: "{{ dashboard_path }}internal"
-  when: inventory_hostname in groups['private_hosts']
+  when: inventory_hostname in groups[private_group]
 
 - name: Create index.html for external
   template:
@@ -37,4 +37,4 @@
     mode: 0664
     owner: root
     group: root
-  when: inventory_hostname in groups['private_hosts']
+  when: inventory_hostname in groups[private_group]

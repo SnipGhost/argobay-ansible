@@ -34,7 +34,7 @@
 
 - name: Push main config
   vars:
-    server_names: "{{ groups['db_servers'] }}"
+    server_names: "{{ groups[db_group] }}"
   template:
     src: cluster.cnf
     dest: /etc/mysql/mariadb.conf.d/90-cluster.cnf
@@ -123,6 +123,7 @@
   with_items:
     - "SHOW STATUS LIKE 'wsrep_cluster_size';"
   register: cluster_status
+  check_mode: no
   changed_when: False
 
 - name: Print cluster status

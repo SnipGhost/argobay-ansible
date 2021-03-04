@@ -1,0 +1,26 @@
+[prod_db_servers]
+asuna db_master=yes
+ichika
+
+[prod_memcached_servers]
+asuna
+nino
+
+[prod_redis_servers]
+asuna redis_master=yes
+ichika
+
+[prod_web_servers]
+asuna
+ichika
+nino
+miku
+yotsuba
+
+[prod_marusya_skill]
+nino
+yotsuba
+
+[prod_smarthome]
+asuna
+miku

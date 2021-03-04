@@ -74,7 +74,7 @@
 
 - name: Configure nginx main sites
   vars:
-    server_names: "{{ groups['web_servers'] }}"
+    server_names: "{{ groups[web_group] }}"
   template:
     src: nginx-site.conf.j2
     dest: /etc/nginx/sites-available/{{ item.name }}
@@ -90,25 +90,28 @@
     mode: 0644
     state: link
   with_items: "{{ nginx_sites }}"
-  when: inventory_hostname in groups[item.hosts | default('web_servers')]
+  when: inventory_hostname in groups[item.hosts | default(web_group)]
   notify: nginx_reload
 
 - name: Find all enabled sites
   shell: ls -1 /etc/nginx/sites-enabled/
   register: all_contents
   changed_when: False
+  check_mode: no
 
 - name: Aggregate valid sites
   set_fact:
     valid: "{{ valid | default(['default']) + [item.name] }}"
   with_items: "{{ nginx_sites }}"
-  when: inventory_hostname in groups[item.hosts | default('web_servers')] 
+  check_mode: no
+  when: inventory_hostname in groups[item.hosts | default(web_group)] 
 
 - name: Disable wrong sites
   file:
     dest: /etc/nginx/sites-enabled/{{ item }}
     state: absent
-  with_items: "{{ all_contents.stdout_lines | difference(valid) }}"
+  with_items: "{{ all_contents['stdout_lines'] | difference(valid) }}"
+  when: not ansible_check_mode
   notify: nginx_reload
 
 - name: Disable nginx default site

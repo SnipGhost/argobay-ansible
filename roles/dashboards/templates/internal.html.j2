@@ -87,11 +87,13 @@
 			</a>
 {% endif %}
 {% endfor %}
+{% if display_only_sites is defined %}
 {% for site in display_only_sites %}
 			<a class="link" href="{{ site.addr }}" target="_blank">
 				<div style="background-image: url('{{ '/img/' + site.icon | default('/img/logo.png') }}');"></div><p>{{ site.name }}</p>
 			</a>
 {% endfor %}
+{% endif %}
 		</div>
 	</div>
 	<div class="footer">

@@ -28,6 +28,7 @@
   stat:
     path: /etc/systemd/system/fan-driver.service
   register: stat_result
+  check_mode: no
   when: not (has_fan | default('false') | bool)
 
 - name: Stop RPi-FanDriver service

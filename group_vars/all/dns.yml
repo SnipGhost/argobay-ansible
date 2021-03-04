@@ -7,6 +7,7 @@ dnsmasq_hosts:
   - name: public
     rec:
       - { ip: "{{public_vip_ip}}", type: i }
+      - { ip: "{{dev_public_vip_ip}}", type: dev.i }
       
   - name: service 
     rec:
@@ -15,17 +16,18 @@ dnsmasq_hosts:
   - name: private
     rec:
       - { ip: "{{private_vip_ip}}", type: i }
+      - { ip: "{{dev_private_vip_ip}}", type: dev.i }
 
   - name: monitoring
     rec:
       - { ip: "{{monitoring_vip_ip}}", type: i }
 
-  - name: dev 
-    rec:
-      - { ip: "{{dev_vip_ip}}", type: i }
-
   #========================================================
   # Internal subdomain records
+
+  - name: dev
+    rec:
+      - { ip: "{{dev_public_vip_ip}}", type: assol.ml }
 
   - name: grafana
     rec:
@@ -38,14 +40,17 @@ dnsmasq_hosts:
   - name: smarthome
     rec:
       - { ip: "{{private_vip_ip}}", type: assol.ml }
+      - { ip: "{{dev_private_vip_ip}}", type: dev.assol.ml }
 
   - name: marusya
     rec:
       - { ip: "{{public_vip_ip}}", type: assol.ml }
+      - { ip: "{{dev_public_vip_ip}}", type: dev.assol.ml }
   
   - name: internal
     rec:
       - { ip: "{{private_vip_ip}}", type: assol.ml }
+      - { ip: "{{dev_private_vip_ip}}", type: dev.assol.ml }
 
   #========================================================
   # IoT devices

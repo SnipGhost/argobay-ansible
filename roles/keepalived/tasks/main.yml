@@ -17,6 +17,7 @@
   stat:
     path: /etc/keepalived/keepalived.conf
   register: stat_result
+  check_mode: no
   when: keepalived_vips is not defined
 
 - name: Stop keepalived service

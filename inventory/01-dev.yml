@@ -1,0 +1,18 @@
+[dev_db_servers]
+itsuki db_master=yes db_replication=no
+
+[dev_memcached_servers]
+rikka
+
+[dev_redis_servers]
+rikka redis_master=yes
+
+[dev_web_servers]
+itsuki
+rikka
+
+[dev_marusya_skill]
+rikka
+
+[dev_smarthome]
+itsuki

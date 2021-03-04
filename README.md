@@ -32,9 +32,14 @@ passwords:
 
 ## Use-cases
 
-To update all components on production:
+To update all components on DEV:
 ```bash
-ansible-playbook setup.yml
+ansible-playbook setup.yml -l dev
+```
+
+To update all components on production [ATTENTION!]:
+```bash
+ansible-playbook setup.yml -l prod
 ```
 
 To change passwords run:
@@ -49,17 +54,17 @@ ansible-playbook provision.yml -e "HOSTNAME=itsuki" -i 192.168.8.184,
 
 Install mariadb first time [ATTENTION!]:
 ```bash
-ansible-playbook storage.yml -e "mariadb_secure=yes mariadb_rejoin=yes mariadb_init=yes"
+ansible-playbook storage.yml -e "mariadb_secure=yes mariadb_rejoin=yes mariadb_init=yes" -l dev
 ```
 
 To re-setup marusya_skill [ATTENTION!]:
 ```bash
-ansible-playbook assol.yml --tags marusya_skill -e "marusya_skill_setup=yes"
+ansible-playbook assol.yml --tags marusya_skill -e "marusya_skill_setup=yes" -l dev
 ```
 
 To re-setup smarthome [ATTENTION!]:
 ```bash
-ansible-playbook assol.yml --tags smarthome -e "smarthome_setup=yes"
+ansible-playbook assol.yml --tags smarthome -e "smarthome_setup=yes" -l dev
 ```
 
 ## Add new service role checklist
@@ -91,7 +96,11 @@ Re-auth on HAProxy stats page with http://user:pass@host:port/haproxy_stats
 certbot certonly -a certbot-dns-freenom:dns-freenom \
   --certbot-dns-freenom:dns-freenom-credentials /etc/letsencrypt/freenomdns.cfg \
   --certbot-dns-freenom:dns-freenom-propagation-seconds 600 \
-  -d "*.*.assol.ml" -d "*.assol.ml" -d "assol.ml"
+  -d "*.assol.ml" -d "assol.ml"
+certbot certonly -a certbot-dns-freenom:dns-freenom \
+  --certbot-dns-freenom:dns-freenom-credentials /etc/letsencrypt/freenomdns.cfg \
+  --certbot-dns-freenom:dns-freenom-propagation-seconds 600 \
+  -d "*.dev.assol.ml" -d "dev.assol.ml"
 ```
 
 ### Certbot import error

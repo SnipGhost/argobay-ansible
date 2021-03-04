@@ -1,4 +1,4 @@
-secret.yml
+secret*.yml
 *.pyc
 *.pem
 *.key

@@ -1,0 +1,138 @@
+###############################################################################
+# Main options for prod-all only
+###############################################################################
+mariadb_cluster_name: GaleraCluster
+mariadb_bind_address: 0.0.0.0
+mariadb_max_conn:     2048
+mariadb_pool_size:    122M
+mariadb_gcache_size:  200M
+mariadb_gcache_page:  200M
+mariadb_datadir:      /mnt/data/mysql
+mariadb_socket:       /var/run/mysqld/mysqld.sock
+mariadb_safe_hosts:
+  - "localhost"
+  - "127.0.0.1"
+  - "192.168.8.5_" 
+# MariaDB proxy options
+mariadb_proxy_port:       3307
+mariadb_proxy_port_ro:    3308
+mariadb_proxy_check_port: 9200
+mariadb_l7_check:         no
+###############################################################################
+# Memcached
+memcached_user:      memcached
+memcached_port:      11211
+memcached_max_conn:  1024
+memcached_cachesize: 128
+# Memcached proxy options
+memcached_proxy_port: 11311
+###############################################################################
+# Redis
+redis_bind_addr: 0.0.0.0
+redis_bind_port: 6379
+redis_db_count:  5
+# Redis proxy options
+redis_proxy_port: 6380
+###############################################################################
+# HAProxy
+haproxy_bind_ip:   0.0.0.0
+haproxy_stat_uri:  /haproxy_stats
+haproxy_stat_host: 0.0.0.0
+haproxy_stat_port: 9000
+###############################################################################
+# NGINX options
+default_cert:         /etc/nginx/certs/assol.ml.fullchain.pem
+default_cert_key:     /etc/nginx/certs/assol.ml.privkey.pem
+dashboard_path:       /var/www/html/
+nginx_enable_default: yes
+# Get only names: nginx_sites | map(attribute='name') | flatten
+nginx_sites:
+  - name: grafana
+    server_name: "{{ grafana_domain }}"
+    addr: "{{ public_vip_ip }}"
+    group: monitoring_servers
+    port: 3000
+    hosts: public_hosts
+    whitelist:
+      - external
+      - vpn
+    display:
+      name: Grafana
+      icon: grafana.svg
+  - name: prometheus
+    server_name: prometheus.assol.ml
+    addr: "{{ monitoring_vip_ip }}"
+    group: monitoring_servers
+    port: 9090
+    hosts: monitoring_servers
+    whitelist:
+      - vpn
+    display:
+      name: Prometheus
+      icon: prometheus.svg
+  - name: smarthome
+    server_name: smarthome.assol.ml
+    addr: "{{ private_vip_ip }}"
+    group: "{{ smarthome_group }}"
+    static_root: /usr/local/bin/smarthome/static
+    static_path: /static
+    # local: yes # No load balancing, only failover
+    port: "{{ smarthome_port }}"
+    hosts: private_hosts
+    whitelist:
+      - vpn
+    display:
+      name: SmartHome
+      icon: smarthome.svg
+  - name: marusya_skill
+    server_name: marusya.assol.ml
+    addr: "{{ public_vip_ip }}"
+    group: "{{ marusya_skill_group }}"
+    # local: yes # No load balancing, only failover
+    port: "{{ marusya_skill_port }}"
+    hosts: public_hosts
+    whitelist:
+      - marusya
+    display:
+      name: Маруся
+      icon: marusya.png
+  - name: haproxy
+    server_name: haproxy_{{ inventory_hostname }}.assol.ml
+    addr: "{{ lookup('dig', inventory_hostname) }}"
+    add_path: /haproxy_stats
+    local: yes
+    port: "{{ haproxy_stat_port }}"
+    whitelist:
+      - vpn
+    display:
+      name: HAProxy
+      icon: haproxy.png
+  - name: external-dashboard
+    server_name: assol.ml
+    addr: "{{ public_vip_ip }}"
+    static_root: "{{ dashboard_path }}external/"
+    static_path: /
+    static_hard: yes
+    ignore_not_found: yes
+    whitelist:
+      - external
+      - vpn
+    display:
+      name: External
+      icon: external.png
+  - name: internal-dashboard
+    server_name: internal.assol.ml
+    addr: "{{ private_vip_ip }}"
+    static_root: "{{ dashboard_path }}internal/"
+    static_path: /
+    static_hard: yes
+    hosts: private_hosts
+    whitelist:
+      - vpn
+###############################################################################
+# Dashboards only
+display_only_sites:
+  - name: Trello
+    addr: https://trello.com/b/m4jVATDW/assolml
+    icon: trello-logo.png
+###############################################################################

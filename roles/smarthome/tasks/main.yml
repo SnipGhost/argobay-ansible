@@ -76,6 +76,7 @@
     mode: 0660
     owner: assol
     group: assol
+    backup: yes
   with_items:
     - { src: app.config.json.j2, dest: api.config.json }
   notify:
@@ -102,24 +103,24 @@
   register: stuff
   check_mode: no
   changed_when: False
-  when: (inventory_hostname == groups.smarthome[0])
+  when: (inventory_hostname == groups[smarthome_group][0])
 
 - name: Revoke all grant for db user
   vars:
     userhost: "'{{ item.split('\t')[1] }}'@'{{ item.split('\t')[0] }}'"
   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "DROP USER {{ userhost }};"
   with_items: "{{ stuff.stdout_lines }}"
-  when: (inventory_hostname == groups.smarthome[0]) and (item.split('\t')[0] not in mariadb_safe_hosts)
+  when: (inventory_hostname == groups[smarthome_group][0]) and (item.split('\t')[0] not in mariadb_safe_hosts)
 
 - name: Add db user to mysql
   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "GRANT SELECT, INSERT, DELETE, UPDATE ON {{ smarthome_db_name }}.* TO '{{ smarthome_db_user }}'@'{{ item }}' IDENTIFIED BY '{{ smarthome_db_pass }}';"
   with_items: "{{ mariadb_safe_hosts }}"
   changed_when: False
-  when: (inventory_hostname == groups.smarthome[0])
+  when: (inventory_hostname == groups[smarthome_group][0])
 
 - name: Re-create db
   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < /usr/local/bin/{{ app_name }}/setup/marusyatech.sql 
-  when: (inventory_hostname == groups.smarthome[0]) and (smarthome_setup | default(false) | bool)
+  when: (inventory_hostname == groups[smarthome_group][0]) and (smarthome_setup | default(false) | bool)
 
 - meta: flush_handlers
 

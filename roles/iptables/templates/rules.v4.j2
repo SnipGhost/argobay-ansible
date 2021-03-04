@@ -15,9 +15,14 @@
 -A INPUT -j valid-states
 -A INPUT -p tcp -m tcp --dport 22 -j incoming-ssh
 
+-A INPUT -p tcp -m multiport --dports 80,443 -m comment --comment Web -j {% if external_connections | default('false') | bool %}incoming-external{% else %}incoming-local-http{% endif %}{{ "" }}
+
 -A INPUT -p vrrp -m comment --comment VRRP -j incoming-local
 -A INPUT -p icmp -m comment --comment ICMP -j incoming-local
 
+{% if inventory_hostname in groups['dev'] %}
+-A INPUT -m conntrack --ctstate RELATED,NEW,ESTABLISHED -j incoming-local
+{% else %}
 {% if inventory_hostname in groups['dns_servers'] %}
 -A INPUT -p udp -m udp --dport 53 -m comment --comment DNS -j incoming-local
 {% if dnsmasq_exporter_enabled | default(false) | bool %}
@@ -73,8 +78,7 @@
 {% if inventory_hostname in groups['web_servers'] %}
 -A INPUT -p tcp -m tcp --dport 9113 -m comment --comment "nginx_exporter" -j incoming-local
 {% endif %}
-
--A INPUT -p tcp -m multiport --dports 80,443 -m comment --comment Web -j {% if external_connections | default('false') | bool %}incoming-external{% else %}incoming-local-http{% endif %}{{ "" }}
+{% endif %}
 
 -A OUTPUT -o lo -m comment --comment "Accept all on loopback" -j ACCEPT
 -A OUTPUT -j valid-states

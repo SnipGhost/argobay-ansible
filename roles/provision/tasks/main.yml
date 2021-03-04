@@ -32,6 +32,7 @@
 - name: Get hostname
   shell: "raspi-config nonint get_hostname"
   register: pi_hostname
+  check_mode: no
   changed_when: False
 
 - name: Change hostname

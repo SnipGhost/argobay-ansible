@@ -87,7 +87,7 @@ nginx_sites:
       name: HAProxy
       icon: haproxy.png
   - name: external-dashboard
-    server_name: external.dev-assol.ml
+    server_name: dev-assol.ml
     addr: "{{ dev_public_vip_ip }}"
     static_root: "{{ dashboard_path }}external/"
     static_path: /

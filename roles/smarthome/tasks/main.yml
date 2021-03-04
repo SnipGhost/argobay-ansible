@@ -119,7 +119,7 @@
   when: (inventory_hostname == groups[smarthome_group][0])
 
 - name: Re-create db
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < /usr/local/bin/{{ app_name }}/setup/marusyatech.sql 
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < /usr/local/bin/{{ app_name }}/setup/smarthome.sql 
   when: (inventory_hostname == groups[smarthome_group][0]) and (smarthome_setup | default(false) | bool)
 
 - meta: flush_handlers

@@ -1,11 +1,11 @@
 ## TODO list
 
-- Add DEV
 - Swagger
 - Ensure logrotate
 - Add deb-package repo
 - Add servers dashboard
 - Collect logs to one server with rsyslog
+- Backup DBs from cron
 - Backup Grafana data
 - Fix 0.7 packet/sec drop on eth0
 - Add password to Redis

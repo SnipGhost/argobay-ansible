@@ -35,6 +35,12 @@
 -A INPUT -p tcp -m tcp --dport 3000 -m comment --comment Grafana -j incoming-local
 {% endif %}
 
+{% for host in groups['dev'] %}
+-A INPUT -s {{ dev_public_vip_ip }}/32 -j DROP
+-A INPUT -s {{ dev_private_vip_ip }}/32 -j DROP
+-A INPUT -s {{ lookup('dig', host + '.local') }}/32 -j DROP
+{% endfor %}
+
 {% if inventory_hostname in groups['memcached_servers'] %}
 -A INPUT -p tcp -m tcp --dport 11211 -m comment --comment Memcached -j incoming-local
 -A INPUT -p tcp -m tcp --dport 9150 -m comment --comment memcached_exporter -j incoming-local

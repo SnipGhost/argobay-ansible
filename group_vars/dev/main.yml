@@ -41,14 +41,14 @@ haproxy_stat_host: 0.0.0.0
 haproxy_stat_port: 9000
 ###############################################################################
 # NGINX options
-default_cert:         /etc/nginx/certs/assol.ml.fullchain.pem
-default_cert_key:     /etc/nginx/certs/assol.ml.privkey.pem
+default_cert:         /etc/nginx/certs/dev-assol.ml.fullchain.pem
+default_cert_key:     /etc/nginx/certs/dev-assol.ml.privkey.pem
 dashboard_path:       /var/www/html/
 nginx_enable_default: yes
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
   - name: smarthome
-    server_name: smarthome.dev.assol.ml
+    server_name: smarthome.dev-assol.ml
     addr: "{{ dev_private_vip_ip }}"
     group: "{{ smarthome_group }}"
     static_root: /usr/local/bin/smarthome/static
@@ -62,7 +62,7 @@ nginx_sites:
       name: SmartHome
       icon: smarthome.svg
   - name: marusya_skill
-    server_name: marusya.dev.assol.ml
+    server_name: marusya.dev-assol.ml
     addr: "{{ dev_public_vip_ip }}"
     group: "{{ marusya_skill_group }}"
     # local: yes # No load balancing, only failover
@@ -79,13 +79,15 @@ nginx_sites:
     add_path: /haproxy_stats
     local: yes
     port: "{{ haproxy_stat_port }}"
+    ssl_certificate: /etc/nginx/certs/assol.ml.fullchain.pem
+    ssl_certificate_key: /etc/nginx/certs/assol.ml.privkey.pem
     whitelist:
       - vpn
     display:
       name: HAProxy
       icon: haproxy.png
   - name: external-dashboard
-    server_name: dev.assol.ml
+    server_name: external.dev-assol.ml
     addr: "{{ dev_public_vip_ip }}"
     static_root: "{{ dashboard_path }}external/"
     static_path: /
@@ -97,7 +99,7 @@ nginx_sites:
       name: External
       icon: external.png
   - name: internal-dashboard
-    server_name: internal.dev.assol.ml
+    server_name: internal.dev-assol.ml
     addr: "{{ dev_private_vip_ip }}"
     static_root: "{{ dashboard_path }}internal/"
     static_path: /

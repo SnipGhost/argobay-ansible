@@ -92,15 +92,21 @@ ansible-playbook assol.yml --tags smarthome -e "smarthome_setup=yes" -l dev
 Re-auth on HAProxy stats page with http://user:pass@host:port/haproxy_stats
 
 ### Renew wildcard cert
+PROD:
 ```bash
+# @nino
 certbot certonly -a certbot-dns-freenom:dns-freenom \
   --certbot-dns-freenom:dns-freenom-credentials /etc/letsencrypt/freenomdns.cfg \
   --certbot-dns-freenom:dns-freenom-propagation-seconds 600 \
   -d "*.assol.ml" -d "assol.ml"
+```
+DEV:
+```bash
+# @rikka
 certbot certonly -a certbot-dns-freenom:dns-freenom \
   --certbot-dns-freenom:dns-freenom-credentials /etc/letsencrypt/freenomdns.cfg \
   --certbot-dns-freenom:dns-freenom-propagation-seconds 600 \
-  -d "*.dev.assol.ml" -d "dev.assol.ml"
+  -d "*.dev-assol.ml" -d "dev-assol.ml"
 ```
 
 ### Certbot import error

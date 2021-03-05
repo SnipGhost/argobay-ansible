@@ -118,9 +118,6 @@ nginx_sites:
     whitelist:
       - external
       - vpn
-    display:
-      name: External
-      icon: external.png
   - name: internal-dashboard
     server_name: internal.assol.ml
     addr: "{{ private_vip_ip }}"
@@ -133,6 +130,9 @@ nginx_sites:
 ###############################################################################
 # Dashboards only
 display_only_sites:
+  - name: Кластер
+    addr: https://internal.assol.ml/cluster/
+    icon: cluster.svg
   - name: Trello
     addr: https://trello.com/b/m4jVATDW/assolml
     icon: trello-logo.png

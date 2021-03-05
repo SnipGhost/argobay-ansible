@@ -44,6 +44,7 @@ haproxy_stat_port: 9000
 default_cert:         /etc/nginx/certs/dev-assol.ml.fullchain.pem
 default_cert_key:     /etc/nginx/certs/dev-assol.ml.privkey.pem
 dashboard_path:       /var/www/html/
+dashboard_git:        git@github.com:SnipGhost/cluster-page.git
 nginx_enable_default: yes
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:

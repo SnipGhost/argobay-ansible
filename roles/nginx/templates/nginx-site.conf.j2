@@ -52,6 +52,10 @@ server {
 
 	client_max_body_size {{ item.client_max_body_size | default('100M') }};
 
+	location ~ /\. {
+		deny all;
+	}
+
 {% if item.port is defined %}
 	location / {
 		proxy_pass         http://{{ item.name }}{% if item.add_path | default(false) %}{{ item.add_path }}{% endif %};

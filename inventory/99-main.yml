@@ -17,6 +17,7 @@ ichika
 nino
 miku
 yotsuba
+# yukinon
 
 [prod:vars]
 private_group=private_hosts
@@ -31,6 +32,7 @@ smarthome_group=prod_smarthome
 [dev]
 itsuki
 rikka
+# metroid
 
 [dev:vars]
 private_group=dev_private_hosts

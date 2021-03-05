@@ -6,7 +6,7 @@ project_version: v0.2
 # Marusya skill API
 marusya_skill_git: https://github.com/HoriFox/MarusyaSkill.git
 # marusya_skill_bind: 127.0.0.1 # No locad balancing, only failover
-marusya_skill_bind: "{{ lookup('dig', inventory_hostname) }}"
+marusya_skill_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
 marusya_skill_port: 5000
 marusya_skill_buffer_size: 65535
 marusya_skill_logdir: /var/log/marusya_skill
@@ -17,7 +17,7 @@ marusya_skill_confdir: /etc/assol
 smarthome_git: https://github.com/HoriFox/SmartHomeApi.git
 smarthome_host: "{{ private_vip_ip }}"
 # smarthome_bind: 127.0.0.1 # No locad balancing, only failover
-smarthome_bind: "{{ lookup('dig', inventory_hostname) }}"
+smarthome_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
 smarthome_port: 4050
 smarthome_buffer_size: 65535
 smarthome_logdir: /var/log/smarthome

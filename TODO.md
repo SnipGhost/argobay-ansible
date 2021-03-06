@@ -2,7 +2,6 @@
 
 ### Main
 
-- Fix autostart uwsgi-apps
 - Add logrotate
 - Add rsyslog
 - Backup DBs from cron

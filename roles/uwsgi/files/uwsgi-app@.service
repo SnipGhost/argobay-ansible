@@ -15,3 +15,6 @@ ExecStart=/usr/bin/uwsgi \
 	--ini /etc/uwsgi/apps-enabled/%i.ini \
 	--pidfile /run/uwsgi/%i.pid
 ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=uwsgi-apps.target

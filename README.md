@@ -143,3 +143,6 @@ git remote set-url origin git@github.com:SnipGhost/assol-ansible.git
 # SSD SMARTBUY 128 GiB
 UUID=5ebb4c58-4f31-4081-9eed-ff3e86a69a02 /mnt/data ext4 defaults,auto,noatime,discard,rw,nofail 0 2
 ```
+
+### Enable wi-fi on RPi:
+comment line `dtoverlay=disable-wifi` in /boot/config.txt

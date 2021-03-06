@@ -1,13 +1,19 @@
 ## TODO list
 
-- Swagger
-- Ensure logrotate
-- Add deb-package repo
-- Collect logs to one server with rsyslog
+### Main
+
+- Fix autostart uwsgi-apps
+- Add logrotate
+- Add rsyslog
 - Backup DBs from cron
-- Backup Grafana data
 - Add password to Redis
+- Fix daemon-reload handlers order
+
+### Backlog
+
+- Add swagger
+- Add deb-package repo
+- Backup Grafana data
 - Upgrade Redis to sentinel master-slave [replication](https://rtfm.co.ua/redis-replikaciya-chast-2-master-slave-replikaciya-i-redis-sentinel/)
 - Add keepalived_exporter
-- Fix daemon-reload handlers order
 - Remake dnsmasq_exporter

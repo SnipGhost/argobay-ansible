@@ -5,7 +5,7 @@ itsuki db_master=yes db_replication=no
 rikka
 
 [dev_redis_servers]
-rikka redis_master=yes
+itsuki redis_master=yes
 
 [dev_web_servers]
 itsuki

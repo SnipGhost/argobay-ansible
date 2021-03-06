@@ -3,7 +3,6 @@
 - Swagger
 - Ensure logrotate
 - Add deb-package repo
-- Add servers dashboard
 - Collect logs to one server with rsyslog
 - Backup DBs from cron
 - Backup Grafana data

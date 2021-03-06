@@ -131,3 +131,15 @@ Import ssh-key to ssh-agent (see `ssh-add -L`) and set ssh-origin
 ```bash
 git remote set-url origin git@github.com:SnipGhost/assol-ansible.git 
 ```
+
+### Add disk checklist
+1) `fdisk`
+2) `mkfs.ext4 /dev/sda2`
+3) `mkdir -p /mnt/data`
+4) `mount /dev/sda2 /mnt/data`
+5) `lsblk -o NAME,UUID | grep sda2`
+6) add to /etc/fstab automount
+```ini
+# SSD SMARTBUY 128 GiB
+UUID=5ebb4c58-4f31-4081-9eed-ff3e86a69a02 /mnt/data ext4 defaults,auto,noatime,discard,rw,nofail 0 2
+```

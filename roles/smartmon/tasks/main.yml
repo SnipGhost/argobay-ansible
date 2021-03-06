@@ -1,0 +1,17 @@
+---
+- name: Install packages
+  package:
+    name:
+      - smartmontools
+    state: present
+
+- name: Get version
+  shell: "/usr/sbin/smartctl -V | head -n1 | cut -f2 -d' '  | tr '.' '_'"
+  register: out
+  check_mode: no
+  changed_when: no
+
+- name: Update smartmon db
+  get_url:
+    url: "https://www.smartmontools.org/export/HEAD/branches/RELEASE_{{ out.stdout }}_DRIVEDB/smartmontools/drivedb.h"
+    dest: "{{ smartmon_db_path }}"

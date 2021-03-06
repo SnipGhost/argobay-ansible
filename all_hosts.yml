@@ -5,6 +5,8 @@
       tags: common
     - name: users
       tags: users
+    - name: smartmon
+      tags: smartmon
     - name: sshd
       tags: sshd
     - name: iptables

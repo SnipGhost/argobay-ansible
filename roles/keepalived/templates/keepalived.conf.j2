@@ -10,9 +10,7 @@ vrrp_instance {{ vip.name }} {
         auth_pass {{ vip.password }}
     }
 
-    use_vmac
-
-   virtual_ipaddress {
+    virtual_ipaddress {
        {{ vip.ip }}/{{ vip.mask | default(subnet_mask) }} dev {{ vip.iface }} label {{ vip.iface }}:{{ vip.id }}
     }
 }

@@ -1,0 +1,2 @@
+logrotate_default_period: weekly
+logrotate_default_rotate: 4

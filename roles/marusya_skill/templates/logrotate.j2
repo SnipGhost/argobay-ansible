@@ -1,0 +1,8 @@
+{{ marusya_skill_logdir }}/*.log {
+	{{ marusya_skill_log_period }}
+    rotate {{ marusya_skill_log_rotate }}
+    size {{ marusya_skill_log_size }}
+    missingok
+    compress
+    copytruncate
+}

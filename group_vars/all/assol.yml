@@ -12,6 +12,9 @@ marusya_skill_buffer_size: 65535
 marusya_skill_logdir: /var/log/marusya_skill
 marusya_skill_bindir: /usr/local/bin/marusya_skill
 marusya_skill_confdir: /etc/assol
+marusya_skill_log_period: daily
+marusya_skill_log_rotate: 7
+marusya_skill_log_size:   10M
 ###############################################################################
 # SmartHome API
 smarthome_git: https://github.com/HoriFox/SmartHomeApi.git
@@ -23,3 +26,6 @@ smarthome_buffer_size: 65535
 smarthome_logdir: /var/log/smarthome
 smarthome_bindir: /usr/local/bin/smarthome
 smarthome_confdir: /etc/assol
+smarthome_log_period: daily
+smarthome_log_rotate: 7
+smarthome_log_size:   10M

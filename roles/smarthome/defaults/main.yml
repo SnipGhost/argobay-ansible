@@ -10,6 +10,10 @@ smarthome_logdir: /var/log/smarthome
 smarthome_bindir: /usr/local/bin/smarthome
 smarthome_confdir: /etc/assol
 
+smarthome_log_period: daily
+smarthome_log_rotate: 7
+smarthome_log_size:   10M
+
 mariadb_proxy_host: 127.0.0.1
 mariadb_proxy_port: 3306
 mariadb_safe_hosts:

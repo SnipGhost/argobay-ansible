@@ -55,6 +55,10 @@ ntpd_servers:
   - ntp1.mail.ru
   - ntp2.mail.ru
 ###############################################################################
+# Logrotate
+logrotate_default_period: weekly
+logrotate_default_rotate: 4
+###############################################################################
 # Local DNS via dnsmasq
 dnsmasq_records_file: /etc/cluster-hosts
 dnsmasq_exporter_enabled: no

@@ -5,12 +5,14 @@
       tags: common
     - name: users
       tags: users
-    - name: smartmon
-      tags: smartmon
     - name: sshd
       tags: sshd
     - name: iptables
       tags: iptables
+    - name: smartmon
+      tags: smartmon
+    - name: logrotate
+      tags: logrotate
     - name: ntpd
       tags: ntpd
     - name: keepalived

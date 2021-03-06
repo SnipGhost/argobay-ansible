@@ -1,0 +1,10 @@
+---
+- name: Reload systemd
+  command: systemctl daemon-reload
+  listen: systemd_reload
+
+- name: Restart logrotate service
+  service:
+    name: logrotate
+    state: restarted
+  listen: logrotate_restart

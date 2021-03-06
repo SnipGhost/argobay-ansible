@@ -2,7 +2,6 @@
 
 ### Main
 
-- Add logrotate
 - Add rsyslog
 - Backup DBs from cron
 - Add password to Redis

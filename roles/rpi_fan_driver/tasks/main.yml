@@ -1,4 +1,11 @@
 ---
+- name: Install packages
+  package:
+    name:
+      - python3
+      - python3-rpi.gpio
+    state: present
+
 - name: Install RPi-FanDriver script
   get_url:
     url: "https://raw.githubusercontent.com/SnipGhost/RPi-FanDriver/master/fan_driver.py"
@@ -12,7 +19,9 @@
     url: https://raw.githubusercontent.com/SnipGhost/RPi-FanDriver/master/fan-driver.service
     dest: /etc/systemd/system/fan-driver.service
     mode: 0644
-  notify: systemd_reload
+  notify:
+    - Reload systemd
+    - fan_driver_restart
   when: has_fan | default('false') | bool
 
 - name: Create config
@@ -31,14 +40,14 @@
   check_mode: no
   when: not (has_fan | default('false') | bool)
 
-- name: Stop RPi-FanDriver service
+- meta: flush_handlers
+
+- name: Stop & disable RPi-FanDriver service
   service:
     name: fan-driver
     state: stopped
     enabled: no
   when: not (has_fan | default('false') | bool) and stat_result.stat.exists
-
-- meta: flush_handlers
 
 - name: Start RPi-FanDriver service
   service:
@@ -46,4 +55,3 @@
     state: started
     enabled: yes
   when: has_fan | default('false') | bool
-

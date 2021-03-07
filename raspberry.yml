@@ -2,6 +2,9 @@
 - hosts: raspberry_pi
   roles:
     - name: rpi_fan_driver
-      tags: rpi_fan_driver
+      tags: 
+        - rpi_fan_driver
+        - fan_driver
+        - fan-driver
     - name: rpi_exporter
       tags: rpi_exporter

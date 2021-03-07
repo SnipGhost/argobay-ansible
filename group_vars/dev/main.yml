@@ -43,8 +43,6 @@ haproxy_stat_port: 9000
 # NGINX options
 default_cert:         /etc/nginx/certs/dev-assol.ml.fullchain.pem
 default_cert_key:     /etc/nginx/certs/dev-assol.ml.privkey.pem
-dashboard_path:       /var/www/html/
-dashboard_git:        git@github.com:SnipGhost/cluster-page.git
 nginx_enable_default: yes
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
@@ -108,8 +106,21 @@ nginx_sites:
     hosts: dev_private_hosts
     whitelist:
       - vpn
+  - name: swagger
+    server_name: swagger.dev-assol.ml
+    addr: "{{ dev_private_vip_ip }}"
+    static_root: "{{ swagger_path }}"
+    static_path: /
+    static_hard: yes
+    hosts: dev_private_hosts
+    whitelist:
+      - vpn
 ###############################################################################
 # Dashboards only
+dashboard_path:       /var/www/html/
+dashboard_git:        git@github.com:SnipGhost/cluster-page.git
+swagger_path:         /var/www/html/swagger
+swagger_git:          git@github.com:SnipGhost/custom-swagger.git
 display_only_sites:
   - name: Кластер
     addr: https://internal.dev-assol.ml/cluster/

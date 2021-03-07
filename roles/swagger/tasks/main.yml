@@ -1,0 +1,47 @@
+---
+- name: Create path for swagger
+  file:
+    path: "{{ swagger_path }}"
+    state: directory
+    owner: root
+    group: ansible
+    mode: u=rwX,g=rwX,o=rX
+    recurse: yes
+  changed_when: no
+
+- name: Clone repo for cluster page
+  git:
+    repo: "{{ swagger_git }}"
+    dest: "{{ swagger_path }}"
+    clone: yes
+    update: yes
+    accept_hostkey: yes
+  become: no
+
+- name: Reset permissions
+  file:
+    path: "{{ swagger_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwX,g=rX,o=rX
+    recurse: yes
+  changed_when: no
+
+- name: Create path for swagger specs
+  file:
+    path: "{{ swagger_path }}specs"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwX,g=rX,o=rX
+    recurse: yes
+  changed_when: no
+
+- name: Copy maintained specs
+  template:
+    src: "{{ item }}"
+    dest: "{{ swagger_path }}specs/{{ item | basename }}"
+    mode: 0644
+  with_fileglob:
+    - ../templates/specs/*

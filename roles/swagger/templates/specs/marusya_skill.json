@@ -1,0 +1,113 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "version": "0.1.0",
+    "title": "Marusya Skill",
+    "description": "API навыка Маруси",
+    "contact": {
+      "name": "Marusya Skill Team",
+      "email": "marusya_skill_team@list.ru",
+      "url": "http://assol.ml"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://marusya.assol.ml/"
+    },
+    {
+      "url": "https://marusya.dev-assol.ml/"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "Info-page",
+        "operationId": "info",
+        "responses": {
+          "200": {
+            "description": "pet response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Request"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Обработка запросов от Маруси",
+        "operationId": "skill",
+        "requestBody": {
+          "description": "Pet to add to the store",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "pet response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Request"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Request"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Request": {
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -9,5 +9,8 @@
       tags: nginx_exporter
     - name: dashboards
       tags: dashboards
+    - name: swagger
+      tags: swagger
+      when: inventory_hostname in groups[private_group]
     - name: uwsgi
       tags: uwsgi

@@ -38,7 +38,7 @@
     src: init.service.j2
     dest: /etc/systemd/system/memcached_exporter.service
   notify:
-    - systemd_reload
+    - Reload systemd
     - memcached_exporter_restart
 
 - meta: flush_handlers

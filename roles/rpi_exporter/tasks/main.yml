@@ -39,7 +39,7 @@
   template:
     src: rpi_exporter.service.j2
     dest: /etc/systemd/system/rpi_exporter.service
-  notify: systemd_reload
+  notify: Reload systemd
 
 - meta: flush_handlers
 

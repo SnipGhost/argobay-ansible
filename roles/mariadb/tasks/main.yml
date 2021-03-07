@@ -30,7 +30,7 @@
     src: files/limits.conf
     dest: /etc/systemd/system/mariadb.service.d/
   notify:
-    - daemon_reload
+    - Reload systemd
 
 - name: Push main config
   vars:

@@ -38,7 +38,7 @@
     src: init.service.j2
     dest: /etc/systemd/system/haproxy_exporter.service
   notify:
-    - systemd_reload
+    - Reload systemd
     - haproxy_exporter_restart
 
 - meta: flush_handlers

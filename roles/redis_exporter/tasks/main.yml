@@ -50,7 +50,7 @@
     src: init.service.j2
     dest: /etc/systemd/system/redis_exporter.service
   notify:
-    - systemd_reload
+    - Reload systemd
     - redis_exporter_restart
 
 - meta: flush_handlers

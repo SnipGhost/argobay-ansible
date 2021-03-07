@@ -1,9 +1,10 @@
+---
+- name: Reload systemd
+  command: systemctl daemon-reload
+  listen: systemd_reload
+
 - name: Restart nginx_exporter service
   service:
     name: nginx_exporter
     state: restarted
   listen: nginx_exporter_restart
-
-- name: Reload systemd
-  command: systemctl daemon-reload
-  listen: systemd_reload

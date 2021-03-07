@@ -2,6 +2,7 @@
 Description=%i uWSGI app
 After=syslog.target
 PartOf=uwsgi-apps.target
+SyslogFacility=local0
 
 [Service]
 Type=simple

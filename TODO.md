@@ -2,10 +2,8 @@
 
 ### Main
 
-- Add SyslogFacility to fan-driver
 - Backup DBs from cron
 - Add password to Redis
-- Fix daemon-reload handlers order
 
 ### Backlog
 

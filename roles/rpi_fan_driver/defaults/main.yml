@@ -1,3 +1,4 @@
+fan_driver_log_format: "[PID: %(process)d] %(asctime)s [%(levelname)s] %(module)s:%(funcName)s:%(lineno)d %(message)s"
 fan_driver_temp_max: 57
 fan_driver_temp_min: 45
 fan_driver_delay: 1

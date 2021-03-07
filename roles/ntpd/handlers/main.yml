@@ -1,3 +1,4 @@
+---
 - name: restart chronyd
   systemd:
     name: chronyd

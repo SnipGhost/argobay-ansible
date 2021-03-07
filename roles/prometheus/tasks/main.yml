@@ -52,7 +52,7 @@
   template:
     src: init.service.j2
     dest: /etc/systemd/system/prometheus.service
-  notify: systemd_reload
+  notify: Reload systemd
 
 - name: Copy config file
   template:

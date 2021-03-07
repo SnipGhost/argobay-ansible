@@ -1,2 +1,5 @@
-- name: reload systemd
-  shell: systemctl daemon-reload
+---
+- name: Reload systemd
+  command: systemctl daemon-reload
+  listen: systemd_reload
+

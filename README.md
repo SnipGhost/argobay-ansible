@@ -5,6 +5,10 @@ Playbooks require secret variables:
 - service_vip_password
 - public_vip_password
 - private_vip_password
+- monitoring_vip_password
+- research_vip_password
+- dev_public_vip_password
+- dev_private_vip_password
 - passwords
 - ap_ssid
 - ap_code

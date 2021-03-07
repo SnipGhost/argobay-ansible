@@ -1,0 +1,2 @@
+# Specific RPi options
+fan_driver_log_format: "[%(levelname)s] %(module)s:%(funcName)s:%(lineno)d %(message)s"

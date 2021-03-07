@@ -1,0 +1,48 @@
+---
+- name: Create path for mdwiki
+  file:
+    path: "{{ mdwiki_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwX,g=rX,o=rX
+    recurse: yes
+
+- name: Download mdwiki
+  unarchive:
+    src: "https://github.com/Dynalon/mdwiki/releases/download/{{ mdwiki_version }}/mdwiki-{{ mdwiki_version }}.zip"
+    dest: /tmp/
+    remote_src: yes
+  when: install_mdwiki | default(false) | bool
+
+- name: Copy mdwiki.html to static path
+  copy:
+    src: "/tmp/mdwiki-{{ mdwiki_version }}/mdwiki.html"
+    dest: "{{ mdwiki_path }}index.html"
+    owner: root
+    group: root
+    remote_src: yes
+    mode: 0644
+  when: install_mdwiki | default(false) | bool
+
+- name: Delete mdwiki tmp folder
+  file:
+    path: "/tmp/mdwiki-{{ mdwiki_version }}/mdwiki.html"
+    state: absent
+  when: install_mdwiki | default(false) | bool
+
+- name: Copy maintained files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ mdwiki_path }}{{ item | basename }}"
+    mode: 0644
+  with_fileglob:
+    - ../files/*
+
+- name: Copy maintained pages
+  template:
+    src: "{{ item }}"
+    dest: "{{ mdwiki_path }}{{ item | basename }}"
+    mode: 0644
+  with_fileglob:
+    - ../templates/*

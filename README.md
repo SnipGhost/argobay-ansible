@@ -72,6 +72,11 @@ To re-setup smarthome [ATTENTION!]:
 ansible-playbook assol.yml --tags smarthome -e "smarthome_setup=yes" -l dev
 ```
 
+To download mdwiki run:
+```bash
+ansible-playbook web.yml --tags mdwiki -e "install_mdwiki=yes"
+```
+
 ## Add new service role checklist
 
 - Pull binary/script application

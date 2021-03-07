@@ -115,12 +115,22 @@ nginx_sites:
     hosts: dev_private_hosts
     whitelist:
       - vpn
+  - name: mdwiki
+    server_name: wiki.dev-assol.ml
+    addr: "{{ dev_private_vip_ip }}"
+    static_root: "{{ mdwiki_path }}"
+    static_path: /
+    static_hard: yes
+    hosts: dev_private_hosts
+    whitelist:
+      - vpn
 ###############################################################################
 # Dashboards only
 dashboard_path:       /var/www/html/
 dashboard_git:        git@github.com:SnipGhost/cluster-page.git
 swagger_path:         /var/www/html/swagger
 swagger_git:          git@github.com:SnipGhost/custom-swagger.git
+mdwiki_path:          /var/www/html/mdwiki/
 display_only_sites:
   - name: Кластер
     addr: https://internal.dev-assol.ml/cluster/

@@ -12,5 +12,8 @@
     - name: swagger
       tags: swagger
       when: inventory_hostname in groups[private_group]
+    - name: mdwiki
+      tags: mdwiki
+      when: inventory_hostname in groups[private_group]
     - name: uwsgi
       tags: uwsgi

@@ -8,7 +8,9 @@
     - name: sshd
       tags: sshd
     - name: iptables
-      tags: iptables
+      tags:
+        - iptables
+        - acl
     - name: smartmon
       tags: smartmon
     - name: logrotate

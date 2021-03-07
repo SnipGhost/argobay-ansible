@@ -1,0 +1,106 @@
+###############################################################################
+# Affect Nginx-ACL & iptables
+external_blacklist:
+  - 198.16.0.0/16       # Amsterdam Browsec VPN (test)
+  - 220.145.227.70/32   # pmadmin|phpmyadmin
+  - 185.142.236.43/32   # robots.txt|sitemap.xml
+  - 46.101.146.208/32   # masscan
+  - 139.59.226.79/32    # masscan
+  - 209.97.134.32/32    # masscan
+  - 35.195.161.121/32   # masscan
+  - 208.91.111.234/32   # autoprpv
+  - 173.242.104.172/32  # scanner threatsinkhole.com
+  - 60.60.141.209/32    # artemis.pokeradio.net
+  - 209.141.60.60/32    # artemis.pokeradio.net
+  - 52.42.79.222/32     # try wordpress/wp-login
+  - 222.186.136.150/32  # filtered by regexp
+  - 192.241.218.199/32  # try /owa/auth/logon.aspx
+  - 138.68.249.116/32   # filtered by regexp
+  - 139.162.145.250/32  # filtered by regexp
+  - 192.241.228.12/32   # filtered by regexp
+  - 193.118.53.210/32   # filtered by regexp
+  - 201.245.168.163/32  # filtered by regexp
+  - 39.96.137.146/32    # filtered by regexp
+  - 39.96.139.120/32    # filtered by regexp
+  - 172.104.242.173/32  # filtered by regexp
+  - 188.126.94.51/32    # filtered by regexp
+  - 185.93.2.168/32     # adsl.inet-telecom.org
+  - 91.90.123.62/32     # filtered by regexp
+  - 89.238.141.232/32   # adsl.inet-telecom.org
+  - 203.159.80.134/32   # slot0.aberalunim.xyz
+  - 172.104.242.173/32  # scanner threatsinkhole.com
+  - 205.185.122.102/32  # filtered by regexp
+  - 117.239.149.94/32   # filtered by regexp
+  - 134.209.76.5/32     # filtered by regexp
+  - 14.215.28.12/32     # filtered by regexp
+  - 161.35.230.183/32   # filtered by regexp
+  - 180.149.125.167/32  # filtered by regexp
+  - 18.136.72.135/32    # ec2-18-136-72-135.ap-southeast-1.compute.amazonaws.com.
+  - 192.241.221.40/32   # zg-0226a-179.stretchoid.com.
+  - 192.241.223.176/32  # zg-0226a-260.stretchoid.com.
+  - 192.241.226.82/32   # zg-0226b-26.stretchoid.com.
+  - 192.241.228.178/32  # zg-0226b-295.stretchoid.com.
+  - 193.118.53.202/32   # zl-ams-nl-gp3-wk102a.internet-census.org.
+  - 193.169.255.74/32   # filtered by regexp
+  - 203.159.80.134/32   # slot0.aberalunim.xyz.
+  - 205.185.122.102/32  # filtered by regexp
+  - 209.141.49.42/32    # filtered by regexp
+  - 211.38.144.230/32   # filtered by regexp
+  - 2.57.122.97/32      # filtered by regexp
+  - 31.13.23.180/32     # filtered by regexp
+  - 3.17.210.127/32     # ec2-3-17-210-127.us-east-2.compute.amazonaws.com.
+  - 35.178.16.1/32      # ec2-35-178-16-1.eu-west-2.compute.amazonaws.com.
+  - 45.143.221.129/32   # filtered by regexp
+  - 45.144.225.70/32    # filtered by regexp
+  - 5.202.146.4/32      # filtered by regexp
+  - 66.240.205.34/32    # malware-hunter.census.shodan.io.
+  - 115.63.138.139/32   # hn.kd.ny.adsl.
+  - 128.14.134.170/32   # zl-lax-us-gp3-wk106b.internet-census.org.
+  - 13.232.96.15/32     # ec2-13-232-96-15.ap-south-1.compute.amazonaws.com.
+  - 149.129.50.37/32    # filtered by regexp
+  - 18.231.94.162/32    # ec2-18-231-94-162.sa-east-1.compute.amazonaws.com.
+  - 185.118.164.252/32  # ru.nrts.net.
+  - 192.241.227.85/32   # zg-0226b-123.stretchoid.com.
+  - 193.46.255.33/32    # hostingmailto181.statics.servermail.org.
+  - 195.154.61.206/32   # macgregor.probe.onyphe.net.
+  - 205.169.39.216/32   # filtered by regexp
+  - 205.169.39.239/32   # filtered by regexp
+  - 216.245.214.66/32   # 66-214-245-216.static.reverse.lstn.net.
+  - 34.201.153.104/32   # ec2-34-201-153-104.compute-1.amazonaws.com.
+  - 35.181.112.20/32    # ec2-35-181-112-20.eu-west-3.compute.amazonaws.com.
+  - 3.84.215.5/32       # ec2-3-84-215-5.compute-1.amazonaws.com.
+  - 3.89.7.95/32        # ec2-3-89-7-95.compute-1.amazonaws.com.
+  - 45.33.96.205/32     # li-atl-us-gd4-wk102.internet-census.org.
+  - 59.99.190.127/32    # filtered by regexp
+  - 69.25.58.60/32      # filtered by regexp
+  - 89.190.156.31/32    # filtered by regexp
+  - 128.14.133.58/32    # zl-lax-us-gp3-wk104a.internet-census.org.
+  - 173.255.193.38/32   # li203-38.members.linode.com.
+  - 192.241.217.183/32  # zg-0226a-26.stretchoid.com.
+  - 192.241.226.28/32   # zg-0226b-6.stretchoid.com.
+  - 192.241.228.101/32  # zg-0226b-255.stretchoid.com.
+  - 192.53.170.163/32   # li-dal-us-gd4-wk103.internet-census.org.
+  - 195.154.63.222/32   # heath.probe.onyphe.net.
+  - 212.83.146.233/32   # monika.probe.onyphe.net.
+  - 212.83.162.123/32   # 212-83-162-123.rev.poneytelecom.eu.
+  - 62.210.5.253/32     # francis.probe.onyphe.net.
+  - 63.32.111.71/32     # ec2-63-32-111-71.eu-west-1.compute.amazonaws.com.
+  - 73.218.181.110/32   # c-73-218-181-110.hsd1.ma.comcast.net.
+  - 193.118.53.194/32   # zl-ams-nl-gp3-wk101a.internet-census.org.
+  - 128.14.134.134/32   # zl-lax-us-gp3-wk105a.internet-census.org.
+  - 161.35.230.3/32     # filtered by regexp
+  - 180.149.125.172/32  # filtered by regexp
+  - 192.241.218.166/32  # zg-0226a-67.stretchoid.com.
+  - 192.241.222.31/32   # zg-0226a-221.stretchoid.com.
+  - 192.241.228.54/32   # zg-0226b-231.stretchoid.com.
+  - 54.38.79.15/32      # vps-c6a99f8e.vps.ovh.net.
+  - 107.6.157.2/32      # sh-ams-nl-go1-wk101.internet-census.org.
+  - 114.26.104.160/32   # 114-26-104-160.dynamic-ip.hinet.net.
+  - 205.169.39.241/32   # filtered by regexp
+  - 3.22.70.135/32      # ec2-3-22-70-135.us-east-2.compute.amazonaws.com.
+  - 34.209.232.166/32   # ec2-34-209-232-166.us-west-2.compute.amazonaws.com.
+  - 34.211.60.134/32    # ec2-34-211-60-134.us-west-2.compute.amazonaws.com.
+  - 52.28.236.88/32     # ec2-52-28-236-88.eu-central-1.compute.amazonaws.com.
+  - 52.58.118.98/32     # ec2-52-58-118-98.eu-central-1.compute.amazonaws.com.
+  - 65.154.226.165/32   # filtered by regexp
+  - 70.42.131.189/32    # filtered by regexp

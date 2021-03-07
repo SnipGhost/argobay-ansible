@@ -72,6 +72,12 @@
     - ../templates/certs/*
   notify: nginx_reload
 
+- name: Copy filter.sh
+  copy:
+    src: files/filter.sh
+    dest: /root/filter.sh
+    mode: 0750
+
 - name: Configure nginx main sites
   vars:
     server_names: "{{ groups[web_group] }}"

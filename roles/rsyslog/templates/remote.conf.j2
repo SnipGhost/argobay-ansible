@@ -1,0 +1,18 @@
+{{ ansible_managed | comment }}
+
+{% if rsyslog_server_udp %}
+# provides UDP syslog reception
+module(load="imudp")
+input(type="imudp" port="514")
+
+{% endif %}
+{% if rsyslog_server_tcp %}
+# provides TCP syslog reception
+module(load="imtcp")
+input(type="imtcp" port="514")
+
+{% endif %}
+# Allow remote collect
+$AllowedSender TCP, {{ rsyslog_remote_allowed | default(['127.0.0.1']) | join(', ') }}
+$template Incoming-logs,"{{ rsyslog_remote_logdir }}/%HOSTNAME%/%PROGRAMNAME%.log"
+*.*  ?Incoming-logs

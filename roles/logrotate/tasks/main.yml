@@ -11,6 +11,8 @@
     dest: /etc/logrotate.conf
   notify: logrotate_restart
 
+- meta: flush_handlers
+
 - name: Start and enable logrotate
   systemd:
     name: logrotate

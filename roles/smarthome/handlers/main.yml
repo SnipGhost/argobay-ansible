@@ -5,6 +5,12 @@
     state: restarted
   listen: logrotate_restart
 
+- name: Restart rsyslog service
+  service:
+    name: rsyslog
+    state: restarted
+  listen: rsyslog_restart
+
 - name: Reload systemd
   command: systemctl daemon-reload
   listen: systemd_reload

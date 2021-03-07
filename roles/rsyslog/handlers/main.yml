@@ -1,4 +1,8 @@
 ---
+- name: Reload systemd
+  command: systemctl daemon-reload
+  listen: systemd_reload
+
 - name: Restart logrotate service
   service:
     name: logrotate
@@ -10,13 +14,3 @@
     name: rsyslog
     state: restarted
   listen: rsyslog_restart
-
-- name: Reload systemd
-  command: systemctl daemon-reload
-  listen: systemd_reload
-
-- name: Restart uwsg-app service
-  service:
-    name: "uwsgi-app@{{ app_name }}"
-    state: restarted
-  listen: app_restart

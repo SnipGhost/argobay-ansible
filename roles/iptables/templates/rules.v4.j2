@@ -20,6 +20,15 @@
 -A INPUT -p vrrp -m comment --comment VRRP -j incoming-local
 -A INPUT -p icmp -m comment --comment ICMP -j incoming-local
 
+{% if rsyslog_server | default(false) | bool %}
+{% if rsyslog_server_tcp | default(false) | bool %}
+-A INPUT -p tcp -m tcp --dport 514 -m comment --comment "RSyslog TCP" -j incoming-local
+{% endif %}
+{% if rsyslog_server_udp | default(false) | bool %}
+-A INPUT -p udp -m udp --dport 514 -m comment --comment "RSyslog UDP" -j incoming-local
+{% endif %}
+{% endif %}
+
 {% if inventory_hostname in groups['dev'] %}
 -A INPUT -m conntrack --ctstate RELATED,NEW,ESTABLISHED -j incoming-local
 {% else %}

@@ -59,6 +59,24 @@ ntpd_servers:
 logrotate_default_period: weekly
 logrotate_default_rotate: 4
 ###############################################################################
+# Rsyslog
+rsyslog_remote_logdir: /mnt/data/log
+rsyslog_log_period:    daily
+rsyslog_log_rotate:    7
+rsyslog_log_size:      100M
+rsyslog_send_facility:
+  - auth
+  - authpriv
+  - local0
+  - local7
+rsyslog_send_severity:
+  - '*'
+rsyslog_server_udp: no
+rsyslog_server_tcp: yes
+rsyslog_remote_allowed:
+  - 127.0.0.1
+  - 192.168.8.0/24
+###############################################################################
 # Local DNS via dnsmasq
 dnsmasq_records_file: /etc/cluster-hosts
 dnsmasq_exporter_enabled: no

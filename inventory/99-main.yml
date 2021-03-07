@@ -13,7 +13,7 @@ yukinon
 
 [prod]
 asuna
-ichika
+ichika rsyslog_server=yes
 nino
 miku
 yotsuba

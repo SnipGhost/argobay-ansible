@@ -1,0 +1,62 @@
+---
+- name: Install packages
+  package:
+    name:
+      - rsyslog
+    state: present
+
+- name: Copy rsyslog main config
+  template:
+    src: rsyslog.conf.j2
+    dest: /etc/rsyslog.conf
+  notify: rsyslog_restart
+
+- name: Copy rsyslog send-logs config
+  template:
+    src: send.conf.j2
+    dest: /etc/rsyslog.d/99-send.conf
+  notify: rsyslog_restart
+  when: not rsyslog_server | default(false) | bool
+
+- name: Delete invalid send-logs config
+  file:
+    path: /etc/rsyslog.d/99-send.conf
+    state: absent
+  notify: rsyslog_restart
+  when: rsyslog_server | default(false) | bool
+
+- name: Copy rsyslog remote-logs config
+  template:
+    src: remote.conf.j2
+    dest: /etc/rsyslog.d/99-remote.conf
+  notify: rsyslog_restart
+  when: rsyslog_server | default(false) | bool
+
+- name: Delete invalid remote-logs config
+  file:
+    path: /etc/rsyslog.d/99-remote.conf
+    state: absent
+  notify: rsyslog_restart
+  when: not rsyslog_server | default(false) | bool
+
+- name: Copy logrotate config
+  template:
+    src: remote.logrotate.j2
+    dest: /etc/logrotate.d/rsyslog-server
+  notify: logrotate_restart
+  when: rsyslog_server | default(false) | bool
+
+- name: Delete invalid logrotate config
+  file:
+    path: /etc/logrotate.d/rsyslog-server
+    state: absent
+  notify: logrotate_restart
+  when: not rsyslog_server | default(false) | bool
+
+- meta: flush_handlers
+
+- name: Start and enable rsyslog
+  systemd:
+    name: rsyslog
+    state: started
+    enabled: yes

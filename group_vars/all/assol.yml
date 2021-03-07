@@ -1,7 +1,7 @@
 ###############################################################################
 # Assol project options
 ###############################################################################
-project_version: v0.2
+project_version: v0.3
 ###############################################################################
 # Marusya skill API
 marusya_skill_git: https://github.com/HoriFox/MarusyaSkill.git
@@ -15,6 +15,8 @@ marusya_skill_confdir: /etc/assol
 marusya_skill_log_period: daily
 marusya_skill_log_rotate: 7
 marusya_skill_log_size:   10M
+marusya_skill_log_severity: info
+marusya_skill_log_facility: local7
 ###############################################################################
 # SmartHome API
 smarthome_git: https://github.com/HoriFox/SmartHomeApi.git
@@ -29,3 +31,5 @@ smarthome_confdir: /etc/assol
 smarthome_log_period: daily
 smarthome_log_rotate: 7
 smarthome_log_size:   10M
+smarthome_log_severity: info
+smarthome_log_facility: local7

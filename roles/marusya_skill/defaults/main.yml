@@ -9,9 +9,11 @@ marusya_skill_logdir: /var/log/marusya_skill
 marusya_skill_bindir: /usr/local/bin/marusya_skill
 marusya_skill_confdir: /etc/assol
 
-marusya_skill_log_period: daily
-marusya_skill_log_rotate: 7
-marusya_skill_log_size:   10M
+marusya_skill_log_period:   daily
+marusya_skill_log_rotate:   7
+marusya_skill_log_size:     10M
+marusya_skill_log_severity: info
+marusya_skill_log_facility: local7
 
 mariadb_proxy_host: 127.0.0.1
 mariadb_proxy_port: 3306

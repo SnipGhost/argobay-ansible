@@ -32,6 +32,11 @@ passwords:
 
 ## Use-cases
 
+Run only logrotate & rsyslog on DEV:
+```bash
+ansible-playbook all_hosts.yml --tags "logrotate,rsyslog" -l dev
+```
+
 To update all components on DEV:
 ```bash
 ansible-playbook setup.yml -l dev

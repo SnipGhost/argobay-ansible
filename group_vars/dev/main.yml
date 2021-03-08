@@ -115,6 +115,9 @@ nginx_sites:
     hosts: dev_private_hosts
     whitelist:
       - vpn
+    display:
+      name: Swagger
+      icon: swagger.svg
   - name: mdwiki
     server_name: wiki.dev-assol.ml
     addr: "{{ dev_private_vip_ip }}"
@@ -124,10 +127,15 @@ nginx_sites:
     hosts: dev_private_hosts
     whitelist:
       - vpn
+    display:
+      name: Wiki
+      icon: wiki.png
 ###############################################################################
 # Dashboards only
 dashboard_path:       /var/www/html/
 dashboard_git:        git@github.com:SnipGhost/cluster-page.git
+dashboard_max_width:  90vw
+dashboard_top_margin: 20vh
 swagger_path:         /var/www/html/swagger
 swagger_git:          git@github.com:SnipGhost/custom-swagger.git
 mdwiki_path:          /var/www/html/mdwiki/

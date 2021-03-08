@@ -165,3 +165,10 @@ comment line `dtoverlay=disable-wifi` in /boot/config.txt
 ```
 find /var/log/ -name "*.gz" -type f -delete
 ```
+
+### Install ansible
+```bash
+echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" >> /etc/apt/sources.list
+curl -sL "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x93C4A3FD7BB9C367" | apt-key add
+apt install python-dnspython ansible
+```

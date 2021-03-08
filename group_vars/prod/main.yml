@@ -7,7 +7,7 @@ mariadb_max_conn:     2048
 mariadb_pool_size:    122M
 mariadb_gcache_size:  200M
 mariadb_gcache_page:  200M
-mariadb_datadir:      /mnt/data/mysql
+mariadb_datadir:      "{{data_path}}/mysql"
 mariadb_socket:       /var/run/mysqld/mysqld.sock
 mariadb_safe_hosts:
   - "localhost"
@@ -31,6 +31,7 @@ memcached_proxy_port: 11311
 redis_bind_addr: 0.0.0.0
 redis_bind_port: 6379
 redis_db_count:  5
+redis_data_path: "{{ data_path }}/redis/"
 # Redis proxy options
 redis_proxy_port: 6380
 ###############################################################################

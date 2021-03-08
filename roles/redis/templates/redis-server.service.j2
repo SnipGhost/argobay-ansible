@@ -21,7 +21,7 @@ LimitNOFILE=65535
 PrivateDevices=yes
 ProtectHome=yes
 ReadOnlyDirectories=/
-ReadWriteDirectories=-{{data_path}}/redis
+ReadWriteDirectories=-{{ redis_data_path }}
 ReadWriteDirectories=-/var/log/redis
 ReadWriteDirectories=-/var/run/redis
 

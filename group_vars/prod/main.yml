@@ -21,6 +21,7 @@ mariadb_l7_check:         no
 ###############################################################################
 # Memcached
 memcached_user:      memcached
+memcached_host:      "{{ lookup('dig', inventory_hostname + '.local') }}"
 memcached_port:      11211
 memcached_max_conn:  1024
 memcached_cachesize: 128
@@ -28,7 +29,7 @@ memcached_cachesize: 128
 memcached_proxy_port: 11311
 ###############################################################################
 # Redis
-redis_bind_addr: 0.0.0.0
+redis_bind_addr: "{{ lookup('dig', inventory_hostname + '.local') }}"
 redis_bind_port: 6379
 redis_db_count:  5
 redis_data_path: "{{ data_path }}/redis/"
@@ -36,9 +37,9 @@ redis_data_path: "{{ data_path }}/redis/"
 redis_proxy_port: 6380
 ###############################################################################
 # HAProxy
-haproxy_bind_ip:   0.0.0.0
+haproxy_bind_ip:   127.0.0.1
 haproxy_stat_uri:  /haproxy_stats
-haproxy_stat_host: 0.0.0.0
+haproxy_stat_host: 127.0.0.1
 haproxy_stat_port: 9000
 ###############################################################################
 # NGINX options

@@ -93,7 +93,7 @@
     dest: "{{ razumator_static_path }}"
     owner: root
     group: root
-    mode: 0644
+    mode: 0755
     state: link
 
 - name: Copy logrotate config file

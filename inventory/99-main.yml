@@ -50,6 +50,9 @@ notebooks
 prod
 dev
 
+[research_hosts]
+ichika
+
 [public_hosts]
 nino
 yotsuba

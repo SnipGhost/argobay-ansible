@@ -152,6 +152,17 @@ nginx_sites:
     display:
       name: Wiki
       icon: wiki.png
+  - name: jupyter
+    server_name: jupyter.assol.ml
+    addr: "{{ research_vip_ip }}"
+    hosts: research_hosts
+    local: yes
+    port: 8888
+    whitelist:
+      - vpn
+    display:
+      name: Jupyter
+      icon: jupyter.svg
 ###############################################################################
 # Dashboards only
 dashboard_path:       /var/www/html/

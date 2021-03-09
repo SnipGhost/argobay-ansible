@@ -13,6 +13,14 @@ admins:
     email: "lhorifoxl@gmail.com"
     git_name: HoriFox
     key: "https://github.com/horifox.keys"
+users:
+  - name: rgbaybarin
+    color: "01;36m"
+    comment: "Roman Baybarin"
+    email: "rbaybarin@gmail.com"
+    git_name: RBizonDota
+    key: "https://github.com/RBizonDota.keys"
+    servers_group: dev
 ###############################################################################
 # Path to SSD-disks for all disk-based services
 data_path: "/mnt/data"

@@ -2,6 +2,7 @@
 
 ### Main
 
+- Fix tmux-env for any server
 - Add Alertmanager role
 - Modify node_exporter to collect systemd
 - Make alerting rules

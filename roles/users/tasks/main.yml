@@ -46,13 +46,32 @@
     state: present
   with_items: "{{ admins }}"
 
-- name: Change passwords for admin
+- name: Add weak users
+  user:
+    name: "{{ item.name }}"
+    groups: remote
+    append: yes
+    shell: /bin/bash
+    comment: "{{ item.comment }}"
+    state: present
+  with_items: "{{ users }}"
+  when: inventory_hostname in groups[item.servers_group]
+
+- name: Change passwords for admins
   user:
     name: "{{ item.name }}"
     state: present
     password: "{{ '%s' | format(passwords[item.name]) | password_hash('sha512') }}"
   with_items: "{{ admins }}"
   when: set_passwords | default('no') | bool
+
+- name: Change passwords for users
+  user:
+    name: "{{ item.name }}"
+    state: present
+    password: "{{ '%s' | format(passwords[item.name]) | password_hash('sha512') }}"
+  with_items: "{{ users }}"
+  when: inventory_hostname in groups[item.servers_group] and set_passwords | default('no') | bool
 
 - name: Change password for root
   user:
@@ -68,12 +87,20 @@
     password: "{{ '%s' | format(passwords['pi']) | password_hash('sha512') }}"
   when: "inventory_hostname in groups['raspberry_pi'] and (set_passwords | default('no') | bool)"
 
-- name: Add public keys to authorized_key files
+- name: Add public keys for admins to authorized_key files
   authorized_key:
     user: "{{ item.name }}"
     state: present
     key: "{{ item.key }}"
   with_items: "{{ admins }}"
+
+- name: Add public keys for users to authorized_key files
+  authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: "{{ item.key }}"
+  with_items: "{{ users }}"
+  when: inventory_hostname in groups[item.servers_group]
 
 - name: Write .bashrc for admin users
   template:
@@ -85,6 +112,17 @@
     group: "{{ item.name }}"
   with_items: "{{ admins }}"
 
+- name: Write .bashrc for weak users
+  template:
+    src: bashrc.j2
+    dest: "/home/{{ item.name }}/.bashrc"
+    backup: yes
+    mode: 0644
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  with_items: "{{ users }}"
+  when: inventory_hostname in groups[item.servers_group]
+
 - name: Write .vimrc for admin users
   copy:
     src: vimrc
@@ -95,6 +133,17 @@
     group: "{{ item.name }}"
   with_items: "{{ admins }}"
 
+- name: Write .vimrc for weak users
+  copy:
+    src: vimrc
+    dest: "/home/{{ item.name }}/.vimrc"
+    backup: yes
+    mode: 0644
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  with_items: "{{ users }}"
+  when: inventory_hostname in groups[item.servers_group]
+
 - name: Write .gitconfig for admin users
   template:
     src: gitconfig.j2
@@ -104,6 +153,17 @@
     owner: "{{ item.name }}"
     group: "{{ item.name }}"
   with_items: "{{ admins }}"
+
+- name: Write .gitconfig for weak users
+  template:
+    src: gitconfig.j2
+    dest: "/home/{{ item.name }}/.gitconfig"
+    backup: yes
+    mode: 0644
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  with_items: "{{ users }}"
+  when: inventory_hostname in groups[item.servers_group]
 
 - name: Write .bashrc for pi user
   vars:

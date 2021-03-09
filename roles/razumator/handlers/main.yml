@@ -1,0 +1,28 @@
+---
+- name: Reload systemd
+  command: systemctl daemon-reload
+  listen: systemd_reload
+
+- name: Restart logrotate service
+  service:
+    name: logrotate
+    state: restarted
+  listen: logrotate_restart
+
+- name: Restart rsyslog service
+  service:
+    name: rsyslog
+    state: restarted
+  listen: rsyslog_restart
+
+- name: Restart razumator core
+  service:
+    name: razumator-core
+    state: restarted
+  listen: razumator_core_restart
+
+- name: Restart razumator api
+  service:
+    name: razumator-api
+    state: restarted
+  listen: razumator_api_restart

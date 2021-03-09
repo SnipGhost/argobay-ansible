@@ -1,0 +1,35 @@
+userId: razumator
+groupId: razumator
+app_name: razumator
+razumator_git: git@github.com:RBizonDota/Razumator.git
+
+razumator_host: 127.0.0.1
+razumator_port: 10000
+
+razumator_api_host: 0.0.0.0
+razumator_api_port: 10001
+
+# razumator_logdir: /var/log/razumator
+razumator_bindir: "/usr/local/bin/{{ app_name }}"
+razumator_confdir: /etc/razumator
+
+razumator_log_period:   daily
+razumator_log_rotate:   7
+razumator_log_size:     10M
+razumator_log_severity: info
+razumator_log_facility: local7
+
+razumator_db_name: razumator
+razumator_db_user: razumator
+razumator_db_pass: password
+
+mariadb_proxy_host: 127.0.0.1
+mariadb_proxy_port: 3306
+mariadb_safe_hosts:
+  - "localhost"
+  - "127.0.0.1"
+
+memcached_proxy_host: 127.0.0.1
+memcached_proxy_port: 11211
+
+razumator_setup: no

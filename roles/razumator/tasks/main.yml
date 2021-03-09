@@ -1,0 +1,172 @@
+---
+# - name: Creating user group
+#   group: name="{{groupId}}"
+
+# - name: Creating user
+#   user:
+#     name: "{{userId}}"
+#     group: "{{groupId}}"
+#     system: yes
+#     shell: "/sbin/nologin"
+#     comment: "{{userId}} nologin User"
+#     createhome: "no"
+#     state: present
+
+# - name: Add admin users to group
+#   user:
+#     name: "{{ item.name }}"
+#     groups: "{{ groupId }}"
+#     append: yes
+#   with_items: "{{ users }}"
+
+# - name: Create path for razumator
+#   file:
+#     path: "{{ razumator_bindir }}"
+#     state: directory
+#     owner: "{{ userId }}"
+#     group: ansible
+#     mode: u=rwX,g=rwX,o=rX
+#     recurse: yes
+#   changed_when: no
+
+# - name: Clone razumator repo
+#   git:
+#     repo: "{{ razumator_git }}"
+#     dest: "{{ razumator_bindir }}"
+#     clone: yes
+#     update: yes
+#     accept_hostkey: yes
+#     version: develop
+#   notify:
+#     - razumator_core_restart
+#     - razumator_api_restart
+#   become: no
+
+# - name: Reset permissions
+#   file:
+#     path: "{{ razumator_bindir }}"
+#     state: directory
+#     owner: "{{ userId }}"
+#     group: "{{ groupId }}"
+#     mode: u=rwX,g=rX,o=rX
+#     recurse: yes
+#   changed_when: no
+
+# - name: Create path for razumator's directories
+#   file:
+#     path: "{{ item.path }}"
+#     state: directory
+#     owner: "{{ item.owner }}"
+#     group: "{{ item.group }}"
+#     mode: "{{ item.mode | default('0755') }}"
+#   with_items:
+#     - path: "{{ razumator_confdir }}"
+#       owner: "{{ userId }}"
+#       group: "{{ groupId }}"
+#     - path: "{{ razumator_model_path }}"
+#       owner: "{{ userId }}"
+#       group: "{{ groupId }}"
+
+- name: Create config for razumator core
+  template:
+    src: "razumator.json.j2"
+    dest: "{{ razumator_confdir }}/razumator.json"
+    mode: 0644
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+  notify:
+    - razumator_core_restart
+  
+- name: Create config for razumator restapi
+  template:
+    src: "restapi.json.j2"
+    dest: "{{ razumator_confdir }}/restapi.json"
+    mode: 0644
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+  notify:
+    - razumator_api_restart
+
+# - name: Create a symbolic link for static
+#   file:
+#     src: "{{ razumator_bindir }}/src/frontend/build"
+#     dest: "{{ razumator_static_path }}"
+#     owner: root
+#     group: root
+#     mode: 0644
+#     state: link
+
+# # - name: Copy logrotate config file
+# #   template:
+# #     src: logrotate.j2
+# #     dest: /etc/logrotate.d/{{ app_name }}
+# #   notify: logrotate_restart
+
+# # - name: Delete invalid rsyslog config
+# #   file:
+# #     path: /etc/rsyslog.d/{{ app_name }}
+# #     state: absent
+# #   notify: rsyslog_restart
+
+# # - name: Copy rsyslog config file
+# #   template:
+# #     src: rsyslog.conf.j2
+# #     dest: /etc/rsyslog.d/98-{{ app_name }}.conf
+# #   notify: rsyslog_restart
+
+# - name: Retrieve db user grants from mysql
+#   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -e "select Host, User from mysql.user where User = '{{ razumator_db_user }}';" --batch --skip-column-names
+#   register: stuff
+#   check_mode: no
+#   changed_when: False
+#   when: (inventory_hostname == groups[razumator_group][0])
+
+# - name: Revoke all grant for db user
+#   vars:
+#     userhost: "'{{ item.split('\t')[1] }}'@'{{ item.split('\t')[0] }}'"
+#   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "DROP USER {{ userhost }};"
+#   with_items: "{{ stuff.stdout_lines }}"
+#   when: (inventory_hostname == groups[razumator_group][0]) and (item.split('\t')[0] not in mariadb_safe_hosts)
+
+# - name: Add db user to mysql
+#   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "GRANT SELECT, INSERT, DELETE, UPDATE ON {{ razumator_db_name }}.* TO '{{ razumator_db_user }}'@'{{ item }}' IDENTIFIED BY '{{ razumator_db_pass }}';"
+#   with_items: "{{ mariadb_safe_hosts }}"
+#   changed_when: False
+#   when: (inventory_hostname == groups[razumator_group][0])
+
+# - name: Re-create db
+#   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ razumator_bindir }}/cfg/cluster_init.sql 
+#   when: (inventory_hostname == groups[razumator_group][0]) and (razumator_setup | default(false) | bool)
+#   notify:
+#     - razumator_core_restart
+#     - razumator_api_restart
+
+- name: Copy systemd razumator core file
+  template:
+    src: razumator-core.service.j2
+    dest: /etc/systemd/system/razumator-core.service
+  notify:
+    - Reload systemd
+    - razumator_core_restart
+
+- name: Copy systemd razumator api file
+  template:
+    src: razumator-api.service.j2
+    dest: /etc/systemd/system/razumator-api.service
+  notify:
+    - Reload systemd
+    - razumator_api_restart
+
+- meta: flush_handlers
+
+- name: Start and enable razumator api
+  systemd:
+    name: razumator-api
+    state: started
+    enabled: yes
+
+- name: Start and enable razumator core
+  systemd:
+    name: razumator-core
+    state: started
+    enabled: yes

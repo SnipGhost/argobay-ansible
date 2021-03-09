@@ -1,0 +1,7 @@
+
+input(type="imfile"
+      File="{{ razumator_logdir }}/*.log"
+      Tag="{{ app_name }}"
+      reopenOnTruncate="on"
+      Severity="{{ razumator_log_severity }}"
+      Facility="{{ razumator_log_facility }}")

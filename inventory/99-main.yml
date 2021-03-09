@@ -28,6 +28,7 @@ redis_group=prod_redis_servers
 web_group=prod_web_servers
 marusya_skill_group=prod_marusya_skill
 smarthome_group=prod_smarthome
+razumator_group=prod_razumator
 
 [dev]
 itsuki
@@ -43,6 +44,7 @@ redis_group=dev_redis_servers
 web_group=dev_web_servers
 marusya_skill_group=dev_marusya_skill
 smarthome_group=dev_smarthome
+razumator_group=dev_razumator
 
 [all:children]
 raspberry_pi
@@ -103,3 +105,7 @@ dev_smarthome
 [assol:children]
 marusya_skill
 smarthome
+
+[razumator:children]
+prod_razumator
+dev_razumator

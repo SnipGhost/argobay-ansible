@@ -1,0 +1,20 @@
+[Unit]
+Description=Razumator API
+After=syslog.target
+
+[Service]
+SyslogIdentifier=razumator-api
+SyslogFacility={{ razumator_log_facility }}
+SyslogLevel={{ razumator_log_severity }}
+User={{ userId }}
+Group={{ groupId }}
+Type=simple
+Restart=always
+WorkingDirectory=/
+ExecStart={{ razumator_bindir }}/src/arm_restapi
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStop=/bin/kill -INT $MAINPID
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target

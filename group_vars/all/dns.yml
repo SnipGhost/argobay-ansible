@@ -43,8 +43,8 @@ dnsmasq_hosts:
 
   - name: razumator
     rec:
-      - { ip: "{{private_vip_ip}}", type: assol.ml }
-      - { ip: "{{dev_private_vip_ip}}", type: dev-assol.ml }
+      - { ip: "{{public_vip_ip}}", type: assol.ml }
+      - { ip: "{{dev_public_vip_ip}}", type: dev-assol.ml }
 
   - name: smarthome
     rec:

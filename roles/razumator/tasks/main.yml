@@ -48,7 +48,7 @@
     state: directory
     owner: "{{ userId }}"
     group: "{{ groupId }}"
-    mode: u=rwX,g=rX,o=rX
+    mode: u=rwX,g=rwX,o=rX
     recurse: yes
   changed_when: no
 

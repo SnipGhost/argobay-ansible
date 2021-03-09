@@ -74,6 +74,22 @@ nginx_sites:
     display:
       name: Маруся
       icon: marusya.png
+  - name: razumator
+    server_name: razumator.dev-assol.ml
+    addr: "{{ dev_public_vip_ip }}"
+    static_root: "{{ razumator_static_path }}"
+    static_path: /
+    static_hard: yes
+    ignore_not_found: yes
+    local: yes
+    port: "{{ razumator_api_port }}"
+    path: /api/
+    hosts: dev_razumator
+    whitelist:
+      - vpn
+    display:
+      name: Разуматор
+      icon: razumator.svg
   - name: haproxy
     server_name: haproxy_{{ inventory_hostname }}.assol.ml
     addr: "{{ lookup('dig', inventory_hostname + '.local') }}"
@@ -132,16 +148,6 @@ nginx_sites:
     display:
       name: Wiki
       icon: wiki.png
-  - name: razumator
-    server_name: razumator.dev-assol.ml
-    addr: "{{ dev_public_vip_ip }}"
-    static_root: "{{ razumator_static_path }}"
-    static_path: /static/
-    local: yes
-    port: "{{ razumator_api_port }}"
-    hosts: dev_razumator
-    whitelist:
-      - vpn
 ###############################################################################
 # Dashboards only
 dashboard_path:       /var/www/html/

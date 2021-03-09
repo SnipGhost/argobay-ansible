@@ -5,4 +5,6 @@
 - import_playbook: raspberry.yml
 - import_playbook: storage.yml
 - import_playbook: web.yml
+
 - import_playbook: assol.yml
+- import_playbook: razumator.yml

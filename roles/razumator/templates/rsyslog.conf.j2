@@ -1,7 +1,21 @@
+if $programname == 'razumator-api' then {
+      action(type="omfile"
+             fileOwner="{{ userId }}"
+             fileGroup="{{ groupId }}"
+             dirOwner="{{ userId }}"
+             dirGroup="{{ groupId }}"
+             dirCreateMode="0750"
+             FileCreateMode="0640"
+             File="{{ razumator_logdir }}/api.log")
+}
 
-input(type="imfile"
-      File="{{ razumator_logdir }}/*.log"
-      Tag="{{ app_name }}"
-      reopenOnTruncate="on"
-      Severity="{{ razumator_log_severity }}"
-      Facility="{{ razumator_log_facility }}")
+if $programname == 'razumator-core' then {
+      action(type="omfile"
+             fileOwner="{{ userId }}"
+             fileGroup="{{ groupId }}"
+             dirOwner="{{ userId }}"
+             dirGroup="{{ groupId }}"
+             dirCreateMode="0750"
+             FileCreateMode="0640"
+             File="{{ razumator_logdir }}/core.log")
+}

@@ -96,23 +96,17 @@
     mode: 0644
     state: link
 
-# - name: Copy logrotate config file
-#   template:
-#     src: logrotate.j2
-#     dest: /etc/logrotate.d/{{ app_name }}
-#   notify: logrotate_restart
+- name: Copy logrotate config file
+  template:
+    src: logrotate.j2
+    dest: /etc/logrotate.d/{{ app_name }}
+  notify: logrotate_restart
 
-# - name: Delete invalid rsyslog config
-#   file:
-#     path: /etc/rsyslog.d/{{ app_name }}
-#     state: absent
-#   notify: rsyslog_restart
-
-# - name: Copy rsyslog config file
-#   template:
-#     src: rsyslog.conf.j2
-#     dest: /etc/rsyslog.d/98-{{ app_name }}.conf
-#   notify: rsyslog_restart
+- name: Copy rsyslog config file
+  template:
+    src: rsyslog.conf.j2
+    dest: /etc/rsyslog.d/98-{{ app_name }}.conf
+  notify: rsyslog_restart
 
 - name: Retrieve db user grants from mysql
   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -e "select Host, User from mysql.user where User = '{{ razumator_db_user }}';" --batch --skip-column-names
@@ -156,6 +150,14 @@
   notify:
     - Reload systemd
     - razumator_api_restart
+
+- name: Copy addn-sudoers file
+  template:
+    src: 090_razumator.sudoers.j2
+    dest: /etc/sudoers.d/090_razumator
+    mode: 440
+    owner: root
+    group: root
 
 - meta: flush_handlers
 

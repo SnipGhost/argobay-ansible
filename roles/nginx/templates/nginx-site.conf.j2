@@ -57,7 +57,7 @@ server {
 	}
 
 {% if item.port is defined %}
-	location / {
+	location {{ item.path | default('/') }} {
 		proxy_pass         http://{{ item.name }}{% if item.add_path | default(false) %}{{ item.add_path }}{% endif %};
 		proxy_http_version 1.1;
 		proxy_set_header   Host              $http_host;
@@ -71,7 +71,7 @@ server {
 
 {% if item.static_root | default(false) %}
 	location {{ item.static_path | default('static') }} {
-		{% if item.static_hard | default(false) | bool %}root{% else %}alias{% endif %}     {{ item.static_root }};
+		{% if item.static_hard | default(false) | bool %}root {% else %}alias{% endif %}     {{ item.static_root }};
 		index     {{ item.static_index | default('index.html') }};
 {% if item.ignore_not_found | default(false) | bool %}
 		try_files $uri $uri/ {{ item.not_found | default('/index.html') }} =404;

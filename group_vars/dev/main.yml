@@ -14,6 +14,7 @@ mariadb_safe_hosts:
   - "127.0.0.1"
   - "192.168.8.5_" 
 # MariaDB proxy options
+mariadb_proxy_host:       127.0.0.1
 mariadb_proxy_port:       3307
 mariadb_proxy_port_ro:    3308
 mariadb_proxy_check_port: 9200
@@ -26,6 +27,7 @@ memcached_port:      11211
 memcached_max_conn:  512
 memcached_cachesize: 64
 # Memcached proxy options
+memcached_proxy_host: 127.0.0.1
 memcached_proxy_port: 11311
 ###############################################################################
 # Redis
@@ -34,6 +36,7 @@ redis_bind_port: 6379
 redis_db_count:  5
 redis_data_path: "{{ data_path }}/redis/"
 # Redis proxy options
+redis_proxy_host: 127.0.0.1
 redis_proxy_port: 6380
 ###############################################################################
 # HAProxy

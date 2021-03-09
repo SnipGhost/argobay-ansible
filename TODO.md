@@ -2,10 +2,10 @@
 
 ### Main
 
-- Fix tmux-env for any server
+- Fix memlock limit for prometheus
 - Add Alertmanager role
 - Modify node_exporter to collect systemd
-- Make alerting rules
+- Make alerting rules & telegram notifications
 - Add basic_auth for prometheus, alertmanager, smarthome
 - Add redis password auth
 - Backup DBs from cron
@@ -14,8 +14,15 @@
 ### Backlog
 
 - Customize mdwiki
-- Make jupyter-notebook role with [unit](https://gist.github.com/whophil/5a2eab328d2f8c16bb31c9ceaf23164f)
-- Upgrade Redis to sentinel master-slave [replication](https://rtfm.co.ua/redis-replikaciya-chast-2-master-slave-replikaciya-i-redis-sentinel/)
+- Make jupyter-notebook role with the systemd unit
+- Upgrade Redis to master-slave replication
 - Add deb-package repo
 - Add keepalived_exporter
 - Remake dnsmasq_exporter
+
+### Useful links
+
+[jyputer unit](https://gist.github.com/whophil/5a2eab328d2f8c16bb31c9ceaf23164f)]
+[redis replication](https://rtfm.co.ua/redis-replikaciya-chast-2-master-slave-replikaciya-i-redis-sentinel/)
+[systemd prometheus](https://medium.com/kartbites/process-level-monitoring-and-alerting-in-prometheus-915ed7508058)
+[prometheus alert rules](https://awesome-prometheus-alerts.grep.to/rules.html)

@@ -1,5 +1,5 @@
 ---
-- name: Install MySQL client
+- name: Install MySQL client (for ansible tasks)
   package:
     name: mariadb-client
     state: present
@@ -7,16 +7,16 @@
 - name: Clone repo
   git:
     repo: "{{ smarthome_git }}"
-    dest: /usr/local/bin/{{ app_name }}
+    dest: "{{ smarthome_bindir }}"
     clone: yes
     update: yes
   notify:
     - app_restart
 
-- name: Creating assol user group
+- name: Creating app user group
   group: name="{{groupId}}"
 
-- name: Creating assol user
+- name: Creating app user
   user:
     name: "{{userId}}"
     group: "{{groupId}}"
@@ -26,10 +26,10 @@
     createhome: "no"
     state: present
 
-- name: Add admin users to assol group
+- name: Add admin users to app group
   user:
     name: "{{ item.name }}"
-    groups: assol
+    groups: "{{ groupId }}"
     append: yes
   with_items: "{{ admins }}"
 
@@ -63,11 +63,11 @@
     mode: "{{ item.mode | default('0755') }}"
   with_items:
     - path: "{{ smarthome_logdir }}"
-      owner: assol
-      group: assol
+      owner: "{{ userId }}"
+      group: "{{ groupId }}"
     - path: "{{ smarthome_confdir }}"
-      owner: assol
-      group: assol
+      owner: "{{ userId }}"
+      group: "{{ groupId }}"
 
 - name: Copy logrotate config file
   template:
@@ -92,8 +92,8 @@
     src: "{{ item.src }}"
     dest: "{{ smarthome_confdir }}/{{ item.dest }}"
     mode: 0660
-    owner: assol
-    group: assol
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
     backup: yes
   with_items:
     - { src: app.config.json.j2, dest: api.config.json }
@@ -102,16 +102,16 @@
 
 - name: Reset static
   file:
-    dest: /usr/local/bin/{{ app_name }}/static
+    dest: "{{ smarthome_bindir }}/static"
     owner: root
-    group: assol
+    group: "{{ groupId }}"
     mode: u=rwX,g=rX,o=rX
     recurse: yes
 
 - name: Create venv and install requirements
   pip: 
-    requirements: /usr/local/bin/{{ app_name }}/requirements.txt
-    virtualenv: /usr/local/bin/{{ app_name }}/env
+    requirements: "{{ smarthome_bindir }}/requirements.txt"
+    virtualenv: "{{ smarthome_bindir }}/env"
     virtualenv_python: python3.7
   notify:
     - app_restart
@@ -137,7 +137,7 @@
   when: (inventory_hostname == groups[smarthome_group][0])
 
 - name: Re-create db
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < /usr/local/bin/{{ app_name }}/setup/smarthome.sql 
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ smarthome_bindir }}/setup/smarthome.sql 
   when: (inventory_hostname == groups[smarthome_group][0]) and (smarthome_setup | default(false) | bool)
 
 - meta: flush_handlers

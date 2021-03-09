@@ -1,4 +1,4 @@
-{% for vip in keepalived_vips %}
+{% for vip in keepalived_vips | default([]) %}
 vrrp_instance {{ vip.name }} {
     state {{ vip.state | default("BACKUP") }}
     interface {{ vip.iface | default("eth0") }}

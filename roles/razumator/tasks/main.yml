@@ -1,4 +1,9 @@
 ---
+- name: Install MySQL client (for ansible tasks)
+  package:
+    name: mariadb-client
+    state: present
+
 - name: Creating user group
   group: name="{{groupId}}"
 
@@ -36,7 +41,7 @@
     clone: yes
     update: yes
     accept_hostkey: yes
-    version: develop
+    version: "{{ razumator_branch }}"
   notify:
     - razumator_core_restart
     - razumator_api_restart

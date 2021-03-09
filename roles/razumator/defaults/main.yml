@@ -1,7 +1,9 @@
 userId: razumator
 groupId: razumator
 app_name: razumator
-razumator_git: git@github.com:RBizonDota/Razumator.git
+
+razumator_git:    git@github.com:RBizonDota/Razumator.git
+razumator_branch: master
 
 razumator_host: 127.0.0.1
 razumator_port: 10000
@@ -9,11 +11,11 @@ razumator_port: 10000
 razumator_api_host: 0.0.0.0
 razumator_api_port: 10001
 
-razumator_logdir: /var/log/razumator
+razumator_logdir: "/var/log/{{ app_name }}"
 razumator_bindir: "/usr/local/bin/{{ app_name }}"
-razumator_confdir: /etc/razumator
-razumator_model_path: /var/lib/razumator
-razumator_static_path: /var/www/html/razumator
+razumator_confdir: "/etc/{{ app_name }}"
+razumator_model_path: "/var/lib/{{ app_name }}"
+razumator_static_path: "/var/www/html/{{ app_name }}"
 
 razumator_log_period:   daily
 razumator_log_rotate:   7

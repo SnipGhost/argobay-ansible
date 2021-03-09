@@ -7,11 +7,11 @@
     - uwsgi
     - uwsgi-plugin-python3
 
-- name: Creating node_exporter user group
+- name: Creating app user group
   group: name="{{groupId}}"
   become: true
 
-- name: Creating node_exporter user
+- name: Creating app user
   user:
     name: "{{userId}}"
     group: "{{groupId}}"
@@ -36,6 +36,7 @@
     - uwsgi-apps.target
   notify:
     - Reload systemd
+    - apps_restart
 
 - name: Start and enable uwsgi-apps
   systemd:

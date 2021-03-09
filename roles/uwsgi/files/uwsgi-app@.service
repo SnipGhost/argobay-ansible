@@ -5,6 +5,9 @@ PartOf=uwsgi-apps.target
 SyslogFacility=local0
 
 [Service]
+SyslogIdentifier=uwsgi-app@%i
+SyslogFacility={{ uwsgi_log_facility }}
+SyslogLevel={{ uwsgi_log_severity }}
 Type=simple
 Restart=always
 StartLimitBurst=3

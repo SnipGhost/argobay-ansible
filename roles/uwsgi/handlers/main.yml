@@ -3,3 +3,8 @@
   command: systemctl daemon-reload
   listen: systemd_reload
 
+- name: Restart uwsgi-apps target
+  service:
+    name: uwsgi-apps.target
+    state: restarted
+  listen: apps_restart

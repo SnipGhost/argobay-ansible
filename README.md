@@ -24,6 +24,9 @@ Playbooks require secret variables:
 - smarthome_db_name
 - smarthome_db_user
 - smarthome_db_pass
+- razumator_db_name
+- razumator_db_user
+- razumator_db_pass
 
 passwords is dictionary with user passwords:
 ```yml
@@ -74,6 +77,11 @@ ansible-playbook assol.yml --tags marusya_skill -e "marusya_skill_setup=yes" -l 
 To re-setup smarthome [ATTENTION!]:
 ```bash
 ansible-playbook assol.yml --tags smarthome -e "smarthome_setup=yes" -l dev
+```
+
+To re-setup razumator [ATTENTION!]:
+```bash
+ansible-playbook razumator.yml -e "razumator_setup=yes" -l dev
 ```
 
 To download mdwiki run:
@@ -171,4 +179,14 @@ find /var/log/ -name "*.gz" -type f -delete
 echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" >> /etc/apt/sources.list
 curl -sL "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x93C4A3FD7BB9C367" | apt-key add
 apt install python-dnspython ansible
+```
+
+### Install tensorflow==1.15.3 on RPi
+```bash
+pip uninstall tensorflow
+pip3 uninstall tensorflow
+apt install libhdf5-dev libc-ares-dev libeigen3-dev libatlas-base-dev libatlas3-base
+pip3 install h5py==2.10.0
+wget https://github.com/Qengineering/Tensorflow-Raspberry-Pi/raw/master/tensorflow-1.15.2-cp37-cp37m-linux_armv7l.whl
+pip3 install tensorflow-1.15.2-cp37-cp37m-linux_armv7l.whl
 ```

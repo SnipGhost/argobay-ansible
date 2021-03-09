@@ -1,20 +1,22 @@
 ###############################################################################
 # Assol project options
 ###############################################################################
-project_version: v0.4
-###############################################################################
 # Marusya skill API
 marusya_skill_git: https://github.com/HoriFox/MarusyaSkill.git
 # marusya_skill_bind: 127.0.0.1 # No locad balancing, only failover
-marusya_skill_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
-marusya_skill_port: 5000
+marusya_skill_bind:     "{{ lookup('dig', inventory_hostname + '.local') }}"
+marusya_skill_port:     5000
+marusya_skill_port_dev: 8080
+# uWSGI
 marusya_skill_buffer_size: 65535
-marusya_skill_logdir: /var/log/marusya_skill
-marusya_skill_bindir: /usr/local/bin/marusya_skill
+# Dirs
+marusya_skill_logdir:  /var/log/marusya_skill
+marusya_skill_bindir:  /usr/local/bin/marusya_skill
 marusya_skill_confdir: /etc/assol
-marusya_skill_log_period: daily
-marusya_skill_log_rotate: 7
-marusya_skill_log_size:   10M
+# Logging
+marusya_skill_log_period:   daily
+marusya_skill_log_rotate:   7
+marusya_skill_log_size:     10M
 marusya_skill_log_severity: info
 marusya_skill_log_facility: local7
 ###############################################################################
@@ -22,14 +24,18 @@ marusya_skill_log_facility: local7
 smarthome_git: https://github.com/HoriFox/SmartHomeApi.git
 smarthome_host: "{{ private_vip_ip }}"
 # smarthome_bind: 127.0.0.1 # No locad balancing, only failover
-smarthome_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
-smarthome_port: 4050
+smarthome_bind:     "{{ lookup('dig', inventory_hostname + '.local') }}"
+smarthome_port:     4050
+smarthome_port_dev: 4060
+# uWSGI
 smarthome_buffer_size: 65535
-smarthome_logdir: /var/log/smarthome
-smarthome_bindir: /usr/local/bin/smarthome
+# Dirs
+smarthome_logdir:  /var/log/smarthome
+smarthome_bindir:  /usr/local/bin/smarthome
 smarthome_confdir: /etc/assol
-smarthome_log_period: daily
-smarthome_log_rotate: 7
-smarthome_log_size:   10M
+# Logging
+smarthome_log_period:   daily
+smarthome_log_rotate:   7
+smarthome_log_size:     10M
 smarthome_log_severity: info
 smarthome_log_facility: local7

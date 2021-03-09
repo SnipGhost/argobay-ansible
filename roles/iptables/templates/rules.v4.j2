@@ -51,7 +51,7 @@
 {% endfor %}
 
 {% if inventory_hostname in groups['memcached_servers'] %}
--A INPUT -p tcp -m tcp --dport 11211 -m comment --comment Memcached -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ memcached_port | default(11211) }} -m comment --comment Memcached -j incoming-local
 -A INPUT -p tcp -m tcp --dport 9150 -m comment --comment memcached_exporter -j incoming-local
 {% endif %}
 
@@ -62,7 +62,7 @@
 {% endif %}
 
 {% if inventory_hostname in groups['redis_servers'] %}
--A INPUT -p tcp -m multiport --dports 6379,16379 -m comment --comment Redis -j incoming-local
+-A INPUT -p tcp -m multiport --dports {{ redis_bind_port | default(6379) }},16379 -m comment --comment Redis -j incoming-local
 -A INPUT -p tcp -m tcp --dport 9121 -m comment --comment redis_exporter -j incoming-local
 {% endif %}
 
@@ -72,16 +72,16 @@
 
 {% if inventory_hostname in groups['marusya_skill'] %}
 -A INPUT -p tcp -m tcp --dport {{ marusya_skill_port | default(5000) }} -m comment --comment "Marusya skill" -j incoming-local
--A INPUT -p tcp -m tcp --dport 8080 -m comment --comment "Marusya skill DEV" -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ marusya_skill_port_dev | default(8080) }} -m comment --comment "Marusya skill DEV" -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['smarthome'] %}
 -A INPUT -p tcp -m tcp --dport {{ smarthome_port | default(4050) }} -m comment --comment "SmartHome API" -j incoming-local
--A INPUT -p tcp -m tcp --dport 4060 -m comment --comment "SmartHome API DEV" -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ smarthome_port_dev | default(4060) }} -m comment --comment "SmartHome API DEV" -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['research_hosts'] %}
--A INPUT -p tcp -m tcp --dport 8888 -m comment --comment "Jupyter Notebook" -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ jupyter_port | default(8888) }} -m comment --comment "Jupyter Notebook" -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['razumator'] %}
@@ -93,9 +93,9 @@
 -A INPUT -p tcp -m tcp --dport 9101 -m comment --comment haproxy_exporter -j incoming-local
 
 {% if open_proxy_ports | default(false) | bool %}
--A INPUT -p tcp -m tcp --dport 11311 -m comment --comment memcached_proxy -j incoming-local
--A INPUT -p tcp -m multiport --dports 3307,3308 -m comment --comment mysqld_proxy -j incoming-local
--A INPUT -p tcp -m tcp --dport 6380 -m comment --comment redis_proxy -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ memcached_proxy_port | default(11311) }} -m comment --comment memcached_proxy -j incoming-local
+-A INPUT -p tcp -m multiport --dports {{ mariadb_proxy_port | default(3307) }},{{ mariadb_proxy_port_ro | default(3308) }} -m comment --comment mysqld_proxy -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ redis_proxy_port | default(6380) }} -m comment --comment redis_proxy -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['web_servers'] %}

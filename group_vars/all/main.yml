@@ -117,3 +117,8 @@ nginx_exporter_scrape_uri: http://127.0.0.1/stub_status
 # Grafana
 grafana_domain: grafana.assol.ml
 ###############################################################################
+# Jupyter
+jupyter_port: 8888
+###############################################################################
+# Summary
+project_version: v0.4

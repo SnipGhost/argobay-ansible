@@ -1,3 +1,6 @@
 ---
 userId: uwsgi
 groupId: uwsgi
+
+uwsgi_log_severity: info
+uwsgi_log_facility: local0

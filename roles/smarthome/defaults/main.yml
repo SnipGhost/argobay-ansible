@@ -1,13 +1,14 @@
 userId: assol
 groupId: assol
 app_name: smarthome
+
 smarthome_git: https://github.com/HoriFox/SmartHomeApi.git
 smarthome_host: 127.0.0.1
 smarthome_bind: 127.0.0.1
 smarthome_port: 4050
 smarthome_buffer_size: 65535
-smarthome_logdir: /var/log/smarthome
-smarthome_bindir: /usr/local/bin/smarthome
+smarthome_logdir: "/var/log/{{ app_name }}"
+smarthome_bindir: "/usr/local/bin/{{ app_name }}"
 smarthome_confdir: /etc/assol
 
 smarthome_log_period:   daily
@@ -15,6 +16,10 @@ smarthome_log_rotate:   7
 smarthome_log_size:     10M
 smarthome_log_severity: info
 smarthome_log_facility: local7
+
+smarthome_db_name: smarthome
+smarthome_db_user: smarthome_user
+smarthome_db_pass: password
 
 mariadb_proxy_host: 127.0.0.1
 mariadb_proxy_port: 3306

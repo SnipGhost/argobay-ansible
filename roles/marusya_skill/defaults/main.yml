@@ -1,12 +1,13 @@
 userId: assol
 groupId: assol
 app_name: marusya_skill
-marusya_skill_git: https://github.com/SnipGhost/MarusyaSkill.git
+
+marusya_skill_git: https://github.com/HoriFox/MarusyaSkill.git
 marusya_skill_bind: 127.0.0.1
 marusya_skill_port: 5000
 marusya_skill_buffer_size: 65535
-marusya_skill_logdir: /var/log/marusya_skill
-marusya_skill_bindir: /usr/local/bin/marusya_skill
+marusya_skill_logdir: "/var/log/{{ app_name }}"
+marusya_skill_bindir: "/usr/local/bin/{{ app_name }}"
 marusya_skill_confdir: /etc/assol
 
 marusya_skill_log_period:   daily
@@ -14,6 +15,10 @@ marusya_skill_log_rotate:   7
 marusya_skill_log_size:     10M
 marusya_skill_log_severity: info
 marusya_skill_log_facility: local7
+
+marusya_skill_db_name: marusyatech
+marusya_skill_db_user: marusya_skill
+marusya_skill_db_pass: password
 
 mariadb_proxy_host: 127.0.0.1
 mariadb_proxy_port: 3306

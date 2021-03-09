@@ -163,6 +163,8 @@ nginx_sites:
     display:
       name: Jupyter
       icon: jupyter.svg
+      size: 80%
+      border_radius: 0
 ###############################################################################
 # Dashboards only
 dashboard_path:       /var/www/html/

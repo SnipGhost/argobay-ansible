@@ -71,6 +71,7 @@
 			margin-right: auto;
 			display: block;
 			border-radius: 30%;
+			background-repeat: no-repeat;
 		}
 	</style>
 </head>
@@ -84,14 +85,14 @@
 {% for site in nginx_sites %}
 {% if site.display is defined %}
 			<a class="link" href="https://{{ site.server_name }}/" target="_blank">
-				<div style="background-image: url('{{ '/img/' + site.display.icon | default('/img/logo.png') }}');"></div><p>{{ site.display.name | default(site.name) }}</p>
+				<div style="background-image: url('{{ '/img/' + site.display.icon | default('/img/logo.png') }}');{% if site.display.border_radius is defined %} border-radius: {{ site.display.border_radius }};{% endif %}{% if site.display.size is defined %} background-size: {{ site.display.size }};{% endif %}"></div><p>{{ site.display.name | default(site.name) }}</p>
 			</a>
 {% endif %}
 {% endfor %}
 {% if display_only_sites is defined %}
 {% for site in display_only_sites %}
 			<a class="link" href="{{ site.addr }}" target="_blank">
-				<div style="background-image: url('{{ '/img/' + site.icon | default('/img/logo.png') }}');"></div><p>{{ site.name }}</p>
+				<div style="background-image: url('{{ '/img/' + site.icon | default('/img/logo.png') }}');{% if site.border_radius is defined %} border-radius: {{ site.border_radius }};{% endif %}{% if site.size is defined %} background-size: {{ site.size }};{% endif %}"></div><p>{{ site.name }}</p>
 			</a>
 {% endfor %}
 {% endif %}

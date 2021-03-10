@@ -83,8 +83,6 @@ nginx_sites:
     # local: yes # No load balancing, only failover
     port: "{{ smarthome_port }}"
     hosts: private_hosts
-    whitelist:
-      - vpn
     display:
       name: SmartHome
       icon: smarthome.svg

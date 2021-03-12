@@ -6,3 +6,4 @@ data_path: /data
 prometheus_data_retention: 15d
 prometheus_version: 2.18.1
 exec_command: "/usr/local/bin/prometheus --config.file=/etc/prometheus/prometheus.conf --storage.tsdb.path={{ data_path }}/prometheus/ --storage.tsdb.retention={{ prometheus_data_retention }}"
+max_mem_lock: "65536"

@@ -1,6 +1,7 @@
 proc_version: armv7
 has_fan: no
 open_proxy_ports: yes
+max_mem_lock: "524288" # KiB
 
 keepalived_vips:
 

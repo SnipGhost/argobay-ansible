@@ -2,7 +2,6 @@
 
 ### Main
 
-- Fix memlock limit for prometheus
 - Add Alertmanager role
 - Modify node_exporter to collect systemd
 - Make alerting rules & telegram notifications

@@ -6,6 +6,7 @@ After=network-online.target
 [Service]
 User={{ userId }}
 Group={{ groupId }}
+LimitMEMLOCK={{ ( max_mem_lock | int ) * 1024 }}
 Restart=always
 RestartSec=2
 StartLimitInterval=0

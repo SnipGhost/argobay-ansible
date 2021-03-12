@@ -6,3 +6,11 @@
     name: net.ipv4.ip_nonlocal_bind
     value: '1'
     state: present
+
+- name: Manage max_map_count
+  sysctl:
+    sysctl_file: /etc/sysctl.d/99-sysctl.conf
+    sysctl_set: yes
+    name: vm.max_map_count
+    value: "{{ max_mem_lock }}"
+    state: present

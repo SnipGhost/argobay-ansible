@@ -52,7 +52,14 @@
   template:
     src: init.service.j2
     dest: /etc/systemd/system/prometheus.service
-  notify: Reload systemd
+  notify:
+    - Reload systemd
+    - prometheus_restart
+
+- name: Copy limits conf file
+  template:
+    src: limits.conf.j2
+    dest: /etc/security/limits.d/prometheus.conf
 
 - name: Copy config file
   template:

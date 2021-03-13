@@ -3,5 +3,7 @@
   roles:
     - name: prometheus
       tags: prometheus
+    - name: alertmanager
+      tags: alertmanager
     - name: grafana
       tags: grafana

@@ -1,0 +1,18 @@
+[Unit]
+Description={{ serviceName }}
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ userId }}
+Group={{ groupId }}
+Restart=always
+RestartSec=2
+StartLimitBurst=3
+StartLimitIntervalSec=30
+Type=simple
+WorkingDirectory={{ alertmanager_confdir }}
+ExecStart={{ exec_command }}
+
+[Install]
+WantedBy=multi-user.target

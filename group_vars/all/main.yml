@@ -107,7 +107,7 @@ prometheus_jobs:
   # - { name: dnsmasq, port: 9153, group: dns_servers }
   - { name: rpi, port: 9243, group: raspberry_pi }
 ###############################################################################
-# Prometheus exporter's version
+# Prometheus exporter's options
 rpi_exporter_version: 0.6.0
 node_exporter_version: 1.0.1
 mysqld_exporter_version: 0.12.1
@@ -115,6 +115,15 @@ memcached_exporter_version: 0.8.0
 haproxy_exporter_version: 0.12.0
 redis_exporter_version: 1.17.1
 nginx_exporter_scrape_uri: http://127.0.0.1/stub_status
+###############################################################################
+# Alertmanager
+alertmanager_version: 0.21.0
+alertmanager_host:    0.0.0.0
+alertmanager_port:    9093
+alertmanager_confdir: /etc/alertmanager
+alertmanager_bindir:  /usr/local/bin
+alertmanager_receivers:
+    - { name: alertmanager-bot, host: 127.0.0.1, port: 8007 }
 ###############################################################################
 # Grafana
 grafana_domain: grafana.assol.ml

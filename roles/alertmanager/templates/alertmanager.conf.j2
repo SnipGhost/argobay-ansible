@@ -1,0 +1,16 @@
+{{ ansible_managed | comment }}
+
+route:
+  group_wait: 1m
+  group_interval: 1m
+  repeat_interval: 1h
+  group_by: ['alertname', 'cluster', 'service']
+  receiver: alertmanager-bot
+
+receivers:
+{% for receiver in alertmanager_receivers | default([]) %}
+  - name: {{ receiver.name }}
+    webhook_configs:
+      - send_resolved: true
+        url: 'http://{{ receiver.host }}:{{ receiver.port }}'
+{% endfor %}

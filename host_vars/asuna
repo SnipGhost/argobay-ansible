@@ -3,6 +3,9 @@ has_fan: no
 open_proxy_ports: yes
 max_mem_lock: "524288" # KiB
 
+disks:
+  - /dev/sda
+
 keepalived_vips:
 
   - id: "{{ monitoring_vip_id }}"

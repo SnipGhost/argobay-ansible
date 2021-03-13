@@ -1,6 +1,9 @@
 proc_version: armv7
 has_fan: yes
 
+disks:
+  - /dev/sda
+
 keepalived_vips:
 
   - id: "{{ dev_private_vip_id }}"

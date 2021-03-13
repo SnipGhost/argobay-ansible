@@ -3,6 +3,9 @@ has_fan: yes
 fan_driver_temp_max: 58
 fan_driver_temp_min: 50
 
+disks:
+  - /dev/sda
+
 keepalived_vips:
 
   - id: "{{ research_vip_id }}"

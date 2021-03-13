@@ -15,3 +15,26 @@
   get_url:
     url: "https://www.smartmontools.org/export/HEAD/branches/RELEASE_{{ out.stdout }}_DRIVEDB/smartmontools/drivedb.h"
     dest: "{{ smartmon_db_path }}"
+
+- name: Copy config file
+  template:
+    src: smartd.conf.j2
+    dest: /etc/smartd.conf
+  notify: smartd_restart
+  when: disks | default([]) | length > 0
+
+- meta: flush_handlers
+
+- name: Start smartd service
+  service:
+    name: smartd
+    state: started
+    enabled: yes
+  when: disks | default([]) | length > 0
+
+- name: Stop and disable smartd service
+  service:
+    name: smartd
+    state: stopped
+    enabled: no
+  when: disks | default([]) | length == 0

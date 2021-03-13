@@ -66,7 +66,7 @@ nginx_sites:
   - name: prometheus
     server_name: prometheus.assol.ml
     addr: "{{ monitoring_vip_ip }}"
-    group: monitoring_servers
+    local: yes
     port: 9090
     hosts: monitoring_servers
     whitelist:
@@ -77,7 +77,7 @@ nginx_sites:
   - name: alertmanager
     server_name: alertmanager.assol.ml
     addr: "{{ monitoring_vip_ip }}"
-    group: monitoring_servers
+    local: yes
     port: "{{ alertmanager_port }}"
     hosts: monitoring_servers
     whitelist:

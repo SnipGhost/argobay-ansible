@@ -27,6 +27,7 @@ Playbooks require secret variables:
 - razumator_db_name
 - razumator_db_user
 - razumator_db_pass
+- alertmanager_bot_telegram_token
 
 passwords is dictionary with user passwords:
 ```yml
@@ -192,10 +193,12 @@ pip3 install tensorflow-1.15.2-cp37-cp37m-linux_armv7l.whl
 ```
 
 ### Prometheus 1.x instead of 2.x
-
 So, mmap's in new Prometheus caused `mmap: cannot allocate memory` errors and panics on 32-bit systems.
 You can check the developer's answers about this - they have no plans to support 32 bit architectures.
 It is suggested to use 1.x version of Prometheus to avoid problems.
 Workaround is empirically reduce the retention size and scrap intervals.
 https://github.com/prometheus/prometheus/issues/7483
 https://github.com/prometheus/prometheus/issues/4392
+
+### Telegram bot
+Bot_name: @assol_ml_bot

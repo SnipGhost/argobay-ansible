@@ -41,6 +41,8 @@
 
 {% if inventory_hostname in groups['monitoring_servers'] %}
 -A INPUT -p tcp -m tcp --dport 9090 -m comment --comment Prometheus -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ alertmanager_port }} -m comment --comment Alertmanager -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ alertmanager_bot_port }} -m comment --comment Alertmanager-bot -j incoming-local
 -A INPUT -p tcp -m tcp --dport 3000 -m comment --comment Grafana -j incoming-local
 {% endif %}
 

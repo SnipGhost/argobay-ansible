@@ -74,6 +74,17 @@ nginx_sites:
     display:
       name: Prometheus
       icon: prometheus.svg
+  - name: alertmanager
+    server_name: alertmanager.assol.ml
+    addr: "{{ monitoring_vip_ip }}"
+    group: monitoring_servers
+    port: "{{ alertmanager_port }}"
+    hosts: monitoring_servers
+    whitelist:
+      - vpn
+    display:
+      name: Alerts
+      icon: prometheus.svg
   - name: smarthome
     server_name: smarthome.assol.ml
     addr: "{{ private_vip_ip }}"
@@ -170,7 +181,7 @@ nginx_sites:
 # Dashboards only
 dashboard_path:       /var/www/html/
 dashboard_git:        git@github.com:SnipGhost/cluster-page.git
-dashboard_max_width:  60vw
+dashboard_max_width:  70vw
 dashboard_top_margin: 10vh
 swagger_path:         /var/www/html/swagger/
 swagger_git:          git@github.com:SnipGhost/custom-swagger.git

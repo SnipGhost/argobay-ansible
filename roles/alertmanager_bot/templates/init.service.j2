@@ -1,0 +1,44 @@
+[Unit]
+Description=Alertmanager Bot
+Documentation=https://github.com/metalmatze/alertmanager-bot
+Wants=network-online.target
+After=network-online.target
+AssertFileIsExecutable={{ alertmanager_bot_bindir }}/alertmanager_bot
+
+[Service]
+Type=simple
+User={{ userId }}
+Group={{ groupId }}
+
+PrivateTmp=true
+ProtectHome=true
+PrivateDevices=true
+
+Environment=ALERTMANAGER_URL=http://{{ alertmanager_host }}:{{ alertmanager_port }}
+Environment=LISTEN_ADDR={{ alertmanager_bot_bind }}:{{ alertmanager_bot_port }}
+Environment=TELEGRAM_TOKEN={{ alertmanager_bot_telegram_token }}
+Environment=STORE={{ alertmanager_bot_store }}
+Environment=TEMPLATE_PATHS={{ alertmanager_bot_confdir }}/default.tmpl
+{% if alertmanager_bot_store == "bolt" %}
+Environment=BOLT_PATH={{ alertmanager_bot_bolt_path }}
+{% endif %}
+{% if alertmanager_bot_store == "consul" %}
+Environment=CONSUL_URL={{ alertmanager_bot_consul_url }}
+{% endif %}
+{% for item in alertmanager_bot_env_vars %}
+Environment={{ item.split("=")[0] }}={{ item.split("=")[1] }}
+{% endfor %}
+ExecStart={{ alertmanager_bot_bindir }}/alertmanager_bot \
+{% for id in alertmanager_bot_telegram_admins %}
+  --telegram.admin={{ id }} \
+{% endfor %}
+  --log.level={{ alertmanager_bot_log_level }}
+
+KillMode=process
+
+SyslogIdentifier={{ service_name }}
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

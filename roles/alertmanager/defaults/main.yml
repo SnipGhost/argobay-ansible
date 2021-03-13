@@ -5,8 +5,9 @@ groupId: alertmanager
 
 alertmanager_version: 0.21.0
 alertmanager_confdir: /etc/alertmanager
-alertmanager_host: 0.0.0.0
+alertmanager_bind: 0.0.0.0
+alertmanager_host: 127.0.0.1
 alertmanager_port: 9093
 alertmanager_bindir: /usr/local/bin
 
-exec_command: "{{ alertmanager_bindir }}/alertmanager --config.file={{ alertmanager_confdir }}/alertmanager.conf --web.external-url http://{{ alertmanager_host }}:{{ alertmanager_port }}"
+exec_command: "{{ alertmanager_bindir }}/alertmanager --config.file={{ alertmanager_confdir }}/alertmanager.conf --web.external-url http://{{ alertmanager_bind }}:{{ alertmanager_port }}"

@@ -118,12 +118,26 @@ nginx_exporter_scrape_uri: http://127.0.0.1/stub_status
 ###############################################################################
 # Alertmanager
 alertmanager_version: 0.21.0
-alertmanager_host:    0.0.0.0
-alertmanager_port:    9093
+alertmanager_bind: 0.0.0.0
+alertmanager_host: 127.0.0.1
+alertmanager_port: 9093
 alertmanager_confdir: /etc/alertmanager
-alertmanager_bindir:  /usr/local/bin
 alertmanager_receivers:
-    - { name: alertmanager-bot, host: 127.0.0.1, port: 8007 }
+  - name: alertmanager-bot
+    host: "{{ alertmanager_bot_host }}"
+    port: "{{ alertmanager_bot_port }}"
+###############################################################################
+# Alertmanager bot
+alertmanager_bot_version: 0.4.3
+alertmanager_bot_bind: 0.0.0.0
+alertmanager_bot_host: 127.0.0.1
+alertmanager_bot_port: 8007
+alertmanager_bot_log_level: "info"
+alertmanager_bot_confdir: /etc/am-bot
+alertmanager_bot_boltdir: /mnt/data/am-bot
+alertmanager_bot_bolt_path: "{{ alertmanager_bot_boltdir }}/am_bot.db"
+alertmanager_bot_telegram_admins:
+  - 148129813 # @snipghost
 ###############################################################################
 # Grafana
 grafana_domain: grafana.assol.ml

@@ -3,9 +3,8 @@
 ### Main
 
 - Suggest to use 1.x version of Prometheus
-- Add Alertmanager role
 - Modify node_exporter to collect systemd
-- Make alerting rules & telegram notifications
+- Make alerting rules
 - Add basic_auth for prometheus, alertmanager, smarthome
 - Add redis password auth
 - Backup DBs from cron

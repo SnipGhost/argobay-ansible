@@ -41,6 +41,10 @@ dnsmasq_hosts:
     rec:
       - { ip: "{{monitoring_vip_ip}}", type: assol.ml }
 
+  - name: alertmanager
+    rec:
+      - { ip: "{{monitoring_vip_ip}}", type: assol.ml }
+
   - name: jupyter
     rec:
       - { ip: "{{research_vip_ip}}", type: assol.ml }

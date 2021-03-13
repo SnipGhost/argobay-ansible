@@ -3,7 +3,13 @@ serviceName: prometheus
 userId: prometheus
 groupId: prometheus
 data_path: /data
-prometheus_data_retention: 15d
+
+prometheus_data_retention:      15d
+prometheus_retention_size:      200MB
+prometheus_scrape_interval:     15s
+prometheus_evaluation_interval: 15s
+
 prometheus_version: 2.18.1
-exec_command: "/usr/local/bin/prometheus --config.file=/etc/prometheus/prometheus.conf --storage.tsdb.path={{ data_path }}/prometheus/ --storage.tsdb.retention={{ prometheus_data_retention }}"
+exec_command: "/usr/local/bin/prometheus --config.file=/etc/prometheus/prometheus.conf --storage.tsdb.path={{ data_path }}/prometheus/ --storage.tsdb.retention={{ prometheus_data_retention }} --storage.tsdb.retention.size={{ prometheus_retention_size }}"
 max_mem_lock: "65536"
+prometheus_wait_wal_sec: 20

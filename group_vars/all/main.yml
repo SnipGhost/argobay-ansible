@@ -93,8 +93,11 @@ dnsmasq_iface: eth0:{{ service_vip_id }}
 # DNS records in dns.yml
 ###############################################################################
 # Prometheus
-prometheus_data_retention: "60d"
-prometheus_version: "2.23.0"
+prometheus_version:             2.18.1 # Less mmap allocations
+prometheus_data_retention:      30d
+prometheus_retention_size:      500MB
+prometheus_scrape_interval:     15s
+prometheus_evaluation_interval: 15s
 prometheus_jobs:
   - { name: node, port: 9100, group: all }
   - { name: haproxy, port: 9101, group: all }

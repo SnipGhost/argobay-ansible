@@ -26,6 +26,7 @@
     group: "{{ groupId }}"
     remote_src: yes
     mode: 0755
+  notify: prometheus_restart
 
 - name: Delete prometheus tmp folder
   file:

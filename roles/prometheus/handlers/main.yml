@@ -8,3 +8,8 @@
     name: prometheus
     state: restarted
   listen: prometheus_restart
+
+- name: Wait for reading write-ahead log
+  pause:
+    seconds: "{{ prometheus_wait_wal_sec }}"
+  listen: prometheus_restart

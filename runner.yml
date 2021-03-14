@@ -1,0 +1,5 @@
+---
+- hosts: gitlab_runner
+  roles:
+    - name: gitlab_runner
+      tags: gitlab_runner

@@ -1,0 +1,52 @@
+---
+- name: Install packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker
+    - docker-compose
+
+- name: Create app directory
+  file:
+    path: "{{ gitlab_runner_install_dir }}"
+    state: directory
+    owner: root
+    mode: 700
+
+- name: Copy docker-compose file to remote hosts
+  copy:
+    src: docker-compose.yml
+    dest: "{{ gitlab_runner_install_dir }}"
+    mode: 700
+    owner: root
+
+- name: Find old runner container 
+  command: docker ps --filter name=^/$RUNNER_NAME$ --format \{\{.ID\}\}
+  environment:
+    RUNNER_NAME: "{{ gitlab_runner_name }}"
+  register: runner_container_id
+
+- name: Unregister old runner from gitlab
+  command: docker exec {{ gitlab_runner_name }} gitlab-runner unregister --name {{ gitlab_runner_name }}
+  when: runner_container_id.stdout != ""
+
+- name: Take down old runner container
+  command: docker-compose down --volumes
+  args:
+    chdir: "{{ gitlab_runner_install_dir }}"
+  when: runner_container_id.stdout != ""
+
+- name: Spin up gitlab runner container
+  command: docker-compose up -d
+  args:
+    chdir: "{{ gitlab_runner_install_dir }}"
+  environment:
+    GITLAB_URL: "{{ gitlab_runner_reg_url }}"
+    GITLAB_REGISTRATION_TOKEN: "{{ gitlab_runner_reg_token }}"
+    RUNNER_NAME: "{{ gitlab_runner_name }}"
+
+- name: Remove app directory
+  file:
+    path: "{{ gitlab_runner_install_dir }}"
+    state: absent

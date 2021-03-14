@@ -1,0 +1,36 @@
+version: "3"
+services: 
+  registration:
+    container_name: "${RUNNER_NAME}-registration"
+    image: klud/gitlab-runner:12.8.0-alpine
+    environment: 
+      REGISTER_NON_INTERACTIVE: "true"
+      REGISTER_LOCKED: "false"
+      RUNNER_EXECUTOR: "docker"
+      DOCKER_IMAGE: "docker:latest"
+      DOCKER_PRIVILEGED: "false"
+      DOCKER_PULL_POLICY: "always"
+      DOCKER_VOLUMES: "/var/run/docker.sock:/var/run/docker.sock"
+      CI_SERVER_URL: "${GITLAB_URL}"
+      REGISTRATION_TOKEN: "${GITLAB_REGISTRATION_TOKEN}"
+      RUNNER_TAG_LIST: "self-hosted,rpi,docker"
+      RUN_UNTAGGED: "false"
+      RUNNER_NAME: "${RUNNER_NAME}"
+      DESCRIPTION: "Self hosted gitlab runner on raspberry pi"
+    volumes: 
+      - config-volume:/etc/gitlab-runner
+    entrypoint: /bin/sh
+    command: -c "gitlab-runner register"
+
+  gitlab_runner:
+    container_name: "${RUNNER_NAME}"
+    image: klud/gitlab-runner:12.8.0-alpine
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+      - config-volume:/etc/gitlab-runner
+    restart: unless-stopped
+    depends_on: 
+      - registration
+
+volumes:
+  config-volume:

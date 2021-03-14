@@ -78,6 +78,9 @@ ichika
 [monitoring_servers]
 asuna
 
+[gitlab_runner]
+itsuki
+
 [db_servers:children]
 prod_db_servers
 dev_db_servers

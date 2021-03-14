@@ -149,5 +149,10 @@ grafana_domain: grafana.assol.ml
 # Jupyter
 jupyter_port: 8888
 ###############################################################################
+# GitLab Runner
+gitlab_runner_name: arm-runner
+gitlab_runner_install_dir: "/tmp/gitlab-runner-{{ gitlab_runner_name }}"
+gitlab_runner_reg_url: https://bmstu.codes/
+###############################################################################
 # Summary
 project_version: v0.5

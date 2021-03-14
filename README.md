@@ -28,6 +28,7 @@ Playbooks require secret variables:
 - razumator_db_user
 - razumator_db_pass
 - alertmanager_bot_telegram_token
+- gitlab_runner_reg_token
 
 passwords is dictionary with user passwords:
 ```yml
@@ -88,6 +89,11 @@ ansible-playbook razumator.yml -e "razumator_setup=yes" -l dev
 To download mdwiki run:
 ```bash
 ansible-playbook web.yml --tags mdwiki -e "install_mdwiki=yes"
+```
+
+To re-register GitLab runner:
+```bash
+ansible-playbook runner.yml
 ```
 
 ## Add new service role checklist
@@ -209,7 +215,7 @@ GROUP=infrastructure
 PROJECT=assol-ansible
 
 git remote add bmstu git@bmstu.codes:iu5/${GROUP}/${PROJECT}.git
-git config —global alias.pushall '!git remote | xargs -L1 git push —all'
+git config --global alias.pushall '!git remote | xargs -L1 git push --all'
 
 git pushall
 ```

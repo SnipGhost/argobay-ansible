@@ -16,3 +16,4 @@
 	br = branch
 	type = cat-file -t
 	dump = cat-file -p
+	pushall = !git remote | xargs -L1 git push --all

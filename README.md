@@ -202,3 +202,14 @@ https://github.com/prometheus/prometheus/issues/4392
 
 ### Telegram bot
 Bot_name: @assol_ml_bot
+
+### Make multiple remote upstreams
+```bash
+GROUP=infrastructure
+PROJECT=assol-ansible
+
+git remote add bmstu git@bmstu.codes:iu5/${GROUP}/${PROJECT}.git
+git config —global alias.pushall '!git remote | xargs -L1 git push —all'
+
+git pushall
+```

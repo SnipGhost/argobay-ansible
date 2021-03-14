@@ -7,6 +7,7 @@
 - Backup DBs from cron
 - Backup Grafana data
 - Suggest to use 1.x version of Prometheus (?)
+- Prometheus remote write/read for long-term storage
 
 ### Backlog
 
@@ -21,7 +22,11 @@
 
 ### Useful links
 
-[jyputer unit](https://gist.github.com/whophil/5a2eab328d2f8c16bb31c9ceaf23164f)]
+[jyputer unit](https://gist.github.com/whophil/5a2eab328d2f8c16bb31c9ceaf23164f)
 [redis replication](https://rtfm.co.ua/redis-replikaciya-chast-2-master-slave-replikaciya-i-redis-sentinel/)
 [systemd prometheus](https://medium.com/kartbites/process-level-monitoring-and-alerting-in-prometheus-915ed7508058)
 [prometheus alert rules](https://awesome-prometheus-alerts.grep.to/rules.html)
+
+### VS
+
+https://github.com/inCaller/prometheus_bot vs current

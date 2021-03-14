@@ -10,4 +10,8 @@ alertmanager_host: 127.0.0.1
 alertmanager_port: 9093
 alertmanager_bindir: /usr/local/bin
 
+alermanager_group_wait: 30s
+alermanager_group_interval: 30s
+alermanager_repeat_interval: 1h
+
 exec_command: "{{ alertmanager_bindir }}/alertmanager --config.file={{ alertmanager_confdir }}/alertmanager.conf --web.external-url http://{{ alertmanager_bind }}:{{ alertmanager_port }}"

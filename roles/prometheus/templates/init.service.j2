@@ -9,9 +9,11 @@ Group={{ groupId }}
 LimitMEMLOCK={{ ( max_mem_lock | int ) * 1024 }}
 Restart=always
 RestartSec=2
-StartLimitInterval=0
+StartLimitBurst=3
+StartLimitIntervalSec=30
 Type=simple
 ExecStart={{ exec_command }}
+ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]
 WantedBy=multi-user.target

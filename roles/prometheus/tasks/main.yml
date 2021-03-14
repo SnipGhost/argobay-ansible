@@ -20,12 +20,15 @@
 
 - name: Copy prometheus file to bin
   copy:
-    src: "/tmp/prometheus-{{ prometheus_version }}.linux-{{ proc_version }}/prometheus"
-    dest: "/usr/local/bin/prometheus"
+    src: "/tmp/prometheus-{{ prometheus_version }}.linux-{{ proc_version }}/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
     owner: "{{ userId }}"
     group: "{{ groupId }}"
     remote_src: yes
     mode: 0755
+  with_items:
+    - prometheus
+    - promtool
   notify: prometheus_restart
 
 - name: Delete prometheus tmp folder
@@ -66,6 +69,12 @@
   template:
     src: prometheus.conf.j2
     dest: /etc/prometheus/prometheus.conf
+  notify: prometheus_restart
+
+- name: Copy rule files
+  copy:
+    src: files/
+    dest: /etc/prometheus/
   notify: prometheus_restart
 
 - meta: flush_handlers

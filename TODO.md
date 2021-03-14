@@ -2,16 +2,16 @@
 
 ### Main
 
-- Suggest to use 1.x version of Prometheus
-- Modify node_exporter to collect systemd
-- Make alerting rules
 - Add basic_auth for prometheus, alertmanager, smarthome
 - Add redis password auth
 - Backup DBs from cron
 - Backup Grafana data
+- Suggest to use 1.x version of Prometheus (?)
 
 ### Backlog
 
+- Suggest to use the nginx-lua-prometheus exporter
+- Fix certbot systemd unit with /usr/local/bin
 - Customize mdwiki
 - Make jupyter-notebook role with the systemd unit
 - Upgrade Redis to master-slave replication

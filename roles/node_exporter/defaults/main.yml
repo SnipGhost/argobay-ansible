@@ -2,5 +2,5 @@
 serviceName: node_exporter
 userId: node_exporter
 groupId: node_exporter
-exec_command: /usr/local/bin/node_exporter
+exec_command: /usr/local/bin/node_exporter --collector.systemd --collector.filesystem.ignored-mount-points=^/(sys|proc|dev|run)($|/)
 node_exporter_version: 0.18.1

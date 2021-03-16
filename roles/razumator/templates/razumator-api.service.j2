@@ -1,6 +1,6 @@
 [Unit]
 Description=Razumator API
-After=syslog.target
+After=syslog.target network.target haproxy.service
 
 [Service]
 SyslogIdentifier=razumator-api

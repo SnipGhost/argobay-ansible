@@ -1,6 +1,6 @@
 [Unit]
 Description=Razumator core
-After=syslog.target
+After=syslog.target network.target haproxy.service
 
 [Service]
 SyslogIdentifier=razumator-core

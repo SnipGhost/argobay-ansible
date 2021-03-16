@@ -1,6 +1,6 @@
 [Unit]
 Description=%i uWSGI app
-After=syslog.target
+After=syslog.target network.target haproxy.service
 PartOf=uwsgi-apps.target
 SyslogFacility=local0
 

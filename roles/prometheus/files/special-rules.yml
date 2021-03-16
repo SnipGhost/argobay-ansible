@@ -12,7 +12,7 @@ groups:
           description: "{{ $labels.instance }} CPU temperature > 60 deg.C for 30s, VALUE = {{ $value }}."
       
       - alert: uWSGIAppNotRunning
-        expr: node_systemd_unit_state{name=~"uwsgi-app@.+", state="active"} != 1
+        expr: node_systemd_unit_state{name=~"uwsgi-app@.+", state=~"inactive|deactivating|activating"} != 0
         for: 30s
         labels:
           severity: warning
@@ -21,7 +21,7 @@ groups:
           description: "Python uWSGI app {{ $labels.name }} on {{ $labels.instance }} state = {{ $labels.state }}, type = {{ $labels.type }}."
 
       - alert: RazumatorNotRunning
-        expr: node_systemd_unit_state{name=~"razumator-.+", state="active"} != 1
+        expr: node_systemd_unit_state{name=~"razumator-.+", state=~"inactive|deactivating|activating"} != 0
         for: 30s
         labels:
           severity: warning

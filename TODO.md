@@ -2,7 +2,6 @@
 
 ### Main
 
-- Deduplicate apss alerts on failed state
 - Add basic_auth for prometheus, alertmanager, smarthome
 - Add redis password auth
 - Backup DBs from cron

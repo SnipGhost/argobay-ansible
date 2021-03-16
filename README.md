@@ -219,3 +219,10 @@ git config --global alias.pushall '!git remote | xargs -L1 git push --all'
 
 git pushall
 ```
+
+### Start gitlab-runner manually
+Go to `gitlab_runner_install_dir` and run docker-compose, for example:
+```bash
+cd /mnt/data/runners/arm-runner/
+docker-compose up -d
+```

@@ -2,6 +2,7 @@
 
 ### Main
 
+- Extract docker to dedicated role
 - Add basic_auth for prometheus, alertmanager, smarthome
 - Add redis password auth
 - Backup DBs from cron

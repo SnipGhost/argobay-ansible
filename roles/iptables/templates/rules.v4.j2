@@ -9,6 +9,23 @@
 :incoming-external - [0:0]
 :valid-states - [0:0]
 :outgoing-services - [0:0]
+{% if inventory_hostname in groups['gitlab_runner'] %}
+:DOCKER - [0:0]
+:DOCKER-ISOLATION-STAGE-1 - [0:0]
+:DOCKER-ISOLATION-STAGE-2 - [0:0]
+:DOCKER-USER - [0:0]
+
+-A FORWARD -j DOCKER-USER
+-A FORWARD -j DOCKER-ISOLATION-STAGE-1
+{% for br in docker_bridges %}
+{% if inventory_hostname in groups[br.group | default('all')] %}
+-A FORWARD -o {{ br.name }} -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -o {{ br.name }} -j DOCKER
+-A FORWARD -i {{ br.name }} ! -o {{ br.name }} -j ACCEPT
+-A FORWARD -i {{ br.name }} -o {{ br.name }} -j ACCEPT
+{% endif %}
+{% endfor %}
+{% endif %}
 
 -A INPUT -i lo -m comment --comment "Accept all on loopback" -j ACCEPT
 -A INPUT -m conntrack --ctstate INVALID -j DROP
@@ -140,4 +157,48 @@
 -A outgoing-services -p vrrp -j ACCEPT
 -A outgoing-services -j DROP
 
+{% if inventory_hostname in groups['gitlab_runner'] %}
+{% for br in docker_bridges %}
+{% if inventory_hostname in groups[br.group | default('all')] %}
+-A DOCKER-ISOLATION-STAGE-1 -i {{ br.name }} ! -o {{ br.name }} -j DOCKER-ISOLATION-STAGE-2
+{% endif %}
+{% endfor %}
+-A DOCKER-ISOLATION-STAGE-1 -j RETURN
+
+{% for br in docker_bridges %}
+{% if inventory_hostname in groups[br.group | default('all')] %}
+-A DOCKER-ISOLATION-STAGE-2 -o {{ br.name }} -j DROP
+{% endif %}
+{% endfor %}
+-A DOCKER-ISOLATION-STAGE-2 -j RETURN
+
+-A DOCKER-USER -d {{ service_vip_ip }}/32 -m comment --comment "Accept DNS" -j ACCEPT
+-A DOCKER-USER -d {{ default_gw | ipsubnet(subnet_mask) }} -m comment --comment "Reject LAN" -j REJECT
+-A DOCKER-USER -j RETURN
+{% endif %}
+
 COMMIT
+{% if inventory_hostname in groups['gitlab_runner'] %}
+
+*nat
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:DOCKER - [0:0]
+
+-A PREROUTING -m addrtype --dst-type LOCAL -j DOCKER
+{% for br in docker_bridges %}
+{% if inventory_hostname in groups[br.group | default('all')] %}
+-A POSTROUTING -s {{ br.cidr }} ! -o {{ br.name }} -j MASQUERADE
+{% endif %}
+{% endfor %}
+-A OUTPUT ! -d 127.0.0.0/8 -m addrtype --dst-type LOCAL -j DOCKER
+{% for br in docker_bridges %}
+{% if inventory_hostname in groups[br.group | default('all')] %}
+-A DOCKER -i {{ br.name }} -j RETURN
+{% endif %}
+{% endfor %}
+
+COMMIT
+{% endif %}

@@ -21,6 +21,8 @@ services:
       - config-volume:/etc/gitlab-runner
     entrypoint: /bin/sh
     command: -c "gitlab-runner register"
+    networks:
+      - runner-net
 
   gitlab_runner:
     container_name: "${RUNNER_NAME}"
@@ -29,8 +31,20 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - config-volume:/etc/gitlab-runner
     restart: unless-stopped
+    networks:
+      - runner-net
     depends_on: 
       - registration
 
 volumes:
   config-volume:
+
+networks:
+  runner-net:
+    driver: bridge
+    ipam:
+     driver: default
+     config:
+       - subnet: {{ docker_runner_subnet }}
+    driver_opts:
+      com.docker.network.bridge.name: {{ docker_runner_bridge }}

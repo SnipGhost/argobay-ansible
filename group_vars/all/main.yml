@@ -149,9 +149,20 @@ grafana_domain: grafana.assol.ml
 # Jupyter
 jupyter_port: 8888
 ###############################################################################
+# Docker
+docker_datapath: "{{ data_path }}/docker"
+docker_runner_bridge: br_runner
+docker_runner_subnet: 172.100.0.0/16
+docker_bridges:
+  - name: docker0
+    cidr: 172.17.0.0/16
+    group: all
+  - name: "{{ docker_runner_bridge }}"
+    cidr: "{{ docker_runner_subnet }}"
+    group: gitlab_runner
 # GitLab Runner
 gitlab_runner_name: arm-runner
-gitlab_runner_install_dir: "/tmp/gitlab-runner-{{ gitlab_runner_name }}"
+gitlab_runner_install_dir: "{{ data_path }}/runners/{{ gitlab_runner_name }}"
 gitlab_runner_reg_url: https://bmstu.codes/
 ###############################################################################
 # Summary

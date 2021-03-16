@@ -7,19 +7,27 @@
     - docker
     - docker-compose
 
+- name: Create docker-daemon config
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    mode: 0644
+  notify:
+    - docker_restart
+
 - name: Create app directory
   file:
     path: "{{ gitlab_runner_install_dir }}"
     state: directory
     owner: root
-    mode: 700
+    mode: 0750
 
 - name: Copy docker-compose file to remote hosts
-  copy:
-    src: docker-compose.yml
-    dest: "{{ gitlab_runner_install_dir }}"
-    mode: 700
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ gitlab_runner_install_dir }}/docker-compose.yml"
     owner: root
+    mode: 0640
 
 - name: Find old runner container 
   command: docker ps --filter name=^/$RUNNER_NAME$ --format \{\{.ID\}\}
@@ -30,6 +38,7 @@
 - name: Unregister old runner from gitlab
   command: docker exec {{ gitlab_runner_name }} gitlab-runner unregister --name {{ gitlab_runner_name }}
   when: runner_container_id.stdout != ""
+  ignore_errors: yes
 
 - name: Take down old runner container
   command: docker-compose down --volumes
@@ -46,7 +55,7 @@
     GITLAB_REGISTRATION_TOKEN: "{{ gitlab_runner_reg_token }}"
     RUNNER_NAME: "{{ gitlab_runner_name }}"
 
-- name: Remove app directory
-  file:
-    path: "{{ gitlab_runner_install_dir }}"
-    state: absent
+# - name: Remove app directory
+#   file:
+#     path: "{{ gitlab_runner_install_dir }}"
+#     state: absent

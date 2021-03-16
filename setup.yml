@@ -8,3 +8,5 @@
 
 - import_playbook: assol.yml
 - import_playbook: razumator.yml
+
+- import_playbook: runner.yml

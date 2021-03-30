@@ -47,6 +47,24 @@ groups:
           summary: "MySQL insufficient cluster size (instance {{ $labels.instance }})"
           description: "Cluster size < 2 on {{ $labels.instance }} for active wsrep, VALUE = {{ $value }}."
 
+      - alert: MarynoNetBalance
+        expr: maryno_net_balance < (2 * maryno_net_plan_cost)
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low balance for internet provider (instance {{ $labels.instance }})"
+          description: "Account balance < (2 * month_cost), balance = {{ $value }} rub."
+      
+      - alert: MarynoNetAccountLocked
+        expr: maryno_net_is_blocked > 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Maryno.net account locked (instance {{ $labels.instance }})"
+          description: "Maryno.net account locked, maryno_net_is_blocked > 0, value = {{ $value }}."
+        
       # - alert: NginxHighHttp5xxErrorRate
       #   expr: sum(rate(nginx_http_requests_total{status=~"^5.."}[1m])) / sum(rate(nginx_http_requests_total[1m])) * 100 > 5
       #   for: 1m

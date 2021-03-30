@@ -29,6 +29,8 @@ Playbooks require secret variables:
 - razumator_db_pass
 - alertmanager_bot_telegram_token
 - gitlab_runner_reg_token
+- payment_exporter_user
+- payment_exporter_pass
 
 passwords is dictionary with user passwords:
 ```yml

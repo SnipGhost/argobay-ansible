@@ -9,3 +9,5 @@
       tags: alertmanager_bot
     - name: grafana
       tags: grafana
+    - name: payment_exporter
+      tags: payment_exporter

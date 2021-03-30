@@ -1,0 +1,61 @@
+- name: Creating app user group
+  group: name="{{groupId}}"
+
+- name: Creating app user
+  user:
+    name: "{{ userId }}"
+    group: "{{ groupId }}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{ userId }} nologin User"
+    createhome: "no"
+    state: present
+
+- name: Clone repo
+  git:
+    repo: "{{ payment_exporter_git }}"
+    dest: "{{ payment_exporter_bindir }}"
+    clone: yes
+    update: yes
+  notify:
+    - payment_exporter_restart
+
+- name: Copy systemd init file
+  template:
+    src: init.service.j2
+    dest: /etc/systemd/system/{{ serviceName }}.service
+  notify:
+    - Reload systemd
+    - payment_exporter_restart
+
+- name: Push config
+  template:
+    src: config.json.j2
+    dest: "{{ payment_exporter_config }}"
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0600
+  notify:
+    - payment_exporter_restart
+
+- name: Create venv and install requirements
+  pip: 
+    requirements: "{{ payment_exporter_bindir }}/requirements.txt"
+    virtualenv: "{{ payment_exporter_bindir }}/env"
+    virtualenv_python: python3.7
+  notify:
+    - payment_exporter_restart
+
+- meta: flush_handlers
+
+- name: Start payment_exporter service
+  service:
+    name: payment_exporter
+    state: started
+    enabled: yes
+
+- name: Check if payment_exporter emits metrices
+  uri:
+    url: http://127.0.0.1:{{ payment_exporter_port }}/metrics
+    method: GET
+    status_code: 200

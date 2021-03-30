@@ -26,6 +26,12 @@ scrape_configs:
 
 {% for job in prometheus_jobs %}
   - job_name: '{{ job.name }}'
+{% if job.scrape_interval is defined %}
+    scrape_interval: {{ job.scrape_interval }}
+{% endif %}
+{% if job.scrape_timeout is defined %}
+    scrape_timeout: {{ job.scrape_timeout }}
+{% endif %}
     static_configs:
     - targets:
 {% for host in groups[job.group] %}

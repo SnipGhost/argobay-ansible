@@ -61,6 +61,7 @@
 #-A INPUT -p tcp -m tcp --dport {{ alertmanager_port }} -m comment --comment Alertmanager -j incoming-local
 #-A INPUT -p tcp -m tcp --dport {{ alertmanager_bot_port }} -m comment --comment Alertmanager-bot -j incoming-local
 -A INPUT -p tcp -m tcp --dport 3000 -m comment --comment Grafana -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ payment_exporter_port | default(9999) }} -m comment --comment payment_exporter -j incoming-local
 {% endif %}
 
 {% for host in groups['dev'] %}

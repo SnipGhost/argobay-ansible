@@ -17,6 +17,8 @@
       tags: logrotate
     - name: rsyslog
       tags: rsyslog
+    - name: atop
+      tags: atop
     - name: ntpd
       tags: ntpd
     - name: keepalived

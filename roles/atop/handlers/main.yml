@@ -1,0 +1,10 @@
+---
+- name: Reload systemd
+  command: systemctl daemon-reload
+  listen: systemd_reload
+
+- name: Restart atop service
+  service:
+    name: atop
+    state: restarted
+  listen: atop_restart

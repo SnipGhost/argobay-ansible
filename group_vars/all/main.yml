@@ -58,6 +58,10 @@ research_vip_ip:   192.168.8.16
 dev_private_vip_id: 7
 dev_private_vip_ip: 192.168.8.17
 ###############################################################################
+# atop
+atop_log_interval: 60
+atop_log_generations: 10
+###############################################################################
 # Chronyd options
 ntpd_servers:
   - ntp1.mail.ru

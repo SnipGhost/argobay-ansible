@@ -153,8 +153,8 @@ nginx_sites:
 # Dashboards only
 dashboard_path:       /var/www/html/
 dashboard_git:        git@github.com:SnipGhost/cluster-page.git
-dashboard_max_width:  90vw
-dashboard_top_margin: 20vh
+dashboard_max_width:  60vw
+dashboard_top_margin: 10vh
 swagger_path:         /var/www/html/swagger
 swagger_git:          git@github.com:SnipGhost/custom-swagger.git
 mdwiki_path:          /var/www/html/mdwiki/

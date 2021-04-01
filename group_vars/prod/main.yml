@@ -181,7 +181,7 @@ nginx_sites:
 # Dashboards only
 dashboard_path:       /var/www/html/
 dashboard_git:        git@github.com:SnipGhost/cluster-page.git
-dashboard_max_width:  70vw
+dashboard_max_width:  85vw
 dashboard_top_margin: 10vh
 swagger_path:         /var/www/html/swagger/
 swagger_git:          git@github.com:SnipGhost/custom-swagger.git
@@ -190,6 +190,14 @@ display_only_sites:
   - name: Кластер
     addr: https://internal.assol.ml/cluster/
     icon: cluster.svg
+  - name: Codes
+    addr: https://bmstu.codes/
+    icon: gitlab.svg
+    size: 90%
+  - name: Почта
+    addr: http://mail.assol.ml/
+    icon: mail.svg
+    size: 90%
   - name: Trello
     addr: https://trello.com/b/m4jVATDW/assolml
     icon: trello-logo.png

@@ -1,0 +1,52 @@
+---
+serviceName: victoria-metrics
+userId: prometheus
+groupId: prometheus
+data_path: /data
+
+victoria_metrics_version: 1.57.1
+main_pack_name: victoria-metrics-{% if proc_version.startswith('arm') %}arm{% else %}{{ proc_version }}{% endif %}-v{{ victoria_metrics_version }}
+vmutils_pack_name: vmutils-{% if proc_version.startswith('arm') %}arm{% else %}{{ proc_version }}{% endif %}-v{{ victoria_metrics_version }}
+
+victoria_metrics_retention: 3
+victoria_metrics_scrape_interval: 15s
+victoria_metrics_evaluation_interval: 15s
+
+victoria_metrics_host: 127.0.0.1
+victoria_metrics_port: 8428
+vmagent_host: 127.0.0.1
+vmagent_port: 8429
+vmalert_host: 127.0.0.1
+vmalert_port: 8880
+
+victoria_metrics_data_path: "{{ data_path }}/victoria-metrics/"
+vmagent_data_path: "{{ data_path }}/vmagent/"
+
+exec_commands:
+  victoria-metrics:
+    /usr/local/bin/victoria-metrics-prod
+      -storageDataPath={{ victoria_metrics_data_path }}
+      -retentionPeriod={{ victoria_metrics_retention }}
+      -search.latencyOffset={{ victoria_metrics_scrape_interval }}
+      -httpListenAddr={{ victoria_metrics_host }}:{{ victoria_metrics_port }}
+  vmagent:
+    /usr/local/bin/vmagent-prod
+      -remoteWrite.tmpDataPath={{ vmagent_data_path }}
+      -promscrape.config=/etc/prometheus/victoria-metrics.conf
+      -remoteWrite.url=http://{{ victoria_metrics_host }}:{{ victoria_metrics_port }}/api/v1/write
+      -httpListenAddr={{ vmagent_host }}:{{ vmagent_port }}
+  vmalert:
+    /usr/local/bin/vmalert-prod
+      -rule="/etc/prometheus/*-rules.yml"
+      -evaluationInterval={{ victoria_metrics_evaluation_interval }}
+      -datasource.url=http://{{ victoria_metrics_host }}:{{ victoria_metrics_port }}
+      -notifier.url=http://{{ alertmanager_host }}:{{ alertmanager_port }}
+      -remoteWrite.url=http://{{ victoria_metrics_host }}:{{ victoria_metrics_port }}
+      -remoteRead.url=http://{{ victoria_metrics_host }}:{{ victoria_metrics_port }}
+      -httpListenAddr={{ vmalert_host }}:{{ vmalert_port }}
+
+max_mem_lock: "65536"
+wait_wal_sec: 20
+
+alertmanager_host: 127.0.0.1
+alertmanager_port: 9093

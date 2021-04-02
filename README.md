@@ -230,3 +230,21 @@ Go to `gitlab_runner_install_dir` and run docker-compose, for example:
 cd /mnt/data/runners/arm-runner/
 docker-compose up -d
 ```
+
+### Stopwatch and countdown
+```bash
+function countdown(){
+   date1=$((`date +%s` + $1)); 
+   while [ "$date1" -ge `date +%s` ]; do 
+     echo -ne "$(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r";
+     sleep 0.1
+   done
+}
+function stopwatch(){
+  date1=`date +%s`; 
+   while true; do 
+    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"; 
+    sleep 0.1
+   done
+}
+```

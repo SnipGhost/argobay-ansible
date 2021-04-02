@@ -1,0 +1,161 @@
+---
+- name: Creating app user group
+  group: name="{{groupId}}"
+
+- name: Creating app user
+  user:
+    name: "{{userId}}"
+    group: "{{groupId}}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{userId}} nologin user"
+    createhome: "no"
+    state: present
+
+- name: Creates tmp directory
+  file: 
+    path: "/tmp/victoria-metrics/"
+    state: directory
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0755
+
+- name: Install single Victoria Metrics
+  unarchive:
+    src: 'https://github.com/VictoriaMetrics/VictoriaMetrics/releases/download/v{{ victoria_metrics_version }}/{{ main_pack_name }}.tar.gz'
+    dest: /tmp/victoria-metrics/
+    remote_src: yes
+  when: victoria_metrics_install | default(false) | bool
+
+- name: Install vmutils
+  unarchive:
+    src: 'https://github.com/VictoriaMetrics/VictoriaMetrics/releases/download/v{{ victoria_metrics_version }}/{{ vmutils_pack_name }}.tar.gz'
+    dest: /tmp/victoria-metrics/
+    remote_src: yes
+  when: victoria_metrics_install | default(false) | bool
+
+- name: Copy Victoria Metrics files to bin
+  copy:
+    src: "/tmp/victoria-metrics/{{ item }}-prod"
+    dest: "/usr/local/bin/{{ item }}-prod"
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    remote_src: yes
+    mode: 0755
+  with_items:
+    - victoria-metrics
+    - vmagent
+    - vmalert
+  notify: "{{ item }}_restart"
+  when: victoria_metrics_install | default(false) | bool
+
+- name: Delete tmp folder
+  file:
+    path: '/tmp/victoria-metrics'
+    state: absent
+  when: victoria_metrics_install | default(false) | bool
+
+- name: Creates data directory
+  file: 
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0755
+  with_items:
+    - "{{ victoria_metrics_data_path }}"
+    - "{{ vmagent_data_path }}"
+
+- name: Creates config directory
+  file: 
+    path: "/etc/prometheus/"
+    state: directory
+    owner: "{{userId}}"
+    group: "{{groupId}}"
+    mode: 0755
+
+- name: Copy limits conf file
+  template:
+    src: limits.conf.j2
+    dest: /etc/security/limits.d/victoria-metrics.conf
+
+- name: Copy victoria-metrics systemd init file
+  vars:
+    item: victoria-metrics
+  template:
+    src: init.service.j2
+    dest: /etc/systemd/system/{{ item }}.service
+  register: result1
+  notify: "{{ item }}_restart"
+
+- name: Copy vmagent systemd init file
+  vars:
+    item: vmagent
+  template:
+    src: init.service.j2
+    dest: /etc/systemd/system/{{ item }}.service
+  register: result2
+  notify: "{{ item }}_restart"
+
+- name: Copy vmalert systemd init file
+  vars:
+    item: vmalert
+  template:
+    src: init.service.j2
+    dest: /etc/systemd/system/{{ item }}.service
+  register: result3
+  notify: "{{ item }}_restart"
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+  when: result1.changed or result2.changed or result3.changed
+
+- name: Copy config file
+  template:
+    src: prometheus.conf.j2
+    dest: /etc/prometheus/victoria-metrics.conf
+  notify: vmagent_restart
+
+- name: Copy rule files
+  copy:
+    src: files/
+    dest: /etc/prometheus/
+  notify: vmalert_restart
+
+- meta: flush_handlers
+
+- name: Start Victoria Metrics service
+  service:
+    name: victoria-metrics
+    state: started
+    enabled: yes
+
+- name: Check if Victoria Metrics is accessible
+  uri:
+    url: http://127.0.0.1:{{ victoria_metrics_port }}/
+    method: GET
+    status_code: 200
+
+- name: Start vmagent service
+  service:
+    name: vmagent
+    state: started
+    enabled: yes
+
+- name: Check if vmagent is accessible
+  uri:
+    url: http://127.0.0.1:{{ vmagent_port }}/
+    method: GET
+    status_code: 200
+
+- name: Start vmalert service
+  service:
+    name: vmalert
+    state: started
+    enabled: yes
+
+- name: Check if vmalert is accessible
+  uri:
+    url: http://127.0.0.1:{{ vmalert_port }}/
+    method: GET
+    status_code: 200

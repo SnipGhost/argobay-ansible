@@ -2,15 +2,15 @@
 
 ### Main
 
-- Migrate to Victoria Metrics
 - Add basic_auth for prometheus, alertmanager, smarthome
 - Add redis password auth
 - Backup DBs from cron
 - Backup Grafana data
-- Prometheus remote write/read for long-term storage
+- Install K8S
 
 ### Backlog
 
+- Extract vmagent & vmalert from victoria_metrics
 - Suggest to use the nginx-lua-prometheus exporter
 - Fix certbot systemd unit with /usr/local/bin
 - Customize mdwiki

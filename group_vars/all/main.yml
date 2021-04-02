@@ -96,11 +96,22 @@ dnsmasq_logging: no
 dnsmasq_iface: eth0:{{ service_vip_id }}
 # DNS records in dns.yml
 ###############################################################################
-# Prometheus
-prometheus_version: 2.18.1 # Less mmap allocations
-prometheus_data_retention:      360h
-prometheus_scrape_interval:     15s
-prometheus_evaluation_interval: 15s
+# Victoria Metrics
+victoria_metrics_version: 1.57.1
+victoria_metrics_retention: 3
+victoria_metrics_scrape_interval: 15s
+victoria_metrics_evaluation_interval: 15s
+victoria_metrics_host: 127.0.0.1
+victoria_metrics_port: 8428
+victoria_metrics_data_path: "{{ data_path }}/victoria-metrics/"
+# VM Agent
+vmagent_host: 127.0.0.1
+vmagent_port: 8429
+vmagent_data_path: "{{ data_path }}/vmagent/"
+# VM Alert
+vmalert_host: 127.0.0.1
+vmalert_port: 8880
+# Prometheus config drop-in replacement compatibility
 prometheus_jobs:
   - { name: node, port: 9100, group: all }
   - { name: haproxy, port: 9101, group: all }

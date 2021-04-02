@@ -1,8 +1,10 @@
 ---
 - hosts: monitoring_servers
   roles:
-    - name: prometheus
-      tags: prometheus
+    # - name: prometheus
+    #   tags: prometheus
+    - name: victoria_metrics
+      tags: victoria_metrics
     - name: alertmanager
       tags: alertmanager
     - name: alertmanager_bot

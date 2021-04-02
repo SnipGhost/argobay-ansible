@@ -1,0 +1,21 @@
+[Unit]
+Description={{ item }}
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ userId }}
+Group={{ groupId }}
+{% if item == 'victoria-metrics' %}
+LimitMEMLOCK={{ ( max_mem_lock | int ) * 1024 }}
+{% endif %}
+Restart=always
+RestartSec=2
+StartLimitBurst=3
+StartLimitInterval=60
+Type=simple
+ExecStart={{ exec_commands[item] }}
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

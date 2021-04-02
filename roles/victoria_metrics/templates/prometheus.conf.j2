@@ -1,0 +1,28 @@
+{{ ansible_managed | comment }}
+
+global:
+  scrape_interval:     {{ victoria_metrics_scrape_interval }} # Set the scrape interval to every X seconds. Default is every 1 minute.
+  evaluation_interval: {{ victoria_metrics_evaluation_interval }} # Evaluate rules every X seconds. The default is every 1 minute.
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Victoria Metrics itself.
+scrape_configs:
+  - job_name: 'victoria-metrics'
+    static_configs:
+    - targets: ['localhost:{{ victoria_metrics_port }}']
+
+{% for job in prometheus_jobs %}
+  - job_name: '{{ job.name }}'
+{% if job.scrape_interval is defined %}
+    scrape_interval: {{ job.scrape_interval }}
+{% endif %}
+{% if job.scrape_timeout is defined %}
+    scrape_timeout: {{ job.scrape_timeout }}
+{% endif %}
+    static_configs:
+    - targets:
+{% for host in groups[job.group] %}
+      - '{{ host }}:{{ job.port }}'
+{% endfor %}
+
+{% endfor %}

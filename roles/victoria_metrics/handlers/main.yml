@@ -1,0 +1,31 @@
+---
+- name: Reload systemd
+  command: systemctl daemon-reload
+  listen: systemd_reload
+
+- name: Restart the Victoria Metrics service
+  service:
+    name: victoria-metrics
+    state: restarted
+  listen:
+    - victoria_metrics_restart
+    - victoria-metrics_restart
+
+- name: Restart the vmagent service
+  service:
+    name: vmagent
+    state: restarted
+  listen: vmagent_restart
+  
+- name: Restart the vmalert service
+  service:
+    name: vmalert
+    state: restarted
+  listen: vmalert_restart
+
+- name: Wait for reading write-ahead log
+  pause:
+    seconds: "{{ wait_wal_sec }}"
+  listen:
+    - victoria_metrics_restart
+    - victoria-metrics_restart

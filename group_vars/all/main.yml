@@ -104,10 +104,10 @@ victoria_metrics_evaluation_interval: 15s
 victoria_metrics_host: 127.0.0.1
 victoria_metrics_port: 8428
 victoria_metrics_data_path: "{{ data_path }}/victoria-metrics/"
-# VM Agent
-vmagent_host: 127.0.0.1
-vmagent_port: 8429
-vmagent_data_path: "{{ data_path }}/vmagent/"
+# VM Agent (merged with Victoria Metrics base)
+# vmagent_host: 127.0.0.1
+# vmagent_port: 8429
+# vmagent_data_path: "{{ data_path }}/vmagent/"
 # VM Alert
 vmalert_host: 127.0.0.1
 vmalert_port: 8880

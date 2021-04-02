@@ -58,8 +58,11 @@
 
 {% if inventory_hostname in groups['monitoring_servers'] %}
 #-A INPUT -p tcp -m tcp --dport 9090 -m comment --comment Prometheus -j incoming-local
-#-A INPUT -p tcp -m tcp --dport {{ alertmanager_port }} -m comment --comment Alertmanager -j incoming-local
-#-A INPUT -p tcp -m tcp --dport {{ alertmanager_bot_port }} -m comment --comment Alertmanager-bot -j incoming-local
+#-A INPUT -p tcp -m tcp --dport {{ alertmanager_port | default(9093) }} -m comment --comment Alertmanager -j incoming-local
+#-A INPUT -p tcp -m tcp --dport {{ alertmanager_bot_port | default(8007) }} -m comment --comment Alertmanager-bot -j incoming-local
+#-A INPUT -p tcp -m tcp --dport {{ victoria_metrics_port | default(8428) }} -m comment --comment VictoriaMetrics -j incoming-local
+#-A INPUT -p tcp -m tcp --dport {{ vmagent_port | default(8429) }} -m comment --comment VictoriaMetricsAgent -j incoming-local
+#-A INPUT -p tcp -m tcp --dport {{ vmalert_port | default(8880) }} -m comment --comment VictoriaMetricsAlert -j incoming-local
 -A INPUT -p tcp -m tcp --dport 3000 -m comment --comment Grafana -j incoming-local
 -A INPUT -p tcp -m tcp --dport {{ payment_exporter_port | default(9999) }} -m comment --comment payment_exporter -j incoming-local
 {% endif %}

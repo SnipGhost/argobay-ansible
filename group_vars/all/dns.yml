@@ -37,7 +37,11 @@ dnsmasq_hosts:
     rec:
       - { ip: "{{public_vip_ip}}", type: assol.ml }
 
-  - name: prometheus
+  # - name: prometheus
+  #   rec:
+  #     - { ip: "{{monitoring_vip_ip}}", type: assol.ml }
+
+  - name: vm
     rec:
       - { ip: "{{monitoring_vip_ip}}", type: assol.ml }
 

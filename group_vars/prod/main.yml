@@ -63,17 +63,30 @@ nginx_sites:
     display:
       name: Grafana
       icon: grafana.svg
-  - name: prometheus
-    server_name: prometheus.assol.ml
+  # - name: prometheus
+  #   server_name: prometheus.assol.ml
+  #   addr: "{{ monitoring_vip_ip }}"
+  #   local: yes
+  #   port: 9090
+  #   hosts: monitoring_servers
+  #   whitelist:
+  #     - vpn
+  #   display:
+  #     name: Prometheus
+  #     icon: prometheus.svg
+  - name: victoria-metrics
+    server_name: vm.assol.ml
     addr: "{{ monitoring_vip_ip }}"
     local: yes
-    port: 9090
+    port: "{{ victoria_metrics_port }}"
     hosts: monitoring_servers
     whitelist:
       - vpn
     display:
-      name: Prometheus
-      icon: prometheus.svg
+      name: Metrics
+      icon: victoria-metrics.png
+      size: 150%
+      border_radius: 0
   - name: alertmanager
     server_name: alertmanager.assol.ml
     addr: "{{ monitoring_vip_ip }}"

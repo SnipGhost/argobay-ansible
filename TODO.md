@@ -2,7 +2,6 @@
 
 ### Main
 
-- Add basic_auth for prometheus, alertmanager, smarthome
 - Add redis password auth
 - Backup DBs from cron
 - Backup Grafana data

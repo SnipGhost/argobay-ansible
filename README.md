@@ -31,6 +31,7 @@ Playbooks require secret variables:
 - gitlab_runner_reg_token
 - payment_exporter_user
 - payment_exporter_pass
+- htpasswd
 
 passwords is dictionary with user passwords:
 ```yml

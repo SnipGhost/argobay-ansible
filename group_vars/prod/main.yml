@@ -69,6 +69,7 @@ nginx_sites:
   #   local: yes
   #   port: 9090
   #   hosts: monitoring_servers
+  #   basic_auth: yes
   #   whitelist:
   #     - vpn
   #   display:
@@ -80,6 +81,7 @@ nginx_sites:
     local: yes
     port: "{{ victoria_metrics_port }}"
     hosts: monitoring_servers
+    basic_auth: yes
     whitelist:
       - vpn
     display:
@@ -93,6 +95,7 @@ nginx_sites:
     local: yes
     port: "{{ alertmanager_port }}"
     hosts: monitoring_servers
+    basic_auth: yes
     whitelist:
       - vpn
     display:
@@ -107,6 +110,7 @@ nginx_sites:
     # local: yes # No load balancing, only failover
     port: "{{ smarthome_port }}"
     hosts: private_hosts
+    basic_auth: yes
     display:
       name: SmartHome
       icon: smarthome.svg

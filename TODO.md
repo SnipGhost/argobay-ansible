@@ -2,7 +2,7 @@
 
 ### Main
 
-- Extract docker to dedicated role
+- Migrate to Victoria Metrics
 - Add basic_auth for prometheus, alertmanager, smarthome
 - Add redis password auth
 - Backup DBs from cron

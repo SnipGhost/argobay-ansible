@@ -1,5 +1,7 @@
 ---
 - hosts: gitlab_runner
   roles:
+    - name: docker
+      tags: docker
     - name: gitlab_runner
       tags: gitlab_runner

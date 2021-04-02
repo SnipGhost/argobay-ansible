@@ -2,4 +2,3 @@ gitlab_runner_name: arm-runner
 gitlab_runner_install_dir: "/tmp/gitlab-runner-{{ gitlab_runner_name }}"
 gitlab_runner_reg_url: https://gitlab.com/
 gitlab_runner_reg_token: runner_token
-docker_datapath: "/var/lib/docker"

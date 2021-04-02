@@ -178,4 +178,4 @@ payment_exporter_log_level: debug
 payment_exporter_sleep_time: 43200
 ###############################################################################
 # Summary
-project_version: v0.5
+project_version: v0.6

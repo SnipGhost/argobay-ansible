@@ -208,6 +208,8 @@ Workaround is empirically reduce the retention size and scrap intervals.
 https://github.com/prometheus/prometheus/issues/7483
 https://github.com/prometheus/prometheus/issues/4392
 
+UPD: Bad news - 1.8.2 has extremely outdated configuration. Suggest to use Victoria Metrics
+
 ### Telegram bot
 Bot_name: @assol_ml_bot
 

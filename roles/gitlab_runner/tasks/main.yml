@@ -1,20 +1,4 @@
 ---
-- name: Install packages
-  package:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - docker
-    - docker-compose
-
-- name: Create docker-daemon config
-  template:
-    src: daemon.json.j2
-    dest: /etc/docker/daemon.json
-    mode: 0644
-  notify:
-    - docker_restart
-
 - name: Create app directory
   file:
     path: "{{ gitlab_runner_install_dir }}"

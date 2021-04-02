@@ -7,7 +7,7 @@ User=prometheus
 Group=prometheus
 Type=simple
 Restart=always
-ExecStart=/usr/local/bin/memcached_exporter --web.listen-address=0.0.0.0:9150
+ExecStart=/usr/local/bin/memcached_exporter --web.listen-address=0.0.0.0:9150 --memcached.address="{{ memcached_host | default(127.0.0.1) }}:{{ memcached_port | default(11211) }}"
 
 [Install]
 WantedBy=multi-user.target

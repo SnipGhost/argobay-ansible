@@ -7,7 +7,7 @@ User=prometheus
 Group=prometheus
 Type=simple
 Restart=always
-ExecStart=/usr/local/bin/redis_exporter -include-system-metrics
+ExecStart=/usr/local/bin/redis_exporter -include-system-metrics -redis.addr="redis://{{ redis_bind_addr | default(127.0.0.1) }}:{{ redis_bind_port | default(6379) }}"
 
 [Install]
 WantedBy=multi-user.target

@@ -27,13 +27,20 @@
     state: stopped
     enabled: no
 
-- name: Add uwsgi systemd services
+- name: Add uwsgi-apps target
   copy:
     src: "files/{{ item }}"
     dest: "/etc/systemd/system/"
   with_items:
-    - uwsgi-app@.service
     - uwsgi-apps.target
+  notify:
+    - Reload systemd
+    - apps_restart
+
+- name: Add uwsgi systemd services
+  template:
+    src: uwsgi-app@.service.j2
+    dest: /etc/systemd/system/uwsgi-app@.service
   notify:
     - Reload systemd
     - apps_restart

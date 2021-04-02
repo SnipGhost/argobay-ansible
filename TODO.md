@@ -7,7 +7,6 @@
 - Add redis password auth
 - Backup DBs from cron
 - Backup Grafana data
-- Suggest to use 1.x version of Prometheus (?)
 - Prometheus remote write/read for long-term storage
 
 ### Backlog
@@ -20,6 +19,10 @@
 - Add deb-package repo
 - Add keepalived_exporter
 - Remake dnsmasq_exporter
+
+### Failed
+
+- Suggest to use 1.x version of Prometheus - extremely outdated configuration
 
 ### Useful links
 

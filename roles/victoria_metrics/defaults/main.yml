@@ -25,6 +25,7 @@ vmagent_data_path: "{{ data_path }}/vmagent/"
 exec_commands:
   victoria-metrics:
     /usr/local/bin/victoria-metrics-prod
+      -promscrape.config=/etc/prometheus/victoria-metrics.conf
       -storageDataPath={{ victoria_metrics_data_path }}
       -retentionPeriod={{ victoria_metrics_retention }}
       -search.latencyOffset={{ victoria_metrics_scrape_interval }}

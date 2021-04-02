@@ -95,7 +95,7 @@
     src: init.service.j2
     dest: /etc/systemd/system/{{ item }}.service
   register: result2
-  notify: "{{ item }}_restart"
+  # notify: "{{ item }}_restart"
 
 - name: Copy vmalert systemd init file
   vars:
@@ -114,7 +114,8 @@
   template:
     src: prometheus.conf.j2
     dest: /etc/prometheus/victoria-metrics.conf
-  notify: vmagent_restart
+  # notify: vmagent_restart
+  notify: victoria-metrics_restart
 
 - name: Copy rule files
   copy:
@@ -136,17 +137,17 @@
     method: GET
     status_code: 200
 
-- name: Start vmagent service
-  service:
-    name: vmagent
-    state: started
-    enabled: yes
+# - name: Start vmagent service
+#   service:
+#     name: vmagent
+#     state: started
+#     enabled: yes
 
-- name: Check if vmagent is accessible
-  uri:
-    url: http://127.0.0.1:{{ vmagent_port }}/
-    method: GET
-    status_code: 200
+# - name: Check if vmagent is accessible
+#   uri:
+#     url: http://127.0.0.1:{{ vmagent_port }}/
+#     method: GET
+#     status_code: 200
 
 - name: Start vmalert service
   service:

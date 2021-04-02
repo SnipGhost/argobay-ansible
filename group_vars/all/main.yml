@@ -54,12 +54,12 @@ dev_public_vip_ip: 192.168.8.15
 research_vip_id:   6
 research_vip_ip:   192.168.8.16
 #=====================================#
-#  Emulate private on dev-environment
+# Emulate private on dev-environment
 dev_private_vip_id: 7
 dev_private_vip_ip: 192.168.8.17
 ###############################################################################
 # atop
-atop_log_interval: 60
+atop_log_interval: 300
 atop_log_generations: 10
 ###############################################################################
 # Chronyd options
@@ -73,9 +73,9 @@ logrotate_default_rotate: 4
 ###############################################################################
 # Rsyslog
 rsyslog_remote_logdir: /mnt/data/log
-rsyslog_log_period:    daily
-rsyslog_log_rotate:    7
-rsyslog_log_size:      100M
+rsyslog_log_period: daily
+rsyslog_log_rotate: 7
+rsyslog_log_size: 100M
 rsyslog_send_facility:
   - auth
   - authpriv
@@ -97,7 +97,7 @@ dnsmasq_iface: eth0:{{ service_vip_id }}
 # DNS records in dns.yml
 ###############################################################################
 # Prometheus
-prometheus_version:             2.18.1 # Less mmap allocations
+prometheus_version: 2.18.1 # Less mmap allocations
 prometheus_data_retention:      360h
 prometheus_scrape_interval:     15s
 prometheus_evaluation_interval: 15s

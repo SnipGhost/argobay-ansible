@@ -16,8 +16,8 @@ razumator_confdir: /etc/razumator
 razumator_model_path: /var/lib/razumator
 razumator_static_path: /var/www/html/razumator
 # Logging
-razumator_log_period:   daily
-razumator_log_rotate:   7
-razumator_log_size:     10M
+razumator_log_period: daily
+razumator_log_rotate: 7
+razumator_log_size: 10M
 razumator_log_severity: info
 razumator_log_facility: local7

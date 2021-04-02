@@ -3,28 +3,28 @@
 ###############################################################################
 mariadb_cluster_name: GaleraClusterDev
 mariadb_bind_address: 0.0.0.0
-mariadb_max_conn:     512
-mariadb_pool_size:    60M
-mariadb_gcache_size:  100M
-mariadb_gcache_page:  100M
-mariadb_datadir:      "{{data_path}}/mysql"
-mariadb_socket:       /var/run/mysqld/mysqld.sock
+mariadb_max_conn: 512
+mariadb_pool_size: 60M
+mariadb_gcache_size: 100M
+mariadb_gcache_page: 100M
+mariadb_datadir: "{{data_path}}/mysql"
+mariadb_socket: /var/run/mysqld/mysqld.sock
 mariadb_safe_hosts:
   - "localhost"
   - "127.0.0.1"
   - "192.168.8.5_" 
 # MariaDB proxy options
-mariadb_proxy_host:       127.0.0.1
-mariadb_proxy_port:       3307
-mariadb_proxy_port_ro:    3308
+mariadb_proxy_host: 127.0.0.1
+mariadb_proxy_port: 3307
+mariadb_proxy_port_ro: 3308
 mariadb_proxy_check_port: 9200
-mariadb_l7_check:         no
+mariadb_l7_check: no
 ###############################################################################
 # Memcached
-memcached_user:      memcached
-memcached_host:      "{{ lookup('dig', inventory_hostname + '.local') }}"
-memcached_port:      11211
-memcached_max_conn:  512
+memcached_user: memcached
+memcached_host: "{{ lookup('dig', inventory_hostname + '.local') }}"
+memcached_port: 11211
+memcached_max_conn: 512
 memcached_cachesize: 64
 # Memcached proxy options
 memcached_proxy_host: 127.0.0.1
@@ -33,21 +33,21 @@ memcached_proxy_port: 11311
 # Redis
 redis_bind_addr: "{{ lookup('dig', inventory_hostname + '.local') }}"
 redis_bind_port: 6379
-redis_db_count:  5
+redis_db_count: 5
 redis_data_path: "{{ data_path }}/redis/"
 # Redis proxy options
 redis_proxy_host: 127.0.0.1
 redis_proxy_port: 6380
 ###############################################################################
 # HAProxy
-haproxy_bind_ip:   127.0.0.1
-haproxy_stat_uri:  /haproxy_stats
+haproxy_bind_ip: 127.0.0.1
+haproxy_stat_uri: /haproxy_stats
 haproxy_stat_host: 127.0.0.1
 haproxy_stat_port: 9000
 ###############################################################################
 # NGINX options
-default_cert:         /etc/nginx/certs/dev-assol.ml.fullchain.pem
-default_cert_key:     /etc/nginx/certs/dev-assol.ml.privkey.pem
+default_cert:     /etc/nginx/certs/dev-assol.ml.fullchain.pem
+default_cert_key: /etc/nginx/certs/dev-assol.ml.privkey.pem
 nginx_enable_default: yes
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
@@ -151,13 +151,13 @@ nginx_sites:
       icon: wiki.png
 ###############################################################################
 # Dashboards only
-dashboard_path:       /var/www/html/
-dashboard_git:        git@github.com:SnipGhost/cluster-page.git
+dashboard_path: /var/www/html/
+dashboard_git: git@github.com:SnipGhost/cluster-page.git
 dashboard_max_width:  60vw
 dashboard_top_margin: 10vh
-swagger_path:         /var/www/html/swagger
-swagger_git:          git@github.com:SnipGhost/custom-swagger.git
-mdwiki_path:          /var/www/html/mdwiki/
+swagger_path: /var/www/html/swagger
+swagger_git: git@github.com:SnipGhost/custom-swagger.git
+mdwiki_path: /var/www/html/mdwiki/
 display_only_sites:
   - name: Кластер
     addr: https://internal.dev-assol.ml/cluster/

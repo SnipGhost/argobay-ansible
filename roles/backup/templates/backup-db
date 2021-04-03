@@ -1,0 +1,6 @@
+#!/bin/sh
+for db in {{ item.important_databases | join(' ') }}
+do
+        mysqldump $db | gzip > /mnt/data/backup/${db}.$(date '+%d.%m.%Y-%H:%M:%S').sql.gz
+done
+find /mnt/data/backup/ -mtime +{{ item.retention }} -type f -iname "*.sql.gz" -delete

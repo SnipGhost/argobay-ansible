@@ -30,7 +30,7 @@
 
 - name: Creates data directory
   file: 
-    path: "{{ data_path }}/grafana/"
+    path: "{{ grafana_data_path }}"
     state: directory
     owner: "{{ userId }}"
     group: "{{ groupId }}"

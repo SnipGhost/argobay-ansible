@@ -161,6 +161,7 @@ alertmanager_bot_telegram_admins:
 ###############################################################################
 # Grafana
 grafana_domain: grafana.assol.ml
+grafana_data_path: "{{ data_path }}/grafana/"
 ###############################################################################
 # Jupyter
 jupyter_port: 8888
@@ -187,6 +188,21 @@ payment_exporter_bindir: /usr/local/bin/payment_exporter
 payment_exporter_config: /etc/payment_exporter.config.json
 payment_exporter_log_level: debug
 payment_exporter_sleep_time: 43200
+###############################################################################
+# Backup scripts
+backup_scripts:
+  - tpl: backup-db
+    interval: daily
+    group: monitoring_servers
+    retention: 3
+    important_databases:
+      - smarthome
+      - marusyatech
+      - mysql
+  - tpl: backup-grafana
+    interval: daily
+    group: monitoring_servers
+    retention: 3
 ###############################################################################
 # Summary
 project_version: v0.6

@@ -1,0 +1,11 @@
+---
+- name: Add backup scripts
+  template:
+    src: "{{ item.tpl }}"
+    dest: /etc/cron.{{ item.interval }}/{{ item.tpl }}
+    mode: 755
+  notify: cron_restart
+  when: inventory_hostname in groups[item.group]
+  with_items: "{{ backup_scripts | default([]) }}"
+
+- meta: flush_handlers

@@ -3,8 +3,6 @@
 ### Main
 
 - Add redis password auth
-- Backup DBs from cron
-- Backup Grafana data
 - Install K8S
 
 ### Backlog
@@ -12,7 +10,6 @@
 - Extract vmagent & vmalert from victoria_metrics
 - Suggest to use the nginx-lua-prometheus exporter
 - Fix certbot systemd unit with /usr/local/bin
-- Customize mdwiki
 - Make jupyter-notebook role with the systemd unit
 - Upgrade Redis to master-slave replication
 - Add deb-package repo

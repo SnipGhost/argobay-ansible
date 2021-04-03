@@ -10,3 +10,4 @@
 - import_playbook: razumator.yml
 
 - import_playbook: runner.yml
+- import_playbook: post_install.yml

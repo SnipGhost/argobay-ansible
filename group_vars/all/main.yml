@@ -205,4 +205,4 @@ backup_scripts:
     retention: 3
 ###############################################################################
 # Summary
-project_version: v0.6
+project_version: v0.7

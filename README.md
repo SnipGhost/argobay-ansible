@@ -42,6 +42,13 @@ passwords:
 
 + ssl cert & key from {{default_cert}} & {{default_cert_key}}
 
+
+## Init repo
+
+1) Create secrets files for all, prod and dev
+2) `ansible-galaxy install -r requirements.yml`
+
+
 ## Use-cases
 
 Run only logrotate & rsyslog on DEV:

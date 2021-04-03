@@ -1,0 +1,3 @@
+- src: git@bmstu.codes:iu5/infrastructure/dashboards-role.git
+  name: dashboards
+  scm: git

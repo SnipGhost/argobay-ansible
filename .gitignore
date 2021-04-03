@@ -3,3 +3,4 @@ secret*.yml
 *.pem
 *.key
 *.crt
+roles/dashboards

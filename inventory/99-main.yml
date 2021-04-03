@@ -78,6 +78,9 @@ ichika
 [monitoring_servers]
 asuna
 
+[payment_servers]
+miku
+
 [gitlab_runner]
 itsuki
 

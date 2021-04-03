@@ -121,7 +121,7 @@ prometheus_jobs:
   - { name: memcached, port: 9150, group: memcached_servers }
   # - { name: dnsmasq, port: 9153, group: dns_servers }
   - { name: rpi, port: 9243, group: raspberry_pi }
-  - { name: payment, port: 9999, group: monitoring_servers }
+  - { name: payment, port: 9999, group: payment_servers }
 ###############################################################################
 # Prometheus exporter's options
 rpi_exporter_version: 0.6.0
@@ -186,7 +186,7 @@ gitlab_runner_reg_url: https://bmstu.codes/
 payment_exporter_git: https://github.com/SnipGhost/payment_exporter
 payment_exporter_bindir: /usr/local/bin/payment_exporter
 payment_exporter_config: /etc/payment_exporter.config.json
-payment_exporter_log_level: debug
+payment_exporter_log_level: info
 payment_exporter_sleep_time: 43200
 ###############################################################################
 # Backup scripts

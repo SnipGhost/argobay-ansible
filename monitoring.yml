@@ -4,12 +4,17 @@
     # - name: prometheus
     #   tags: prometheus
     - name: victoria_metrics
-      tags: victoria_metrics
+      tags:
+        - victoria_metrics
+        - prometheus
     - name: alertmanager
       tags: alertmanager
     - name: alertmanager_bot
       tags: alertmanager_bot
     - name: grafana
       tags: grafana
+
+- hosts: payment_servers
+  roles:
     - name: payment_exporter
       tags: payment_exporter

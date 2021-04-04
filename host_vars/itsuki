@@ -1,5 +1,5 @@
 proc_version: armv7
-has_fan: yes
+has_fan: no
 
 disks:
   - /dev/sda

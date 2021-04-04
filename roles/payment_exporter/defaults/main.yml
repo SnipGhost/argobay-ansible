@@ -6,6 +6,8 @@ groupId: prometheus
 payment_exporter_git: https://github.com/SnipGhost/payment_exporter
 payment_exporter_bindir: /usr/local/bin/payment_exporter
 payment_exporter_config: /etc/payment_exporter.config.json
+payment_exporter_rundir: /var/lib/payment_exporter
+payment_exporter_dump: "{{ payment_exporter_rundir }}/dump.json"
 
 exec_command: "{{ payment_exporter_bindir }}/env/bin/python3 {{ payment_exporter_bindir }}/payment_exporter.py -c {{ payment_exporter_config }}"
 
@@ -13,4 +15,5 @@ payment_exporter_log_level: info
 payment_exporter_user: username
 payment_exporter_pass: password
 payment_exporter_sleep_time: 86400
+payment_exporter_maryno_net_min_sleep_time: 3600
 payment_exporter_port: 9999

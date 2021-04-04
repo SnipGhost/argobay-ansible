@@ -38,6 +38,16 @@
   notify:
     - payment_exporter_restart
 
+- name: Creates run directory
+  file: 
+    path: "{{ payment_exporter_rundir }}"
+    state: directory
+    owner: "{{userId}}"
+    group: "{{groupId}}"
+    mode: 0755
+  notify:
+    - payment_exporter_wait
+
 - name: Create venv and install requirements
   pip: 
     requirements: "{{ payment_exporter_bindir }}/requirements.txt"

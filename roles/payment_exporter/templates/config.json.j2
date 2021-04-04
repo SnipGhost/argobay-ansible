@@ -2,11 +2,17 @@
 	"log_level": "{{ payment_exporter_log_level }}",
 	"sleep": {{ payment_exporter_sleep_time }},
 	"port": {{ payment_exporter_port }},
+	"dump": "{{ payment_exporter_dump }}",
 	"extractors": {
 		"maryno_net": {
 			"module": "MarynoNetExtractor",
 			"username": "{{ payment_exporter_user }}",
-			"password": "{{ payment_exporter_pass }}"
+			"password": "{{ payment_exporter_pass }}",
+			"interval": {% if payment_exporter_sleep_time < payment_exporter_maryno_net_min_sleep_time %}{{ payment_exporter_maryno_net_min_sleep_time // payment_exporter_sleep_time }}{% else %}0{% endif %}{{ '' }}
+		},
+		"speed_test": {
+			"module": "SpeedTestExtractor",
+			"attempts": 3
 		}
 	},
 	"metrics": {
@@ -59,6 +65,35 @@
 			"days_since_block": {
 				"desc": "Maryno.net provider days since last blocking",
 				"type": "bonus"
+			}
+		},
+		"speed_test": {
+			"avg_latency": {
+				"desc": "Average latency in ms"
+			},
+			"avg_download": {
+				"desc": "Average download speed in bits/sec"
+			},
+			"avg_upload": {
+				"desc": "Average upload speed in bits/sec"
+			},
+			"min_latency": {
+				"desc": "Minimum latency in ms"
+			},
+			"min_download": {
+				"desc": "Minimum download speed in bits/sec"
+			},
+			"min_upload": {
+				"desc": "Minimum upload speed in bits/sec"
+			},
+			"max_latency": {
+				"desc": "Maximum latency in ms"
+			},
+			"max_download": {
+				"desc": "Maximum download speed in bits/sec"
+			},
+			"max_upload": {
+				"desc": "Maximum upload speed in bits/sec"
 			}
 		}
 	}

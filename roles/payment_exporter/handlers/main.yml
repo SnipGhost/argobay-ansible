@@ -8,3 +8,8 @@
     name: payment_exporter
     state: restarted
   listen: payment_exporter_restart
+
+- name: Wait for init metrics
+  pause:
+    seconds: 60
+  listen: payment_exporter_wait

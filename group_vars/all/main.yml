@@ -186,8 +186,11 @@ gitlab_runner_reg_url: https://bmstu.codes/
 payment_exporter_git: https://github.com/SnipGhost/payment_exporter
 payment_exporter_bindir: /usr/local/bin/payment_exporter
 payment_exporter_config: /etc/payment_exporter.config.json
+payment_exporter_rundir: /var/lib/payment_exporter
+payment_exporter_dump: "{{ payment_exporter_rundir }}/dump.json"
 payment_exporter_log_level: info
-payment_exporter_sleep_time: 43200
+payment_exporter_sleep_time: 21600
+payment_exporter_maryno_net_min_sleep_time: 3600
 ###############################################################################
 # Backup scripts
 backup_scripts:

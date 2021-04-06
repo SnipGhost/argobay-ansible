@@ -1,6 +1,7 @@
 ## TODO list
 
 ### Main
+- Fix Prometheus*Slow alerts for Victoria Metrics
 - Add deb-package repo & pipelines
 - Add redis password auth
 - Install PostgreSQL-cluster

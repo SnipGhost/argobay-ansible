@@ -101,20 +101,20 @@ groups:
           summary: "Host physical component too hot (instance {{ $labels.instance }})"
           description: "Physical hardware component {{ $labels.instance }} too hot. VALUE = {{ $value }}."
 
-      - alert: PrometheusRuleEvaluationSlow
-        expr: prometheus_rule_group_last_duration_seconds > prometheus_rule_group_interval_seconds
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Prometheus rule evaluation slow (instance {{ $labels.instance }})"
-          description: "Prometheus rule evaluation took more time than the scheduled interval. It indicates a slower storage backend access or too complex query. VALUE = {{ $value }}. LABELS: {{ $labels }}."
+      # - alert: PrometheusRuleEvaluationSlow
+      #   expr: prometheus_rule_group_last_duration_seconds > prometheus_rule_group_interval_seconds
+      #   for: 5m
+      #   labels:
+      #     severity: warning
+      #   annotations:
+      #     summary: "Prometheus rule evaluation slow (instance {{ $labels.instance }})"
+      #     description: "Prometheus rule evaluation took more time than the scheduled interval. It indicates a slower storage backend access or too complex query. VALUE = {{ $value }}. LABELS: {{ $labels }}."
       
-      - alert: PrometheusTargetScrapingSlow
-        expr: prometheus_target_interval_length_seconds{quantile="0.9"} > 60
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Prometheus target scraping slow (instance {{ $labels.instance }})"
-          description: "Prometheus is scraping exporters slowly. VALUE = {{ $value }}. LABELS: {{ $labels }}."
+      # - alert: PrometheusTargetScrapingSlow
+      #   expr: prometheus_target_interval_length_seconds{quantile="0.9"} > 60
+      #   for: 5m
+      #   labels:
+      #     severity: warning
+      #   annotations:
+      #     summary: "Prometheus target scraping slow (instance {{ $labels.instance }})"
+      #     description: "Prometheus is scraping exporters slowly. VALUE = {{ $value }}. LABELS: {{ $labels }}."

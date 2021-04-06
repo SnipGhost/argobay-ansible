@@ -162,4 +162,7 @@ display_only_sites:
   - name: Кластер
     addr: https://internal.dev-assol.ml/cluster/
     icon: cluster.svg
+  - name: Grafana
+    addr: https://grafana.assol.ml/
+    icon: grafana.svg
 ###############################################################################

@@ -89,6 +89,29 @@ dnsmasq_hosts:
       - { ip: "{{dev_private_vip_ip}}", type: dev-assol.ml }
 
   #========================================================
+  # Network devices
+
+  - name: router
+    rec:
+      - { ip: 192.168.8.1, type: i }
+
+  - name: switch-main
+    rec:
+      - { ip: 192.168.8.2, type: i }
+
+  - name: switch-cluster
+    rec:
+      - { ip: 192.168.8.3, type: i }
+
+  - name: switch-mak
+    rec:
+      - { ip: 192.168.8.4, type: i }
+
+  - name: switch-horifox
+    rec:
+      - { ip: 192.168.8.5, type: i }
+      
+  #========================================================
   # IoT devices
 
   - name: pilot

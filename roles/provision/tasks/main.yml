@@ -18,16 +18,23 @@
 
 - name: Add ansible user
   user:
-    name: ansible
+    name: "{{ ansible_user }}"
     state: present
-    password: "{{ '%s' | format(passwords['ansible']) | password_hash('sha512') }}"
+    password: "{{ '%s' | format(passwords[ansible_user]) | password_hash('sha512') }}"
 
 - name: Add ansible user to sudoers
   lineinfile:
     path: /etc/sudoers
     state: present
-    regexp: '^ansible\s'
-    line: 'ansible ALL=(ALL) ALL'
+    regexp: '^{{ ansible_user }}\s'
+    line: '{{ ansible_user }} ALL=(ALL) ALL'
+
+- name: Add public keys to authorized_key for ansible
+  authorized_key:
+    user: "{{ ansible_user }}"
+    state: present
+    key: "{{ item.key }}"
+  with_items: "{{ admins | default([]) }}"
 
 - name: Get hostname
   shell: "raspi-config nonint get_hostname"
@@ -65,8 +72,6 @@
     - disable-bt
   when: not rpi_disable_wireless | default(false) | bool
 
-- reboot:
-
 - name: Write dhcpcd config for static IP
   template:
     src: dhcpcd.conf.j2
@@ -75,5 +80,6 @@
     mode: 0664
     owner: root
     group: netdev
-  notify:
-    reboot_server
+
+- command: "reboot"
+  ignore_errors: yes

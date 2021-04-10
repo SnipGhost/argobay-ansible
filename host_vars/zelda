@@ -1,0 +1,24 @@
+proc_version: armv7
+has_fan: yes
+max_mem_lock: "524288" # KiB
+
+disks:
+  - /dev/sda
+
+keepalived_vips:
+
+  - id: "{{ monitoring_vip_id }}"
+    name: monitoring_vip
+    ip: "{{ monitoring_vip_ip }}"
+    priority: 190
+    state: BACKUP
+    iface: eth0
+    password: "{{ monitoring_vip_password }}"
+
+  - id: "{{ service_vip_id }}"
+    name: service_vip
+    ip: "{{ service_vip_ip }}"
+    priority: 180
+    state: BACKUP
+    iface: eth0
+    password: "{{ service_vip_password }}"

@@ -1,6 +1,7 @@
 ## TODO list
 
 ### Main
+- VictoriaMetrics HA with Zelda
 - Fix Prometheus*Slow alerts for Victoria Metrics
 - Add deb-package repo & pipelines
 - Add redis password auth

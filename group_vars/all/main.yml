@@ -158,6 +158,7 @@ alertmanager_bot_bolt_path: "{{ alertmanager_bot_boltdir }}/am_bot.db"
 alertmanager_bot_telegram_admins:
   - 148129813 # @snipghost
   - 425226470 # @horifox
+  - 525681106 # Александр Васильев
 ###############################################################################
 # Grafana
 grafana_domain: grafana.assol.ml

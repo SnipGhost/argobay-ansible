@@ -15,11 +15,3 @@ keepalived_vips:
     state: MASTER
     iface: eth0
     password: "{{ research_vip_password }}"
-
-  - id: "{{ service_vip_id }}"
-    name: service_vip
-    ip: "{{ service_vip_ip }}"
-    priority: 180
-    state: BACKUP
-    iface: eth0
-    password: "{{ service_vip_password }}"

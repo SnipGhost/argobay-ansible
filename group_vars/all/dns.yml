@@ -172,6 +172,11 @@ dnsmasq_hosts:
       - { ip: 192.168.8.57, type: e }
       - { ip: 192.168.8.67, type: w, main: yes }
 
+  - name: zelda
+    rec:
+      - { ip: 192.168.8.58, type: e, main: yes }
+      - { ip: 192.168.8.68, type: w }
+
   - name: yukinon
     rec:
       - { ip: 192.168.8.30, type: e }

@@ -1,17 +1,20 @@
 [prod_db_servers]
 asuna db_master=yes
+zelda
 ichika
 
 [prod_memcached_servers]
 asuna
-nino
+zelda
 
 [prod_redis_servers]
 asuna redis_master=yes
+zelda
 ichika
 
 [prod_web_servers]
 asuna
+zelda
 ichika
 nino
 miku

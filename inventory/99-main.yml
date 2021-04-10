@@ -7,6 +7,7 @@ yotsuba
 itsuki
 rikka
 # metroid
+zelda
 
 [notebooks]
 # yukinon
@@ -18,6 +19,7 @@ nino
 miku
 yotsuba
 # yukinon
+zelda
 
 [prod:vars]
 private_group=private_hosts
@@ -73,10 +75,11 @@ itsuki
 [dns_servers]
 asuna
 miku
-ichika
+zelda
 
 [monitoring_servers]
 asuna
+# zelda
 
 [payment_servers]
 miku

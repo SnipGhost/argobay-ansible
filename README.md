@@ -73,7 +73,9 @@ ansible-playbook all_hosts.yml --tags common -e "set_passwords=yes"
 
 To provision Raspberry Pi host:
 ```bash
-ansible-playbook provision.yml -e "HOSTNAME=itsuki" -i 192.168.8.184,
+export ANSIBLE_HOST_KEY_CHECKING=False
+ansible-playbook provision.yml -e "HOSTNAME=zelda rpi_disable_wireless=yes" -i 192.168.8.144,
+unset ANSIBLE_HOST_KEY_CHECKING
 ```
 
 Install mariadb first time [ATTENTION!]:

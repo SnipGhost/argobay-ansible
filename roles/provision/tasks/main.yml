@@ -41,6 +41,29 @@
 
 - name: Configurate WiFi
   shell: "raspi-config nonint do_wifi_ssid_passphrase {{ ap_ssid }} {{ ap_pass }} && raspi-config nonint do_wifi_country {{ ap_code }}"
+  when: not rpi_disable_wireless | default(false) | bool
+
+- name: Disable wireless modules
+  lineinfile:
+    line: 'dtoverlay={{ item }}'
+    dest: /boot/config.txt
+    regexp: "^ *#? *dtoverlay={{ item }}"
+    insertafter: [all]
+  with_items:
+    - disable-wifi
+    - disable-bt
+  when: rpi_disable_wireless | default(false) | bool
+
+- name: Enable wireless modules
+  lineinfile:
+    line: '#dtoverlay={{ item }}'
+    dest: /boot/config.txt
+    regexp: "^ *#? *dtoverlay={{ item }}"
+    insertafter: [all]
+  with_items:
+    - disable-wifi
+    - disable-bt
+  when: not rpi_disable_wireless | default(false) | bool
 
 - name: Write dhcpcd config for static IP
   template:
@@ -51,5 +74,4 @@
     owner: root
     group: netdev
 
-- shell: "reboot"
-  ignore_errors: yes
+- reboot:

@@ -65,6 +65,8 @@
     - disable-bt
   when: not rpi_disable_wireless | default(false) | bool
 
+- reboot:
+
 - name: Write dhcpcd config for static IP
   template:
     src: dhcpcd.conf.j2
@@ -73,5 +75,5 @@
     mode: 0664
     owner: root
     group: netdev
-
-- reboot:
+  notify:
+    reboot_server

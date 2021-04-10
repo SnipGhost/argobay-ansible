@@ -1,0 +1,5 @@
+---
+- name: Reboot server
+  command: reboot
+  listen: reboot_server
+  ignore_errors: yes

@@ -8,9 +8,12 @@
   template:
     src: redis-server.service.j2
     dest: /lib/systemd/system/redis-server.service
-  notify:
-    - Reload systemd
-    - redis_restart
+  register: daemon
+  notify: redis_restart
+
+- name: Reload systemd unit file
+  command: systemctl daemon-reload
+  when: daemon.changed
 
 - name: Copy config file
   template:

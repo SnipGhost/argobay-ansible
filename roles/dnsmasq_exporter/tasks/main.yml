@@ -6,7 +6,6 @@
     dest: /usr/bin/dnsmasq_exporter
     mode: 0755
   notify: dnsmasq_exporter_restart
-  when: dnsmasq_exporter_enabled | default(true) | bool
 
 - name: Install dnsmasq_exporter systemd-unit
   get_url:
@@ -14,7 +13,6 @@
     dest: /etc/systemd/system/dnsmasq_exporter.service
     mode: 0644
   notify: Reload systemd
-  when: dnsmasq_exporter_enabled | default(true) | bool
 
 - meta: flush_handlers
 

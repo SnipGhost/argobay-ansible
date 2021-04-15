@@ -1,0 +1,27 @@
+---
+- name: Create directory for local ceph-monitor
+  file:
+    path: /var/lib/ceph/bootstrap-osd/
+    state: directory
+    owner: ceph
+    group: ceph
+    mode: 0750
+
+- name: Configure ceph bootstrap-osd key 
+  template:
+    src: ceph.keyring.j2
+    dest: /var/lib/ceph/bootstrap-osd/ceph.keyring
+    owner: root
+    group: ceph
+    mode: 0640
+    backup: yes
+
+# /usr/sbin/sgdisk -n '1:0:0' -c '1:Linux LVM' -t '1:8e00' /dev/sdx
+- name: Deploy ceph-osd
+  shell: "/usr/sbin/ceph-volume lvm prepare --data {{ item }}"
+  with_items: "{{ ceph_disks | default([]) }}"
+  when: manage_disks | default(false) | bool
+
+- name: Activate all ceph-osd
+  shell: /usr/sbin/ceph-volume lvm activate --all
+  when: manage_disks | default(false) | bool

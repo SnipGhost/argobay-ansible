@@ -1,0 +1,4 @@
+ceph_release: pacific
+mons_group: ceph_mons
+osds_group: ceph_osds
+rgw_lb_group: ceph_rgw_lb

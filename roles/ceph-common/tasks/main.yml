@@ -1,0 +1,59 @@
+---
+- name: Add ceph repo
+  template:
+    src: ceph.repo.j2
+    dest: /etc/apt/sources.list.d/download_ceph_com_debian_{{ ceph_release }}.list 
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+
+- name: Install ceph
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ceph
+    - ceph-mds
+
+- name: Create directories for ceph
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: ceph
+    group: ceph
+    mode: '0750'
+  with_items:
+    - /var/lib/ceph/
+    - /etc/ceph/
+
+- name: Configure ceph
+  vars:
+    server_names: "{{ groups[mons_group] }}"
+  template:
+    src: ceph.conf.j2
+    dest: /etc/ceph/ceph.conf
+    owner: root
+    group: ceph
+    mode: 0644
+    backup: yes
+
+- name: Configure ceph admin keys
+  template:
+    src: ceph.client.admin.keyring.j2
+    dest: "/etc/ceph/ceph.client.admin.keyring"
+    owner: root
+    group: ceph
+    mode: 0600
+    backup: yes
+
+# - name: Configure ceph user keys
+#   template:
+#     src: ceph.client.keyring.j2
+#     dest: "/etc/ceph/ceph.client.{{ item.name }}.keyring"
+#     owner: root
+#     group: ceph
+#     mode: 0644
+#     backup: yes
+#   with_items:
+#     - { name: user, key: "{{ ceph_keys['user'] }}" }

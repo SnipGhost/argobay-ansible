@@ -1,0 +1,22 @@
+ceph_release: pacific
+mons_group: ceph_mons
+osds_group: ceph_osds
+# rgws_group: ceph_rgws
+rgw_lb_group: ceph_rgw_lb
+
+ceph_init_member: zelda
+
+# Total PGs = (Total_number_of_OSD * 100) / max_replication_count
+ceph_pg_count: 256
+
+# Disable journal for SSDs
+ceph_journal_size: 0
+ceph_cache_size: 1073741824
+
+ceph_fsid: 334c1c58-eb81-4d49-a718-dd8167efd79b
+
+ceph_admin_key: AQCranRg8f17KxAAegHPERmy5zQB+pQaHWOA3g==
+ceph_mon_key: AQCUanRgdjCCCxAAAhmQgxGbxkyVhs+PoKaXJw==
+ceph_osd_key: AQA3bnRggT9pOxAAmv8bJdg1sJbIhlGGB36erw==
+ceph_mgr_key: AQDcbXRg45odDxAAG1JAymzw3no0PqkkLOza5Q==
+

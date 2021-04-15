@@ -1,0 +1,20 @@
+[mon.]
+	key = {{ ceph_mon_key }}
+	caps mon = "allow *"
+{% for host in server_names %}
+[mgr.{{ host }}]
+	key = {{ ceph_mgr_key }}
+	caps mds = "allow *"
+	caps mon = "allow profile mgr"
+	caps osd = "allow *"
+{% endfor %}
+[client.admin]
+	key = {{ ceph_admin_key }}
+	auid = 0
+	caps mds = "allow"
+	caps mon = "allow *"
+	caps osd = "allow *"
+[client.bootstrap-osd]
+	key = {{ ceph_osd_key }}
+	caps osd = "profile bootstrap-osd"
+	caps mon = "allow profile bootstrap-osd"

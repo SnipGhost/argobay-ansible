@@ -152,6 +152,7 @@ certbot certonly -a certbot-dns-freenom:dns-freenom \
 
 ### Certbot import error
 Install last certbot-nginx from pypi: https://pypi.org/project/certbot-nginx/#files
+And fix binary path in /lib/systemd/system/certbot.service
 
 ### Marusya skill tester
 [Skill tester](https://skill-tester.marusia.mail.ru)
@@ -257,4 +258,16 @@ function stopwatch(){
     sleep 0.1
    done
 }
+```
+
+### Create htpasswd file
+```bash
+htpasswd -c htpasswd admin
+```
+
+### Create ceph logical volume
+```bash
+pvcreate /dev/sda1
+vgcreate cephvg /dev/sda1
+lvcreate --name cephlv -l 100%FREE cephvg
 ```

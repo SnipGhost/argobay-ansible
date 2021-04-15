@@ -1,0 +1,5 @@
+[mgr.{{ ansible_fqdn }}]
+	key = {{ ceph_mgr_key }}
+	caps mds = "allow *"
+	caps mon = "allow profile mgr"
+	caps osd = "allow *"

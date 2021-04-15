@@ -62,6 +62,10 @@ research_vip_ip:   192.168.8.16
 # Emulate private on dev-environment
 dev_private_vip_id: 7
 dev_private_vip_ip: 192.168.8.17
+#=====================================#
+# Rados gateway load balancer VIP
+rgw_lb_vip_id: 8
+rgw_lb_vip_ip: 192.168.8.18
 ###############################################################################
 # atop
 atop_log_interval: 300

@@ -1,6 +1,7 @@
 ## TODO list
 
 ### Main
+- Ceph mon & mgr autostart
 - VictoriaMetrics HA with Zelda
 - Fix Prometheus*Slow alerts for Victoria Metrics
 - Add deb-package repo & pipelines
@@ -8,6 +9,8 @@
 - Install PostgreSQL-cluster
 - Install OIDC-Provider
 - Install K8S
+- HTTP-cache nginx + keepalive connections
+- Ceph secure iptables (static ports for osd-s)
 
 ### Backlog
 - Extract vmagent & vmalert from victoria_metrics role

@@ -26,6 +26,10 @@ dnsmasq_hosts:
     rec:
       - { ip: "{{research_vip_ip}}", type: i }
 
+  - name: rgw
+    rec:
+      - { ip: "{{ rgw_lb_vip_ip }}", type: i }
+
   #========================================================
   # Internal subdomain records
 

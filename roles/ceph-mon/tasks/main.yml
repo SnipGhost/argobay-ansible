@@ -1,0 +1,101 @@
+---
+- name: Clear artifact mon and mgr path
+  file:
+    path: "/var/lib/ceph/{{ item }}/ceph-{{ ansible_fqdn }}/"
+    state: absent
+  with_items:
+    - mon
+    - mgr
+
+- name: Create directory for local ceph-monitor
+  file:
+    path: "/var/lib/ceph/{{ item }}/ceph-{{ ansible_fqdn }}"
+    state: directory
+    owner: ceph
+    group: ceph
+    mode: 0755
+  with_items:
+    - mon
+    - mgr
+
+- name: Delete old mon keyring
+  file:
+    path: /tmp/ceph.mon.keyring
+    state: absent
+
+# - name: Create keyring for ceph
+#   shell:
+#     /bin/ceph-authtool --create-keyring /tmp/ceph.mon.keyring --gen-key -n mon. --cap mon 'allow *' && 
+#     /bin/ceph-authtool --create-keyring /etc/ceph/ceph.client.admin.keyring --gen-key -n client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow' && 
+#     /bin/ceph-authtool /tmp/ceph.mon.keyring --import-keyring /etc/ceph/ceph.client.admin.keyring;
+
+# Similarly to the above task
+- name: Create keyring for ceph
+  vars:
+    server_names: "{{ groups[mons_group] }}"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: ceph
+    mode: 0640
+    backup: yes
+  with_items:
+    - { src: keys/ceph.mon.keyring, dest: /tmp/ceph.mon.keyring }
+    - { src: keys/ceph.mgr.keyring, dest: "/var/lib/ceph/mgr/ceph-{{ ansible_fqdn }}/keyring" }
+    - { src: keys/ceph.keyring, dest: /var/lib/ceph/bootstrap-osd/ceph.keyring }
+
+- name: Create monmap for local ceph-monitor
+  vars:
+    server_names: "{{ groups[mons_group] }}"
+  shell:
+    "/bin/monmaptool --create --clobber \
+      {% for host in server_names -%} --add {{ host }} {{ hostvars[host]['ansible_default_ipv4']['address'] }} {{ ' ' }} {%- endfor %}
+      --fsid {{ ceph.fsid }} /tmp/monmap;"
+
+- name: Move data to directory for local ceph-monitor
+  shell:
+    "/bin/ceph-mon --mkfs -i {{ ansible_fqdn }} --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring"
+
+- name: Create keyring for ceph-mon
+  vars:
+    server_names: "{{ groups[mons_group] }}"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: ceph
+    mode: 0640
+    backup: yes
+  with_items:
+    - { src: keys/ceph.mon.keyring, dest: "/var/lib/ceph/mon/ceph-{{ ansible_fqdn }}/keyring" }
+
+- name: Submit configuration for local ceph-monitor
+  file:
+    path: "/var/lib/ceph/mon/ceph-{{ ansible_fqdn }}"
+    recurse: yes
+    state: directory
+    owner: ceph
+    group: ceph
+
+# TODO: Know why default kv_backend file (with leveldb) causes a service crash
+- name: Remove kv_backend file
+  file:
+    path: "/var/lib/ceph/mon/ceph-{{ ansible_fqdn }}/kv_backend"
+    state: absent
+
+- name: Start and enable ceph-monitor and ceph-manager
+  systemd:
+    name: "{{ item }}@{{ ansible_fqdn }}"
+    enabled: yes
+    state: started
+  with_items:
+    - ceph-mon
+    - ceph-mgr
+
+# Fix auth issues
+- name: Change client.bootstrap-osd
+  shell:
+    /bin/ceph auth del client.bootstrap-osd && 
+    /bin/ceph auth add client.bootstrap-osd -i /var/lib/ceph/bootstrap-osd/ceph.keyring;
+  when: inventory_hostname == groups[mons_group][0]

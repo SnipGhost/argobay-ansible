@@ -4,6 +4,9 @@ has_fan: no
 disks:
   - /dev/sda
 
+ceph_disks:
+  - /dev/sda1
+
 keepalived_vips:
 
   - id: "{{ dev_private_vip_id }}"

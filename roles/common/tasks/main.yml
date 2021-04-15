@@ -22,6 +22,7 @@
       - tmux
       - dnsutils
       - tcpdump
+      - lvm2
     state: present
 
 - name: Install virtualenv via pip

@@ -1,0 +1,21 @@
+
+- hosts:
+    - ceph_mons
+    - ceph_osds
+  order: sorted
+  roles:
+    - role: ceph-common
+      tags: ceph-common
+
+- hosts: ceph_mons
+  order: sorted
+  roles:
+    - role: ceph-mon
+      tags: ceph-mon
+      when: ceph_unsafe_mode | default(false) | bool
+
+- hosts: ceph_osds
+  order: sorted
+  roles:
+    - role: ceph-osd
+      tags: ceph-osd

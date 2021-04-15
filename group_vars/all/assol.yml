@@ -3,7 +3,7 @@
 ###############################################################################
 # Marusya skill API
 marusya_skill_git: https://github.com/HoriFox/MarusyaSkill.git
-# marusya_skill_bind: 127.0.0.1 # No locad balancing, only failover
+# marusya_skill_bind: 127.0.0.1 # No load balancing, only failover
 marusya_skill_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
 marusya_skill_port: 5000
 marusya_skill_port_dev: 8080
@@ -22,8 +22,8 @@ marusya_skill_log_facility: local7
 ###############################################################################
 # SmartHome API
 smarthome_git: https://github.com/HoriFox/SmartHomeApi.git
-smarthome_host: "{{ private_vip_ip }}"
-# smarthome_bind: 127.0.0.1 # No locad balancing, only failover
+smarthome_host: smarthome.assol.ml
+# smarthome_bind: 127.0.0.1 # No load balancing, only failover
 smarthome_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
 smarthome_port: 4050
 smarthome_port_dev: 4060

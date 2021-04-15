@@ -6,7 +6,6 @@ marusya_skill_git: https://github.com/HoriFox/MarusyaSkill.git
 # marusya_skill_bind: 127.0.0.1 # No load balancing, only failover
 marusya_skill_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
 marusya_skill_port: 5000
-marusya_skill_port_dev: 8080
 # uWSGI
 marusya_skill_buffer_size: 65535
 # Dirs
@@ -22,11 +21,11 @@ marusya_skill_log_facility: local7
 ###############################################################################
 # SmartHome API
 smarthome_git: https://github.com/HoriFox/SmartHomeApi.git
-smarthome_host: smarthome.assol.ml
 # smarthome_bind: 127.0.0.1 # No load balancing, only failover
 smarthome_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
 smarthome_port: 4050
-smarthome_port_dev: 4060
+smarthome_connect_host: smarthome.assol.ml
+smarthome_connect_port: 443
 # uWSGI
 smarthome_buffer_size: 65535
 # Dirs

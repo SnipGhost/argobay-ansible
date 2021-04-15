@@ -3,9 +3,10 @@ groupId: assol
 app_name: smarthome
 
 smarthome_git: https://github.com/HoriFox/SmartHomeApi.git
-smarthome_host: 127.0.0.1
 smarthome_bind: 127.0.0.1
 smarthome_port: 4050
+smarthome_connect_host: 127.0.0.1
+smarthome_connect_port: 4050
 smarthome_buffer_size: 65535
 smarthome_logdir: "/var/log/{{ app_name }}"
 smarthome_bindir: "/usr/local/bin/{{ app_name }}"

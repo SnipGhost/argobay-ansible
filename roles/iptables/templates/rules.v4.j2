@@ -66,15 +66,21 @@
 -A INPUT -p tcp -m tcp --dport 3000 -m comment --comment Grafana -j incoming-local
 {% endif %}
 
-{% if inventory_hostname in groups['payment_servers'] %}
--A INPUT -p tcp -m tcp --dport {{ payment_exporter_port | default(9999) }} -m comment --comment payment_exporter -j incoming-local
+{% if inventory_hostname in groups['ceph'] %}
+-A INPUT -p tcp -m multiport --dports 3300,6789 -m comment --comment CephMON -j incoming-local
+-A INPUT -p tcp -m multiport --dports 6800:7300 -m comment --comment CephOther -j incoming-local
 {% endif %}
 
+# DENY DEV-REQUESTS ON PROD
 {% for host in groups['dev'] %}
 -A INPUT -s {{ dev_public_vip_ip }}/32 -j DROP
 -A INPUT -s {{ dev_private_vip_ip }}/32 -j DROP
 -A INPUT -s {{ lookup('dig', host + '.local') }}/32 -j DROP
 {% endfor %}
+
+{% if inventory_hostname in groups['payment_servers'] %}
+-A INPUT -p tcp -m tcp --dport {{ payment_exporter_port | default(9999) }} -m comment --comment payment_exporter -j incoming-local
+{% endif %}
 
 {% if inventory_hostname in groups['memcached_servers'] %}
 -A INPUT -p tcp -m tcp --dport {{ memcached_port | default(11211) }} -m comment --comment Memcached -j incoming-local
@@ -98,12 +104,10 @@
 
 {% if inventory_hostname in groups['marusya_skill'] %}
 -A INPUT -p tcp -m tcp --dport {{ marusya_skill_port | default(5000) }} -m comment --comment "Marusya skill" -j incoming-local
--A INPUT -p tcp -m tcp --dport {{ marusya_skill_port_dev | default(8080) }} -m comment --comment "Marusya skill DEV" -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['smarthome'] %}
 -A INPUT -p tcp -m tcp --dport {{ smarthome_port | default(4050) }} -m comment --comment "SmartHome API" -j incoming-local
--A INPUT -p tcp -m tcp --dport {{ smarthome_port_dev | default(4060) }} -m comment --comment "SmartHome API DEV" -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['research_hosts'] %}

@@ -13,6 +13,15 @@
   notify:
     - app_restart
 
+- name: Reset permissions
+  file:
+    path: "{{ smarthome_bindir }}"
+    state: directory
+    owner: "{{userId}}"
+    group: "{{groupId}}"
+    mode: u=rwX,g=rwX,o=rX
+    recurse: yes
+
 - name: Creating app user group
   group: name="{{groupId}}"
 

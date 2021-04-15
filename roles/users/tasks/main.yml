@@ -215,3 +215,17 @@
     mode: 0755
     owner: root
     group: root
+
+- name: Edit locale file
+  template:
+    src: locale.gen.j2
+    dest: /etc/locale.gen
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Ensure a locale exists
+  locale_gen:
+    name: "{{ item.code }}"
+    state: present
+  with_items: "{{ locales }}"

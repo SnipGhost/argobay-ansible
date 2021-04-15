@@ -22,6 +22,11 @@ users:
     key: "https://github.com/RBizonDota.keys"
     servers_group: dev
 ###############################################################################
+# locale.gen
+locales:
+  - { code: "en_US.UTF-8" }
+  - { code: "ru_RU.UTF-8" }
+###############################################################################
 # Path to SSD-disks for all disk-based services
 data_path: "/mnt/data"
 ###############################################################################

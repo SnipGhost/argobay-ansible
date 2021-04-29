@@ -2,6 +2,7 @@
 - hosts:
     - ceph_mons
     - ceph_osds
+    - ceph_mdss
   order: sorted
   roles:
     - role: ceph-common
@@ -19,3 +20,9 @@
   roles:
     - role: ceph-osd
       tags: ceph-osd
+
+- hosts: ceph_mdss
+  order: sorted
+  roles:
+    - role: ceph-mds
+      tags: ceph-mds

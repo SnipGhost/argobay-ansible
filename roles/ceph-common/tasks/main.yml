@@ -14,7 +14,6 @@
     state: present
   with_items:
     - ceph
-    - ceph-mds
 
 - name: Create directories for ceph
   file:

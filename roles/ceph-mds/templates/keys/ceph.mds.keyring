@@ -1,0 +1,5 @@
+[mds.{{ ansible_fqdn }}]
+	key = {{ ceph_mds_key }}
+	caps osd = "allow rwx"
+	caps mds = "allow *"
+	caps mon = "allow profile mds"

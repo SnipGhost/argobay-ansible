@@ -1,0 +1,53 @@
+---
+- name: Install ceph
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ceph-mds
+
+- name: Create directory for local ceph-mds
+  file:
+    path: "/var/lib/ceph/{{ item }}/ceph-{{ ansible_fqdn }}"
+    state: directory
+    owner: ceph
+    group: ceph
+    mode: 0755
+  with_items:
+    - mds
+
+# - name: Create keyring for ceph
+#   shell:
+#     /bin/ceph-authtool --create-keyring /var/lib/ceph/mds/ceph-{{ ansible_fqdn }}/keyring --gen-key -n mds.{{ ansible_fqdn }}
+
+# Similarly to the above task
+- name: Create keyring for ceph
+  vars:
+    server_names: "{{ groups[mdss_group] }}"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: ceph
+    mode: 0640
+    backup: yes
+  with_items:
+    - { src: keys/ceph.mds.keyring, dest: "/var/lib/ceph/mds/ceph-{{ ansible_fqdn }}/keyring" }
+
+- name: Import new keys for local ceph-mds
+  shell: "/usr/bin/ceph auth add mds.{{ ansible_fqdn }} -i /var/lib/ceph/mds/ceph-{{ ansible_fqdn }}/keyring"
+
+- name: Start and enable ceph-mds
+  systemd:
+    name: "{{ item }}@{{ ansible_fqdn }}"
+    enabled: yes
+    state: started
+  with_items:
+    - ceph-mds
+
+- name: Enable ceph-mds target
+  systemd:
+    name: "{{ item }}.target"
+    enabled: yes
+  with_items:
+    - ceph-mds

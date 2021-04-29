@@ -1,6 +1,7 @@
 ceph_release: pacific
 mons_group: ceph_mons
 osds_group: ceph_osds
+mdss_group: ceph_mdss
 # rgws_group: ceph_rgws
 rgw_lb_group: ceph_rgw_lb
 
@@ -19,4 +20,4 @@ ceph_admin_key: AQCranRg8f17KxAAegHPERmy5zQB+pQaHWOA3g==
 ceph_mon_key: AQCUanRgdjCCCxAAAhmQgxGbxkyVhs+PoKaXJw==
 ceph_osd_key: AQA3bnRggT9pOxAAmv8bJdg1sJbIhlGGB36erw==
 ceph_mgr_key: AQDcbXRg45odDxAAG1JAymzw3no0PqkkLOza5Q==
-
+ceph_mds_key: AQAU1nhgygl7ChAAloB4eLxIbkxWhfXDeUAyYA==

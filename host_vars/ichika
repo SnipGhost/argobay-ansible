@@ -1,7 +1,5 @@
 proc_version: armv7
-has_fan: yes
-fan_driver_temp_max: 58
-fan_driver_temp_min: 50
+has_fan: no
 
 disks:
   - /dev/sda

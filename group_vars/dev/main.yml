@@ -70,8 +70,6 @@ nginx_sites:
     # local: yes # No load balancing, only failover
     port: "{{ marusya_skill_port }}"
     hosts: dev_public_hosts
-    whitelist:
-      - vpn
     display:
       name: Маруся
       icon: marusya.png

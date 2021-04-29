@@ -1,8 +1,6 @@
 proc_version: armv7
-has_fan: yes
+has_fan: no
 max_mem_lock: "524288" # KiB
-fan_driver_temp_max: 58
-fan_driver_temp_min: 48
 
 disks:
   - /dev/sda

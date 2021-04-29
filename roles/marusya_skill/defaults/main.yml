@@ -34,3 +34,6 @@ marusya_skill_setup: no
 
 smarthome_connect_host: 127.0.0.1
 smarthome_connect_port: 4050
+
+smarthome_auth: default
+smarthome_schema: https

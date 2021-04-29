@@ -1,1 +1,2 @@
 smarthome_connect_host: smarthome.assol.ml
+smarthome_auth: basic_auth

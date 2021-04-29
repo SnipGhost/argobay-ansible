@@ -310,3 +310,8 @@ Core: 5.10.27-v7l-ceph+
 ```bash
 mount -t ceph zelda:6789,asuna:6789,ichika:6789:/ /mnt/cephfs -o name=admin,secretfile=/etc/ceph/admin.secret,noatime
 ```
+
+### Enable Ceph monitoring
+```bash
+ceph mgr module enable prometheus
+```

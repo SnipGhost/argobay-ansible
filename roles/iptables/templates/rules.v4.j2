@@ -69,6 +69,7 @@
 {% if inventory_hostname in groups['ceph'] %}
 -A INPUT -p tcp -m multiport --dports 3300,6789 -m comment --comment CephMON -j incoming-local
 -A INPUT -p tcp -m multiport --dports 6800:7300 -m comment --comment CephOther -j incoming-local
+-A INPUT -p tcp -m tcp --dport 9283 -m comment --comment ceph_mgr_exporter -j incoming-local
 {% endif %}
 
 # DENY DEV-REQUESTS ON PROD

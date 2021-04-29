@@ -1,7 +1,6 @@
 ## TODO list
 
 ### Main
-- Ceph mon & mgr autostart
 - VictoriaMetrics HA with Zelda
 - Fix Prometheus*Slow alerts for Victoria Metrics
 - Add deb-package repo & pipelines

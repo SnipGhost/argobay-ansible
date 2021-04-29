@@ -87,25 +87,6 @@ miku
 [gitlab_runner]
 itsuki
 
-[ceph_mons]
-asuna
-zelda
-ichika
-
-[ceph_osds]
-asuna
-zelda
-ichika
-itsuki
-
-[ceph_mdss]
-asuna
-zelda
-miku
-
-[ceph_rgw_lb]
-miku
-
 [db_servers:children]
 prod_db_servers
 dev_db_servers

@@ -25,3 +25,10 @@
 - name: Activate all ceph-osd
   shell: /usr/sbin/ceph-volume lvm activate --all
   when: manage_disks | default(false) | bool
+
+- name: Enable ceph targets
+  systemd:
+    name: "{{ item }}.target"
+    enabled: yes
+  with_items:
+    - ceph-osd

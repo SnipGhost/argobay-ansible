@@ -99,3 +99,11 @@
     /bin/ceph auth del client.bootstrap-osd && 
     /bin/ceph auth add client.bootstrap-osd -i /var/lib/ceph/bootstrap-osd/ceph.keyring;
   when: inventory_hostname == groups[mons_group][0]
+
+- name: Enable ceph targets
+  systemd:
+    name: "{{ item }}.target"
+    enabled: yes
+  with_items:
+    - ceph-mon
+    - ceph-mgr

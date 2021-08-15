@@ -132,6 +132,7 @@ prometheus_jobs:
   - { name: rpi, port: 9243, group: raspberry_pi }
   - { name: ceph, port: 9283, group: ceph_mons }
   - { name: payment, port: 9999, group: payment_servers }
+  # - { name: esp, port: 80, group: esp_modules }
 ###############################################################################
 # Prometheus exporter's options
 rpi_exporter_version: 0.6.0

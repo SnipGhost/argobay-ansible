@@ -133,6 +133,16 @@ dnsmasq_hosts:
       - { ip: 192.168.8.235, type: i }
       - { ip: 192.168.8.235, type: assol.ml }
 
+  - name: nyanko
+    rec:
+      - { ip: 192.168.8.121, type: i }
+      - { ip: 192.168.8.121, type: assol.ml }
+
+  - name: printer
+    rec:
+      - { ip: 192.168.8.8, type: i }
+      - { ip: 192.168.8.8, type: assol.ml }
+
   #========================================================
   # Servers interfaces
 
@@ -143,8 +153,8 @@ dnsmasq_hosts:
 
   - name: ichika
     rec:
-      - { ip: 192.168.8.51, type: e, main: yes }
-      - { ip: 192.168.8.61, type: w }
+      - { ip: 192.168.8.51, type: e }
+      - { ip: 192.168.8.61, type: w, main: yes }
 
   - name: nino
     rec:
@@ -173,13 +183,17 @@ dnsmasq_hosts:
 
   - name: metroid
     rec:
-      - { ip: 192.168.8.57, type: e }
-      - { ip: 192.168.8.67, type: w, main: yes }
+      - { ip: 192.168.8.57, type: e, main: yes}
+      - { ip: 192.168.8.67, type: w }
 
   - name: zelda
     rec:
       - { ip: 192.168.8.58, type: e, main: yes }
       - { ip: 192.168.8.68, type: w }
+
+  - name: emily
+    rec:
+      - { ip: 192.168.8.69, type: w, main: yes }
 
   - name: yukinon
     rec:

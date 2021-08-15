@@ -153,6 +153,7 @@ certbot certonly -a certbot-dns-freenom:dns-freenom \
 ### Certbot import error
 Install last certbot-nginx from pypi: https://pypi.org/project/certbot-nginx/#files
 And fix binary path in /lib/systemd/system/certbot.service
+And in cron.d/certbot
 
 ### Marusya skill tester
 [Skill tester](https://skill-tester.marusia.mail.ru)

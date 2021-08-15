@@ -152,6 +152,15 @@
   with_items: "{{ users }}"
   when: inventory_hostname in groups[item.servers_group]
 
+- name: Write .gitconfig for root
+  template:
+    src: gitconfig.j2
+    dest: "/root/.gitconfig"
+    backup: yes
+    mode: 0644
+    owner: root
+    group: root
+
 - name: Write .gitconfig for admin users
   template:
     src: gitconfig.j2

@@ -5,9 +5,11 @@
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
+{% if item is defined %}
 [user]
 	name = {{ item.git_name | default(item.comment) }}
 	email = {{ item.email }}
+{% endif %}
 [alias]
 	hist = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	st = status

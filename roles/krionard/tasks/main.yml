@@ -150,7 +150,7 @@
   when: (inventory_hostname == groups[krionard_group][0])
 
 - name: Re-create db
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ krionard_bindir }}/sql_setup/krionardtech.sql 
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ krionard_bindir }}/sql_setup/db_init.sql 
   when: (inventory_hostname == groups[krionard_group][0]) and (krionard_setup | default(false) | bool)
 
 - meta: flush_handlers

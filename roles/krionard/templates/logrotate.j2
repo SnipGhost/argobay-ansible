@@ -1,0 +1,8 @@
+{{ krionard_logdir }}/*.log {
+    {{ krionard_log_period }}
+    rotate {{ krionard_log_rotate }}
+    size {{ krionard_log_size }}
+    missingok
+    compress
+    copytruncate
+}

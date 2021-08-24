@@ -1,0 +1,22 @@
+[uwsgi]
+name = {{ app_name }}
+uid = assol
+gid = assol
+
+master = true
+workers = 2
+threads = 2
+
+http-socket = {{ krionard_bind }}:{{ krionard_port }}
+buffer-size = {{ krionard_buffer_size }}
+
+need-app = true
+lazy-apps = true
+
+chdir = {{ krionard_bindir }}
+logto2 = {{ krionard_logdir }}/{{ app_name }}.log
+
+home = {{ krionard_bindir }}/env
+plugin = python3
+callable = app
+wsgi-file = {{ krionard_bindir }}/run.py

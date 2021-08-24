@@ -1,0 +1,8 @@
+
+input(type="imfile"
+      File="{{ krionard_logdir }}/*.log"
+      StateFile="{{ app_name }}"
+      Tag="{{ app_name }}"
+      reopenOnTruncate="on"
+      Severity="{{ krionard_log_severity }}"
+      Facility="{{ krionard_log_facility }}")

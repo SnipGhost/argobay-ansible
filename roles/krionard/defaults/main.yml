@@ -1,0 +1,39 @@
+userId: assol
+groupId: assol
+app_name: krionard
+
+krionard_git: https://github.com/HoriFox/Krionard.git
+krionard_bind: 127.0.0.1
+krionard_port: 5000
+krionard_buffer_size: 65535
+krionard_logdir: "/var/log/{{ app_name }}"
+krionard_bindir: "/usr/local/bin/{{ app_name }}"
+krionard_confdir: /etc/assol
+
+krionard_log_period:   daily
+krionard_log_rotate:   7
+krionard_log_size:     10M
+krionard_log_severity: info
+krionard_log_facility: local7
+
+krionard_db_name: marusyatech
+krionard_db_user: krionard
+krionard_db_pass: password
+
+mariadb_proxy_host: 127.0.0.1
+mariadb_proxy_port: 3306
+mariadb_safe_hosts:
+  - "localhost"
+  - "127.0.0.1"
+
+redis_proxy_host: 127.0.0.1
+redis_proxy_port: 6379
+
+krionard_name: "ассоль"
+krionard_setup: no
+
+smarthome_connect_host: 127.0.0.1
+smarthome_connect_port: 4050
+
+smarthome_auth: default
+smarthome_schema: https

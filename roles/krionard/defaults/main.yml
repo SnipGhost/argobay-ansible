@@ -32,8 +32,8 @@ redis_proxy_port: 6379
 krionard_name: "ассоль"
 krionard_setup: no
 
-smarthome_connect_host: 127.0.0.1
-smarthome_connect_port: 4050
+dacrover_connect_host: 127.0.0.1
+dacrover_connect_port: 4050
 
-smarthome_auth: default
-smarthome_schema: https
+dacrover_auth: default
+dacrover_schema: https

@@ -4,7 +4,7 @@
     - name: krionard
       tags: krionard
 
-- hosts: smarthome
+- hosts: dacrover
   roles:
-    - name: smarthome
-      tags: smarthome
+    - name: dacrover
+      tags: dacrover

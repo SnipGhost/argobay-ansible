@@ -51,18 +51,18 @@ default_cert_key: /etc/nginx/certs/dev-assol.ml.privkey.pem
 nginx_enable_default: yes
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
-  - name: smarthome
-    server_name: smarthome.dev-assol.ml
+  - name: dacrover
+    server_name: dacrover.dev-assol.ml
     addr: "{{ dev_private_vip_ip }}"
-    group: "{{ smarthome_group }}"
-    static_root: /usr/local/bin/smarthome/static
+    group: "{{ dacrover_group }}"
+    static_root: /usr/local/bin/dacrover/static
     static_path: /static
     # local: yes # No load balancing, only failover
-    port: "{{ smarthome_port }}"
+    port: "{{ dacrover_port }}"
     hosts: dev_private_hosts
     display:
-      name: SmartHome
-      icon: smarthome.svg
+      name: dacrover
+      icon: dacrover.svg
   - name: krionard
     server_name: krionard.dev-assol.ml
     addr: "{{ dev_public_vip_ip }}"

@@ -101,19 +101,19 @@ nginx_sites:
     display:
       name: Alerts
       icon: prometheus.svg
-  - name: smarthome
-    server_name: smarthome.assol.ml
+  - name: dacrover
+    server_name: dacrover.assol.ml
     addr: "{{ private_vip_ip }}"
-    group: "{{ smarthome_group }}"
-    static_root: /usr/local/bin/smarthome/static
+    group: "{{ dacrover_group }}"
+    static_root: /usr/local/bin/dacrover/static
     static_path: /static
     # local: yes # No load balancing, only failover
-    port: "{{ smarthome_port }}"
+    port: "{{ dacrover_port }}"
     hosts: private_hosts
     basic_auth: yes
     display:
-      name: SmartHome
-      icon: smarthome.svg
+      name: dacrover
+      icon: dacrover.svg
   - name: krionard
     server_name: krionard.assol.ml
     addr: "{{ public_vip_ip }}"

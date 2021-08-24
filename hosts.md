@@ -14,7 +14,7 @@
 - Nginx
 - HAProxy
 - K8S mon
-- SmartHomeAPI
+- Dacrover
 
 ## Ichika
 - **research_vip** 192.168.8.16 [1/1]
@@ -41,7 +41,7 @@
 - DNS
 - Nginx
 - HAProxy
-- SmartHomeAPI
+- Dacrover
 - K8S mon
 
 ## Yotsuba
@@ -64,7 +64,7 @@
 - **dev_private_vip** 192.168.8.17 [1/2]
 - Nginx
 - HAProxy
-- SmartHomeAPI_DEV
+- Dacrover_DEV
 - K8S pods
 
 ## Rikka

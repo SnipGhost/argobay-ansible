@@ -107,8 +107,8 @@
 -A INPUT -p tcp -m tcp --dport {{ krionard_port | default(5000) }} -m comment --comment "Krionard" -j incoming-local
 {% endif %}
 
-{% if inventory_hostname in groups['smarthome'] %}
--A INPUT -p tcp -m tcp --dport {{ smarthome_port | default(4050) }} -m comment --comment "SmartHome API" -j incoming-local
+{% if inventory_hostname in groups['dacrover'] %}
+-A INPUT -p tcp -m tcp --dport {{ dacrover_port | default(4050) }} -m comment --comment "Dacrover" -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['research_hosts'] %}

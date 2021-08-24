@@ -6,8 +6,8 @@
 
 - name: Clone repo
   git:
-    repo: "{{ smarthome_git }}"
-    dest: "{{ smarthome_bindir }}"
+    repo: "{{ dacrover_git }}"
+    dest: "{{ dacrover_bindir }}"
     clone: yes
     update: yes
   notify:
@@ -15,7 +15,7 @@
 
 - name: Reset permissions
   file:
-    path: "{{ smarthome_bindir }}"
+    path: "{{ dacrover_bindir }}"
     state: directory
     owner: "{{userId}}"
     group: "{{groupId}}"
@@ -71,10 +71,10 @@
     group: "{{ item.group }}"
     mode: "{{ item.mode | default('0755') }}"
   with_items:
-    - path: "{{ smarthome_logdir }}"
+    - path: "{{ dacrover_logdir }}"
       owner: "{{ userId }}"
       group: "{{ groupId }}"
-    - path: "{{ smarthome_confdir }}"
+    - path: "{{ dacrover_confdir }}"
       owner: "{{ userId }}"
       group: "{{ groupId }}"
 
@@ -99,7 +99,7 @@
 - name: Create app config
   template:
     src: "{{ item.src }}"
-    dest: "{{ smarthome_confdir }}/{{ item.dest }}"
+    dest: "{{ dacrover_confdir }}/{{ item.dest }}"
     mode: 0660
     owner: "{{ userId }}"
     group: "{{ groupId }}"
@@ -111,7 +111,7 @@
 
 - name: Reset static
   file:
-    dest: "{{ smarthome_bindir }}/static"
+    dest: "{{ dacrover_bindir }}/static"
     owner: root
     group: "{{ groupId }}"
     mode: u=rwX,g=rX,o=rX
@@ -119,35 +119,35 @@
 
 - name: Create venv and install requirements
   pip: 
-    requirements: "{{ smarthome_bindir }}/requirements.txt"
-    virtualenv: "{{ smarthome_bindir }}/env"
+    requirements: "{{ dacrover_bindir }}/requirements.txt"
+    virtualenv: "{{ dacrover_bindir }}/env"
     virtualenv_python: python3.7
   notify:
     - app_restart
 
 - name: Retrieve db user grants from mysql
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -e "select Host, User from mysql.user where User = '{{ smarthome_db_user }}';" --batch --skip-column-names
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -e "select Host, User from mysql.user where User = '{{ dacrover_db_user }}';" --batch --skip-column-names
   register: stuff
   check_mode: no
   changed_when: False
-  when: (inventory_hostname == groups[smarthome_group][0])
+  when: (inventory_hostname == groups[dacrover_group][0])
 
 - name: Revoke all grant for db user
   vars:
     userhost: "'{{ item.split('\t')[1] }}'@'{{ item.split('\t')[0] }}'"
   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "DROP USER {{ userhost }};"
   with_items: "{{ stuff.stdout_lines }}"
-  when: (inventory_hostname == groups[smarthome_group][0]) and (item.split('\t')[0] not in mariadb_safe_hosts)
+  when: (inventory_hostname == groups[dacrover_group][0]) and (item.split('\t')[0] not in mariadb_safe_hosts)
 
 - name: Add db user to mysql
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "GRANT SELECT, INSERT, DELETE, UPDATE ON {{ smarthome_db_name }}.* TO '{{ smarthome_db_user }}'@'{{ item }}' IDENTIFIED BY '{{ smarthome_db_pass }}';"
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "GRANT SELECT, INSERT, DELETE, UPDATE ON {{ dacrover_db_name }}.* TO '{{ dacrover_db_user }}'@'{{ item }}' IDENTIFIED BY '{{ dacrover_db_pass }}';"
   with_items: "{{ mariadb_safe_hosts }}"
   changed_when: False
-  when: (inventory_hostname == groups[smarthome_group][0])
+  when: (inventory_hostname == groups[dacrover_group][0])
 
 - name: Re-create db
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ smarthome_bindir }}/setup/smarthome.sql 
-  when: (inventory_hostname == groups[smarthome_group][0]) and (smarthome_setup | default(false) | bool)
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ dacrover_bindir }}/setup/dacrover.sql 
+  when: (inventory_hostname == groups[dacrover_group][0]) and (dacrover_setup | default(false) | bool)
 
 - meta: flush_handlers
 

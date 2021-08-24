@@ -1,0 +1,22 @@
+[uwsgi]
+name = {{ app_name }}
+uid = assol
+gid = assol
+
+master = true
+workers = 2
+threads = 2
+
+http-socket = {{ dacrover_bind }}:{{ dacrover_port }}
+buffer-size = {{ dacrover_buffer_size }}
+
+need-app = true
+lazy-apps = true
+
+chdir = {{ dacrover_bindir }}
+logto2 = {{ dacrover_logdir }}/{{ app_name }}.log
+
+home = {{ dacrover_bindir }}/env
+plugin = python3
+callable = app
+wsgi-file = {{ dacrover_bindir }}/run.py

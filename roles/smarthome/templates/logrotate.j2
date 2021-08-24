@@ -1,8 +1,0 @@
-{{ smarthome_logdir }}/*.log {
-    {{ smarthome_log_period }}
-    rotate {{ smarthome_log_rotate }}
-    size {{ smarthome_log_size }}
-    missingok
-    compress
-    copytruncate
-}

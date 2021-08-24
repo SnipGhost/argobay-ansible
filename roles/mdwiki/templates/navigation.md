@@ -1,4 +1,4 @@
 [Home](index.md)
 [Krionard](krionard.md)
-[SmartHome](smarthome.md)
+[Dacrover](dacrover.md)
 [gimmick:themechooser](Choose theme)

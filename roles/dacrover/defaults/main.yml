@@ -1,0 +1,31 @@
+userId: assol
+groupId: assol
+app_name: dacrover
+
+dacrover_git: https://github.com/HoriFox/Dacrover.git
+dacrover_bind: 127.0.0.1
+dacrover_port: 4050
+dacrover_connect_host: 127.0.0.1
+dacrover_connect_port: 4050
+dacrover_buffer_size: 65535
+dacrover_logdir: "/var/log/{{ app_name }}"
+dacrover_bindir: "/usr/local/bin/{{ app_name }}"
+dacrover_confdir: /etc/assol
+
+dacrover_log_period:   daily
+dacrover_log_rotate:   7
+dacrover_log_size:     10M
+dacrover_log_severity: info
+dacrover_log_facility: local7
+
+dacrover_db_name: dacrover
+dacrover_db_user: dacrover_user
+dacrover_db_pass: password
+
+mariadb_proxy_host: 127.0.0.1
+mariadb_proxy_port: 3306
+mariadb_safe_hosts:
+  - "localhost"
+  - "127.0.0.1"
+
+dacrover_setup: no

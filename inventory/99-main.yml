@@ -29,7 +29,7 @@ memcached_group=prod_memcached_servers
 redis_group=prod_redis_servers
 web_group=prod_web_servers
 krionard_group=prod_krionard
-smarthome_group=prod_smarthome
+dacrover_group=prod_dacrover
 razumator_group=prod_razumator
 
 [dev]
@@ -45,7 +45,7 @@ memcached_group=dev_memcached_servers
 redis_group=dev_redis_servers
 web_group=dev_web_servers
 krionard_group=dev_krionard
-smarthome_group=dev_smarthome
+dacrover_group=dev_dacrover
 razumator_group=dev_razumator
 
 [all:children]
@@ -107,13 +107,13 @@ dev_web_servers
 prod_krionard
 dev_krionard
 
-[smarthome:children]
-prod_smarthome
-dev_smarthome
+[dacrover:children]
+prod_dacrover
+dev_dacrover
 
 [assol:children]
 krionard
-smarthome
+dacrover
 
 [razumator:children]
 prod_razumator

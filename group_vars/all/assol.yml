@@ -19,22 +19,22 @@ krionard_log_size: 10M
 krionard_log_severity: info
 krionard_log_facility: local7
 ###############################################################################
-# SmartHome API
-smarthome_git: https://github.com/HoriFox/SmartHomeApi.git
-# smarthome_bind: 127.0.0.1 # No load balancing, only failover
-smarthome_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
-smarthome_port: 4050
-smarthome_connect_host: smarthome.assol.ml
-smarthome_connect_port: 443
+# Dacrover API
+dacrover_git: https://github.com/HoriFox/Dacrover.git
+# dacrover_bind: 127.0.0.1 # No load balancing, only failover
+dacrover_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
+dacrover_port: 4050
+dacrover_connect_host: dacrover.assol.ml
+dacrover_connect_port: 443
 # uWSGI
-smarthome_buffer_size: 65535
+dacrover_buffer_size: 65535
 # Dirs
-smarthome_logdir: /var/log/smarthome
-smarthome_bindir: /usr/local/bin/smarthome
-smarthome_confdir: /etc/assol
+dacrover_logdir: /var/log/dacrover
+dacrover_bindir: /usr/local/bin/dacrover
+dacrover_confdir: /etc/assol
 # Logging
-smarthome_log_period: daily
-smarthome_log_rotate: 7
-smarthome_log_size: 10M
-smarthome_log_severity: info
-smarthome_log_facility: local7
+dacrover_log_period: daily
+dacrover_log_rotate: 7
+dacrover_log_size: 10M
+dacrover_log_severity: info
+dacrover_log_facility: local7

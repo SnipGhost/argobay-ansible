@@ -43,7 +43,7 @@ public_vip_ip:     192.168.8.11
 service_vip_id:    2
 service_vip_ip:    192.168.8.12
 #=====================================#
-# Internal dashboards & SmartHome
+# Internal dashboards & Dacrover
 private_vip_id:    3
 private_vip_ip:    192.168.8.13
 #=====================================#
@@ -211,7 +211,7 @@ backup_scripts:
     group: monitoring_servers
     retention: 3
     important_databases:
-      - smarthome
+      - dacrover
       - krionardtech
       - mysql
   - tpl: backup-grafana

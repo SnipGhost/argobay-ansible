@@ -1,0 +1,7 @@
+
+input(type="imfile"
+      File="{{ dacrover_logdir }}/*.log"
+      Tag="{{ app_name }}"
+      reopenOnTruncate="on"
+      Severity="{{ dacrover_log_severity }}"
+      Facility="{{ dacrover_log_facility }}")

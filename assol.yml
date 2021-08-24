@@ -1,8 +1,8 @@
 ---
-- hosts: marusya_skill
+- hosts: krionard
   roles:
-    - name: marusya_skill
-      tags: marusya_skill
+    - name: krionard
+      tags: krionard
 
 - hosts: smarthome
   roles:

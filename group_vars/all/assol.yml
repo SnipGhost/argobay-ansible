@@ -1,23 +1,23 @@
 ###############################################################################
 # Assol project options
 ###############################################################################
-# Marusya skill API
-marusya_skill_git: https://github.com/HoriFox/MarusyaSkill.git
-# marusya_skill_bind: 127.0.0.1 # No load balancing, only failover
-marusya_skill_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
-marusya_skill_port: 5000
+# Krionard API
+krionard_git: https://github.com/HoriFox/Krionard.git
+# krionard_bind: 127.0.0.1 # No load balancing, only failover
+krionard_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
+krionard_port: 5000
 # uWSGI
-marusya_skill_buffer_size: 65535
+krionard_buffer_size: 65535
 # Dirs
-marusya_skill_logdir: /var/log/marusya_skill
-marusya_skill_bindir: /usr/local/bin/marusya_skill
-marusya_skill_confdir: /etc/assol
+krionard_logdir: /var/log/krionard
+krionard_bindir: /usr/local/bin/krionard
+krionard_confdir: /etc/assol
 # Logging
-marusya_skill_log_period: daily
-marusya_skill_log_rotate: 7
-marusya_skill_log_size: 10M
-marusya_skill_log_severity: info
-marusya_skill_log_facility: local7
+krionard_log_period: daily
+krionard_log_rotate: 7
+krionard_log_size: 10M
+krionard_log_severity: info
+krionard_log_facility: local7
 ###############################################################################
 # SmartHome API
 smarthome_git: https://github.com/HoriFox/SmartHomeApi.git

@@ -16,7 +16,7 @@ krionard_log_size:     10M
 krionard_log_severity: info
 krionard_log_facility: local7
 
-krionard_db_name: marusyatech
+krionard_db_name: krionardtech
 krionard_db_user: krionard
 krionard_db_pass: password
 

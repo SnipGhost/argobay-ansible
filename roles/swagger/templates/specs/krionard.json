@@ -2,20 +2,20 @@
   "openapi": "3.0.2",
   "info": {
     "version": "0.1.0",
-    "title": "Marusya Skill",
+    "title": "Krionard",
     "description": "API навыка Маруси",
     "contact": {
-      "name": "Marusya Skill Team",
-      "email": "marusya_skill_team@list.ru",
+      "name": "Krionard Team",
+      "email": "krionard_team@list.ru",
       "url": "http://assol.ml"
     }
   },
   "servers": [
     {
-      "url": "https://marusya.assol.ml/"
+      "url": "https://krionard.assol.ml/"
     },
     {
-      "url": "https://marusya.dev-assol.ml/"
+      "url": "https://krionard.dev-assol.ml/"
     }
   ],
   "paths": {

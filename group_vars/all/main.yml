@@ -212,7 +212,7 @@ backup_scripts:
     retention: 3
     important_databases:
       - smarthome
-      - marusyatech
+      - krionardtech
       - mysql
   - tpl: backup-grafana
     interval: daily

@@ -63,16 +63,16 @@ nginx_sites:
     display:
       name: SmartHome
       icon: smarthome.svg
-  - name: marusya_skill
-    server_name: marusya.dev-assol.ml
+  - name: krionard
+    server_name: krionard.dev-assol.ml
     addr: "{{ dev_public_vip_ip }}"
-    group: "{{ marusya_skill_group }}"
+    group: "{{ krionard_group }}"
     # local: yes # No load balancing, only failover
-    port: "{{ marusya_skill_port }}"
+    port: "{{ krionard_port }}"
     hosts: dev_public_hosts
     display:
-      name: Маруся
-      icon: marusya.png
+      name: Krionard
+      # icon: krionard.png
   - name: razumator
     server_name: razumator.dev-assol.ml
     addr: "{{ dev_public_vip_ip }}"

@@ -33,7 +33,7 @@
 - Memcached
 - Nginx
 - HAProxy
-- Marusya_Skill
+- krionard
 
 ## Miku
 - **service_vip** 192.168.8.12 [2/3]
@@ -48,7 +48,7 @@
 - **public_vip** 192.168.8.11 [2/2]
 - Nginx
 - HAProxy
-- Marusya_Skill
+- krionard
 - K8S pods
 
 ## Yukinon
@@ -71,7 +71,7 @@
 - **dev_public_vip** 192.168.8.15 [1/1]
 - Nginx
 - HAProxy
-- Marusya_Skill_DEV
+- krionard_DEV
 - K8S pods
 
 ## Metroid

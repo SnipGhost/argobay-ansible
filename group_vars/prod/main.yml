@@ -114,19 +114,19 @@ nginx_sites:
     display:
       name: SmartHome
       icon: smarthome.svg
-  - name: marusya_skill
-    server_name: marusya.assol.ml
+  - name: krionard
+    server_name: krionard.assol.ml
     addr: "{{ public_vip_ip }}"
-    group: "{{ marusya_skill_group }}"
+    group: "{{ krionard_group }}"
     # local: yes # No load balancing, only failover
-    port: "{{ marusya_skill_port }}"
+    port: "{{ krionard_port }}"
     hosts: public_hosts
     whitelist:
-      - marusya
+      - krionard
       - vpn
     display:
-      name: Маруся
-      icon: marusya.png
+      name: Krionard
+      # icon: krionard.png
   - name: haproxy
     server_name: haproxy_{{ inventory_hostname }}.assol.ml
     addr: "{{ lookup('dig', inventory_hostname + '.local') }}"

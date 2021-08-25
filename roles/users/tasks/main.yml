@@ -258,4 +258,3 @@
     owner: "{{ item.name }}"
     group: "{{ item.name }}"
   with_items: "{{ admins }}"
-  when: "'db_servers' not in group_names"

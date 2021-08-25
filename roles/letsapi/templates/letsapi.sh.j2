@@ -1,0 +1,8 @@
+#!/bin/sh
+
+{% for server in letsapi_cert_renewers %}
+/usr/bin/rsync --password-file='{{ letsapi_path }}/rsync_certs.scrt' -a {{ rsync_certs_user }}@{{ server.host }}::certs_archive {{ letsapi_path }}/archive/
+/usr/bin/rsync --password-file='{{ letsapi_path }}/rsync_certs.scrt' -a {{ rsync_certs_user }}@{{ server.host }}::certs_live {{ letsapi_path }}/live/
+{% endfor %}
+
+/usr/bin/systemctl reload nginx

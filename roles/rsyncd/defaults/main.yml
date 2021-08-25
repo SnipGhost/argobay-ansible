@@ -1,0 +1,5 @@
+---
+rsync_max_conn: 10
+rsync_exclude: "lost+found/"
+rsync_not_compress: "*.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2 *.rar *.7z *.mp3 *.jpg"
+rsync_secret_file: /etc/rsyncd.scrt

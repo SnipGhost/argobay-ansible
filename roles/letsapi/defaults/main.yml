@@ -1,0 +1,3 @@
+---
+letsapi_cron_freq: weekly
+letsapi_path: /etc/letsapi

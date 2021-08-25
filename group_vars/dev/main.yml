@@ -46,8 +46,8 @@ haproxy_stat_host: 127.0.0.1
 haproxy_stat_port: 9000
 ###############################################################################
 # NGINX options
-default_cert:     /etc/nginx/certs/dev-assol.ml.fullchain.pem
-default_cert_key: /etc/nginx/certs/dev-assol.ml.privkey.pem
+default_cert:     "{{ cert_path }}/dev-assol.ml/fullchain.pem"
+default_cert_key: "{{ cert_path }}/dev-assol.ml/privkey.pem"
 nginx_enable_default: yes
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
@@ -61,8 +61,7 @@ nginx_sites:
     port: "{{ dacrover_port }}"
     hosts: dev_private_hosts
     display:
-      name: dacrover
-      icon: dacrover.svg
+      name: Dacrover
   - name: krionard
     server_name: krionard.dev-assol.ml
     addr: "{{ dev_public_vip_ip }}"
@@ -72,7 +71,7 @@ nginx_sites:
     hosts: dev_public_hosts
     display:
       name: Krionard
-      # icon: krionard.png
+      icon: marusya.png
   - name: razumator
     server_name: razumator.dev-assol.ml
     addr: "{{ dev_public_vip_ip }}"
@@ -95,8 +94,8 @@ nginx_sites:
     add_path: /haproxy_stats
     local: yes
     port: "{{ haproxy_stat_port }}"
-    ssl_certificate: /etc/nginx/certs/assol.ml.fullchain.pem
-    ssl_certificate_key: /etc/nginx/certs/assol.ml.privkey.pem
+    ssl_certificate: "{{ cert_path }}/assol.ml/fullchain.pem"
+    ssl_certificate_key: "{{ cert_path }}/assol.ml/privkey.pem"
     whitelist:
       - vpn
     display:

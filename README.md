@@ -32,6 +32,8 @@ Playbooks require secret variables:
 - payment_exporter_user
 - payment_exporter_pass
 - htpasswd
+- rsync_certs_user
+- rsync_certs_pass
 
 passwords is dictionary with user passwords:
 ```yml
@@ -116,6 +118,15 @@ ansible-playbook web.yml --tags mdwiki -e "install_mdwiki=yes"
 To re-register GitLab runner:
 ```bash
 ansible-playbook runner.yml
+```
+
+Run any script on specified servers:
+```bash
+ansible -mraw -a 'apt update' all
+```
+
+```bash
+ansible -mraw -a 'COMMAND' GROUP
 ```
 
 ## Add new service role checklist

@@ -46,8 +46,8 @@ haproxy_stat_host: 127.0.0.1
 haproxy_stat_port: 9000
 ###############################################################################
 # NGINX options
-default_cert:     /etc/nginx/certs/assol.ml.fullchain.pem
-default_cert_key: /etc/nginx/certs/assol.ml.privkey.pem
+default_cert:     "{{ cert_path }}/assol.ml/fullchain.pem"
+default_cert_key: "{{ cert_path }}/assol.ml/privkey.pem"
 nginx_enable_default: yes
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
@@ -112,10 +112,9 @@ nginx_sites:
     hosts: private_hosts
     basic_auth: yes
     display:
-      name: dacrover
-      icon: dacrover.svg
+      name: Dacrover
   - name: krionard
-    server_name: krionard.assol.ml
+    server_name: "krionard.assol.ml marusya.assol.ml"
     addr: "{{ public_vip_ip }}"
     group: "{{ krionard_group }}"
     # local: yes # No load balancing, only failover
@@ -126,7 +125,7 @@ nginx_sites:
       - vpn
     display:
       name: Krionard
-      # icon: krionard.png
+      icon: marusya.png
   - name: haproxy
     server_name: haproxy_{{ inventory_hostname }}.assol.ml
     addr: "{{ lookup('dig', inventory_hostname + '.local') }}"

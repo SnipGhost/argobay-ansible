@@ -1,6 +1,8 @@
 {% for host in dnsmasq_hosts %}
+{% for host_name in [ host.name ] + host.aliases | default([]) %}
 {% for rec in host.rec %}
-{{ rec.ip }}{% if rec.main | default('no') | bool %} {{ host.name }} haproxy_{{ host.name }}.assol.ml {{ host.name }}.assol.ml {{ host.name }}.local{% endif %} {{ host.name }}.{{ rec.type }}
+{{ rec.ip }}{% if rec.main | default('no') | bool %} {{ host_name }} haproxy_{{ host_name }}.assol.ml {{ host_name }}.assol.ml {{ host_name }}.local{% endif %} {{ host_name }}.{{ rec.type }}
+{% endfor %}
 {% endfor %}
 
 {% endfor %}

@@ -219,5 +219,44 @@ backup_scripts:
     group: monitoring_servers
     retention: 3
 ###############################################################################
+# rsyncd
+rsync_users:
+  - name: "{{ rsync_certs_user }}"
+    password: "{{ rsync_certs_pass }}"
+# sections in config
+rsync_modules:
+  - name: certs_live
+    uid: root
+    gid: root
+    path: /etc/letsencrypt/live/
+    comment: SSL certs links
+    ro: yes
+    list: yes
+    users:
+      - "{{ rsync_certs_user }}"
+    has_secrets: yes
+    group: all
+  - name: certs_archive
+    uid: root
+    gid: root
+    path: /etc/letsencrypt/archive/
+    comment: SSL certs files
+    ro: yes
+    list: yes
+    users:
+      - "{{ rsync_certs_user }}"
+    has_secrets: yes
+    group: all
+###############################################################################
+# LetsAPI
+letsapi_cron_freq: weekly
+letsapi_path: /etc/letsapi
+cert_path: "{{ letsapi_path }}/live"
+letsapi_cert_renewers:
+  - host: nino
+    cert: assol.ml
+  - host: rikka
+    cert: dev-assol.ml
+###############################################################################
 # Summary
 project_version: v0.7

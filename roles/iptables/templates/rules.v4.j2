@@ -46,6 +46,10 @@
 {% endif %}
 {% endif %}
 
+{% if inventory_hostname in groups['rsyncd_servers'] %}
+-A INPUT -p tcp -m tcp --dport 873 -m comment --comment rsyncd -j incoming-local
+{% endif %}
+
 {% if inventory_hostname in groups['dev'] %}
 -A INPUT -m conntrack --ctstate RELATED,NEW,ESTABLISHED -j incoming-local
 {% else %}

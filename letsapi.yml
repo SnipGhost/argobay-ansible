@@ -1,0 +1,7 @@
+---
+- hosts: web_servers
+  roles:
+    - name: letsapi
+      tags:
+        - letsapi
+        - certs

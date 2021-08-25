@@ -90,6 +90,11 @@ To update nginx:
 ansible-playbook web.yml -l dev --tags nginx
 ```
 
+To deploy renewed certs:
+```bash
+ansible-playbook letsapi.yml --tags certs
+```
+
 Install mariadb first time [ATTENTION!]:
 ```bash
 ansible-playbook storage.yml -e "mariadb_secure=yes mariadb_rejoin=yes mariadb_init=yes" -l dev
@@ -191,6 +196,7 @@ login GIHUB_LOGIN
 password GIHUB_PASSOWORD
 ```
 
+### Import ssh-keys
 Import ssh-key to ssh-agent (see `ssh-add -L`) and set ssh-origin
 ```bash
 git remote set-url origin git@github.com:SnipGhost/assol-ansible.git 

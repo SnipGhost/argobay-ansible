@@ -18,12 +18,12 @@ Playbooks require secret variables:
 - mariadb_clustercheck.pass
 - haproxy_stat_user
 - haproxy_stat_pass
-- marusya_skill_db_name
-- marusya_skill_db_user
-- marusya_skill_db_pass
-- smarthome_db_name
-- smarthome_db_user
-- smarthome_db_pass
+- krionard_db_name
+- krionard_db_user
+- krionard_db_pass
+- dacrover_db_name
+- dacrover_db_user
+- dacrover_db_pass
 - razumator_db_name
 - razumator_db_user
 - razumator_db_pass
@@ -78,19 +78,29 @@ ansible-playbook provision.yml -e "HOSTNAME=zelda rpi_disable_wireless=yes" -i 1
 unset ANSIBLE_HOST_KEY_CHECKING
 ```
 
+To update dns:
+```bash
+ansible-playbook service.yml --tags dns
+```
+
+To update nginx:
+```bash
+ansible-playbook web.yml -l dev --tags nginx
+```
+
 Install mariadb first time [ATTENTION!]:
 ```bash
 ansible-playbook storage.yml -e "mariadb_secure=yes mariadb_rejoin=yes mariadb_init=yes" -l dev
 ```
 
-To re-setup marusya_skill [ATTENTION!]:
+To re-setup krionard [ATTENTION!]:
 ```bash
-ansible-playbook assol.yml --tags marusya_skill -e "marusya_skill_setup=yes" -l dev
+ansible-playbook assol.yml --tags krionard -e "krionard_setup=yes" -l dev
 ```
 
-To re-setup smarthome [ATTENTION!]:
+To re-setup dacrover [ATTENTION!]:
 ```bash
-ansible-playbook assol.yml --tags smarthome -e "smarthome_setup=yes" -l dev
+ansible-playbook assol.yml --tags dacrover -e "dacrover_setup=yes" -l dev
 ```
 
 To re-setup razumator [ATTENTION!]:
@@ -155,7 +165,7 @@ Install last certbot-nginx from pypi: https://pypi.org/project/certbot-nginx/#fi
 And fix binary path in /lib/systemd/system/certbot.service
 And in cron.d/certbot
 
-### Marusya skill tester
+### Marusya tester
 [Skill tester](https://skill-tester.marusia.mail.ru)
 
 ### Naming

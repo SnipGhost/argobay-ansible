@@ -1,0 +1,6 @@
+---
+- name: Restart cron service
+  service:
+    name: cron
+    state: restarted
+  listen: cron_restart

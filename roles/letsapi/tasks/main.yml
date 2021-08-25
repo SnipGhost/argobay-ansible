@@ -1,0 +1,31 @@
+---
+- name: Create path for letsapi
+  file:
+    path: "{{ letsapi_path }}/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwX,g=rX
+    recurse: yes
+  with_items:
+    - live
+    - archive
+
+- name: Copy letsapi cron-script
+  template:
+    src: letsapi.sh.j2
+    dest: /etc/cron.{{ letsapi_cron_freq }}/letsapi
+    mode: 0750
+  notify: cron_restart
+
+- name: Copy letsapi secrets
+  template:
+    src: rsync_certs.scrt.j2
+    dest: "{{ letsapi_path }}/rsync_certs.scrt"
+    mode: 0600
+
+- name: Run letsapi cron-script
+  command: /etc/cron.{{ letsapi_cron_freq }}/letsapi
+  tags:
+    - never
+    - certs

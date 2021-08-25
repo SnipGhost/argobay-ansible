@@ -32,7 +32,8 @@ Playbooks require secret variables:
 - payment_exporter_user
 - payment_exporter_pass
 - htpasswd
-- rsync_users
+- rsync_certs_user
+- rsync_certs_pass
 
 passwords is dictionary with user passwords:
 ```yml

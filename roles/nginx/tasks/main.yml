@@ -72,14 +72,14 @@
     - ../templates/acl/*.j2
   notify: nginx_restart
 
-- name: Configure certs
-  template:
-    src: "{{ item }}"
-    dest: "/etc/nginx/certs/{{ item | basename }}"
-    mode: 0640
-  with_fileglob:
-    - ../templates/certs/*
-  notify: nginx_reload
+# - name: Configure certs
+#   template:
+#     src: "{{ item }}"
+#     dest: "/etc/nginx/certs/{{ item | basename }}"
+#     mode: 0640
+#   with_fileglob:
+#     - ../templates/certs/*
+#   notify: nginx_reload
 
 - name: Copy filter.sh
   copy:

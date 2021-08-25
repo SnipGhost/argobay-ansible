@@ -46,6 +46,10 @@
 {% endif %}
 {% endif %}
 
+{% if inventory_hostname in groups['rsyncd_servers'] %}
+-A INPUT -p tcp -m tcp --dport 873 -m comment --comment rsyncd -j incoming-local
+{% endif %}
+
 {% if inventory_hostname in groups['dev'] %}
 -A INPUT -m conntrack --ctstate RELATED,NEW,ESTABLISHED -j incoming-local
 {% else %}
@@ -81,10 +85,6 @@
 
 {% if inventory_hostname in groups['payment_servers'] %}
 -A INPUT -p tcp -m tcp --dport {{ payment_exporter_port | default(9999) }} -m comment --comment payment_exporter -j incoming-local
-{% endif %}
-
-{% if inventory_hostname in groups['rsyncd_servers'] %}
--A INPUT -p tcp -m tcp --dport 873 -m comment --comment rsyncd -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['memcached_servers'] %}

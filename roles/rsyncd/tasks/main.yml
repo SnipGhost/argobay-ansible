@@ -15,6 +15,7 @@
   template:
     src: rsyncd.scrt.j2
     dest: "{{ rsync_secret_file }}"
+    mode: 0600
   notify: rsync_restart
 
 - meta: flush_handlers

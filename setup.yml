@@ -1,6 +1,7 @@
 ---
 - import_playbook: all_hosts.yml
 - import_playbook: service.yml
+- import_playbook: letsapi.yml
 - import_playbook: monitoring.yml
 - import_playbook: raspberry.yml
 - import_playbook: storage.yml

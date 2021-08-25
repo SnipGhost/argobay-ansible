@@ -46,8 +46,8 @@ haproxy_stat_host: 127.0.0.1
 haproxy_stat_port: 9000
 ###############################################################################
 # NGINX options
-default_cert:     /etc/nginx/certs/dev-assol.ml.fullchain.pem
-default_cert_key: /etc/nginx/certs/dev-assol.ml.privkey.pem
+default_cert:     /etc/nginx/certs/dev-assol.ml/fullchain.pem
+default_cert_key: /etc/nginx/certs/dev-assol.ml/privkey.pem
 nginx_enable_default: yes
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
@@ -94,8 +94,8 @@ nginx_sites:
     add_path: /haproxy_stats
     local: yes
     port: "{{ haproxy_stat_port }}"
-    ssl_certificate: /etc/nginx/certs/assol.ml.fullchain.pem
-    ssl_certificate_key: /etc/nginx/certs/assol.ml.privkey.pem
+    ssl_certificate: /etc/nginx/certs/assol.ml/fullchain.pem
+    ssl_certificate_key: /etc/nginx/certs/assol.ml/privkey.pem
     whitelist:
       - vpn
     display:

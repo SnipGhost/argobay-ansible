@@ -87,6 +87,10 @@ miku
 [gitlab_runner]
 itsuki
 
+[rsyncd_servers]
+nino
+rikka
+
 [db_servers:children]
 prod_db_servers
 dev_db_servers

@@ -219,5 +219,30 @@ backup_scripts:
     group: monitoring_servers
     retention: 3
 ###############################################################################
+# rsyncd
+rsync_modules:
+  - name: certs_live
+    uid: root
+    gid: root
+    path: /etc/letsencrypt/live/
+    comment: SSL certs links
+    ro: yes
+    list: yes
+    users:
+      - rsync_certs
+    has_secrets: yes
+    group: all
+  - name: certs_archive
+    uid: root
+    gid: root
+    path: /etc/letsencrypt/archive/
+    comment: SSL certs files
+    ro: yes
+    list: yes
+    users:
+      - rsync_certs
+    has_secrets: yes
+    group: all
+###############################################################################
 # Summary
 project_version: v0.7

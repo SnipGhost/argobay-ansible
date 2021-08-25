@@ -1,0 +1,26 @@
+---
+- name: Install packages
+  package:
+    name:
+      - rsync
+    state: present
+
+- name: Copy rsync main config
+  template:
+    src: rsyncd.conf.j2
+    dest: /etc/rsyncd.conf
+  notify: rsync_restart
+
+- name: Copy rsync secrets config
+  template:
+    src: rsyncd.scrt.j2
+    dest: "{{ rsync_secret_file }}"
+  notify: rsync_restart
+
+- meta: flush_handlers
+
+- name: Start and enable rsync
+  systemd:
+    name: rsync
+    state: started
+    enabled: yes

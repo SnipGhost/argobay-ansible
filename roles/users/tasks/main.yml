@@ -238,3 +238,24 @@
     name: "{{ item.code }}"
     state: present
   with_items: "{{ locales }}"
+
+- name: Write .my.cnf for root
+  template:
+    src: my.cnf.j2
+    dest: "/root/.my.cnf"
+    backup: yes
+    mode: 0640
+    owner: root
+    group: root
+  when: "'db_servers' not in group_names"
+
+- name: Write .my.cnf for admin users
+  template:
+    src: my.cnf.j2
+    dest: "/home/{{ item.name }}/.my.cnf"
+    backup: yes
+    mode: 0640
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  with_items: "{{ admins }}"
+  when: "'db_servers' not in group_names"

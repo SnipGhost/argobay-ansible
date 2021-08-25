@@ -1,2 +1,4 @@
 locales:
   - { code: "en_US.UTF-8", sub: "UTF-8" }
+mariadb_proxy_host: 127.0.0.1
+mariadb_proxy_port: 3306

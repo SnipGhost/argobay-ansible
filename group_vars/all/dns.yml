@@ -68,11 +68,9 @@ dnsmasq_hosts:
       - { ip: "{{dev_private_vip_ip}}", type: dev-assol.ml }
 
   - name: krionard
-    rec:
-      - { ip: "{{public_vip_ip}}", type: assol.ml }
-      - { ip: "{{dev_public_vip_ip}}", type: dev-assol.ml }
-
-  - name: marusya
+    aliases:
+      - marusya
+      - alice
     rec:
       - { ip: "{{public_vip_ip}}", type: assol.ml }
       - { ip: "{{dev_public_vip_ip}}", type: dev-assol.ml }

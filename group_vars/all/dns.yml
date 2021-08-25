@@ -71,6 +71,11 @@ dnsmasq_hosts:
     rec:
       - { ip: "{{public_vip_ip}}", type: assol.ml }
       - { ip: "{{dev_public_vip_ip}}", type: dev-assol.ml }
+
+  - name: marusya
+    rec:
+      - { ip: "{{public_vip_ip}}", type: assol.ml }
+      - { ip: "{{dev_public_vip_ip}}", type: dev-assol.ml }
   
   - name: internal
     rec:

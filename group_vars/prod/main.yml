@@ -112,10 +112,9 @@ nginx_sites:
     hosts: private_hosts
     basic_auth: yes
     display:
-      name: dacrover
-      icon: dacrover.svg
+      name: Dacrover
   - name: krionard
-    server_name: krionard.assol.ml
+    server_name: "krionard.assol.ml marusya.assol.ml"
     addr: "{{ public_vip_ip }}"
     group: "{{ krionard_group }}"
     # local: yes # No load balancing, only failover
@@ -126,7 +125,7 @@ nginx_sites:
       - vpn
     display:
       name: Krionard
-      # icon: krionard.png
+      icon: marusya.png
   - name: haproxy
     server_name: haproxy_{{ inventory_hostname }}.assol.ml
     addr: "{{ lookup('dig', inventory_hostname + '.local') }}"

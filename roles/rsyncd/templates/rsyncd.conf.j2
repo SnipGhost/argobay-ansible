@@ -8,10 +8,10 @@ dont compress = {{ rsync_not_compress }}
 	{% if module.gid is defined %}gid = {{ module.gid }}{% endif %}{{''}}
 	path = {{ module.path }}
 	{% if module.comment is defined %}comment = {{ module.comment }}{% endif %}{{''}}
-	{% if module.ro | default(no) | bool %}read only = yes{% endif %}{{''}}
-	{% if module.list | default(no) | bool %}list = yes{% endif %}{{''}}
+	{% if module.ro | default(false) | bool %}read only = yes{% endif %}{{''}}
+	{% if module.list | default(false) | bool %}list = yes{% endif %}{{''}}
 	{% if module.users is defined %}auth users = {{ module.users | join(',') }}{% endif %}{{''}}
-	{% if module.has_secrets | default(no) | bool %}secrets file = /etc/rsyncd.scrt{% endif %}{{''}}
+	{% if module.has_secrets | default(false) | bool %}secrets file = /etc/rsyncd.scrt{% endif %}{{''}}
 	hosts allow = localhost {{ groups[module.group] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(' ') }}
 	hosts deny = *
 

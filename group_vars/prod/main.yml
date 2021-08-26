@@ -101,6 +101,17 @@ nginx_sites:
     display:
       name: Alerts
       icon: prometheus.svg
+  - name: hydra
+    server_name: hydra.assol.ml
+    addr: "{{ private_vip_ip }}"
+    local: yes
+    port: 4444
+    hosts: hydra_servers
+    whitelist:
+      - vpn
+    display:
+      name: ORY Hydra
+      icon: hydra.png
   - name: dacrover
     server_name: dacrover.assol.ml
     addr: "{{ private_vip_ip }}"

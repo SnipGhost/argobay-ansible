@@ -1,0 +1,18 @@
+[Unit]
+Description={{ serviceName }}
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ userId }}
+Group={{ groupId }}
+Restart=always
+RestartSec=2
+StartLimitBurst=3
+StartLimitInterval=60
+Type=simple
+ExecStart={{ exec_command }}
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+---
+- name: restart hydra
+  become: true
+  systemd:
+    daemon_reload: true
+    name: hydra
+    state: restarted
+
+- name: reload hydra
+  become: true
+  systemd:
+    name: hydra
+    state: reloaded

@@ -1,0 +1,5 @@
+---
+- hosts: hydra_servers
+  roles:
+    - name: hydra
+      tags: hydra

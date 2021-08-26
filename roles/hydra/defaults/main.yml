@@ -1,0 +1,36 @@
+---
+hydra_version: 1.10.5
+
+hydra_arch: arm32v7
+hydra_pack_name: hydra_{{ hydra_version }}_linux_{{ hydra_arch }}
+hydra_pack_ext: tar.gz
+hydra_download_link: https://github.com/ory/hydra/releases/download/v{{ hydra_version }}/{{ hydra_pack_name }}.{{ hydra_pack_ext }}
+hydra_bin_dir: /usr/local/bin
+
+hydra_log_level: info
+hydra_ttl_access_token: 1h
+hydra_ttl_refresh_token: 720h
+hydra_ttl_id_token: 1h
+hydra_ttl_auth_code: 10m
+hydra_ttl_login_consent_request: 30m
+
+hydra_same_site_mode: Lax
+
+serviceName: hydra
+userId: root
+groupId: root
+exec_command: "{{ hydra_bin_dir }}/hydra -c /etc/hydra.yml serve all"
+
+hydra_db_user: hydra
+hydra_db_pass: hydra_pass
+hydra_db_name: hydra
+hydra_system_secret: aOj3q2W987za3crF2pckz2kXREfCL2PY
+hydra_cookie_secret: aOj3q2W987za3crF2pckz2kXREfCL2PY
+hydra_pairwise_salt: adacD2dawFvs4hbWVaehc55bXWse
+
+mariadb_sst_pass: sst_pass
+mariadb_proxy_host: 127.0.0.1
+mariadb_proxy_port: 3307
+mariadb_safe_hosts:
+  - "localhost"
+  - "127.0.0.1"

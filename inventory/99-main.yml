@@ -91,6 +91,9 @@ itsuki
 nino
 rikka
 
+[hydra_servers]
+miku
+
 [db_servers:children]
 prod_db_servers
 dev_db_servers

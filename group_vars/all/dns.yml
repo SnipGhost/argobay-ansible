@@ -57,6 +57,11 @@ dnsmasq_hosts:
     rec:
       - { ip: "{{research_vip_ip}}", type: assol.ml }
 
+  - name: hydra
+    rec:
+      - { ip: "{{private_vip_ip}}", type: assol.ml }
+      - { ip: "{{dev_private_vip_ip}}", type: dev-assol.ml }
+
   - name: razumator
     rec:
       - { ip: "{{public_vip_ip}}", type: assol.ml }

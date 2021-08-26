@@ -4,3 +4,6 @@
     - debug:
         msg: "{{ lookup('dig', item, '@' + service_vip_ip) }}"
       with_items: "{{ groups['all'] }}"
+
+    - debug:
+        var: ansible_architecture

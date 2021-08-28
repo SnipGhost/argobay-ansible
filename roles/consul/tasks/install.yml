@@ -1,0 +1,73 @@
+---
+- name: Download Consul binaries to local folder
+  become: false
+  get_url:
+    url: "{{ consul_download_link }}"
+    dest: "/tmp/{{ consul_pack_name }}.{{ consul_pack_ext }}"
+  register: _download_archive
+  until: _download_archive is succeeded
+  retries: 3
+  delay: 2
+  run_once: true
+  delegate_to: localhost
+  check_mode: false
+
+- name: Create tmp folder
+  become: false
+  file:
+    path: "/tmp/{{ consul_pack_name }}"
+    state: directory
+  delegate_to: localhost
+  check_mode: false
+
+- name: Unpack Consul binaries
+  become: false
+  unarchive:
+    src: "/tmp/{{ consul_pack_name }}.{{ consul_pack_ext }}"
+    dest: "/tmp/{{ consul_pack_name }}/"
+    creates: "/tmp/{{ consul_pack_name }}/consul"
+  delegate_to: localhost
+  check_mode: false
+
+- name: Create system group
+  group:
+    name: "{{ groupId }}"
+    system: yes
+    state: present
+  when: groupId != 'root'
+
+- name: Create system user
+  user:
+    name: "{{ userId }}"
+    system: yes
+    shell: "/usr/sbin/nologin"
+    group: "{{ groupId }}"
+    createhome: no
+    home: /etc/{{ serviceName }}
+  when: groupId != 'root'
+
+- name: Copy Consul binaries
+  copy:
+    src: "/tmp/{{ consul_pack_name }}/consul"
+    dest: "{{ consul_bin_dir }}/"
+    mode: 0755
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+  notify: restart consul server
+
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: consul
+  loop:
+    - "{{ consul_data_dir }}"
+    - "{{ consul_log_dir }}"
+    - /etc/consul
+    - /etc/consul/services
+
+- name: Create systemd unit
+  template:
+    src: consul-systemd.j2
+    dest: /etc/systemd/system/consul.service
+  notify: restart consul server

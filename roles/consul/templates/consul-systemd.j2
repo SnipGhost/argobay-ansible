@@ -1,0 +1,27 @@
+[Unit]
+Description="HashiCorp Consul - A service mesh solution"
+Documentation=https://www.consul.io/
+Requires=network-online.target
+After=network-online.target
+ConditionFileNotEmpty=/etc/consul/consul.hcl
+
+[Service]
+Type=notify
+User={{ userId }}
+Group={{ groupId }}
+ExecStart={{ consul_bin_dir }}/consul agent \
+  -config-dir=/etc/consul/ \
+  -config-dir=/etc/consul/services \
+  -client '{{ consul_listen_addr | join(' ') }}' \
+  -dns-port {{ consul_dns_port }} \
+  -http-port {{ consul_http_port }}
+ExecReload={{ consul_bin_dir }}/consul validate /etc/consul /etc/consul/services
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStop=/bin/kill -INT $MAINPID
+KillMode=process
+Restart=on-failure
+LimitNOFILE=65536
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target

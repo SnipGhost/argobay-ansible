@@ -1,0 +1,25 @@
+{{ ansible_managed | comment }}
+disable_update_check = true
+data_dir = "{{ consul_data_dir }}"
+log_file = "{{ consul_log_file }}"
+log_level = "{{ consul_log_level | string | upper }}"
+node_name = "{{ ansible_hostname }}"
+server = {{ consul_server | bool | string | lower }}
+ui = {{ consul_server | bool | string | lower }}
+raft_protocol = 3
+protocol = 3
+{% if consul_server is sameas true %}
+bootstrap_expect = {{ groups[consul_group] | default([])| length }}
+{%endif%}
+bind_addr = "{{ consul_bind_addr }}"
+domain = "{{ consul_domain }}"
+datacenter = "{{ consul_dc }}"
+recursors = ["{{ consul_recursors | default('127.0.0.1') | join('", "') }}"]
+enable_local_script_checks = {{ consul_enable_local_script_checks | string | lower }}
+retry_join = [{% for server in groups[consul_group] | sort %}"{{ hostvars[server]['consul_bind_addr'] | default(hostvars[server]['ansible_facts']['default_ipv4']['address'], true) }}"{% if not loop.last %},{% endif %}{% endfor %}]
+performance {
+  raft_multiplier = {{ consul_raft_multiplier }}
+}
+node_meta {
+  groups="{{ group_names | join(',') }}"
+}

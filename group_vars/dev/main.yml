@@ -101,6 +101,17 @@ nginx_sites:
     display:
       name: HAProxy
       icon: haproxy.png
+  - name: consul
+    server_name: consul.dev-assol.ml
+    addr: "{{ dev_private_vip_ip }}"
+    group: consul_group
+    local: yes
+    port: "{{ consul_http_port | default(8500) }}"
+    whitelist:
+      - vpn
+    display:
+      name: Consul
+      icon: consul.svg
   - name: external-dashboard
     server_name: dev-assol.ml
     addr: "{{ dev_public_vip_ip }}"

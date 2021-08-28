@@ -8,8 +8,8 @@ dnsmasq_hosts:
     rec:
       - { ip: "{{public_vip_ip}}", type: i }
       - { ip: "{{dev_public_vip_ip}}", type: dev.i }
-      
-  - name: service 
+
+  - name: service
     rec:
       - { ip: "{{service_vip_ip}}", type: i }
 
@@ -56,6 +56,11 @@ dnsmasq_hosts:
   - name: jupyter
     rec:
       - { ip: "{{research_vip_ip}}", type: assol.ml }
+
+  - name: consul
+    rec:
+      - { ip: "{{consul_vip_ip}}", type: assol.ml }
+      - { ip: "{{dev_private_vip_ip}}", type: dev-assol.ml }
 
   - name: razumator
     rec:

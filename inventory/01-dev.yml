@@ -11,6 +11,9 @@ itsuki redis_master=yes
 itsuki
 rikka
 
+[dev_consul_servers]
+itsuki
+
 [dev_krionard]
 rikka
 

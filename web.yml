@@ -4,11 +4,14 @@
     - name: nginx
       tags:
         - nginx
+        - site
         - acl
     - name: nginx_exporter
       tags: nginx_exporter
     - name: dashboards
-      tags: dashboards
+      tags:
+        - dashboards
+        - site
     - name: swagger
       tags: swagger
       when: inventory_hostname in groups[private_group]

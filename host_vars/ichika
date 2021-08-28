@@ -14,5 +14,5 @@ keepalived_vips:
     ip: "{{ research_vip_ip }}"
     priority: 200
     state: MASTER
-    iface: eth0
+    iface: wlan0
     password: "{{ research_vip_password }}"

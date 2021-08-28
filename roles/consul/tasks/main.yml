@@ -1,0 +1,4 @@
+---
+- include: install.yml
+  when: consul_install | default(false) | bool
+- include: configure.yml

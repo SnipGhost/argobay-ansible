@@ -1,0 +1,17 @@
+---
+- name: Configure Consul
+  template:
+    src: consul_conf.hcl.j2
+    dest: /etc/consul/consul.hcl
+    owner: consul
+    backup: yes
+  notify: reload consul server
+
+- name: Start consul service
+  systemd:
+    name: consul
+    state: started
+    daemon_reload: yes
+    enabled: yes
+    no_block: "{{ consul_server }}"
+  register: consul_started

@@ -66,6 +66,11 @@ dev_private_vip_ip: 192.168.8.17
 # Rados gateway load balancer VIP
 rgw_lb_vip_id: 8
 rgw_lb_vip_ip: 192.168.8.18
+#=====================================#
+# PROD Consul VIP
+consul_vip_id: 9
+consul_vip_ip: 192.168.8.20
+# DEV Consul VIP == DEV private VIP
 ###############################################################################
 # atop
 atop_log_interval: 300
@@ -257,6 +262,18 @@ letsapi_cert_renewers:
     cert: assol.ml
   - host: rikka
     cert: dev-assol.ml
+###############################################################################
+consul_log_level: INFO
+consul_version: 1.10.1
+consul_domain: service
+consul_dc: main
+consul_recursors:
+  - "{{ service_vip_ip }}"
+consul_enable_local_script_checks: true
+consul_dns_port: 8600
+consul_http_port: 8500
+consul_listen_addr:
+  - 127.0.0.1
 ###############################################################################
 # Summary
 project_version: v0.7

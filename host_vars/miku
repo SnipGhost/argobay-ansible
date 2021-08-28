@@ -26,3 +26,11 @@ keepalived_vips:
     state: MASTER
     iface: eth0
     password: "{{ rgw_lb_vip_password }}"
+
+  - id: "{{ consul_vip_id }}"
+    name: consul_vip
+    ip: "{{ consul_vip_ip }}"
+    priority: 200
+    state: MASTER
+    iface: eth0
+    password: "{{ consul_vip_password }}"

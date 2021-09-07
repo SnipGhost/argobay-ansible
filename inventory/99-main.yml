@@ -130,6 +130,10 @@ dev_dacrover
 krionard
 dacrover
 
+[razumator:children]
+razumator_api
+razumator_core
+
 [razumator_api:children]
 prod_razumator_api
 dev_razumator_api

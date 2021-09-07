@@ -20,5 +20,8 @@ rikka
 [dev_dacrover]
 itsuki
 
-[dev_razumator]
+[dev_razumator_api]
 rikka
+
+[dev_razumator_core]
+itsuki

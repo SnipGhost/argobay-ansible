@@ -16,6 +16,7 @@ razumator_bindir: "/usr/local/bin/{{ app_name }}"
 razumator_confdir: "/etc/{{ app_name }}"
 razumator_model_path: "/var/lib/{{ app_name }}"
 razumator_static_path: "/var/www/html/{{ app_name }}"
+razumator_builddir: build/arm
 
 razumator_log_period:   daily
 razumator_log_rotate:   7

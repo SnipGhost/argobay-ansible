@@ -75,14 +75,15 @@ nginx_sites:
   - name: razumator
     server_name: razumator.dev-assol.ml
     addr: "{{ dev_public_vip_ip }}"
+    group: "{{ razumator_api_group }}"
     static_root: "{{ razumator_static_path }}"
     static_path: /
     static_hard: yes
     ignore_not_found: yes
-    local: yes
+    # local: yes
     port: "{{ razumator_api_port }}"
     path: /api/
-    hosts: dev_razumator
+    hosts: dev_public_hosts
     whitelist:
       - vpn
     display:

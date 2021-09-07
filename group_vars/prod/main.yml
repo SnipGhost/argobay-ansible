@@ -126,6 +126,23 @@ nginx_sites:
     display:
       name: Krionard
       icon: marusya.png
+  - name: razumator
+    server_name: razumator.assol.ml
+    addr: "{{ public_vip_ip }}"
+    group: "{{ razumator_api_group }}"
+    static_root: "{{ razumator_static_path }}"
+    static_path: /
+    static_hard: yes
+    ignore_not_found: yes
+    # local: yes
+    port: "{{ razumator_api_port }}"
+    path: /api/
+    hosts: prod_public_hosts
+    whitelist:
+      - vpn
+    display:
+      name: Разуматор
+      icon: razumator.svg
   - name: haproxy
     server_name: haproxy_{{ inventory_hostname }}.assol.ml
     addr: "{{ lookup('dig', inventory_hostname + '.local') }}"

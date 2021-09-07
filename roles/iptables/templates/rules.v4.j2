@@ -128,6 +128,7 @@
 
 {% if inventory_hostname in groups[razumator_core_group] %}
 -A INPUT -p tcp -m tcp --dport {{ razumator_port | default(10000) }} -m comment --comment "Razumator Core" -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ razumator_proxy_port | default(10002) }} -m comment --comment "Razumator Core Proxy" -j incoming-local
 {% endif %}
 
 -A INPUT -p tcp -m tcp --dport 9100 -m comment --comment node_exporter -j incoming-local

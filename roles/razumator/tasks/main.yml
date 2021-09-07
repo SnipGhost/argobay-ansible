@@ -95,9 +95,13 @@
   when: inventory_hostname in groups[razumator_api_group]
 
 - name: Copy sys config json file
-  template:
+  copy:
+    remote_src: yes
     src: "{{ razumator_bindir }}/build/config/sys.json"
     dest: "{{ razumator_confdir }}/sys.json"
+    mode: 0644
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
 
 - name: Create a symbolic link for static
   file:

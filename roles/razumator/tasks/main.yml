@@ -97,7 +97,7 @@
 - name: Copy sys config json file
   copy:
     remote_src: yes
-    src: "{{ razumator_bindir }}/build/config/sys.json"
+    src: "{{ razumator_bindir }}/{{ razumator_builddir }}/sys.json"
     dest: "{{ razumator_confdir }}/sys.json"
     mode: 0644
     owner: "{{ userId }}"

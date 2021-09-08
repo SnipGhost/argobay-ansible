@@ -54,20 +54,3 @@
     owner: "{{ userId }}"
     group: "{{ groupId }}"
   notify: restart consul server
-
-- name: Create directories
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: consul
-  loop:
-    - "{{ consul_data_dir }}"
-    - "{{ consul_log_dir }}"
-    - /etc/consul
-    - /etc/consul/services
-
-- name: Create systemd unit
-  template:
-    src: consul-systemd.j2
-    dest: /etc/systemd/system/consul.service
-  notify: restart consul server

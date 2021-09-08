@@ -1,4 +1,24 @@
 ---
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0755
+  loop:
+    - "{{ consul_data_dir }}"
+    - "{{ consul_log_dir }}"
+    - /etc/consul
+    - /etc/consul/services
+  notify: restart consul server
+
+- name: Create systemd unit
+  template:
+    src: consul-systemd.j2
+    dest: /etc/systemd/system/consul.service
+  notify: restart consul server
+
 - name: Configure Consul
   template:
     src: consul_conf.hcl.j2

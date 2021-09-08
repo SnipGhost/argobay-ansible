@@ -16,7 +16,7 @@ consul_pack_ext: zip
 consul_download_link: https://releases.hashicorp.com/consul/{{ consul_version }}/{{ consul_pack_name }}.{{ consul_pack_ext }}
 
 consul_bind_addr: "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}"
-consul_domain: service
+consul_domain: compute
 consul_dc: main
 consul_recursors:
   - 127.0.0.1
@@ -28,3 +28,7 @@ consul_server: false
 consul_listen_addr:
   - 127.0.0.1
  
+consul_acl: true
+consul_acl_default_policy: deny
+consul_acl_enable_token_persistence: true
+consul_telementry_disable_compat: true

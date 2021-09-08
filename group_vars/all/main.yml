@@ -263,13 +263,15 @@ letsapi_cert_renewers:
   - host: rikka
     cert: dev-assol.ml
 ###############################################################################
+# Consul
 consul_log_level: INFO
 consul_version: 1.10.1
-consul_domain: service
+consul_domain: compute
 consul_dc: main
 consul_recursors:
   - "{{ service_vip_ip }}"
 consul_enable_local_script_checks: true
+consul_raft_multiplier: 5
 consul_dns_port: 8600
 consul_http_port: 8500
 consul_listen_addr:

@@ -7,6 +7,8 @@ razumator_branch: master
 
 razumator_host: 127.0.0.1
 razumator_port: 10000
+razumator_proxy_host: 127.0.0.1
+razumator_proxy_port: 10002
 
 razumator_api_host: 0.0.0.0
 razumator_api_port: 10001
@@ -16,6 +18,8 @@ razumator_bindir: "/usr/local/bin/{{ app_name }}"
 razumator_confdir: "/etc/{{ app_name }}"
 razumator_model_path: "/var/lib/{{ app_name }}"
 razumator_static_path: "/var/www/html/{{ app_name }}"
+razumator_build_path: "builds"
+razumator_builddir: "{{ razumator_build_path }}/arm"
 
 razumator_log_period:   daily
 razumator_log_rotate:   7

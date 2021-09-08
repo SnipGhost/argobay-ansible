@@ -20,9 +20,11 @@
     name: razumator-core
     state: restarted
   listen: razumator_core_restart
+  when: inventory_hostname in groups[razumator_core_group]
 
 - name: Restart razumator api
   service:
     name: razumator-api
     state: restarted
   listen: razumator_api_restart
+  when: inventory_hostname in groups[razumator_api_group]

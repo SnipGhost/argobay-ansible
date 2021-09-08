@@ -38,6 +38,7 @@
     mysql_server_names: "{{ groups[db_group] }}"
     memcached_server_names: "{{ groups[memcached_group] }}"
     redis_server_names: "{{ groups[redis_group] }}"
+    razumator_server_names: "{{ groups[razumator_core_group] }}"
   template:
     src: haproxy.cfg
     dest: /etc/haproxy/haproxy.cfg

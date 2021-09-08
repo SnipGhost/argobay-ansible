@@ -81,6 +81,7 @@
     group: "{{ groupId }}"
   notify:
     - razumator_core_restart
+  when: inventory_hostname in groups[razumator_core_group]
   
 - name: Create config for razumator restapi
   template:
@@ -91,6 +92,16 @@
     group: "{{ groupId }}"
   notify:
     - razumator_api_restart
+  when: inventory_hostname in groups[razumator_api_group]
+
+- name: Copy sys config json file
+  copy:
+    remote_src: yes
+    src: "{{ razumator_bindir }}/{{ razumator_build_path }}/config/sys.json"
+    dest: "{{ razumator_confdir }}/sys.json"
+    mode: 0644
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
 
 - name: Create a symbolic link for static
   file:
@@ -100,6 +111,7 @@
     group: root
     mode: 0755
     state: link
+  when: inventory_hostname in groups[razumator_api_group]
 
 - name: Copy logrotate config file
   template:
@@ -118,24 +130,24 @@
   register: stuff
   check_mode: no
   changed_when: False
-  when: (inventory_hostname == groups[razumator_group][0])
+  when: (inventory_hostname == groups[razumator_core_group][0])
 
 - name: Revoke all grant for db user
   vars:
     userhost: "'{{ item.split('\t')[1] }}'@'{{ item.split('\t')[0] }}'"
   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "DROP USER {{ userhost }};"
   with_items: "{{ stuff.stdout_lines }}"
-  when: (inventory_hostname == groups[razumator_group][0]) and (item.split('\t')[0] not in mariadb_safe_hosts)
+  when: (inventory_hostname == groups[razumator_core_group][0]) and (item.split('\t')[0] not in mariadb_safe_hosts)
 
 - name: Add db user to mysql
   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "GRANT SELECT, INSERT, DELETE, UPDATE ON {{ razumator_db_name }}.* TO '{{ razumator_db_user }}'@'{{ item }}' IDENTIFIED BY '{{ razumator_db_pass }}';"
   with_items: "{{ mariadb_safe_hosts }}"
   changed_when: False
-  when: (inventory_hostname == groups[razumator_group][0])
+  when: (inventory_hostname == groups[razumator_core_group][0])
 
 - name: Re-create db
   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ razumator_bindir }}/cfg/cluster_init.sql 
-  when: (inventory_hostname == groups[razumator_group][0]) and (razumator_setup | default(false) | bool)
+  when: (inventory_hostname == groups[razumator_core_group][0]) and (razumator_setup | default(false) | bool)
   notify:
     - razumator_core_restart
     - razumator_api_restart
@@ -147,6 +159,7 @@
   notify:
     - Reload systemd
     - razumator_core_restart
+  when: inventory_hostname in groups[razumator_core_group]
 
 - name: Copy systemd razumator api file
   template:
@@ -155,6 +168,7 @@
   notify:
     - Reload systemd
     - razumator_api_restart
+  when: inventory_hostname in groups[razumator_api_group]
 
 - name: Copy addn-sudoers file
   template:
@@ -171,9 +185,11 @@
     name: razumator-api
     state: started
     enabled: yes
+  when: inventory_hostname in groups[razumator_api_group]
 
 - name: Start and enable razumator core
   systemd:
     name: razumator-core
     state: started
     enabled: yes
+  when: inventory_hostname in groups[razumator_core_group]

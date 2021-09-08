@@ -33,5 +33,10 @@ yotsuba
 asuna
 miku
 
-[prod_razumator]
-# nino
+[prod_razumator_api]
+nino
+yotsuba
+
+[prod_razumator_core]
+miku
+zelda razumator_core_master=yes

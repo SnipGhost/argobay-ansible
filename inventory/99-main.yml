@@ -31,7 +31,8 @@ web_group=prod_web_servers
 consul_group=prod_consul_servers
 krionard_group=prod_krionard
 dacrover_group=prod_dacrover
-razumator_group=prod_razumator
+razumator_api_group=prod_razumator_api
+razumator_core_group=prod_razumator_core
 
 [dev]
 itsuki
@@ -48,7 +49,8 @@ web_group=dev_web_servers
 consul_group=dev_consul_servers
 krionard_group=dev_krionard
 dacrover_group=dev_dacrover
-razumator_group=dev_razumator
+razumator_api_group=dev_razumator_api
+razumator_core_group=dev_razumator_core
 
 [all:children]
 raspberry_pi
@@ -129,5 +131,13 @@ krionard
 dacrover
 
 [razumator:children]
-prod_razumator
-dev_razumator
+razumator_api
+razumator_core
+
+[razumator_api:children]
+prod_razumator_api
+dev_razumator_api
+
+[razumator_core:children]
+prod_razumator_core
+dev_razumator_core

@@ -49,6 +49,9 @@ haproxy_stat_port: 9000
 default_cert:     "{{ cert_path }}/dev-assol.ml/fullchain.pem"
 default_cert_key: "{{ cert_path }}/dev-assol.ml/privkey.pem"
 nginx_enable_default: yes
+# No limits for dev
+nginx_conn_limits: []
+nginx_rate_limits: []
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
   - name: dacrover
@@ -75,14 +78,15 @@ nginx_sites:
   - name: razumator
     server_name: razumator.dev-assol.ml
     addr: "{{ dev_public_vip_ip }}"
+    group: "{{ razumator_api_group }}"
     static_root: "{{ razumator_static_path }}"
     static_path: /
     static_hard: yes
     ignore_not_found: yes
-    local: yes
+    # local: yes
     port: "{{ razumator_api_port }}"
     path: /api/
-    hosts: dev_razumator
+    hosts: dev_public_hosts
     whitelist:
       - vpn
     display:

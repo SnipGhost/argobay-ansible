@@ -49,6 +49,16 @@ haproxy_stat_port: 9000
 default_cert:     "{{ cert_path }}/assol.ml/fullchain.pem"
 default_cert_key: "{{ cert_path }}/assol.ml/privkey.pem"
 nginx_enable_default: yes
+# Limits
+nginx_conn_limits:
+  - name: conn_limit_per_ip
+    field: "$binary_remote_addr"
+    max_conn: 40 # default value
+nginx_rate_limits:
+  - name: req_limit_per_ip
+    field: "$binary_remote_addr"
+    rate:  100r/s
+    burst: 40    # default value
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
   - name: grafana
@@ -134,11 +144,11 @@ nginx_sites:
     static_path: /
     static_hard: yes
     ignore_not_found: yes
-    # local: yes
     port: "{{ razumator_api_port }}"
     path: /api/
     hosts: public_hosts
     whitelist:
+      - external
       - vpn
     display:
       name: Разуматор
@@ -175,6 +185,12 @@ nginx_sites:
     whitelist:
       - external
       - vpn
+    conn_limits:
+      - name: conn_limit_per_ip
+        max_conn: 10
+    rate_limits:
+      - name: req_limit_per_ip
+        burst: 20
   - name: internal-dashboard
     server_name: internal.assol.ml
     addr: "{{ private_vip_ip }}"
@@ -225,7 +241,7 @@ nginx_sites:
 # Dashboards only
 dashboard_path: /var/www/html/
 dashboard_git: git@github.com:SnipGhost/cluster-page.git
-dashboard_max_width:  85vw
+dashboard_max_width:  95vw
 dashboard_top_margin: 10vh
 swagger_path: /var/www/html/swagger/
 swagger_git: git@github.com:SnipGhost/custom-swagger.git

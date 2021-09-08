@@ -263,6 +263,7 @@ letsapi_cert_renewers:
   - host: rikka
     cert: dev-assol.ml
 ###############################################################################
+# Consul
 consul_log_level: INFO
 consul_version: 1.10.1
 consul_domain: service
@@ -276,4 +277,4 @@ consul_listen_addr:
   - 127.0.0.1
 ###############################################################################
 # Summary
-project_version: v0.7
+project_version: v0.7b

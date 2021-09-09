@@ -123,6 +123,7 @@ nginx_sites:
     basic_auth: yes
     display:
       name: Dacrover
+      icon: dacrover.svg
   - name: krionard
     server_name: "krionard.assol.ml marusya.assol.ml"
     addr: "{{ public_vip_ip }}"

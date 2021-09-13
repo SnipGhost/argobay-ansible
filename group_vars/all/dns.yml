@@ -10,6 +10,8 @@ dnsmasq_hosts:
       - { ip: "{{dev_public_vip_ip}}", type: dev.i }
 
   - name: service
+    aliases:
+      - dns
     rec:
       - { ip: "{{service_vip_ip}}", type: i }
 
@@ -30,6 +32,10 @@ dnsmasq_hosts:
     rec:
       - { ip: "{{ rgw_lb_vip_ip }}", type: i }
 
+  - name: consul
+    rec:
+      - { ip: "{{consul_vip_ip}}", type: i }
+
   #========================================================
   # Internal subdomain records
 
@@ -41,11 +47,9 @@ dnsmasq_hosts:
     rec:
       - { ip: "{{public_vip_ip}}", type: assol.ml }
 
-  # - name: prometheus
-  #   rec:
-  #     - { ip: "{{monitoring_vip_ip}}", type: assol.ml }
-
   - name: vm
+    aliases:
+      - prometheus
     rec:
       - { ip: "{{monitoring_vip_ip}}", type: assol.ml }
 
@@ -105,51 +109,38 @@ dnsmasq_hosts:
 
   - name: router
     rec:
-      - { ip: 192.168.8.1, type: i }
+      - { ip: 192.168.8.1, type: i, main: yes }
 
   - name: switch-main
     rec:
-      - { ip: 192.168.8.2, type: i }
+      - { ip: 192.168.8.2, type: i, main: yes }
 
   - name: switch-cluster
     rec:
-      - { ip: 192.168.8.3, type: i }
+      - { ip: 192.168.8.3, type: i, main: yes }
 
   - name: switch-mak
     rec:
-      - { ip: 192.168.8.4, type: i }
+      - { ip: 192.168.8.4, type: i, main: yes }
 
   - name: switch-horifox
     rec:
-      - { ip: 192.168.8.5, type: i }
+      - { ip: 192.168.8.5, type: i, main: yes }
       
   #========================================================
   # IoT devices
 
-  - name: pilot
+  - name: printer
     rec:
-      - { ip: 192.168.8.201, type: i }
-      - { ip: 192.168.8.201, type: assol.ml }
-  
-  - name: main.light
-    rec:
-      - { ip: 192.168.8.117, type: i }
-      - { ip: 192.168.8.117, type: assol.ml }
-
-  - name: small.light
-    rec:
-      - { ip: 192.168.8.235, type: i }
-      - { ip: 192.168.8.235, type: assol.ml }
+      - { ip: 192.168.8.8, type: i }
+      - { ip: 192.168.8.8, type: local, main: yes }
+      - { ip: 192.168.8.8, type: assol.ml }
 
   - name: nyanko
     rec:
       - { ip: 192.168.8.121, type: i }
+      - { ip: 192.168.8.121, type: local, main: yes }
       - { ip: 192.168.8.121, type: assol.ml }
-
-  - name: printer
-    rec:
-      - { ip: 192.168.8.8, type: i }
-      - { ip: 192.168.8.8, type: assol.ml }
 
   #========================================================
   # Servers interfaces
@@ -208,7 +199,17 @@ dnsmasq_hosts:
       - { ip: 192.168.8.30, type: e }
       - { ip: 192.168.8.40, type: w, main: yes }
 
-  - name: raphtalia
+  #========================================================
+  # Workstations
+
+  - name: mbp-mak-home
     rec:
-      - { ip: 192.168.8.31, type: e }
-      - { ip: 192.168.8.41, type: w, main: yes }
+      - { ip: 192.168.8.250, type: i }
+      - { ip: 192.168.8.250, type: local, main: yes }
+
+  - name: m-kucherenko
+    aliases:
+      - mbp-mak-work
+    rec:
+      - { ip: 192.168.8.250, type: i }
+      - { ip: 192.168.8.251, type: local, main: yes }

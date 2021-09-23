@@ -8,6 +8,11 @@
     - name: dnsmasq_exporter
       tags: dnsmasq_exporter
 
+    - name: pdns_server
+      tags:
+        - pdns
+        - dns
+
 - hosts: rsyncd_servers
   pre_tasks:
     - name: Gather facts from all hosts

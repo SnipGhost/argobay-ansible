@@ -1,0 +1,17 @@
+---
+- name: restart pdns server
+  systemd:
+    name: pdns
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  register: pdns_restarted
+  when: not pdns_started.changed
+
+- name: reload pdns server
+  systemd:
+    name: pdns
+    state: reloaded
+  when: 
+    - not pdns_started.changed
+    - not (pdns_restarted.changed | default(false))

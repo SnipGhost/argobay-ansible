@@ -1,0 +1,33 @@
+---
+- name: Create db
+  mysql_db:
+    name: "{{ pdns_db_name }}"
+    state: present
+    encoding: utf8
+  run_once: yes
+
+- name: Retrieve db user grants from mysql
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -e "select Host, User from mysql.user where User = '{{ pdns_db_user }}';" --batch --skip-column-names
+  register: stuff
+  check_mode: no
+  changed_when: False
+  run_once: yes
+
+- name: Revoke all grant for db user
+  vars:
+    userhost: "'{{ item.split('\t')[1] }}'@'{{ item.split('\t')[0] }}'"
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "DROP USER {{ userhost }};"
+  with_items: "{{ stuff.stdout_lines }}"
+  run_once: yes
+
+- name: Add db user to mysql
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "GRANT SELECT, INSERT, DELETE, UPDATE ON {{ pdns_db_name }}.* TO '{{ pdns_db_user }}'@'{{ item }}' IDENTIFIED BY '{{ pdns_db_pass }}';"
+  with_items: "{{ mariadb_safe_hosts }}"
+  changed_when: False
+  run_once: yes
+
+- name: Re-create db
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ razumator_bindir }}/cfg/cluster_init.sql 
+  run_once: yes
+  when: pdns_setup | default(false) | bool
+  notify: restart pdns server

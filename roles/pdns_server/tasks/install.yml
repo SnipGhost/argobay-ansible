@@ -1,0 +1,25 @@
+---
+- name: Download PowerDNS binaries to local folder
+  package:
+    name:
+      - pdns-server
+      - pdns-tools
+      - pdns-backend-mysql
+    state: present
+
+- name: Create system group
+  group:
+    name: "{{ groupId }}"
+    system: yes
+    state: present
+  when: groupId != 'root'
+
+- name: Create system user
+  user:
+    name: "{{ userId }}"
+    system: yes
+    shell: "/usr/sbin/nologin"
+    group: "{{ groupId }}"
+    createhome: no
+    home: /etc/{{ serviceName }}
+  when: groupId != 'root'

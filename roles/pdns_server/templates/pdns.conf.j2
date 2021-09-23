@@ -1,0 +1,11 @@
+config-dir={{ pdns_conf_dir }}
+daemon=yes
+launch=gmysql
+gmysql-host={{ mariadb_proxy_host }}
+gmysql-port={{ mariadb_proxy_port }}
+gmysql-user={{ pdns_db_user }}
+gmysql-dbname={{ pdns_db_name }}
+gmysql-password={{ pdns_db_pass }}
+gmysql-dnssec=yes
+setgid={{ userId }}
+setuid={{ groupId }}

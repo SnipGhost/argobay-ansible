@@ -1,0 +1,12 @@
+---
+serviceName: pdns
+userId: pdns
+groupId: pdns
+
+pdns_log_dir: /var/log/powerdns
+pdns_conf_dir: /etc/powerdns
+pdns_db_user: powerdns
+pdns_db_pass: powerdns
+
+mariadb_proxy_host: 127.0.0.1
+mariadb_proxy_port: 3306

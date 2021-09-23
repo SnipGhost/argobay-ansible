@@ -1,0 +1,5 @@
+---
+- include: install.yml
+  when: pdns_install | default(false) | bool
+- include: db.yml
+- include: configure.yml

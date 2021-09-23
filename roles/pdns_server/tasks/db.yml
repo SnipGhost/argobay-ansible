@@ -4,6 +4,8 @@
     name: "{{ pdns_db_name }}"
     state: present
     encoding: utf8
+    login_user: sst_user
+    login_password: "{{ mariadb_sst_pass }}"
   run_once: yes
 
 - name: Retrieve db user grants from mysql

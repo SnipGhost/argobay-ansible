@@ -126,6 +126,10 @@ dnsmasq_hosts:
   - name: switch-horifox
     rec:
       - { ip: 192.168.8.5, type: i, main: yes }
+
+  - name: proxy.router
+    rec:
+      - { ip: 192.168.8.6, type: i, main: yes }
       
   #========================================================
   # IoT devices

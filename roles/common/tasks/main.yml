@@ -23,6 +23,7 @@
       - dnsutils
       - tcpdump
       - lvm2
+      - python-pymysql
     state: present
 
 - name: Install virtualenv via pip

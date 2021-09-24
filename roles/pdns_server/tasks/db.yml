@@ -6,6 +6,8 @@
     encoding: utf8
     login_user: sst_user
     login_password: "{{ mariadb_sst_pass }}"
+    login_host: "{{ mariadb_proxy_host }}"
+    login_port: "{{ mariadb_proxy_port }}"
   run_once: yes
 
 - name: Retrieve db user grants from mysql

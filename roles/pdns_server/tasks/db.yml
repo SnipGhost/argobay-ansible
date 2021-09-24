@@ -23,6 +23,7 @@
   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "DROP USER {{ userhost }};"
   with_items: "{{ stuff.stdout_lines }}"
   run_once: yes
+  when: item.split('\t')[0] not in mariadb_safe_hosts | default([])
 
 - name: Add db user to mysql
   shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} -ne "GRANT SELECT, INSERT, DELETE, UPDATE ON {{ pdns_db_name }}.* TO '{{ pdns_db_user }}'@'{{ item }}' IDENTIFIED BY '{{ pdns_db_pass }}';"

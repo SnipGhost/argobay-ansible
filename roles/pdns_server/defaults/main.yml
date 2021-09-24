@@ -1,7 +1,7 @@
 ---
 serviceName: pdns
-userId: pdns
-groupId: pdns
+userId: root
+groupId: root
 
 pdns_log_dir: /var/log/powerdns
 pdns_conf_dir: /etc/powerdns

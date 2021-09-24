@@ -26,5 +26,4 @@
     state: started
     daemon_reload: yes
     enabled: yes
-    no_block: "{{ pdns_server }}"
   register: pdns_started

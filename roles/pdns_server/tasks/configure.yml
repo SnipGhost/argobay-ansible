@@ -18,7 +18,7 @@
     owner: "{{ userId }}"
     group: "{{ groupId }}"
     backup: yes
-    mode: 0750
+    mode: 0640
   notify: reload pdns server
 
 - name: Start PowerDNS service

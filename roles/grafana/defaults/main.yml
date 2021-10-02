@@ -1,5 +1,5 @@
 ---
 userId: grafana
 groupId: grafana
-grafana_domain: grafana.assol.ml
+grafana_domain: grafana.argobay.ml
 grafana_data_path: "/var/lib/grafana/"

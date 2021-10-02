@@ -47,8 +47,8 @@ haproxy_stat_host: 127.0.0.1
 haproxy_stat_port: 9000
 ###############################################################################
 # NGINX options
-default_cert:     "{{ cert_path }}/dev-assol.ml/fullchain.pem"
-default_cert_key: "{{ cert_path }}/dev-assol.ml/privkey.pem"
+default_cert:     "{{ cert_path }}/dev-argobay.ml/fullchain.pem"
+default_cert_key: "{{ cert_path }}/dev-argobay.ml/privkey.pem"
 nginx_enable_default: yes
 # No limits for dev
 nginx_conn_limits: []
@@ -56,7 +56,7 @@ nginx_rate_limits: []
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
   - name: dacrover
-    server_name: dacrover.dev-assol.ml
+    server_name: dacrover.dev-argobay.ml
     addr: "{{ dev_private_vip_ip }}"
     group: "{{ dacrover_group }}"
     static_root: /usr/local/bin/dacrover/static
@@ -68,7 +68,7 @@ nginx_sites:
       name: Dacrover
       icon: dacrover.svg
   - name: krionard
-    server_name: krionard.dev-assol.ml
+    server_name: krionard.dev-argobay.ml
     addr: "{{ dev_public_vip_ip }}"
     group: "{{ krionard_group }}"
     # local: yes # No load balancing, only failover
@@ -78,7 +78,7 @@ nginx_sites:
       name: Krionard
       icon: marusya.png
   - name: razumator
-    server_name: razumator.dev-assol.ml
+    server_name: razumator.dev-argobay.ml
     addr: "{{ dev_public_vip_ip }}"
     group: "{{ razumator_api_group }}"
     static_root: "{{ razumator_static_path }}"
@@ -95,20 +95,20 @@ nginx_sites:
       name: Разуматор
       icon: razumator.svg
   - name: haproxy
-    server_name: haproxy_{{ inventory_hostname }}.assol.ml
+    server_name: haproxy_{{ inventory_hostname }}.argobay.ml
     addr: "{{ lookup('dig', inventory_hostname + '.local') }}"
     add_path: /haproxy_stats
     local: yes
     port: "{{ haproxy_stat_port }}"
-    ssl_certificate: "{{ cert_path }}/assol.ml/fullchain.pem"
-    ssl_certificate_key: "{{ cert_path }}/assol.ml/privkey.pem"
+    ssl_certificate: "{{ cert_path }}/argobay.ml/fullchain.pem"
+    ssl_certificate_key: "{{ cert_path }}/argobay.ml/privkey.pem"
     whitelist:
       - vpn
     display:
       name: HAProxy
       icon: haproxy.png
   - name: consul
-    server_name: consul.dev-assol.ml
+    server_name: consul.dev-argobay.ml
     addr: "{{ dev_private_vip_ip }}"
     group: consul_group
     local: yes
@@ -119,7 +119,7 @@ nginx_sites:
       name: Consul
       icon: consul.svg
   - name: external-dashboard
-    server_name: dev-assol.ml
+    server_name: dev-argobay.ml
     addr: "{{ dev_public_vip_ip }}"
     static_root: "{{ dashboard_path }}external/"
     static_path: /
@@ -131,7 +131,7 @@ nginx_sites:
       name: External
       icon: external.png
   - name: internal-dashboard
-    server_name: internal.dev-assol.ml
+    server_name: internal.dev-argobay.ml
     addr: "{{ dev_private_vip_ip }}"
     static_root: "{{ dashboard_path }}internal/"
     static_path: /
@@ -140,7 +140,7 @@ nginx_sites:
     whitelist:
       - vpn
   - name: swagger
-    server_name: swagger.dev-assol.ml
+    server_name: swagger.dev-argobay.ml
     addr: "{{ dev_private_vip_ip }}"
     static_root: "{{ swagger_path }}"
     static_path: /
@@ -152,7 +152,7 @@ nginx_sites:
       name: Swagger
       icon: swagger.svg
   - name: mdwiki
-    server_name: wiki.dev-assol.ml
+    server_name: wiki.dev-argobay.ml
     addr: "{{ dev_private_vip_ip }}"
     static_root: "{{ mdwiki_path }}"
     static_path: /
@@ -174,9 +174,9 @@ swagger_git: git@github.com:SnipGhost/custom-swagger.git
 mdwiki_path: /var/www/html/mdwiki/
 display_only_sites:
   - name: Кластер
-    addr: https://internal.dev-assol.ml/cluster/
+    addr: https://internal.dev-argobay.ml/cluster/
     icon: cluster.svg
   - name: Grafana
-    addr: https://grafana.assol.ml/
+    addr: https://grafana.argobay.ml/
     icon: grafana.svg
 ###############################################################################

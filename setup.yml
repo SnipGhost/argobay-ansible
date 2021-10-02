@@ -8,7 +8,7 @@
 - import_playbook: storage.yml
 - import_playbook: web.yml
 
-- import_playbook: assol.yml
+- import_playbook: omega.yml
 - import_playbook: razumator.yml
 
 - import_playbook: runner.yml

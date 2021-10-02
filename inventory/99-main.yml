@@ -126,7 +126,7 @@ dev_krionard
 prod_dacrover
 dev_dacrover
 
-[assol:children]
+[omega:children]
 krionard
 dacrover
 

@@ -1,5 +1,5 @@
 ###############################################################################
-# Assol project options
+# Omega project options
 ###############################################################################
 # Krionard API
 krionard_git: https://github.com/HoriFox/Krionard.git
@@ -24,7 +24,7 @@ dacrover_git: https://github.com/HoriFox/Dacrover.git
 # dacrover_bind: 127.0.0.1 # No load balancing, only failover
 dacrover_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
 dacrover_port: 4050
-dacrover_connect_host: dacrover.assol.ml
+dacrover_connect_host: dacrover.argobay.ml
 dacrover_connect_port: 443
 # uWSGI
 dacrover_buffer_size: 65535

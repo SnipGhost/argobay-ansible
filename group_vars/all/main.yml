@@ -177,7 +177,7 @@ alertmanager_bot_telegram_admins:
   - 525681106 # Александр Васильев
 ###############################################################################
 # Grafana
-grafana_domain: grafana.assol.ml
+grafana_domain: grafana.argobay.ml
 grafana_data_path: "{{ data_path }}/grafana/"
 ###############################################################################
 # Jupyter
@@ -259,9 +259,9 @@ letsapi_path: /etc/letsapi
 cert_path: "{{ letsapi_path }}/live"
 letsapi_cert_renewers:
   - host: nino
-    cert: assol.ml
+    cert: argobay.ml
   - host: rikka
-    cert: dev-assol.ml
+    cert: dev-argobay.ml
 ###############################################################################
 # Consul
 consul_log_level: INFO

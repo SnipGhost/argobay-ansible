@@ -47,8 +47,8 @@ haproxy_stat_host: 127.0.0.1
 haproxy_stat_port: 9000
 ###############################################################################
 # NGINX options
-default_cert:     "{{ cert_path }}/assol.ml/fullchain.pem"
-default_cert_key: "{{ cert_path }}/assol.ml/privkey.pem"
+default_cert:     "{{ cert_path }}/argobay.ml/fullchain.pem"
+default_cert_key: "{{ cert_path }}/argobay.ml/privkey.pem"
 nginx_enable_default: yes
 # Limits
 nginx_conn_limits:
@@ -75,7 +75,7 @@ nginx_sites:
       name: Grafana
       icon: grafana.svg
   # - name: prometheus
-  #   server_name: prometheus.assol.ml
+  #   server_name: prometheus.argobay.ml
   #   addr: "{{ monitoring_vip_ip }}"
   #   local: yes
   #   port: 9090
@@ -87,7 +87,7 @@ nginx_sites:
   #     name: Prometheus
   #     icon: prometheus.svg
   - name: victoria-metrics
-    server_name: vm.assol.ml
+    server_name: vm.argobay.ml
     addr: "{{ monitoring_vip_ip }}"
     local: yes
     port: "{{ victoria_metrics_port }}"
@@ -101,7 +101,7 @@ nginx_sites:
       size: 150%
       border_radius: 0
   - name: alertmanager
-    server_name: alertmanager.assol.ml
+    server_name: alertmanager.argobay.ml
     addr: "{{ monitoring_vip_ip }}"
     local: yes
     port: "{{ alertmanager_port }}"
@@ -113,7 +113,7 @@ nginx_sites:
       name: Alerts
       icon: prometheus.svg
   - name: dacrover
-    server_name: dacrover.assol.ml
+    server_name: dacrover.argobay.ml
     addr: "{{ private_vip_ip }}"
     group: "{{ dacrover_group }}"
     static_root: /usr/local/bin/dacrover/static
@@ -126,7 +126,7 @@ nginx_sites:
       name: Dacrover
       icon: dacrover.svg
   - name: krionard
-    server_name: "krionard.assol.ml marusya.assol.ml"
+    server_name: "krionard.argobay.ml marusya.argobay.ml"
     addr: "{{ public_vip_ip }}"
     group: "{{ krionard_group }}"
     # local: yes # No load balancing, only failover
@@ -139,7 +139,7 @@ nginx_sites:
       name: Krionard
       icon: marusya.png
   - name: razumator
-    server_name: razumator.assol.ml
+    server_name: razumator.argobay.ml
     addr: "{{ public_vip_ip }}"
     group: "{{ razumator_api_group }}"
     static_root: "{{ razumator_static_path }}"
@@ -156,7 +156,7 @@ nginx_sites:
       name: Разуматор
       icon: razumator.svg
   - name: haproxy
-    server_name: haproxy_{{ inventory_hostname }}.assol.ml
+    server_name: haproxy_{{ inventory_hostname }}.argobay.ml
     addr: "{{ lookup('dig', inventory_hostname + '.local') }}"
     add_path: /haproxy_stats
     local: yes
@@ -167,7 +167,7 @@ nginx_sites:
       name: HAProxy
       icon: haproxy.png
   - name: consul
-    server_name: consul.assol.ml
+    server_name: consul.argobay.ml
     addr: "{{ consul_vip_ip }}"
     group: consul_group
     local: yes
@@ -178,7 +178,7 @@ nginx_sites:
       name: Consul
       icon: consul.svg
   - name: external-dashboard
-    server_name: assol.ml
+    server_name: argobay.ml
     addr: "{{ public_vip_ip }}"
     static_root: "{{ dashboard_path }}external/"
     static_path: /
@@ -194,7 +194,7 @@ nginx_sites:
       - name: req_limit_per_ip
         burst: 20
   - name: internal-dashboard
-    server_name: internal.assol.ml
+    server_name: internal.argobay.ml
     addr: "{{ private_vip_ip }}"
     static_root: "{{ dashboard_path }}internal/"
     static_path: /
@@ -203,7 +203,7 @@ nginx_sites:
     whitelist:
       - vpn
   - name: swagger
-    server_name: swagger.assol.ml
+    server_name: swagger.argobay.ml
     addr: "{{ private_vip_ip }}"
     static_root: "{{ swagger_path }}"
     static_path: /
@@ -215,7 +215,7 @@ nginx_sites:
       name: Swagger
       icon: swagger.svg
   - name: mdwiki
-    server_name: wiki.assol.ml
+    server_name: wiki.argobay.ml
     addr: "{{ private_vip_ip }}"
     static_root: "{{ mdwiki_path }}"
     static_path: /
@@ -227,7 +227,7 @@ nginx_sites:
       name: Wiki
       icon: wiki.png
   - name: jupyter
-    server_name: jupyter.assol.ml
+    server_name: jupyter.argobay.ml
     addr: "{{ research_vip_ip }}"
     hosts: research_hosts
     local: yes
@@ -250,17 +250,17 @@ swagger_git: git@github.com:SnipGhost/custom-swagger.git
 mdwiki_path: /var/www/html/mdwiki/
 display_only_sites:
   - name: Кластер
-    addr: https://internal.assol.ml/cluster/
+    addr: https://internal.argobay.ml/cluster/
     icon: cluster.svg
   - name: Codes
     addr: https://bmstu.codes/
     icon: gitlab.svg
     size: 90%
   - name: Почта
-    addr: http://mail.assol.ml/
+    addr: http://mail.argobay.ml/
     icon: mail.svg
     size: 90%
   - name: Trello
-    addr: https://trello.com/b/m4jVATDW/assolml
+    addr: https://trello.com/b/m4jVATDW/argobayml
     icon: trello-logo.png
 ###############################################################################

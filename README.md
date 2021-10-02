@@ -102,12 +102,12 @@ ansible-playbook storage.yml -e "mariadb_secure=yes mariadb_rejoin=yes mariadb_i
 
 To re-setup krionard [ATTENTION!]:
 ```bash
-ansible-playbook assol.yml --tags krionard -e "krionard_setup=yes" -l dev
+ansible-playbook omega.yml --tags krionard -e "krionard_setup=yes" -l dev
 ```
 
 To re-setup dacrover [ATTENTION!]:
 ```bash
-ansible-playbook assol.yml --tags dacrover -e "dacrover_setup=yes" -l dev
+ansible-playbook omega.yml --tags dacrover -e "dacrover_setup=yes" -l dev
 ```
 
 To re-setup razumator [ATTENTION!]:
@@ -165,7 +165,7 @@ PROD:
 certbot certonly -a certbot-dns-freenom:dns-freenom \
   --certbot-dns-freenom:dns-freenom-credentials /etc/letsencrypt/freenomdns.cfg \
   --certbot-dns-freenom:dns-freenom-propagation-seconds 600 \
-  -d "*.assol.ml" -d "assol.ml"
+  -d "*.argobay.ml" -d "argobay.ml"
 ```
 DEV:
 ```bash
@@ -173,7 +173,7 @@ DEV:
 certbot certonly -a certbot-dns-freenom:dns-freenom \
   --certbot-dns-freenom:dns-freenom-credentials /etc/letsencrypt/freenomdns.cfg \
   --certbot-dns-freenom:dns-freenom-propagation-seconds 600 \
-  -d "*.dev-assol.ml" -d "dev-assol.ml"
+  -d "*.dev-argobay.ml" -d "dev-argobay.ml"
 ```
 
 ### Certbot import error

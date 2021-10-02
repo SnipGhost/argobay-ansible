@@ -39,70 +39,70 @@ dnsmasq_hosts:
   #========================================================
   # Internal subdomain records
 
-  - name: dev-assol
+  - name: dev-argobay
     rec:
       - { ip: "{{dev_public_vip_ip}}", type: ml }
 
   - name: grafana
     rec:
-      - { ip: "{{public_vip_ip}}", type: assol.ml }
+      - { ip: "{{public_vip_ip}}", type: argobay.ml }
 
   - name: vm
     aliases:
       - prometheus
     rec:
-      - { ip: "{{monitoring_vip_ip}}", type: assol.ml }
+      - { ip: "{{monitoring_vip_ip}}", type: argobay.ml }
 
   - name: alertmanager
     rec:
-      - { ip: "{{monitoring_vip_ip}}", type: assol.ml }
+      - { ip: "{{monitoring_vip_ip}}", type: argobay.ml }
 
   - name: jupyter
     rec:
-      - { ip: "{{research_vip_ip}}", type: assol.ml }
+      - { ip: "{{research_vip_ip}}", type: argobay.ml }
 
   - name: consul
     rec:
-      - { ip: "{{consul_vip_ip}}", type: assol.ml }
-      - { ip: "{{dev_private_vip_ip}}", type: dev-assol.ml }
+      - { ip: "{{consul_vip_ip}}", type: argobay.ml }
+      - { ip: "{{dev_private_vip_ip}}", type: dev-argobay.ml }
 
   - name: razumator
     rec:
-      - { ip: "{{public_vip_ip}}", type: assol.ml }
-      - { ip: "{{dev_public_vip_ip}}", type: dev-assol.ml }
+      - { ip: "{{public_vip_ip}}", type: argobay.ml }
+      - { ip: "{{dev_public_vip_ip}}", type: dev-argobay.ml }
 
   - name: dacrover
     rec:
-      - { ip: "{{private_vip_ip}}", type: assol.ml }
-      - { ip: "{{dev_private_vip_ip}}", type: dev-assol.ml }
+      - { ip: "{{private_vip_ip}}", type: argobay.ml }
+      - { ip: "{{dev_private_vip_ip}}", type: dev-argobay.ml }
 
   - name: krionard
     aliases:
       - marusya
       - alice
     rec:
-      - { ip: "{{public_vip_ip}}", type: assol.ml }
-      - { ip: "{{dev_public_vip_ip}}", type: dev-assol.ml }
+      - { ip: "{{public_vip_ip}}", type: argobay.ml }
+      - { ip: "{{dev_public_vip_ip}}", type: dev-argobay.ml }
   
   - name: internal
     rec:
-      - { ip: "{{private_vip_ip}}", type: assol.ml }
-      - { ip: "{{dev_private_vip_ip}}", type: dev-assol.ml }
+      - { ip: "{{private_vip_ip}}", type: argobay.ml }
+      - { ip: "{{dev_private_vip_ip}}", type: dev-argobay.ml }
 
   - name: external
     rec:
-      - { ip: "{{public_vip_ip}}", type: assol.ml }
-      - { ip: "{{dev_public_vip_ip}}", type: dev-assol.ml }
+      - { ip: "{{public_vip_ip}}", type: argobay.ml }
+      - { ip: "{{dev_public_vip_ip}}", type: dev-argobay.ml }
 
   - name: swagger
     rec:
-      - { ip: "{{private_vip_ip}}", type: assol.ml }
-      - { ip: "{{dev_private_vip_ip}}", type: dev-assol.ml }
+      - { ip: "{{private_vip_ip}}", type: argobay.ml }
+      - { ip: "{{dev_private_vip_ip}}", type: dev-argobay.ml }
 
   - name: wiki
     rec:
-      - { ip: "{{private_vip_ip}}", type: assol.ml }
-      - { ip: "{{dev_private_vip_ip}}", type: dev-assol.ml }
+      - { ip: "{{private_vip_ip}}", type: argobay.ml }
+      - { ip: "{{dev_private_vip_ip}}", type: dev-argobay.ml }
 
   #========================================================
   # Network devices
@@ -138,13 +138,13 @@ dnsmasq_hosts:
     rec:
       - { ip: 192.168.8.8, type: i }
       - { ip: 192.168.8.8, type: local, main: yes }
-      - { ip: 192.168.8.8, type: assol.ml }
+      - { ip: 192.168.8.8, type: argobay.ml }
 
   - name: nyanko
     rec:
       - { ip: 192.168.8.121, type: i }
       - { ip: 192.168.8.121, type: local, main: yes }
-      - { ip: 192.168.8.121, type: assol.ml }
+      - { ip: 192.168.8.121, type: argobay.ml }
 
   #========================================================
   # Servers interfaces

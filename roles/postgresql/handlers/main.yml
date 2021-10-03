@@ -1,0 +1,17 @@
+---
+- name: restart postgresql server
+  systemd:
+    name: postgresql
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  register: postgresql_restarted
+  when: not postgresql_started.changed
+
+- name: reload postgresql server
+  systemd:
+    name: postgresql
+    state: reloaded
+  when: 
+    - not postgresql_started.changed
+    - not (postgresql_restarted.changed | default(false))

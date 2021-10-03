@@ -1,0 +1,7 @@
+---
+- name: Install PostgreSQL
+  package:
+    name:
+      - postgresql
+      - postgresql-contrib
+    state: present

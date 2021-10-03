@@ -1,0 +1,34 @@
+---
+serviceName: postgresql
+userId: postgre
+groupId: postgre
+
+postgresql_socket_dir: /var/run/postgresql
+postgresql_stats_tmp_dir: /var/run/postgresql/11-main.pg_stat_tmp
+postgresql_data_dir: /var/lib/postgresql/11/main
+
+postgresql_hba_file: /etc/postgresql/11/main/pg_hba.conf
+postgresql_ident_file: /etc/postgresql/11/main/pg_ident.conf
+postgresql_ext_pid_file: /var/run/postgresql/11-main.pid
+
+postgresql_ssl: "on"
+postgresql_ssl_cert: /etc/ssl/certs/ssl-cert-snakeoil.pem
+postgresql_ssl_key: /etc/ssl/private/ssl-cert-snakeoil.key
+
+# min 128kB
+postgresql_shared_buffer: "128MB"
+postgresql_dynamic_shared_memory_type: "posix"
+postgresql_max_conn: 100 
+postgresql_max_wal_size: "1GB"
+postgresql_min_wal_size: "80MB"
+postgresql_max_wal_senders: 4
+postgresql_max_replication_slots: "{{ postgresql_max_wal_senders }}"
+postgresql_cluster_name: "11/main"
+
+# listen_addresses
+postgresql_host: 127.0.0.1
+postgresql_port: 5432
+
+postgresql_proxy_host: 127.0.0.1
+postgresql_proxy_port: 5433
+postgresql_proxy_port_ro: 5434

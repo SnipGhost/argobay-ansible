@@ -1,0 +1,57 @@
+- name: Creating postgres_exporter user group
+  group: name="{{groupId}}"
+  when: groupId != "root" and groupId != "postgres"
+
+- name: Creating postgres_exporter user
+  user:
+    name: "{{ userId }}"
+    group: "{{ groupId }}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{userId}} nologin User"
+    createhome: "no"
+    state: present
+  when: userId != "root" and userId != "postgres"
+
+- name: Install prometheus postgres_exporter
+  unarchive:
+    src: "{{ postgres_exporter_link }}"
+    dest: /tmp/
+    remote_src: yes
+
+- name: Copy prometheus postgres_exporter file to bin
+  copy:
+    src: "/tmp/postgres_exporter-{{ postgres_exporter_version }}.linux-{{ proc_version }}/postgres_exporter"
+    dest: "/usr/local/bin/postgres_exporter"
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    remote_src: yes
+    mode: 0755
+  notify: postgres_exporter_restart
+
+- name: Delete postgres_exporter tmp folder
+  file:
+    path: '/tmp/postgres_exporter-{{ postgres_exporter_version }}.linux-{{ proc_version }}'
+    state: absent
+
+- name: Copy systemd init file
+  template:
+    src: init.service.j2
+    dest: /etc/systemd/system/postgres_exporter.service
+  notify:
+    - Reload systemd
+    - postgres_exporter_restart
+
+- meta: flush_handlers
+
+- name: Start postgres_exporter service
+  service:
+    name: postgres_exporter
+    state: started
+    enabled: yes
+
+- name: Check if postgres_exporter emits metrices
+  uri:
+    url: http://127.0.0.1:9187/metrics
+    method: GET
+    status_code: 200

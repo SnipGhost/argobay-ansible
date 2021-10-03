@@ -100,6 +100,7 @@
 -A INPUT -p udp -m udp --dport 4567 -m comment --comment "MySQL/Galera UDP" -j incoming-local
 -A INPUT -p tcp -m tcp --dport 9104 -m comment --comment mysqld_exporter -j incoming-local
 -A INPUT -p tcp -m tcp --dport {{ postgresql_port | default(5432) }} -m comment --comment PostgreSQL -j incoming-local
+-A INPUT -p tcp -m tcp --dport 9187 -m comment --comment postgres_exporter -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['redis_servers'] %}

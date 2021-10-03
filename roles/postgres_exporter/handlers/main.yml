@@ -1,0 +1,10 @@
+---
+- name: Reload systemd
+  command: systemctl daemon-reload
+  listen: systemd_reload
+
+- name: Restart postgres_exporter service
+  service:
+    name: postgres_exporter
+    state: restarted
+  listen: postgres_exporter_restart

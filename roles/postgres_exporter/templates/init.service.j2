@@ -1,0 +1,14 @@
+[Unit]
+Description=Prometheus PostgreSQL Exporter
+After=network.target
+
+[Service]
+User={{ userId }}
+Group={{ groupId }}
+Type=simple
+Restart=always
+Environment=DATA_SOURCE_URI="postgres@:{{ postgresql_port }}/postgres?host=/var/run/postgresql"
+ExecStart={{ exec_command }}
+
+[Install]
+WantedBy=multi-user.target

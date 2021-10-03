@@ -7,3 +7,8 @@
 
     - debug:
         var: ansible_architecture
+
+    - vars:
+        pg_master_address: "{% for host in groups[db_group] %}{% if hostvars[host]['db_master'] | default(false) | bool %}{{ hostvars[host]['ansible_default_ipv4']['address'] }}{% endif %}{% endfor %}"
+      debug:
+        var: pg_master_address

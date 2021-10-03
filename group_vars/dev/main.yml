@@ -25,19 +25,16 @@ mariadb_l7_check: no
 postgresql_host: 0.0.0.0
 postgresql_port: 5432
 postgresql_max_conn: 256
+postgresql_main_dir: /mnt/data/postgresql
 postgresql_data_dir: /mnt/data/postgresql/main
 postgresql_shared_buffer: "32MB"
 postgresql_max_wal_size: "500MB"
-postgresql_min_wal_size: "10MB"
+postgresql_min_wal_size: "80MB"
 postgresql_cluster_name: "11/main/dev"
-postgresql_dbs:
-  - name: testdb
-    user: testuser
 postgresql_safe_hosts:
-  - "127.0.0.1"
-  - "192.168.8.5_"
-  - "192.168.8.6_"
-postgresql_replication: yes
+  - "127.0.0.1/32"
+  - "192.168.8.0/24"
+postgresql_replication: no
 postgresql_max_wal_senders: "{{ (groups[db_group] | length) * 2 }}"
 postgresql_max_replication_slots: "{{ postgresql_max_wal_senders }}"
 # PostgreSQL proxy options

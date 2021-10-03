@@ -1,11 +1,12 @@
 ## TODO list
 
 ### Main
+- Fix Golang install in common role
+- Fix dnsmasq main record generation
 - VictoriaMetrics HA with Zelda
 - Fix Prometheus*Slow alerts for Victoria Metrics
 - Add deb-package repo & pipelines
 - Add redis password auth
-- Install PostgreSQL-cluster
 - Install OIDC-Provider
 - Install K8S
 - HTTP-cache nginx + keepalive connections

@@ -1,0 +1,41 @@
+- name: Stop PostgreSQL service
+  systemd:
+    name: postgresql
+    state: stopped
+
+- name: Unset startup var
+  set_fact:
+    postgresql_started:
+
+- name: Clear out data directory
+  file:
+    path: "{{ postgresql_main_dir }}"
+    state: absent
+
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0750
+  loop:
+    - "{{ postgresql_main_dir }}"
+
+- name: Create db backup & recovery.conf (-R option)
+  become: yes
+  become_user: postgres
+  vars:
+    ansible_ssh_pipelining: true
+    pg_master_address: "{% for host in groups[db_group] %}{% if hostvars[host]['db_master'] | default(false) | bool %}{{ hostvars[host]['ansible_default_ipv4']['address'] }}{% endif %}{% endfor %}"
+  command: pg_basebackup -X stream -D {{ postgresql_data_dir }} -h {{ pg_master_address }} -p {{ postgresql_port }} -U repluser -R
+  environment:
+    PGPASSWORD: "{{ postgresql_repl_pass }}"
+
+- name: Start postgresql service
+  systemd:
+    name: postgresql
+    state: started
+    daemon_reload: yes
+    enabled: yes
+  register: postgresql_started

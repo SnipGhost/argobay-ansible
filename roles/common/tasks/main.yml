@@ -24,6 +24,7 @@
       - tcpdump
       - lvm2
       - python-pymysql
+      - python-psycopg2
     state: present
 
 - name: Install virtualenv via pip

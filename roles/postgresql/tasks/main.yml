@@ -1,3 +1,13 @@
 ---
 - include: install.yml
 - include: configure.yml
+
+- include: db.yml
+  become: yes
+  become_user: postgres
+  vars:
+    ansible_ssh_pipelining: true
+  when: (db_master | default(false) | bool) and (pg_setup | default(false) | bool)
+
+- include: replica.yml
+  when: (not db_master | default(false) | bool) and (postgresql_replication | default(true) | bool) and (pg_setup | default(false) | bool)

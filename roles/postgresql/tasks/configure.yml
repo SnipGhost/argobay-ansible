@@ -7,7 +7,21 @@
     group: "{{ groupId }}"
     mode: 0750
   loop:
-    - "{{ postgresql_data_dir }}"
+    - "{{ postgresql_main_dir }}"
+  notify: restart postgresql server
+
+- name: Check if PostgreSQL database is initialized.
+  stat:
+    path: "{{ postgresql_data_dir }}"
+  register: pgdata_dir_version
+
+- name: Ensure PostgreSQL database is initialized.
+  become: yes
+  become_user: postgres
+  vars:
+    ansible_ssh_pipelining: true
+  command: "{{ postgresql_bin_path }}/initdb -D {{ postgresql_data_dir }}"
+  when: not pgdata_dir_version.stat.exists
   notify: restart postgresql server
 
 - name: Configure postgresql
@@ -22,8 +36,6 @@
     - postgresql.conf
     - pg_hba.conf
   notify: restart postgresql server
-
-# TODO: Add replication conf
 
 - name: Start postgresql service
   systemd:

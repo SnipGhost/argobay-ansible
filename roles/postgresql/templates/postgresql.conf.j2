@@ -236,12 +236,12 @@ min_wal_size = {{ postgresql_min_wal_size }}
 
 # Set these on the master and on any standby that will send replication data.
 
-max_wal_senders = {% if db_master | default(false) | bool and postgresql_replication | default(true) | bool %}{{ postgresql_max_wal_senders }}{% else %}1{% endif %}		# max number of walsender processes
+max_wal_senders = {% if db_master | default(false) | bool and postgresql_replication | default(true) | bool %}{{ postgresql_max_wal_senders }}{% else %}0{% endif %}		# max number of walsender processes
 				# (change requires restart)
 #wal_keep_segments = 0		# in logfile segments; 0 disables
 #wal_sender_timeout = 60s	# in milliseconds; 0 disables
 
-max_replication_slots = {% if db_master | default(false) | bool and postgresql_replication | default(true) | bool %}{{ postgresql_max_replication_slots }}{% else %}1{% endif %}	# max number of replication slots
+max_replication_slots = {% if db_master | default(false) | bool and postgresql_replication | default(true) | bool %}{{ postgresql_max_replication_slots }}{% else %}0{% endif %}	# max number of replication slots
 				# (change requires restart)
 #track_commit_timestamp = off	# collect timestamp of transaction commit
 				# (change requires restart)
@@ -260,7 +260,7 @@ max_replication_slots = {% if db_master | default(false) | bool and postgresql_r
 
 # These settings are ignored on a master server.
 
-hot_standby = {% if db_master | default(false) | bool and postgresql_replication | default(true) | bool %}on{% else %}off{% endif %}			# "off" disallows queries during recovery
+hot_standby = {% if postgresql_replication | default(true) | bool %}on{% else %}off{% endif %}			# "off" disallows queries during recovery
 					# (change requires restart)
 #max_standby_archive_delay = 30s	# max delay before canceling queries
 					# when reading WAL from archive;

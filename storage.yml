@@ -5,6 +5,8 @@
       tags: mariadb
     - name: mysqld_exporter
       tags: mysqld_exporter
+    - name: postgresql
+      tags: postgresql
 
 - hosts: memcached_servers
   roles:

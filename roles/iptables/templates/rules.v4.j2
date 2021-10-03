@@ -99,6 +99,7 @@
 -A INPUT -p tcp -m multiport --dports 3306,4444,4567,4568,9200 -m comment --comment "MySQL/Galera TCP" -j incoming-local
 -A INPUT -p udp -m udp --dport 4567 -m comment --comment "MySQL/Galera UDP" -j incoming-local
 -A INPUT -p tcp -m tcp --dport 9104 -m comment --comment mysqld_exporter -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ postgresql_port | default(5432) }} -m comment --comment PostgreSQL -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['redis_servers'] %}
@@ -140,6 +141,8 @@
 -A INPUT -p tcp -m tcp --dport {{ memcached_proxy_port | default(11311) }} -m comment --comment memcached_proxy -j incoming-local
 -A INPUT -p tcp -m multiport --dports {{ mariadb_proxy_port | default(3307) }},{{ mariadb_proxy_port_ro | default(3308) }} -m comment --comment mysqld_proxy -j incoming-local
 -A INPUT -p tcp -m tcp --dport {{ redis_proxy_port | default(6380) }} -m comment --comment redis_proxy -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ postgresql_proxy_port | default(5433) }} -m comment --comment postgresql_proxy_port -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ postgresql_proxy_port_ro | default(5434) }} -m comment --comment postgresql_proxy_port_ro -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['web_servers'] %}

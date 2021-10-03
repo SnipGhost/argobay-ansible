@@ -1,10 +1,12 @@
 ---
 serviceName: postgresql
-userId: postgre
-groupId: postgre
+userId: postgres
+groupId: postgres
 
+postgresql_bin_path: /usr/lib/postgresql/11/bin
 postgresql_socket_dir: /var/run/postgresql
 postgresql_stats_tmp_dir: /var/run/postgresql/11-main.pg_stat_tmp
+postgresql_main_dir: /var/lib/postgresql/11
 postgresql_data_dir: /var/lib/postgresql/11/main
 
 postgresql_hba_file: /etc/postgresql/11/main/pg_hba.conf
@@ -15,7 +17,7 @@ postgresql_ssl: "on"
 postgresql_ssl_cert: /etc/ssl/certs/ssl-cert-snakeoil.pem
 postgresql_ssl_key: /etc/ssl/private/ssl-cert-snakeoil.key
 
-# min 128kB
+# min shared buffers: 128kB
 postgresql_shared_buffer: "128MB"
 postgresql_dynamic_shared_memory_type: "posix"
 postgresql_max_conn: 100 

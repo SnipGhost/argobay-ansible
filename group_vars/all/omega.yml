@@ -4,7 +4,7 @@
 # Krionard API
 krionard_git: https://github.com/HoriFox/Krionard.git
 # krionard_bind: 127.0.0.1 # No load balancing, only failover
-krionard_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
+krionard_bind: "{{ lookup('dig', inventory_hostname + '.i') }}"
 krionard_port: 5000
 # uWSGI
 krionard_buffer_size: 65535
@@ -22,7 +22,7 @@ krionard_log_facility: local7
 # Dacrover API
 dacrover_git: https://github.com/HoriFox/Dacrover.git
 # dacrover_bind: 127.0.0.1 # No load balancing, only failover
-dacrover_bind: "{{ lookup('dig', inventory_hostname + '.local') }}"
+dacrover_bind: "{{ lookup('dig', inventory_hostname + '.i') }}"
 dacrover_port: 4050
 dacrover_connect_host: dacrover.argobay.ml
 dacrover_connect_port: 443

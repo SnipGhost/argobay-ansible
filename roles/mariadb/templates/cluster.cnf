@@ -27,7 +27,7 @@ wsrep_provider = /usr/lib/galera/libgalera_smm.so
 wsrep_provider_options = "gcache.size={{ mariadb_gcache_size }}; gcache.page_size={{ mariadb_gcache_page }}"
 wsrep_cluster_address = "gcomm://{% for host in server_names -%}{{ lookup('dig', host) }},{%- endfor %}"
 wsrep_cluster_name = "{{ mariadb_cluster_name }}"
-wsrep_node_address = "{{ lookup('dig', inventory_hostname + '.local') }}"
+wsrep_node_address = "{{ lookup('dig', inventory_hostname + '.i') }}"
 wsrep_node_name = "{{ ansible_hostname }}"
 wsrep_sst_method = rsync
 wsrep_sst_auth = sst_user:{{ mariadb_sst_pass }}

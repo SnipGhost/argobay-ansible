@@ -29,7 +29,7 @@ mariadb_safe_hosts:
 redis_proxy_host: 127.0.0.1
 redis_proxy_port: 6379
 
-krionard_name: "ассоль"
+krionard_name: "омега"
 krionard_setup: no
 
 dacrover_connect_host: 127.0.0.1

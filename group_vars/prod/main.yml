@@ -23,7 +23,7 @@ mariadb_l7_check: no
 ###############################################################################
 # Memcached
 memcached_user: memcached
-memcached_host: "{{ lookup('dig', inventory_hostname + '.local') }}"
+memcached_host: "{{ lookup('dig', inventory_hostname + '.i') }}"
 memcached_port: 11211
 memcached_max_conn: 1024
 memcached_cachesize: 128
@@ -32,7 +32,7 @@ memcached_proxy_host: 127.0.0.1
 memcached_proxy_port: 11311
 ###############################################################################
 # Redis
-redis_bind_addr: "{{ lookup('dig', inventory_hostname + '.local') }}"
+redis_bind_addr: "{{ lookup('dig', inventory_hostname + '.i') }}"
 redis_bind_port: 6379
 redis_db_count: 5
 redis_data_path: "{{ data_path }}/redis/"
@@ -157,7 +157,7 @@ nginx_sites:
       icon: razumator.svg
   - name: haproxy
     server_name: haproxy_{{ inventory_hostname }}.argobay.ml
-    addr: "{{ lookup('dig', inventory_hostname + '.local') }}"
+    addr: "{{ lookup('dig', inventory_hostname + '.i') }}"
     add_path: /haproxy_stats
     local: yes
     port: "{{ haproxy_stat_port }}"

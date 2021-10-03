@@ -136,14 +136,12 @@ dnsmasq_hosts:
 
   - name: printer
     rec:
-      - { ip: 192.168.8.8, type: i }
-      - { ip: 192.168.8.8, type: local, main: yes }
+      - { ip: 192.168.8.8, type: i, main: yes}
       - { ip: 192.168.8.8, type: argobay.ml }
 
   - name: nyanko
     rec:
-      - { ip: 192.168.8.121, type: i }
-      - { ip: 192.168.8.121, type: local, main: yes }
+      - { ip: 192.168.8.121, type: i, main: yes }
       - { ip: 192.168.8.121, type: argobay.ml }
 
   #========================================================
@@ -208,12 +206,10 @@ dnsmasq_hosts:
 
   - name: mbp-mak-home
     rec:
-      - { ip: 192.168.8.250, type: i }
-      - { ip: 192.168.8.250, type: local, main: yes }
+      - { ip: 192.168.8.250, type: i, main: yes }
 
   - name: m-kucherenko
     aliases:
       - mbp-mak-work
     rec:
-      - { ip: 192.168.8.250, type: i }
-      - { ip: 192.168.8.251, type: local, main: yes }
+      - { ip: 192.168.8.250, type: i, main: yes }

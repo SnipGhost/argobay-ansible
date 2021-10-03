@@ -80,7 +80,7 @@
 {% for host in groups['dev'] %}
 -A INPUT -s {{ dev_public_vip_ip }}/32 -j DROP
 -A INPUT -s {{ dev_private_vip_ip }}/32 -j DROP
--A INPUT -s {{ lookup('dig', host + '.local') }}/32 -j DROP
+-A INPUT -s {{ lookup('dig', host + '.i') }}/32 -j DROP
 {% endfor %}
 
 # Consul

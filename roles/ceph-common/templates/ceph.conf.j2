@@ -1,7 +1,7 @@
 [global]
 fsid = {{ ceph_fsid }}
 mon host = {% for host in server_names -%}
-  {{ lookup('dig', host) }}{% if not loop.last %},{% endif %}
+  {{ lookup('dig', host + '.i') }}{% if not loop.last %},{% endif %}
 {%- endfor %}{{ '' }}
 public network = {{ ansible_default_ipv4['address'].split('.')[:3]|join('.') }}.0/24
 

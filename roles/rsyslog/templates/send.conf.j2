@@ -2,6 +2,6 @@
 
 {% for host in groups['all'] %}
 {% if hostvars[host]['rsyslog_server'] | default(false) | bool %}
-{{ rsyslog_send_facility | join(',') }}.{{ rsyslog_send_severity | join(',') }}  @@{{ lookup('dig', host + '.local') }}:514
+{{ rsyslog_send_facility | join(',') }}.{{ rsyslog_send_severity | join(',') }}  @@{{ lookup('dig', host + '.i') }}:514
 {% endif %}
 {% endfor %}

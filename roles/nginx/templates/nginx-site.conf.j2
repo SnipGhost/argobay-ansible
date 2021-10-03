@@ -4,7 +4,7 @@ upstream {{ item.name }} {
 	server 127.0.0.1:{{ item.port }};
 {% else %}
 {% for host in groups[item.group] %}
-	server {{ lookup('dig', host) }}:{{ item.port }};
+	server {{ lookup('dig', host + '.i') }}:{{ item.port }};
 {% endfor %}
 {% endif %}
 }

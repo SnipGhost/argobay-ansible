@@ -155,7 +155,8 @@ alertmanager_version: 0.21.0
 alertmanager_bind: 0.0.0.0
 alertmanager_host: 127.0.0.1
 alertmanager_port: 9093
-alertmanager_confdir: /etc/alertmanager
+alertmanager_conf_dir: /etc/alertmanager
+alertmanager_bin_dir: /usr/local/bin
 alermanager_group_wait: 15s
 alermanager_group_interval: 15s
 alermanager_repeat_interval: 1h

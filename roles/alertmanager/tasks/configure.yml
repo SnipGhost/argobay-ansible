@@ -1,0 +1,28 @@
+---
+- name: Creates config directory
+  file: 
+    path: "{{ alertmanager_conf_dir }}"
+    state: directory
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0755
+
+- name: Copy systemd init file
+  template:
+    src: init.service.j2
+    dest: /etc/systemd/system/alertmanager.service
+  notify: restart alertmanager
+
+- name: Copy config file
+  template:
+    src: alertmanager.conf.j2
+    dest: "{{ alertmanager_conf_dir }}/alertmanager.conf"
+  notify: restart alertmanager
+
+- name: Start alertmanager service
+  systemd:
+    name: alertmanager
+    state: started
+    daemon_reload: yes
+    enabled: yes
+  register: alertmanager_started

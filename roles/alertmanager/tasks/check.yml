@@ -1,0 +1,6 @@
+---
+- name: Check if alertmanager is accessible
+  uri:
+    url: "http://{{ alertmanager_host }}:{{ alertmanager_port }}"
+    method: GET
+    status_code: 200

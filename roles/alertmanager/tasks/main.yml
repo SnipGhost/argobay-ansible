@@ -1,70 +1,8 @@
 ---
-- name: Creating alertmanager user group
-  group: name="{{groupId}}"
+- include: install.yml
+- include: configure.yml
 
-- name: Creating alertmanager user
-  user:
-    name: "{{userId}}"
-    group: "{{groupId}}"
-    system: yes
-    shell: "/sbin/nologin"
-    comment: "{{userId}} nologin user"
-    createhome: "no"
-    state: present
+- name: Flush handlers
+  meta: flush_handlers
 
-- name: Install alertmanager
-  unarchive:
-    src: 'https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-{{ proc_version }}.tar.gz'
-    dest: /tmp/
-    remote_src: yes
-
-- name: Copy alertmanager file to bin
-  copy:
-    src: "/tmp/alertmanager-{{ alertmanager_version }}.linux-{{ proc_version }}/alertmanager"
-    dest: "{{ alertmanager_bindir }}/alertmanager"
-    owner: "{{ userId }}"
-    group: "{{ groupId }}"
-    remote_src: yes
-    mode: 0755
-  notify: alertmanager_restart
-
-- name: Delete alertmanager tmp folder
-  file:
-    path: '/tmp/alertmanager-{{ alertmanager_version }}.linux-{{ proc_version }}'
-    state: absent
-
-- name: Creates config directory
-  file: 
-    path: "{{ alertmanager_confdir }}"
-    state: directory
-    owner: "{{userId}}"
-    group: "{{groupId}}"
-    mode: 0755
-
-- name: Copy systemd init file
-  template:
-    src: init.service.j2
-    dest: /etc/systemd/system/alertmanager.service
-  notify:
-    - Reload systemd
-    - alertmanager_restart
-
-- name: Copy config file
-  template:
-    src: alertmanager.conf.j2
-    dest: "{{ alertmanager_confdir }}/alertmanager.conf"
-  notify: alertmanager_restart
-
-- meta: flush_handlers
-
-- name: Start alertmanager service
-  service:
-    name: alertmanager
-    state: started
-    enabled: yes
-
-- name: Check if alertmanager is accessible
-  uri:
-    url: "http://{{ alertmanager_host }}:{{ alertmanager_port }}"
-    method: GET
-    status_code: 200
+- include: check.yml

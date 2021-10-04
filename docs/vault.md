@@ -1,4 +1,6 @@
-# Example of vault secrets variables
+# Vault secret files
+
+## List of variables
 
 Playbooks require secret variables:
 ```yaml
@@ -85,6 +87,8 @@ gitlab_runner_reg_token: example
 htpasswd: $apr1$ZbHHKQvL$0z/SXRbPbfohsC6a3vrJ8. # decoded: test
 ##########################################################################################
 ```
+
+## Use-cases
 
 Example to create vault file:
 ```bash

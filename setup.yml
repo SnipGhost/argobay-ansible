@@ -1,15 +1,15 @@
 ---
-- import_playbook: all_hosts.yml
-- import_playbook: consul.yml
-- import_playbook: service.yml
-- import_playbook: letsapi.yml
-- import_playbook: monitoring.yml
-- import_playbook: raspberry.yml
-- import_playbook: storage.yml
-- import_playbook: web.yml
+- import_playbook: playbooks/all_hosts.yml
+- import_playbook: playbooks/consul.yml
+- import_playbook: playbooks/service.yml
+- import_playbook: playbooks/letsapi.yml
+- import_playbook: playbooks/monitoring.yml
+- import_playbook: playbooks/raspberry.yml
+- import_playbook: playbooks/storage.yml
+- import_playbook: playbooks/web.yml
 
-- import_playbook: omega.yml
-- import_playbook: razumator.yml
+- import_playbook: playbooks/omega.yml
+- import_playbook: playbooks/razumator.yml
 
-- import_playbook: runner.yml
-- import_playbook: post_install.yml
+- import_playbook: playbooks/runner.yml
+- import_playbook: playbooks/post_install.yml

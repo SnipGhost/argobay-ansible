@@ -1,50 +1,5 @@
 # High availability automated cluster 
 
-Playbooks require secret variables:
-- ansible_become_pass
-- service_vip_password
-- public_vip_password
-- private_vip_password
-- monitoring_vip_password
-- research_vip_password
-- dev_public_vip_password
-- dev_private_vip_password
-- passwords
-- ap_ssid
-- ap_code
-- ap_pass
-- mariadb_sst_pass
-- mariadb_clustercheck.user
-- mariadb_clustercheck.pass
-- haproxy_stat_user
-- haproxy_stat_pass
-- krionard_db_name
-- krionard_db_user
-- krionard_db_pass
-- dacrover_db_name
-- dacrover_db_user
-- dacrover_db_pass
-- razumator_db_name
-- razumator_db_user
-- razumator_db_pass
-- alertmanager_bot_telegram_token
-- gitlab_runner_reg_token
-- payment_exporter_user
-- payment_exporter_pass
-- htpasswd
-- rsync_certs_user
-- rsync_certs_pass
-
-passwords is dictionary with user passwords:
-```yml
-passwords:
-  user_1: encrypted_string_x
-  user_2: encrypted_string_y
-```
-
-+ ssl cert & key from {{default_cert}} & {{default_cert_key}}
-
-
 ## Init repo
 
 1) Create secrets files for all, prod and dev

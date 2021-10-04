@@ -1,5 +1,5 @@
 ---
-# - import_playbook: all_hosts.yml
+- import_playbook: all_hosts.yml
 - import_playbook: consul.yml
 - import_playbook: service.yml
 - import_playbook: letsapi.yml

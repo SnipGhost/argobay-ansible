@@ -85,3 +85,18 @@ gitlab_runner_reg_token: example
 htpasswd: $apr1$ZbHHKQvL$0z/SXRbPbfohsC6a3vrJ8. # decoded: test
 ##########################################################################################
 ```
+
+Example to create vault file:
+```bash
+ansible-vault encrypt groupvars/all/secret.yml
+```
+
+Example to edit vault file:
+```bash
+ansible-vault edit groupvars/all/secret.yml
+```
+
+Example to show vault file:
+```bash
+ansible-vault view groupvars/all/secret.yml
+```

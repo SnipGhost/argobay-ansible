@@ -17,6 +17,7 @@
   file:
     path: "/tmp/{{ consul_pack_name }}"
     state: directory
+  run_once: true
   delegate_to: localhost
   check_mode: false
 
@@ -26,6 +27,7 @@
     src: "/tmp/{{ consul_pack_name }}.{{ consul_pack_ext }}"
     dest: "/tmp/{{ consul_pack_name }}/"
     creates: "/tmp/{{ consul_pack_name }}/consul"
+  run_once: true
   delegate_to: localhost
   check_mode: false
 

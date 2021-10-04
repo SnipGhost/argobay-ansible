@@ -1,56 +1,8 @@
-- name: Creating haproxy_exporter user group
-  group: name="{{groupId}}"
-  become: true
+---
+- include: install.yml
+- include: configure.yml
 
-- name: Creating haproxy_exporter user
-  user:
-    name: "{{userId}}"
-    group: "{{groupId}}"
-    system: yes
-    shell: "/sbin/nologin"
-    comment: "{{userId}} nologin User"
-    createhome: "no"
-    state: present
+- name: Flush handlers
+  meta: flush_handlers
 
-- name: Install prometheus haproxy exporter
-  unarchive:
-    src: "https://github.com/prometheus/haproxy_exporter/releases/download/v{{ haproxy_exporter_version }}/haproxy_exporter-{{ haproxy_exporter_version }}.linux-{{ proc_version }}.tar.gz"
-    dest: /tmp/
-    remote_src: yes
-
-- name: Copy prometheus haproxy exporter file to bin
-  copy:
-    src: "/tmp/haproxy_exporter-{{ haproxy_exporter_version }}.linux-{{ proc_version }}/haproxy_exporter"
-    dest: "/usr/local/bin/haproxy_exporter"
-    owner: "{{userId}}"
-    group: "{{groupId}}"
-    remote_src: yes
-    mode: 0755
-  notify: haproxy_exporter_restart
-
-- name: Delete haproxy exporter tmp folder
-  file:
-    path: '/tmp/haproxy_exporter-{{ haproxy_exporter_version }}.linux-{{ proc_version }}'
-    state: absent
-
-- name: Copy systemd init file
-  template:
-    src: init.service.j2
-    dest: /etc/systemd/system/haproxy_exporter.service
-  notify:
-    - Reload systemd
-    - haproxy_exporter_restart
-
-- meta: flush_handlers
-
-- name: Start haproxy_exporter service
-  service:
-    name: haproxy_exporter
-    state: started
-    enabled: yes
-
-- name: Check if haproxy exporter emits metrices
-  uri:
-    url: http://127.0.0.1:9101/metrics
-    method: GET
-    status_code: 200
+- include: check.yml

@@ -1,5 +1,6 @@
 # High availability automated cluster 
 
+
 ## Init repo
 
 1) Create [secrets files](./docs/vault.md) for all, prod and dev

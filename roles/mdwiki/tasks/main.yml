@@ -1,12 +1,16 @@
 ---
 - name: Create path for mdwiki
   file:
-    path: "{{ mdwiki_path }}"
+    path: "{{ item }}"
     state: directory
     owner: root
     group: root
     mode: u=rwX,g=rX,o=rX
     recurse: yes
+  with_items:
+    - "{{ mdwiki_path }}"
+    - "{{ mdwiki_path }}/argobay"
+    - "{{ mdwiki_path }}/argobay/docs"
 
 - name: Download mdwiki
   unarchive:
@@ -46,3 +50,20 @@
     mode: 0644
   with_fileglob:
     - ../templates/*
+
+- name: Copy ansible README/TODO files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ mdwiki_path }}/argobay/{{ item | basename }}"
+    mode: 0644
+  with_fileglob:
+    - ../../../README.md
+    - ../../../TODO.md
+
+- name: Copy ansible docs files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ mdwiki_path }}/argobay/docs/{{ item | basename }}"
+    mode: 0644
+  with_fileglob:
+    - ../../../docs/*

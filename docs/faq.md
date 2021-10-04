@@ -1,11 +1,4 @@
-# Docementation index
-
-- [vault secrets](./vault.md)
-- [ceph guide](./ceph.md)
-- [git guide](./git.md)
-- [naming conventions](./git.md)
-- [useful notes](./notes.md)
-
+# FAQ
 
 ## Frequent Problems
 

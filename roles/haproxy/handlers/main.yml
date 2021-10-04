@@ -1,8 +1,20 @@
+---
+- name: restart haproxy
+  systemd:
+    name: haproxy
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  register: haproxy_restarted
+  when: not haproxy_started.changed
+
 - name: reload haproxy
   systemd:
     name: haproxy
     state: reloaded
-  listen: haproxy_reload
+  when:
+    - not haproxy_started.changed
+    - not (haproxy_restarted.changed | default(false))
 
 - name: restart mysqlchk.socket
   systemd:

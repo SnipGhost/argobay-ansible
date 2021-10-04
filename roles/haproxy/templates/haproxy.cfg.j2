@@ -1,3 +1,5 @@
+{{ ansible_managed | comment }}
+
 global
 	log 127.0.0.1 local2
 
@@ -52,6 +54,28 @@ listen galera_ro
 {% endif %}
 {% for host in mysql_server_names %}
 	server {{ host }} {{ lookup('dig', host + '.i', '@' + service_vip_ip) }}:{{ mariadb_port }} check
+{% endfor %}
+
+
+listen postgresql_rw
+	bind    {{ haproxy_bind_ip }}:{{ postgresql_proxy_port }}
+	balance first
+
+	default-server inter 1s fastinter 1s downinter 3s rise 3 fall 3 on-marked-down shutdown-sessions on-marked-up shutdown-backup-sessions
+{% for host in postgresql_server_names %}
+	server {{ host }} {{ lookup('dig', host + '.i', '@' + service_vip_ip) }}:{{ postgresql_port }} check{{ ' backup' if not hostvars[host]['db_master']|default(false) else '' }}
+{% endfor %}
+
+
+listen postgresql_ro
+	bind    {{ haproxy_bind_ip }}:{{ postgresql_proxy_port_ro }}
+	balance roundrobin
+	stick on src
+	stick-table type ip size 1k expire 1h
+
+	default-server inter 1s fastinter 1s downinter 3s rise 3 fall 3 on-marked-down shutdown-sessions
+{% for host in postgresql_server_names %}
+	server {{ host }} {{ lookup('dig', host + '.i', '@' + service_vip_ip) }}:{{ postgresql_port }} check
 {% endfor %}
 
 

@@ -18,6 +18,10 @@ mariadb_clustercheck:
   pass: clustercheckpass
 mariadb_l7_check: true
 
+postgresql_port: 5432
+postgresql_proxy_port: 5433
+postgresql_proxy_port_ro: 5434
+
 memcached_port: 11211
 memcached_proxy_port: 11311
 

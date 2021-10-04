@@ -3,6 +3,7 @@
   package:
     name: haproxy
     state: present
+  notify: restart haproxy
 
 - name: Generate mysqlchk config
   template:
@@ -13,9 +14,9 @@
     group: root
     backup: yes
   with_items:
-    - { src: mysqlchk.socket, dest: /lib/systemd/system/mysqlchk.socket, mode: '0644' }
-    - { src: mysqlchk@.service, dest: /lib/systemd/system/mysqlchk@.service, mode: '0644' }
-    - { src: clustercheck.conf, dest: /etc/clustercheck.conf, mode: '0640' }
+    - { src: mysqlchk.socket.j2, dest: /lib/systemd/system/mysqlchk.socket, mode: '0644' }
+    - { src: mysqlchk@.service.j2, dest: /lib/systemd/system/mysqlchk@.service, mode: '0644' }
+    - { src: clustercheck.conf.j2, dest: /etc/clustercheck.conf, mode: '0640' }
   notify: restart mysqlchk.socket
 
 - name: Copy clustercheck script
@@ -36,16 +37,15 @@
 - name: Generate config
   vars:
     mysql_server_names: "{{ groups[db_group] }}"
+    postgresql_server_names: "{{ groups[db_group] }}"
     memcached_server_names: "{{ groups[memcached_group] }}"
     redis_server_names: "{{ groups[redis_group] }}"
     razumator_server_names: "{{ groups[razumator_core_group] }}"
   template:
-    src: haproxy.cfg
+    src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg
     backup: yes
-  notify: haproxy_reload
-
-- meta: flush_handlers
+  notify: reload haproxy
 
 - name: Stop and disable mysqlchk
   systemd:
@@ -57,5 +57,10 @@
 - name: Start and enable HAProxy
   systemd:
     name: haproxy
-    enabled: yes
     state: started
+    daemon_reload: yes
+    enabled: yes
+  register: haproxy_started
+
+- name: Flush handlers
+  meta: flush_handlers

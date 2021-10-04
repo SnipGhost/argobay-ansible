@@ -6,9 +6,9 @@ krionard_git: https://github.com/HoriFox/Krionard.git
 krionard_bind: 127.0.0.1
 krionard_port: 5000
 krionard_buffer_size: 65535
-krionard_logdir: "/var/log/{{ app_name }}"
-krionard_bindir: "/usr/local/bin/{{ app_name }}"
-krionard_confdir: /etc/assol
+krionard_log_dir: "/var/log/{{ app_name }}"
+krionard_bin_dir: "/usr/local/bin/{{ app_name }}"
+krionard_conf_dir: /etc/assol
 
 krionard_log_period:   daily
 krionard_log_rotate:   7

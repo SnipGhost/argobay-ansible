@@ -7,7 +7,7 @@ mariadb_max_conn: 2048
 mariadb_pool_size: 122M
 mariadb_gcache_size: 200M
 mariadb_gcache_page: 200M
-mariadb_datadir: "{{data_path}}/mysql"
+mariadb_data_dir: "{{data_path}}/mysql"
 mariadb_socket: /var/run/mysqld/mysqld.sock
 mariadb_safe_hosts:
   - "localhost"

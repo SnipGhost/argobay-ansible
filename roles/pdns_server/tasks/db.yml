@@ -32,7 +32,7 @@
   run_once: yes
 
 - name: Re-create db
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ razumator_bindir }}/cfg/cluster_init.sql 
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ razumator_bin_dir }}/cfg/cluster_init.sql
   run_once: yes
   when: pdns_setup | default(false) | bool
   notify: restart pdns server

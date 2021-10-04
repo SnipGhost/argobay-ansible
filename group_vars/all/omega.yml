@@ -9,9 +9,9 @@ krionard_port: 5000
 # uWSGI
 krionard_buffer_size: 65535
 # Dirs
-krionard_logdir: /var/log/krionard
-krionard_bindir: /usr/local/bin/krionard
-krionard_confdir: /etc/assol
+krionard_log_dir: /var/log/krionard
+krionard_bin_dir: /usr/local/bin/krionard
+krionard_conf_dir: /etc/assol
 # Logging
 krionard_log_period: daily
 krionard_log_rotate: 7
@@ -29,9 +29,9 @@ dacrover_connect_port: 443
 # uWSGI
 dacrover_buffer_size: 65535
 # Dirs
-dacrover_logdir: /var/log/dacrover
-dacrover_bindir: /usr/local/bin/dacrover
-dacrover_confdir: /etc/assol
+dacrover_log_dir: /var/log/dacrover
+dacrover_bin_dir: /usr/local/bin/dacrover
+dacrover_conf_dir: /etc/assol
 # Logging
 dacrover_log_period: daily
 dacrover_log_rotate: 7

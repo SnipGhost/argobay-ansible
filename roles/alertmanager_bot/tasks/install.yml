@@ -30,7 +30,7 @@
 - name: Copy alertmanager-bot binaries
   copy:
     src: "/tmp/alertmanager_bot"
-    dest: "{{ alertmanager_bot_bindir }}/"
+    dest: "{{ alertmanager_bot_bin_dir }}/"
     mode: 0755
     owner: "{{ userId }}"
     group: "{{ groupId }}"

@@ -26,7 +26,7 @@
 
 - name: Create path for razumator
   file:
-    path: "{{ razumator_bindir }}"
+    path: "{{ razumator_bin_dir }}"
     state: directory
     owner: "{{ userId }}"
     group: ansible
@@ -37,7 +37,7 @@
 - name: Clone razumator repo
   git:
     repo: "{{ razumator_git }}"
-    dest: "{{ razumator_bindir }}"
+    dest: "{{ razumator_bin_dir }}"
     clone: yes
     update: yes
     accept_hostkey: yes
@@ -49,7 +49,7 @@
 
 - name: Reset permissions
   file:
-    path: "{{ razumator_bindir }}"
+    path: "{{ razumator_bin_dir }}"
     state: directory
     owner: "{{ userId }}"
     group: "{{ groupId }}"
@@ -65,7 +65,7 @@
     group: "{{ item.group }}"
     mode: "{{ item.mode | default('0755') }}"
   with_items:
-    - path: "{{ razumator_confdir }}"
+    - path: "{{ razumator_conf_dir }}"
       owner: "{{ userId }}"
       group: "{{ groupId }}"
     - path: "{{ razumator_model_path }}"
@@ -75,7 +75,7 @@
 - name: Create config for razumator core
   template:
     src: "razumator.json.j2"
-    dest: "{{ razumator_confdir }}/razumator.json"
+    dest: "{{ razumator_conf_dir }}/razumator.json"
     mode: 0644
     owner: "{{ userId }}"
     group: "{{ groupId }}"
@@ -86,7 +86,7 @@
 - name: Create config for razumator restapi
   template:
     src: "restapi.json.j2"
-    dest: "{{ razumator_confdir }}/restapi.json"
+    dest: "{{ razumator_conf_dir }}/restapi.json"
     mode: 0644
     owner: "{{ userId }}"
     group: "{{ groupId }}"
@@ -97,15 +97,15 @@
 - name: Copy sys config json file
   copy:
     remote_src: yes
-    src: "{{ razumator_bindir }}/{{ razumator_build_path }}/config/sys.json"
-    dest: "{{ razumator_confdir }}/sys.json"
+    src: "{{ razumator_bin_dir }}/{{ razumator_build_path }}/config/sys.json"
+    dest: "{{ razumator_conf_dir }}/sys.json"
     mode: 0644
     owner: "{{ userId }}"
     group: "{{ groupId }}"
 
 - name: Create a symbolic link for static
   file:
-    src: "{{ razumator_bindir }}/src/frontend/build"
+    src: "{{ razumator_bin_dir }}/src/frontend/build"
     dest: "{{ razumator_static_path }}"
     owner: root
     group: root
@@ -146,7 +146,7 @@
   when: (inventory_hostname == groups[razumator_core_group][0])
 
 - name: Re-create db
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ razumator_bindir }}/cfg/cluster_init.sql 
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ razumator_bin_dir }}/cfg/cluster_init.sql
   when: (inventory_hostname == groups[razumator_core_group][0]) and (razumator_setup | default(false) | bool)
   notify:
     - razumator_core_restart

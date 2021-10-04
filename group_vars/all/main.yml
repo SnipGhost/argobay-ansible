@@ -86,7 +86,7 @@ logrotate_default_period: weekly
 logrotate_default_rotate: 4
 ###############################################################################
 # Rsyslog
-rsyslog_remote_logdir: /mnt/data/log
+rsyslog_remote_log_dir: /mnt/data/log
 rsyslog_log_period: daily
 rsyslog_log_rotate: 7
 rsyslog_log_size: 100M
@@ -171,7 +171,7 @@ alertmanager_bot_bind: 0.0.0.0
 alertmanager_bot_host: 127.0.0.1
 alertmanager_bot_port: 8007
 alertmanager_bot_log_level: "info"
-alertmanager_bot_confdir: /etc/am-bot
+alertmanager_bot_conf_dir: /etc/am-bot
 alertmanager_bot_boltdir: /mnt/data/am-bot
 alertmanager_bot_bolt_path: "{{ alertmanager_bot_boltdir }}/am_bot.db"
 alertmanager_bot_telegram_admins:
@@ -205,10 +205,10 @@ gitlab_runner_reg_url: https://bmstu.codes/
 ###############################################################################
 # Payment_exporter
 payment_exporter_git: https://github.com/SnipGhost/payment_exporter
-payment_exporter_bindir: /usr/local/bin/payment_exporter
+payment_exporter_bin_dir: /usr/local/bin/payment_exporter
 payment_exporter_config: /etc/payment_exporter.config.json
-payment_exporter_rundir: /var/lib/payment_exporter
-payment_exporter_dump: "{{ payment_exporter_rundir }}/dump.json"
+payment_exporter_run_dir: /var/lib/payment_exporter
+payment_exporter_dump: "{{ payment_exporter_run_dir }}/dump.json"
 payment_exporter_log_level: info
 payment_exporter_sleep_time: 21600
 payment_exporter_maryno_net_min_sleep_time: 3600

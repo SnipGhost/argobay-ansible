@@ -4,12 +4,12 @@ userId: prometheus
 groupId: prometheus
 
 payment_exporter_git: https://github.com/SnipGhost/payment_exporter
-payment_exporter_bindir: /usr/local/bin/payment_exporter
+payment_exporter_bin_dir: /usr/local/bin/payment_exporter
 payment_exporter_config: /etc/payment_exporter.config.json
-payment_exporter_rundir: /var/lib/payment_exporter
-payment_exporter_dump: "{{ payment_exporter_rundir }}/dump.json"
+payment_exporter_run_dir: /var/lib/payment_exporter
+payment_exporter_dump: "{{ payment_exporter_run_dir }}/dump.json"
 
-exec_command: "{{ payment_exporter_bindir }}/env/bin/python3 {{ payment_exporter_bindir }}/payment_exporter.py -c {{ payment_exporter_config }}"
+exec_command: "{{ payment_exporter_bin_dir }}/env/bin/python3 {{ payment_exporter_bin_dir }}/payment_exporter.py -c {{ payment_exporter_config }}"
 
 payment_exporter_log_level: info
 payment_exporter_user: username

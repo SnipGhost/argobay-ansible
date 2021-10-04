@@ -1,4 +1,4 @@
-{{ rsyslog_remote_logdir }}/*.log {{ rsyslog_remote_logdir }}/*/*.log {
+{{ rsyslog_remote_log_dir }}/*.log {{ rsyslog_remote_log_dir }}/*/*.log {
     {{ rsyslog_log_period }}
     rotate {{ rsyslog_log_rotate }}
     size {{ rsyslog_log_size }}

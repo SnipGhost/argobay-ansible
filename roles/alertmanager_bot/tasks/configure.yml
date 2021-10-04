@@ -1,7 +1,7 @@
 ---
 - name: Creates config directory
   file: 
-    path: "{{ alertmanager_bot_confdir }}"
+    path: "{{ alertmanager_bot_conf_dir }}"
     state: directory
     owner: "{{userId}}"
     group: "{{groupId}}"
@@ -25,7 +25,7 @@
 - name: Copy message template
   copy:
     src: files/default.tmpl
-    dest: "{{ alertmanager_bot_confdir }}/default.tmpl"
+    dest: "{{ alertmanager_bot_conf_dir }}/default.tmpl"
     owner: root
     group: root
     mode: 0644

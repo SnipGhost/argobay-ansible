@@ -7,7 +7,7 @@
 - name: Clone repo
   git:
     repo: "{{ dacrover_git }}"
-    dest: "{{ dacrover_bindir }}"
+    dest: "{{ dacrover_bin_dir }}"
     clone: yes
     update: yes
   notify:
@@ -15,7 +15,7 @@
 
 - name: Reset permissions
   file:
-    path: "{{ dacrover_bindir }}"
+    path: "{{ dacrover_bin_dir }}"
     state: directory
     owner: "{{userId}}"
     group: "{{groupId}}"
@@ -71,10 +71,10 @@
     group: "{{ item.group }}"
     mode: "{{ item.mode | default('0755') }}"
   with_items:
-    - path: "{{ dacrover_logdir }}"
+    - path: "{{ dacrover_log_dir }}"
       owner: "{{ userId }}"
       group: "{{ groupId }}"
-    - path: "{{ dacrover_confdir }}"
+    - path: "{{ dacrover_conf_dir }}"
       owner: "{{ userId }}"
       group: "{{ groupId }}"
 
@@ -99,7 +99,7 @@
 - name: Create app config
   template:
     src: "{{ item.src }}"
-    dest: "{{ dacrover_confdir }}/{{ item.dest }}"
+    dest: "{{ dacrover_conf_dir }}/{{ item.dest }}"
     mode: 0660
     owner: "{{ userId }}"
     group: "{{ groupId }}"
@@ -111,7 +111,7 @@
 
 - name: Reset static
   file:
-    dest: "{{ dacrover_bindir }}/static"
+    dest: "{{ dacrover_bin_dir }}/static"
     owner: root
     group: "{{ groupId }}"
     mode: u=rwX,g=rX,o=rX
@@ -119,8 +119,8 @@
 
 - name: Create venv and install requirements
   pip: 
-    requirements: "{{ dacrover_bindir }}/requirements.txt"
-    virtualenv: "{{ dacrover_bindir }}/env"
+    requirements: "{{ dacrover_bin_dir }}/requirements.txt"
+    virtualenv: "{{ dacrover_bin_dir }}/env"
     virtualenv_python: python3.7
   notify:
     - app_restart
@@ -146,7 +146,7 @@
   when: (inventory_hostname == groups[dacrover_group][0])
 
 - name: Re-create db
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ dacrover_bindir }}/setup/dacrover.sql 
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ dacrover_bin_dir }}/setup/dacrover.sql
   when: (inventory_hostname == groups[dacrover_group][0]) and (dacrover_setup | default(false) | bool)
 
 - meta: flush_handlers

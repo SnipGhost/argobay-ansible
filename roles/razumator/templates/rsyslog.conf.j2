@@ -6,7 +6,7 @@ if $programname == 'razumator-api' then {
              dirGroup="{{ groupId }}"
              dirCreateMode="0750"
              FileCreateMode="0640"
-             File="{{ razumator_logdir }}/api.log")
+             File="{{ razumator_log_dir }}/api.log")
 }
 
 if $programname == 'razumator-core' then {
@@ -17,5 +17,5 @@ if $programname == 'razumator-core' then {
              dirGroup="{{ groupId }}"
              dirCreateMode="0750"
              FileCreateMode="0640"
-             File="{{ razumator_logdir }}/core.log")
+             File="{{ razumator_log_dir }}/core.log")
 }

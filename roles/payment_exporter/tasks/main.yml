@@ -14,7 +14,7 @@
 - name: Clone repo
   git:
     repo: "{{ payment_exporter_git }}"
-    dest: "{{ payment_exporter_bindir }}"
+    dest: "{{ payment_exporter_bin_dir }}"
     clone: yes
     update: yes
   notify:
@@ -40,7 +40,7 @@
 
 - name: Creates run directory
   file: 
-    path: "{{ payment_exporter_rundir }}"
+    path: "{{ payment_exporter_run_dir }}"
     state: directory
     owner: "{{userId}}"
     group: "{{groupId}}"
@@ -50,8 +50,8 @@
 
 - name: Create venv and install requirements
   pip: 
-    requirements: "{{ payment_exporter_bindir }}/requirements.txt"
-    virtualenv: "{{ payment_exporter_bindir }}/env"
+    requirements: "{{ payment_exporter_bin_dir }}/requirements.txt"
+    virtualenv: "{{ payment_exporter_bin_dir }}/env"
     virtualenv_python: python3.7
   notify:
     - payment_exporter_restart

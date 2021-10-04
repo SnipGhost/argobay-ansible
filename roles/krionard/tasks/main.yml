@@ -7,7 +7,7 @@
 - name: Clone repo
   git:
     repo: "{{ krionard_git }}"
-    dest: "{{ krionard_bindir }}"
+    dest: "{{ krionard_bin_dir }}"
     clone: yes
     update: yes
   notify:
@@ -15,7 +15,7 @@
 
 - name: Reset permissions
   file:
-    path: "{{ krionard_bindir }}"
+    path: "{{ krionard_bin_dir }}"
     state: directory
     owner: "{{userId}}"
     group: "{{groupId}}"
@@ -71,10 +71,10 @@
     group: "{{ item.group }}"
     mode: "{{ item.mode | default('0755') }}"
   with_items:
-    - path: "{{ krionard_logdir }}"
+    - path: "{{ krionard_log_dir }}"
       owner: "{{ userId }}"
       group: "{{ groupId }}"
-    - path: "{{ krionard_confdir }}"
+    - path: "{{ krionard_conf_dir }}"
       owner: "{{ userId }}"
       group: "{{ groupId }}"
 
@@ -99,7 +99,7 @@
 - name: Create app config
   template:
     src: "{{ item.src }}"
-    dest: "{{ krionard_confdir }}/{{ item.dest }}"
+    dest: "{{ krionard_conf_dir }}/{{ item.dest }}"
     mode: 0660
     owner: "{{ userId }}"
     group: "{{ groupId }}"
@@ -111,8 +111,8 @@
 
 - name: Copy vocabulary
   ansible.builtin.copy:
-    src: "{{ krionard_bindir }}/config_copy/skill.vocabulary.json"
-    dest: "{{ krionard_confdir }}/skill.vocabulary.json"
+    src: "{{ krionard_bin_dir }}/config_copy/skill.vocabulary.json"
+    dest: "{{ krionard_conf_dir }}/skill.vocabulary.json"
     mode: 0660
     owner: "{{ userId }}"
     group: "{{ groupId }}"
@@ -123,8 +123,8 @@
 
 - name: Create venv and install requirements
   pip: 
-    requirements: "{{ krionard_bindir }}/dependencies/requirements.txt"
-    virtualenv: "{{ krionard_bindir }}/env"
+    requirements: "{{ krionard_bin_dir }}/dependencies/requirements.txt"
+    virtualenv: "{{ krionard_bin_dir }}/env"
     virtualenv_python: python3.7
   notify:
     - app_restart
@@ -150,7 +150,7 @@
   when: (inventory_hostname == groups[krionard_group][0])
 
 - name: Re-create db
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ krionard_bindir }}/sql_setup/db_init.sql 
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ krionard_bin_dir }}/sql_setup/db_init.sql
   when: (inventory_hostname == groups[krionard_group][0]) and (krionard_setup | default(false) | bool)
 
 - meta: flush_handlers

@@ -14,5 +14,5 @@ input(type="imtcp" port="514")
 {% endif %}
 # Allow remote collect
 $AllowedSender TCP, {{ rsyslog_remote_allowed | default(['127.0.0.1']) | join(', ') }}
-$template Incoming-logs,"{{ rsyslog_remote_logdir }}/%HOSTNAME%/%PROGRAMNAME%.log"
+$template Incoming-logs,"{{ rsyslog_remote_log_dir }}/%HOSTNAME%/%PROGRAMNAME%.log"
 *.*  ?Incoming-logs

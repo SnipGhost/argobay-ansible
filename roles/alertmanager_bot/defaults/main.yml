@@ -12,8 +12,8 @@ alertmanager_bot_port: 8007
 alertmanager_bot_store: "bolt"
 alertmanager_bot_log_level: "info"
 
-alertmanager_bot_bindir: /usr/local/bin
-alertmanager_bot_confdir: /etc/am-bot
+alertmanager_bot_bin_dir: /usr/local/bin
+alertmanager_bot_conf_dir: /etc/am-bot
 alertmanager_bot_boltdir: /data
 alertmanager_bot_bolt_path: "{{ alertmanager_bot_boltdir }}/am_bot.db"
 

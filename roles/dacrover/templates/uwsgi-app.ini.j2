@@ -13,10 +13,10 @@ buffer-size = {{ dacrover_buffer_size }}
 need-app = true
 lazy-apps = true
 
-chdir = {{ dacrover_bindir }}
-logto2 = {{ dacrover_logdir }}/{{ app_name }}.log
+chdir = {{ dacrover_bin_dir }}
+logto2 = {{ dacrover_log_dir }}/{{ app_name }}.log
 
-home = {{ dacrover_bindir }}/env
+home = {{ dacrover_bin_dir }}/env
 plugin = python3
 callable = app
-wsgi-file = {{ dacrover_bindir }}/run.py
+wsgi-file = {{ dacrover_bin_dir }}/run.py

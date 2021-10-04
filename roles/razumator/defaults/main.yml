@@ -13,9 +13,9 @@ razumator_proxy_port: 10002
 razumator_api_host: 0.0.0.0
 razumator_api_port: 10001
 
-razumator_logdir: "/var/log/{{ app_name }}"
-razumator_bindir: "/usr/local/bin/{{ app_name }}"
-razumator_confdir: "/etc/{{ app_name }}"
+razumator_log_dir: "/var/log/{{ app_name }}"
+razumator_bin_dir: "/usr/local/bin/{{ app_name }}"
+razumator_conf_dir: "/etc/{{ app_name }}"
 razumator_model_path: "/var/lib/{{ app_name }}"
 razumator_static_path: "/var/www/html/{{ app_name }}"
 razumator_build_path: "builds"

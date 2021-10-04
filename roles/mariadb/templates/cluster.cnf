@@ -1,7 +1,7 @@
 [mysqld]
 bind-address = {{ mariadb_bind_address }}
 binlog_format = ROW
-datadir = {{ mariadb_datadir | default('/var/lib/mysql') }}
+datadir = {{ mariadb_data_dir | default('/var/lib/mysql') }}
 
 default-storage-engine = innodb
 innodb_file_per_table =	on

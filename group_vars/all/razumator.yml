@@ -12,9 +12,9 @@ razumator_proxy_port: 10002
 razumator_api_host: 0.0.0.0
 razumator_api_port: 10001
 # Work dirs
-razumator_logdir: /var/log/razumator
-razumator_bindir: /usr/local/bin/razumator
-razumator_confdir: /etc/razumator
+razumator_log_dir: /var/log/razumator
+razumator_bin_dir: /usr/local/bin/razumator
+razumator_conf_dir: /etc/razumator
 razumator_model_path: /var/lib/razumator
 razumator_static_path: /var/www/html/razumator
 # Logging

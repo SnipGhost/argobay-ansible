@@ -8,9 +8,9 @@ dacrover_port: 4050
 dacrover_connect_host: 127.0.0.1
 dacrover_connect_port: 4050
 dacrover_buffer_size: 65535
-dacrover_logdir: "/var/log/{{ app_name }}"
-dacrover_bindir: "/usr/local/bin/{{ app_name }}"
-dacrover_confdir: /etc/assol
+dacrover_log_dir: "/var/log/{{ app_name }}"
+dacrover_bin_dir: "/usr/local/bin/{{ app_name }}"
+dacrover_conf_dir: /etc/assol
 
 dacrover_log_period:   daily
 dacrover_log_rotate:   7

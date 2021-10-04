@@ -1,67 +1,9 @@
 ---
-- name: Creating app user group
-  group: name="{{groupId}}"
+- include: install.yml
+- include: configure.yml
 
-- name: Creating app user
-  user:
-    name: "{{userId}}"
-    group: "{{groupId}}"
-    system: yes
-    shell: "/sbin/nologin"
-    comment: "{{userId}} nologin user"
-    createhome: "no"
-    state: present
-
-- name: Install alertmanager-bot release
-  get_url:
-    url: "{{ alertmanager_bot_download_url }}"
-    dest: "{{ alertmanager_bot_bindir }}/alertmanager_bot"
-    owner: "{{userId}}"
-    group: "{{groupId}}"
-    mode: 755
-    remote_src: yes
-
-- name: Creates config directory
-  file: 
-    path: "{{ alertmanager_bot_confdir }}"
-    state: directory
-    owner: "{{userId}}"
-    group: "{{groupId}}"
-    mode: 0755
-
-- name: Creates bolt directory
-  file: 
-    path: "{{ alertmanager_bot_boltdir }}"
-    state: directory
-    owner: "{{userId}}"
-    group: "{{groupId}}"
-    mode: 0755
-
-- name: Copy systemd init file
-  template:
-    src: init.service.j2
-    dest: /etc/systemd/system/am-bot.service
-    mode: 0640
-  notify:
-    - Reload systemd
-    - am_bot_restart
-
-- name: Copy message template
-  copy:
-    src: files/default.tmpl
-    dest: "{{ alertmanager_bot_confdir }}/default.tmpl"
-    owner: root
-    group: root
-    mode: 0644
-  notify: am_bot_restart
-
-- meta: flush_handlers
-
-- name: Start am-bot service
-  service:
-    name: am-bot
-    state: started
-    enabled: yes
+- name: Flush handlers
+  meta: flush_handlers
 
 - name: Check if alertmanager bot is accessible
   uri:

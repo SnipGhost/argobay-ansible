@@ -1,0 +1,40 @@
+---
+- name: Creates config directory
+  file: 
+    path: "{{ alertmanager_bot_confdir }}"
+    state: directory
+    owner: "{{userId}}"
+    group: "{{groupId}}"
+    mode: 0755
+
+- name: Creates bolt directory
+  file: 
+    path: "{{ alertmanager_bot_boltdir }}"
+    state: directory
+    owner: "{{userId}}"
+    group: "{{groupId}}"
+    mode: 0755
+
+- name: Copy systemd init file
+  template:
+    src: init.service.j2
+    dest: /etc/systemd/system/am-bot.service
+    mode: 0640
+  notify: restart alertmanager_bot
+
+- name: Copy message template
+  copy:
+    src: files/default.tmpl
+    dest: "{{ alertmanager_bot_confdir }}/default.tmpl"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart alertmanager_bot
+
+- name: Start alertmanager_bot service
+  systemd:
+    name: am-bot
+    state: started
+    daemon_reload: yes
+    enabled: yes
+  register: alertmanager_bot_started

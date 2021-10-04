@@ -34,6 +34,16 @@
     path: '/tmp/postgres_exporter-{{ postgres_exporter_version }}.linux-{{ proc_version }}'
     state: absent
 
+- name: Copy config file
+  copy:
+    src: queries.yaml
+    dest: "{{ postgres_exporter_config }}"
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0755
+  notify:
+    - postgres_exporter_restart
+
 - name: Copy systemd init file
   template:
     src: init.service.j2

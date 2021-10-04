@@ -2,7 +2,9 @@
 serviceName: postgres_exporter
 userId: postgres
 groupId: postgres
-exec_command: "/usr/local/bin/postgres_exporter --auto-discover-databases"
-postgres_exporter_version: 0.10.0
 
+postgres_exporter_version: 0.10.0
 postgres_exporter_link: https://github.com/prometheus-community/postgres_exporter/releases/download/v{{ postgres_exporter_version }}/postgres_exporter-{{ postgres_exporter_version }}.linux-{{ proc_version }}.tar.gz
+
+postgres_exporter_config: /etc/postgres_exporter.queries.yaml
+exec_command: "/usr/local/bin/postgres_exporter --auto-discover-databases --extend.query-path {{ postgres_exporter_config }}"

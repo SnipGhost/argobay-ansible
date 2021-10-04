@@ -181,6 +181,7 @@ alertmanager_bot_telegram_admins:
 # Grafana
 grafana_domain: grafana.argobay.ml
 grafana_data_path: "{{ data_path }}/grafana/"
+grafana_smtp_enabled: yes
 ###############################################################################
 # Jupyter
 jupyter_port: 8888

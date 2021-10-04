@@ -7,3 +7,13 @@ http_port = 3000
 domain = {{ grafana_domain }}
 root_url = https://%(domain)s/
 enable_gzip = false
+
+{% if grafana_smtp_enabled | default(false) | bool %}
+[smtp]
+enabled=true
+host={{ smtp_host }}
+user={{ smtp_user }}
+password={{ smtp_pass }}
+from_address={{ smtp_from }}
+from_name={{ smtp_name }}
+{% endif %}

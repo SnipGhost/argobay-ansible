@@ -15,18 +15,20 @@
 - name: Update APT cache
   apt:
     update_cache: yes
+  changed_when: no
 
 - name: Install packages
   package:
     name:
       - grafana
     state: present
+  notify: restart grafana
 
 - name: Copy config file
   template:
     src: grafana.ini.j2
     dest: /etc/grafana/grafana.ini
-  notify: grafana_restart
+  notify: restart grafana
 
 - name: Creates data directory
   file: 
@@ -36,10 +38,13 @@
     group: "{{ groupId }}"
     mode: 0755
 
-- meta: flush_handlers
-
 - name: Start Grafana service
   service:
     name: grafana-server
     state: started
+    daemon_reload: yes
     enabled: yes
+  register: grafana_started
+
+- name: Flush handlers
+  meta: flush_handlers

@@ -1,7 +1,5 @@
 [Home](index.md)
 
-[PosgreSQL](postgresql.md)
-
 [Krionard](krionard.md)
 
 [Dacrover](dacrover.md)
@@ -19,5 +17,7 @@
   * [Naming](argobay/docs/naming.md)
   * [Notes](argobay/docs/notes.md)
   * [Vault](argobay/docs/vault.md)
+  - - - -
+  * [PostgreSQL](argobay/docs/postgresql.md)
 
 [gimmick:themechooser](Choose theme)

@@ -1,3 +1,9 @@
+[dev_public_hosts]
+rikka
+
+[dev_private_hosts]
+itsuki
+
 [dev_db_servers]
 itsuki db_master=yes db_replication=no
 

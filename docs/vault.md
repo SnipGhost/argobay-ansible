@@ -4,7 +4,6 @@
 
 Playbooks require secret variables:
 ```yaml
-
 # Keepalived VIPs
 service_vip_password: example
 public_vip_password: example
@@ -84,8 +83,15 @@ razumator_db_pass: example
 # GitLab Runner
 gitlab_runner_reg_token: example
 
-# Admin htpasswd password (only base64 encoding)
-htpasswd: $apr1$ZbHHKQvL$0z/SXRbPbfohsC6a3vrJ8. # decoded: test
+# htpasswd password files
+htpasswds:
+  - name: /etc/nginx/.htpasswd
+    users:
+      - { name: example, pass: example }
+  - name: /etc/nginx/.htpasswd_devs
+    users:
+      - { name: example, pass: example }
+      - { name: test, pass: test }
 ```
 
 ## Use-cases

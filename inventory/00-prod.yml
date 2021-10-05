@@ -1,3 +1,11 @@
+[public_hosts]
+nino
+yotsuba
+
+[private_hosts]
+miku
+asuna
+
 [prod_db_servers]
 asuna db_master=yes
 zelda

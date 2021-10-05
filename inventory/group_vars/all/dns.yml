@@ -101,8 +101,8 @@ dnsmasq_hosts:
 
   - name: wiki
     rec:
-      - { ip: "{{private_vip_ip}}", type: argobay.ml }
-      - { ip: "{{dev_private_vip_ip}}", type: dev-argobay.ml }
+      - { ip: "{{public_vip_ip}}", type: argobay.ml }
+      - { ip: "{{dev_public_vip_ip}}", type: dev-argobay.ml }
 
   #========================================================
   # Network devices

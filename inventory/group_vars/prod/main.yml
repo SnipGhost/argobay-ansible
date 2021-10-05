@@ -237,13 +237,22 @@ nginx_sites:
       icon: swagger.svg
   - name: mdwiki
     server_name: wiki.argobay.ml
-    addr: "{{ private_vip_ip }}"
+    addr: "{{ public_vip_ip }}"
     static_root: "{{ mdwiki_path }}"
     static_path: /
     static_hard: yes
-    hosts: private_hosts
+    hosts: public_hosts
+    basic_auth: yes
+    basic_auth_file: /etc/nginx/.htpasswd_devs
     whitelist:
+      - external
       - vpn
+    conn_limits:
+      - name: conn_limit_per_ip
+        max_conn: 10
+    rate_limits:
+      - name: req_limit_per_ip
+        burst: 20
     display:
       name: Wiki
       icon: wiki.png

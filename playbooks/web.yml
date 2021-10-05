@@ -19,6 +19,6 @@
       tags:
         - mdwiki
         - wiki
-      when: inventory_hostname in groups[private_group]
+      when: inventory_hostname in groups[public_group]
     - name: uwsgi
       tags: uwsgi

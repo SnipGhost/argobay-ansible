@@ -174,11 +174,11 @@ nginx_sites:
       icon: swagger.svg
   - name: mdwiki
     server_name: wiki.dev-argobay.ml
-    addr: "{{ dev_private_vip_ip }}"
+    addr: "{{ dev_public_vip_ip }}"
     static_root: "{{ mdwiki_path }}"
     static_path: /
     static_hard: yes
-    hosts: dev_private_hosts
+    hosts: dev_public_hosts
     whitelist:
       - vpn
     display:

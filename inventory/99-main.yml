@@ -18,7 +18,6 @@ ichika rsyslog_server=yes
 nino
 miku
 yotsuba
-# yukinon
 zelda
 
 [prod:vars]
@@ -37,7 +36,6 @@ razumator_core_group=prod_razumator_core
 [dev]
 itsuki
 rikka
-# metroid
 
 [dev:vars]
 private_group=dev_private_hosts
@@ -60,21 +58,6 @@ dev
 
 [research_hosts]
 ichika
-
-[public_hosts]
-nino
-yotsuba
-
-[private_hosts]
-miku
-asuna
-
-[dev_public_hosts]
-rikka
-
-[dev_private_hosts]
-itsuki
-# metroid
 
 [dns_servers]
 asuna

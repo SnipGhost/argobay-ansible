@@ -3,7 +3,7 @@
 
 ## Init repo
 
-1) Create [secrets files](./docs/vault.md) for all, prod and dev
+1) Create [secrets files](docs/vault.md) for all, prod and dev
 2) `ansible-galaxy install -r requirements.yml`
 
 

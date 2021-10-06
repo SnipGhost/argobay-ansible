@@ -1,0 +1,144 @@
+# Nginx options
+default_cert:     "{{ cert_path }}/dev-argobay.ml/fullchain.pem"
+default_cert_key: "{{ cert_path }}/dev-argobay.ml/privkey.pem"
+nginx_enable_default: yes
+
+# No limits for dev
+nginx_conn_limits: []
+nginx_rate_limits: []
+
+# Get only names: nginx_sites | map(attribute='name') | flatten
+nginx_sites:
+  - name: dacrover
+    server_name: dacrover.dev-argobay.ml
+    addr: "{{ dev_private_vip_ip }}"
+    group: "{{ dacrover_group }}"
+    static_root: /usr/local/bin/dacrover/static
+    static_path: /static
+    # local: yes # No load balancing, only failover
+    port: "{{ dacrover_port }}"
+    hosts: dev_private_hosts
+    display:
+      name: Dacrover
+      icon: dacrover.svg
+
+  - name: krionard
+    server_name: krionard.dev-argobay.ml
+    addr: "{{ dev_public_vip_ip }}"
+    group: "{{ krionard_group }}"
+    # local: yes # No load balancing, only failover
+    port: "{{ krionard_port }}"
+    hosts: dev_public_hosts
+    display:
+      name: Krionard
+      icon: marusya.png
+
+  - name: razumator
+    server_name: razumator.dev-argobay.ml
+    addr: "{{ dev_public_vip_ip }}"
+    group: "{{ razumator_api_group }}"
+    static_root: "{{ razumator_static_path }}"
+    static_path: /
+    static_hard: yes
+    ignore_not_found: yes
+    # local: yes
+    port: "{{ razumator_api_port }}"
+    path: /api/
+    hosts: dev_public_hosts
+    whitelist:
+      - vpn
+    display:
+      name: Разуматор
+      icon: razumator.svg
+
+  - name: haproxy
+    server_name: haproxy_{{ inventory_hostname }}.argobay.ml
+    addr: "{{ lookup('dig', inventory_hostname + '.i') }}"
+    add_path: /haproxy_stats
+    local: yes
+    port: "{{ haproxy_stat_port }}"
+    ssl_certificate: "{{ cert_path }}/argobay.ml/fullchain.pem"
+    ssl_certificate_key: "{{ cert_path }}/argobay.ml/privkey.pem"
+    whitelist:
+      - vpn
+    display:
+      name: HAProxy
+      icon: haproxy.png
+
+  - name: consul
+    server_name: consul.dev-argobay.ml
+    addr: "{{ dev_private_vip_ip }}"
+    group: consul_group
+    local: yes
+    port: "{{ consul_http_port | default(8500) }}"
+    whitelist:
+      - vpn
+    display:
+      name: Consul
+      icon: consul.svg
+
+  - name: external-dashboard
+    server_name: dev-argobay.ml
+    addr: "{{ dev_public_vip_ip }}"
+    static_root: "{{ dashboard_path }}external/"
+    static_path: /
+    static_hard: yes
+    ignore_not_found: yes
+    whitelist:
+      - vpn
+    display:
+      name: External
+      icon: external.png
+
+  - name: internal-dashboard
+    server_name: internal.dev-argobay.ml
+    addr: "{{ dev_private_vip_ip }}"
+    static_root: "{{ dashboard_path }}internal/"
+    static_path: /
+    static_hard: yes
+    hosts: dev_private_hosts
+    whitelist:
+      - vpn
+
+  - name: swagger
+    server_name: swagger.dev-argobay.ml
+    addr: "{{ dev_private_vip_ip }}"
+    static_root: "{{ swagger_path }}"
+    static_path: /
+    static_hard: yes
+    hosts: dev_private_hosts
+    whitelist:
+      - vpn
+    display:
+      name: Swagger
+      icon: swagger.svg
+
+  - name: mdwiki
+    server_name: wiki.dev-argobay.ml
+    addr: "{{ dev_public_vip_ip }}"
+    static_root: "{{ mdwiki_path }}"
+    static_path: /
+    static_hard: yes
+    hosts: dev_public_hosts
+    whitelist:
+      - vpn
+    display:
+      name: Wiki
+      icon: wiki.png
+
+# Dashboards only
+dashboard_path: /var/www/html/
+dashboard_git: git@github.com:SnipGhost/cluster-page.git
+dashboard_max_width:  60vw
+dashboard_top_margin: 10vh
+swagger_path: /var/www/html/swagger
+swagger_git: git@github.com:SnipGhost/custom-swagger.git
+mdwiki_path: /var/www/html/mdwiki/
+
+display_only_sites:
+  - name: Кластер
+    addr: https://internal.dev-argobay.ml/cluster/
+    icon: cluster.svg
+  - name: Grafana
+    addr: https://grafana.argobay.ml/
+    icon: grafana.svg

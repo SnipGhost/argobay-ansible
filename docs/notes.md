@@ -18,3 +18,21 @@ UPD: Bad news - 1.8.2 has extremely outdated configuration. Suggest to use Victo
 
 ## Telegram bot
 Bot_name: @assol_ml_bot
+
+## Stopwatch and countdown
+```bash
+function countdown(){
+   date1=$((`date +%s` + $1)); 
+   while [ "$date1" -ge `date +%s` ]; do 
+     echo -ne "$(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r";
+     sleep 0.1
+   done
+}
+function stopwatch(){
+  date1=`date +%s`; 
+   while true; do 
+    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"; 
+    sleep 0.1
+   done
+}
+```

@@ -1,6 +1,9 @@
-###############################################################################
 # Main options
-###############################################################################
+
+# Summary
+project_version: v0.7c
+
+# Users with sudo
 admins:
   - name: mak
     color: "01;33m"
@@ -13,6 +16,7 @@ admins:
     email: "lhorifoxl@gmail.com"
     git_name: HoriFox
     key: "https://github.com/horifox.keys"
+# Non-privileged users
 users:
   - name: rgbaybarin
     color: "01;36m"
@@ -21,198 +25,27 @@ users:
     git_name: RBizonDota
     key: "https://github.com/RBizonDota.keys"
     servers_group: dev
-###############################################################################
+
 # locale.gen
 locales:
   - { code: "en_US.UTF-8" }
   - { code: "ru_RU.UTF-8" }
-###############################################################################
+
 # Path to SSD-disks for all disk-based services
 data_path: "/mnt/data"
-###############################################################################
-# Network
-default_gw: 192.168.8.1
-subnet_mask: 24
-secondary_dns: 8.8.8.8
-#=====================================#
-# External dashboards
-public_vip_id:     1
-public_vip_ip:     192.168.8.11
-#=====================================#
-# DNS & subservices
-service_vip_id:    2
-service_vip_ip:    192.168.8.12
-#=====================================#
-# Internal dashboards & Dacrover
-private_vip_id:    3
-private_vip_ip:    192.168.8.13
-#=====================================#
-# Monitoring services only
-monitoring_vip_id: 4
-monitoring_vip_ip: 192.168.8.14
-#=====================================#
-# Emulate public on dev-environment
-dev_public_vip_id: 5
-dev_public_vip_ip: 192.168.8.15
-#=====================================#
-# Machine learning services
-research_vip_id:   6
-research_vip_ip:   192.168.8.16
-#=====================================#
-# Emulate private on dev-environment
-dev_private_vip_id: 7
-dev_private_vip_ip: 192.168.8.17
-#=====================================#
-# Rados gateway load balancer VIP
-rgw_lb_vip_id: 8
-rgw_lb_vip_ip: 192.168.8.18
-#=====================================#
-# PROD Consul VIP
-consul_vip_id: 9
-consul_vip_ip: 192.168.8.20
-# DEV Consul VIP == DEV private VIP
-###############################################################################
-# atop
-atop_log_interval: 300
-atop_log_generations: 10
-###############################################################################
+
 # Chronyd options
 ntpd_servers:
   - ntp1.mail.ru
   - ntp2.mail.ru
-###############################################################################
-# Logrotate
-logrotate_default_period: weekly
-logrotate_default_rotate: 4
-###############################################################################
-# Rsyslog
-rsyslog_remote_log_dir: /mnt/data/log
-rsyslog_log_period: daily
-rsyslog_log_rotate: 7
-rsyslog_log_size: 100M
-rsyslog_send_facility:
-  - auth
-  - authpriv
-  - local0
-  - local7
-rsyslog_send_severity:
-  - '*'
-rsyslog_server_udp: no
-rsyslog_server_tcp: yes
-rsyslog_remote_allowed:
-  - 127.0.0.1
-  - 192.168.8.0/24
-###############################################################################
+
 # Local DNS via dnsmasq
 dnsmasq_records_file: /etc/cluster-hosts
 dnsmasq_exporter_enabled: no
 dnsmasq_logging: no
 dnsmasq_iface: eth0:{{ service_vip_id }}
 # DNS records in dns.yml
-###############################################################################
-# Victoria Metrics
-victoria_metrics_version: 1.57.1
-victoria_metrics_retention: 3
-victoria_metrics_scrape_interval: 15s
-victoria_metrics_evaluation_interval: 15s
-victoria_metrics_host: 127.0.0.1
-victoria_metrics_port: 8428
-victoria_metrics_data_path: "{{ data_path }}/victoria-metrics/"
-# VM Agent (merged with Victoria Metrics base)
-# vmagent_host: 127.0.0.1
-# vmagent_port: 8429
-# vmagent_data_path: "{{ data_path }}/vmagent/"
-# VM Alert
-vmalert_host: 127.0.0.1
-vmalert_port: 8880
-# Prometheus config drop-in replacement compatibility
-prometheus_jobs:
-  - { name: node, port: 9100, group: all }
-  - { name: haproxy, port: 9101, group: all }
-  - { name: mysql, port: 9104, group: db_servers }
-  - { name: nginx, port: 9113, group: web_servers }
-  - { name: redis, port: 9121, group: redis_servers }
-  - { name: memcached, port: 9150, group: memcached_servers }
-  # - { name: dnsmasq, port: 9153, group: dns_servers }
-  - { name: postgres, port: 9187, group: db_servers }
-  - { name: rpi, port: 9243, group: raspberry_pi }
-  - { name: ceph, port: 9283, group: ceph_mons }
-  - { name: payment, port: 9999, group: payment_servers }
-  # - { name: esp, port: 80, group: esp_modules }
-###############################################################################
-# Prometheus exporter's options
-rpi_exporter_version: 0.6.0
-node_exporter_version: 1.0.1
-mysqld_exporter_version: 0.12.1
-memcached_exporter_version: 0.8.0
-haproxy_exporter_version: 0.12.0
-redis_exporter_version: 1.17.1
-postgres_exporter_version: 0.10.0
-nginx_exporter_scrape_uri: http://127.0.0.1/stub_status
-###############################################################################
-# Alertmanager
-alertmanager_version: 0.21.0
-alertmanager_bind: 0.0.0.0
-alertmanager_host: 127.0.0.1
-alertmanager_port: 9093
-alertmanager_conf_dir: /etc/alertmanager
-alertmanager_bin_dir: /usr/local/bin
-alermanager_group_wait: 15s
-alermanager_group_interval: 15s
-alermanager_repeat_interval: 1h
-alertmanager_receivers:
-  - name: alertmanager-bot
-    host: "{{ alertmanager_bot_host }}"
-    port: "{{ alertmanager_bot_port }}"
-###############################################################################
-# Alertmanager bot
-alertmanager_bot_version: 0.4.3
-alertmanager_bot_bind: 0.0.0.0
-alertmanager_bot_host: 127.0.0.1
-alertmanager_bot_port: 8007
-alertmanager_bot_log_level: "info"
-alertmanager_bot_conf_dir: /etc/am-bot
-alertmanager_bot_boltdir: /mnt/data/am-bot
-alertmanager_bot_bolt_path: "{{ alertmanager_bot_boltdir }}/am_bot.db"
-alertmanager_bot_telegram_admins:
-  - 148129813 # @snipghost
-  - 425226470 # @horifox
-  - 525681106 # Александр Васильев
-###############################################################################
-# Grafana
-grafana_domain: grafana.argobay.ml
-grafana_data_path: "{{ data_path }}/grafana/"
-grafana_smtp_enabled: yes
-###############################################################################
-# Jupyter
-jupyter_port: 8888
-###############################################################################
-# Docker
-docker_datapath: "{{ data_path }}/docker"
-docker_runner_bridge: br_runner
-docker_runner_subnet: 172.100.0.0/16
-docker_bridges:
-  - name: docker0
-    cidr: 172.17.0.0/16
-    group: all
-  - name: "{{ docker_runner_bridge }}"
-    cidr: "{{ docker_runner_subnet }}"
-    group: gitlab_runner
-# GitLab Runner
-gitlab_runner_name: arm-runner
-gitlab_runner_install_dir: "{{ data_path }}/runners/{{ gitlab_runner_name }}"
-gitlab_runner_reg_url: https://bmstu.codes/
-###############################################################################
-# Payment_exporter
-payment_exporter_git: https://github.com/SnipGhost/payment_exporter
-payment_exporter_bin_dir: /usr/local/bin/payment_exporter
-payment_exporter_config: /etc/payment_exporter.config.json
-payment_exporter_run_dir: /var/lib/payment_exporter
-payment_exporter_dump: "{{ payment_exporter_run_dir }}/dump.json"
-payment_exporter_log_level: info
-payment_exporter_sleep_time: 21600
-payment_exporter_maryno_net_min_sleep_time: 3600
-###############################################################################
+
 # Backup scripts
 backup_scripts:
   - tpl: backup-db
@@ -227,7 +60,7 @@ backup_scripts:
     interval: daily
     group: monitoring_servers
     retention: 3
-###############################################################################
+
 # rsyncd
 rsync_users:
   - name: "{{ rsync_certs_user }}"
@@ -256,7 +89,7 @@ rsync_modules:
       - "{{ rsync_certs_user }}"
     has_secrets: yes
     group: all
-###############################################################################
+
 # LetsAPI
 letsapi_cron_freq: weekly
 letsapi_path: /etc/letsapi
@@ -266,7 +99,7 @@ letsapi_cert_renewers:
     cert: argobay.ml
   - host: rikka
     cert: dev-argobay.ml
-###############################################################################
+
 # Consul
 consul_log_level: INFO
 consul_version: 1.10.1
@@ -280,6 +113,23 @@ consul_dns_port: 8600
 consul_http_port: 8500
 consul_listen_addr:
   - 127.0.0.1
-###############################################################################
-# Summary
-project_version: v0.7b
+
+# Jupyter
+jupyter_port: 8888
+
+# Docker
+docker_datapath: "{{ data_path }}/docker"
+docker_runner_bridge: br_runner
+docker_runner_subnet: 172.100.0.0/16
+docker_bridges:
+  - name: docker0
+    cidr: 172.17.0.0/16
+    group: all
+  - name: "{{ docker_runner_bridge }}"
+    cidr: "{{ docker_runner_subnet }}"
+    group: gitlab_runner
+
+# GitLab Runner
+gitlab_runner_name: arm-runner
+gitlab_runner_install_dir: "{{ data_path }}/runners/{{ gitlab_runner_name }}"
+gitlab_runner_reg_url: https://bmstu.codes/

@@ -1,6 +1,5 @@
-###############################################################################
 # Omega project options
-###############################################################################
+
 # Krionard API
 krionard_git: https://github.com/HoriFox/Krionard.git
 # krionard_bind: 127.0.0.1 # No load balancing, only failover
@@ -18,7 +17,7 @@ krionard_log_rotate: 7
 krionard_log_size: 10M
 krionard_log_severity: info
 krionard_log_facility: local7
-###############################################################################
+
 # Dacrover API
 dacrover_git: https://github.com/HoriFox/Dacrover.git
 # dacrover_bind: 127.0.0.1 # No load balancing, only failover

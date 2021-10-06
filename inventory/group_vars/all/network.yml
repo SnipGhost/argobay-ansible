@@ -1,0 +1,41 @@
+# Network
+default_gw: 192.168.8.1
+subnet_mask: 24
+secondary_dns: 8.8.8.8
+
+# External dashboards
+public_vip_id:     1
+public_vip_ip:     192.168.8.11
+
+# DNS & subservices
+service_vip_id:    2
+service_vip_ip:    192.168.8.12
+
+# Internal dashboards & Dacrover
+private_vip_id:    3
+private_vip_ip:    192.168.8.13
+
+# Monitoring services only
+monitoring_vip_id: 4
+monitoring_vip_ip: 192.168.8.14
+
+# Emulate public on dev-environment
+dev_public_vip_id: 5
+dev_public_vip_ip: 192.168.8.15
+
+# Machine learning services
+research_vip_id:   6
+research_vip_ip:   192.168.8.16
+
+# Emulate private on dev-environment
+dev_private_vip_id: 7
+dev_private_vip_ip: 192.168.8.17
+
+# Rados gateway load balancer VIP
+rgw_lb_vip_id: 8
+rgw_lb_vip_ip: 192.168.8.18
+
+# PROD Consul VIP
+consul_vip_id: 9
+consul_vip_ip: 192.168.8.20
+# DEV Consul VIP == DEV private VIP

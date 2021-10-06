@@ -1,0 +1,86 @@
+# Victoria Metrics
+victoria_metrics_version: 1.57.1
+victoria_metrics_retention: 3
+victoria_metrics_scrape_interval: 15s
+victoria_metrics_evaluation_interval: 15s
+victoria_metrics_host: 127.0.0.1
+victoria_metrics_port: 8428
+victoria_metrics_data_path: "{{ data_path }}/victoria-metrics/"
+
+# VM Agent (merged with Victoria Metrics base)
+# vmagent_host: 127.0.0.1
+# vmagent_port: 8429
+# vmagent_data_path: "{{ data_path }}/vmagent/"
+
+# VM Alert
+vmalert_host: 127.0.0.1
+vmalert_port: 8880
+
+# Prometheus config drop-in replacement compatibility
+prometheus_jobs:
+  - { name: node, port: 9100, group: all }
+  - { name: haproxy, port: 9101, group: all }
+  - { name: mysql, port: 9104, group: db_servers }
+  - { name: nginx, port: 9113, group: web_servers }
+  - { name: redis, port: 9121, group: redis_servers }
+  - { name: memcached, port: 9150, group: memcached_servers }
+  # - { name: dnsmasq, port: 9153, group: dns_servers }
+  - { name: postgres, port: 9187, group: db_servers }
+  - { name: rpi, port: 9243, group: raspberry_pi }
+  - { name: ceph, port: 9283, group: ceph_mons }
+  - { name: payment, port: 9999, group: payment_servers }
+  # - { name: esp, port: 80, group: esp_modules }
+
+# Prometheus exporter's options
+rpi_exporter_version: 0.6.0
+node_exporter_version: 1.0.1
+mysqld_exporter_version: 0.12.1
+memcached_exporter_version: 0.8.0
+haproxy_exporter_version: 0.12.0
+redis_exporter_version: 1.17.1
+postgres_exporter_version: 0.10.0
+nginx_exporter_scrape_uri: http://127.0.0.1/stub_status
+
+# Payment_exporter
+payment_exporter_git: https://github.com/SnipGhost/payment_exporter
+payment_exporter_bin_dir: /usr/local/bin/payment_exporter
+payment_exporter_config: /etc/payment_exporter.config.json
+payment_exporter_run_dir: /var/lib/payment_exporter
+payment_exporter_dump: "{{ payment_exporter_run_dir }}/dump.json"
+payment_exporter_log_level: info
+payment_exporter_sleep_time: 21600
+payment_exporter_maryno_net_min_sleep_time: 3600
+
+# Alertmanager
+alertmanager_version: 0.21.0
+alertmanager_bind: 0.0.0.0
+alertmanager_host: 127.0.0.1
+alertmanager_port: 9093
+alertmanager_conf_dir: /etc/alertmanager
+alertmanager_bin_dir: /usr/local/bin
+alermanager_group_wait: 15s
+alermanager_group_interval: 15s
+alermanager_repeat_interval: 1h
+alertmanager_receivers:
+  - name: alertmanager-bot
+    host: "{{ alertmanager_bot_host }}"
+    port: "{{ alertmanager_bot_port }}"
+
+# Alertmanager bot
+alertmanager_bot_version: 0.4.3
+alertmanager_bot_bind: 0.0.0.0
+alertmanager_bot_host: 127.0.0.1
+alertmanager_bot_port: 8007
+alertmanager_bot_log_level: "info"
+alertmanager_bot_conf_dir: /etc/am-bot
+alertmanager_bot_boltdir: /mnt/data/am-bot
+alertmanager_bot_bolt_path: "{{ alertmanager_bot_boltdir }}/am_bot.db"
+alertmanager_bot_telegram_admins:
+  - 148129813 # @snipghost
+  - 425226470 # @horifox
+  - 525681106 # Александр Васильев
+
+# Grafana
+grafana_domain: grafana.argobay.ml
+grafana_data_path: "{{ data_path }}/grafana/"
+grafana_smtp_enabled: yes

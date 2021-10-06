@@ -1,22 +1,24 @@
-###############################################################################
 # Razumator project options
-###############################################################################
 razumator_git:    git@github.com:RBizonDota/Razumator.git
 razumator_branch: develop
+
 # Core
 razumator_host: 0.0.0.0
 razumator_port: 10000
 razumator_proxy_host: 127.0.0.1
 razumator_proxy_port: 10002
+
 # API
 razumator_api_host: 0.0.0.0
 razumator_api_port: 10001
+
 # Work dirs
 razumator_log_dir: /var/log/razumator
 razumator_bin_dir: /usr/local/bin/razumator
 razumator_conf_dir: /etc/razumator
 razumator_model_path: /var/lib/razumator
 razumator_static_path: /var/www/html/razumator
+
 # Logging
 razumator_log_period: daily
 razumator_log_rotate: 7

@@ -1,6 +1,6 @@
 ---
 - name: Install chronyd
-  yum:
+  package:
     name: chrony
     state: latest
 

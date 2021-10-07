@@ -29,7 +29,7 @@ razumator_log_facility: local7
 
 razumator_db_name: razumator
 razumator_db_user: razumator
-razumator_db_pass: password
+# razumator_db_pass: password
 
 mariadb_proxy_host: 127.0.0.1
 mariadb_proxy_port: 3306

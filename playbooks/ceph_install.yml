@@ -1,4 +1,4 @@
-
+---
 - hosts:
     - ceph_mons
     - ceph_osds

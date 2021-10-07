@@ -92,6 +92,13 @@ htpasswds:
     users:
       - { name: example, pass: example }
       - { name: test, pass: test }
+
+# Ceph auth key
+ceph_admin_key: exampleexampleexampleexampleexampleexa==
+ceph_mon_key: exampleexampleexampleexampleexampleexa==
+ceph_osd_key: exampleexampleexampleexampleexampleexa==
+ceph_mgr_key: exampleexampleexampleexampleexampleexa==
+ceph_mds_key: exampleexampleexampleexampleexampleexa==
 ```
 
 ## Use-cases

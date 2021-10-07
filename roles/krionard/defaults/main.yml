@@ -18,7 +18,7 @@ krionard_log_facility: local7
 
 krionard_db_name: krionardtech
 krionard_db_user: krionard
-krionard_db_pass: password
+# krionard_db_pass: password
 
 mariadb_proxy_host: 127.0.0.1
 mariadb_proxy_port: 3306

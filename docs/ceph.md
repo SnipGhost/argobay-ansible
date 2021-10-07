@@ -26,14 +26,16 @@ ceph osd crush move itsuki datacenter=prod-home
 ceph osd crush rule create-replicated prod-rule prod-root osd ssd
 ceph osd crush set osd.0 0.080 root=prod-root datacenter=prod-home host=asuna
 ceph osd crush set osd.1 0.080 root=prod-root datacenter=prod-home host=ichika
-ceph osd crush set osd.2 0.080 root=prod-root datacenter=prod-home host=zelda
-ceph osd crush set osd.3 0.080 root=prod-root datacenter=prod-home host=itsuki
+ceph osd crush set osd.2 0.080 root=prod-root datacenter=prod-home host=itsuki
+ceph osd crush set osd.3 0.080 root=prod-root datacenter=prod-home host=zelda
 ```
 
 ## Create CephFS
 ```bash
 ceph osd pool create cephfs_data 64
 ceph osd pool create cephfs_metadata 16
+ceph osd pool set cephfs_data crush_rule prod-rule
+ceph osd pool set cephfs_metadata crush_rule prod-rule
 ceph fs new cephfs cephfs_metadata cephfs_data
 ceph fs ls
 ```

@@ -6,7 +6,7 @@ haproxy_bind_ip: 127.0.0.1
 haproxy_stat_host: 127.0.0.1
 haproxy_stat_port: 9000
 haproxy_stat_user: haproxy_user
-haproxy_stat_pass: haproxy_pass
+# haproxy_stat_pass: haproxy_pass
 
 mariadb_max_conn: 2048
 mariadb_port: 3306
@@ -15,7 +15,7 @@ mariadb_proxy_port_ro: 3308
 mariadb_proxy_check_port: 9200
 mariadb_clustercheck:
   user: clustercheckuser
-  pass: clustercheckpass
+# pass: clustercheckpass
 mariadb_l7_check: true
 
 postgresql_port: 5432

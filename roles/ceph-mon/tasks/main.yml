@@ -51,7 +51,7 @@
   shell:
     "/bin/monmaptool --create --clobber \
       {% for host in server_names -%} --add {{ host }} {{ hostvars[host]['ansible_default_ipv4']['address'] }} {{ ' ' }} {%- endfor %}
-      --fsid {{ ceph.fsid }} /tmp/monmap;"
+      --fsid {{ ceph_fsid }} /tmp/monmap;"
 
 - name: Move data to directory for local ceph-monitor
   shell:

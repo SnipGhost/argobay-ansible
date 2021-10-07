@@ -1,7 +1,6 @@
 ## TODO list
 
 ### Main
-- Remove Ceph secrets!
 - Repack mdwiki with external libs
 - Fix Golang install in common role
 - Fix dnsmasq main record generation

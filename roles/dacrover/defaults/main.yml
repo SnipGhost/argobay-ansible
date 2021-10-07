@@ -20,7 +20,7 @@ dacrover_log_facility: local7
 
 dacrover_db_name: dacrover
 dacrover_db_user: dacrover_user
-dacrover_db_pass: password
+# dacrover_db_pass: password
 
 mariadb_proxy_host: 127.0.0.1
 mariadb_proxy_port: 3306

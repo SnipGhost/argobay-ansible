@@ -7,4 +7,4 @@ mysqld_exporter_version: 0.12.1
 
 mariadb_clustercheck:
   user: clustercheckuser
-  pass: clustercheckpass
+# pass: clustercheckpass

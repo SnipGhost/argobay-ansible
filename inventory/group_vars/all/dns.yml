@@ -191,9 +191,10 @@ dnsmasq_hosts:
       - { ip: 192.168.8.58, type: e, main: yes }
       - { ip: 192.168.8.68, type: w }
 
-  - name: emily
+  - name: rapunzel
     rec:
-      - { ip: 192.168.8.69, type: w, main: yes }
+      - { ip: 192.168.8.59, type: e, main: yes }
+      - { ip: 192.168.8.69, type: w }
 
   - name: yukinon
     rec:

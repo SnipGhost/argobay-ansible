@@ -48,13 +48,13 @@ groups:
           description: "Cluster size < 2 on {{ $labels.instance }} for active wsrep, VALUE = {{ $value }}."
 
       - alert: MarynoNetBalance
-        expr: maryno_net_balance < (2 * maryno_net_plan_cost)
+        expr: maryno_net_balance < (1.5 * maryno_net_plan_cost)
         for: 0m
         labels:
           severity: warning
         annotations:
           summary: "Low balance for internet provider (instance {{ $labels.instance }})"
-          description: "Account balance < (2 * month_cost), balance = {{ $value }} rub."
+          description: "Account balance < (1.5 * month_cost), balance = {{ $value }} rub."
       
       - alert: MarynoNetAccountLocked
         expr: maryno_net_is_blocked > 0

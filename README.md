@@ -76,9 +76,19 @@ ansible-playbook playbooks/all_hosts.yml --tags common -e "set_passwords=yes"
 
 To provision Raspberry Pi host:
 ```bash
-export ANSIBLE_HOST_KEY_CHECKING=False
-ansible-playbook playbooks/provision.yml -e "HOSTNAME=zelda rpi_disable_wireless=yes" -i 192.168.8.144,
-unset ANSIBLE_HOST_KEY_CHECKING
+# Update DNS before run to generate valid dhcpd.conf with provision.sh
+ansible-playbook playbooks/service.yml --tags dns
+
+# Change hostname and IP
+./provision.sh rapunzel 192.168.8.116
+
+# Run common roles
+ansible-playbook playbooks/all_hosts.yml -e "set_passwords=yes" -l rapunzel
+
+# Additional run raspberry pi specific roles
+ansible-playbook playbooks/raspberry.yml -l rapunzel
+# And update monitoring configs
+ansible-playbook playbooks/monitroing.yml --tags prometheus
 ```
 
 To update dns:

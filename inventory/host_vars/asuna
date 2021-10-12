@@ -7,7 +7,7 @@ disks:
   - /dev/sda
 
 ceph_disks:
-  - /dev/sda1
+  - /dev/sda2
 
 keepalived_vips:
 

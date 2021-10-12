@@ -201,6 +201,10 @@ dnsmasq_hosts:
       - { ip: 192.168.8.30, type: e }
       - { ip: 192.168.8.40, type: w, main: yes }
 
+  - name: mai
+    rec:
+      - { ip: 192.168.8.31, type: w, main: yes }
+
   #========================================================
   # Workstations
 

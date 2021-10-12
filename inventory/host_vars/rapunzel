@@ -13,7 +13,7 @@ keepalived_vips:
   - id: "{{ monitoring_vip_id }}"
     name: monitoring_vip
     ip: "{{ monitoring_vip_ip }}"
-    priority: 190
+    priority: 180
     state: BACKUP
     iface: eth0
     password: "{{ monitoring_vip_password }}"
@@ -21,7 +21,7 @@ keepalived_vips:
   - id: "{{ service_vip_id }}"
     name: service_vip
     ip: "{{ service_vip_ip }}"
-    priority: 180
+    priority: 170
     state: BACKUP
     iface: eth0
     password: "{{ service_vip_password }}"
@@ -29,7 +29,7 @@ keepalived_vips:
   - id: "{{ consul_vip_id }}"
     name: consul_vip
     ip: "{{ consul_vip_ip }}"
-    priority: 190
+    priority: 170
     state: BACKUP
     iface: eth0
     password: "{{ consul_vip_password }}"

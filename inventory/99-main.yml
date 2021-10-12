@@ -8,6 +8,7 @@ itsuki
 rikka
 # metroid
 zelda
+rapunzel
 
 [notebooks]
 # yukinon
@@ -19,6 +20,7 @@ nino
 miku
 yotsuba
 zelda
+rapunzel
 
 [prod:vars]
 private_group=private_hosts

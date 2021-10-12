@@ -86,3 +86,23 @@ htpasswd -c filename admin
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
 <!-- END extlib/js/highlight-7.3.pack.min.js -->
 ```
+
+
+## Setup Raspberry Pi without monitor
+At root of boot sd-card:
+```bash
+# Enable ssh - create empty "ssh" file
+touch ssh
+
+# For WiFi setup:
+cat > wpa_supplicant.conf <<EOF
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=RU
+
+network={
+        ssid="${WIFI_SSID}"
+        psk="${WIFI_PASS}"
+}
+EOF
+```

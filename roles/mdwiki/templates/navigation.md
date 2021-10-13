@@ -17,6 +17,7 @@
   * [Naming](argobay/docs/naming.md)
   * [Notes](argobay/docs/notes.md)
   * [Vault](argobay/docs/vault.md)
+  * [tmux-env](argobay/docs/tmux-env.md)
   - - - -
   * [PostgreSQL](argobay/docs/postgresql.md)
 

@@ -15,12 +15,12 @@ rapunzel
 
 [prod]
 asuna
-ichika rsyslog_server=yes
+ichika
 nino
 miku
 yotsuba
 zelda
-rapunzel
+rapunzel rsyslog_server=yes
 
 [prod:vars]
 private_group=private_hosts

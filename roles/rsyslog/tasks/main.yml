@@ -53,6 +53,15 @@
   notify: logrotate_restart
   when: not rsyslog_server | default(false) | bool
 
+- name: Create log directory
+  file:
+    path: "{{ rsyslog_remote_log_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: rsyslog_server | default(false) | bool
+
 - meta: flush_handlers
 
 - name: Start and enable rsyslog

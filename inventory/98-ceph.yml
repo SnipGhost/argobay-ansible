@@ -7,12 +7,12 @@ ceph_rgw_lb
 [ceph_mons]
 asuna
 zelda
-ichika
+rapunzel
 
 [ceph_osds]
 asuna
 zelda
-ichika
+rapunzel
 itsuki
 
 [ceph_mdss]

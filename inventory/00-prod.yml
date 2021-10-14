@@ -9,16 +9,17 @@ asuna
 [prod_db_servers]
 asuna db_master=yes
 zelda
-ichika
+rapunzel
 
 [prod_memcached_servers]
 asuna
 zelda
+rapunzel
 
 [prod_redis_servers]
 asuna redis_master=yes
 zelda
-ichika
+rapunzel
 
 [prod_web_servers]
 asuna
@@ -27,6 +28,7 @@ ichika
 nino
 miku
 yotsuba
+rapunzel
 
 [prod_consul_servers]
 asuna

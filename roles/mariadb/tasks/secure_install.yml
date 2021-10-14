@@ -1,13 +1,4 @@
 ---
-- name: Push root .my.cnf config file
-  template:
-    src: my.cnf
-    dest: /root/.my.cnf
-    owner: root
-    group: root
-    mode: 0600
-  notify: mariadb_restart
-
 # TODO: Handle old-root unknown password case
 
 # - name: Set root password part-1

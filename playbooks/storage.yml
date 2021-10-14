@@ -1,10 +1,12 @@
 ---
 - hosts: db_servers
   roles:
+    # Unsafe: -e mariadb_rejoin=yes
     - name: mariadb
       tags: mariadb
     - name: mysqld_exporter
       tags: mysqld_exporter
+    # Unsafe: -e pg_setup=yes
     - name: postgresql
       tags: postgresql
     - name: postgres_exporter

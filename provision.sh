@@ -1,3 +1,5 @@
+#!/bin/sh
+
 if [ "$#" -lt 2 ] ||  [ "$#" -gt 3 ]; then
     echo "Usage: $0 HOSTNAME IP_ADDRESS [DISABLE_WIRELESS]";
 	echo "DISABLE_WIRELESS: yes|no, default = yes";

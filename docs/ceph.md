@@ -19,15 +19,20 @@ ceph osd crush add-bucket asuna host
 ceph osd crush add-bucket ichika host
 ceph osd crush add-bucket zelda host
 ceph osd crush add-bucket itsuki host
+ceph osd crush add-bucket rapunzel host
 ceph osd crush move asuna datacenter=prod-home
 ceph osd crush move ichika datacenter=prod-home
 ceph osd crush move zelda datacenter=prod-home
 ceph osd crush move itsuki datacenter=prod-home
+ceph osd crush move rapunzel datacenter=prod-home
 ceph osd crush rule create-replicated prod-rule prod-root osd ssd
-ceph osd crush set osd.0 0.080 root=prod-root datacenter=prod-home host=asuna
-ceph osd crush set osd.1 0.080 root=prod-root datacenter=prod-home host=ichika
-ceph osd crush set osd.2 0.080 root=prod-root datacenter=prod-home host=itsuki
-ceph osd crush set osd.3 0.080 root=prod-root datacenter=prod-home host=zelda
+
+ceph osd crush set osd.0 0.060 root=prod-root datacenter=prod-home host=asuna
+ceph osd crush set osd.1 0.060 root=prod-root datacenter=prod-home host=itsuki
+
+ceph osd crush set osd.X 0.060 root=prod-root datacenter=prod-home host=ichika
+ceph osd crush set osd.Y 0.060 root=prod-root datacenter=prod-home host=zelda
+ceph osd crush set osd.Z 0.120 root=prod-root datacenter=prod-home host=rapunzel
 ```
 
 ## Create CephFS
@@ -51,4 +56,11 @@ mount -t ceph zelda:6789,asuna:6789,ichika:6789:/ /mnt/cephfs -o name=admin,secr
 ## Enable Ceph monitoring
 ```bash
 ceph mgr module enable prometheus
+```
+
+## Remove OSD
+```bash
+ceph osd out ${id}
+systemctl stop ceph-osd@${id}
+ceph osd purge ${id} --yes-i-really-mean-it
 ```

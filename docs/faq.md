@@ -31,15 +31,35 @@ certbot certonly -a certbot-dns-freenom:dns-freenom \
 
 
 ## Add disk checklist
-1) `fdisk`
-2) `mkfs.ext4 /dev/sda2`
-3) `mkdir -p /mnt/data`
-4) `mount /dev/sda2 /mnt/data`
-5) `lsblk -o NAME,UUID | grep sda2`
-6) add to /etc/fstab automount
+- `fdisk`
+- `mkfs.ext4 /dev/sdaX` for /var
+- `mkfs.ext4 /dev/sdaY` for /mnt/data
+- `mkdir -p /mnt/data`
+- `mount /dev/sdaY /mnt/data`
+- `lsblk -o NAME,UUID`
+- add to /etc/fstab automount:
 ```ini
 # SSD SMARTBUY 128 GiB
-UUID=5ebb4c58-4f31-4081-9eed-ff3e86a69a02 /mnt/data ext4 defaults,auto,noatime,discard,rw,nofail 0 2
+UUID=6fb42088-c559-4d1c-b4b6-b9246cf58312 /var ext4 defaults,auto,noatime,discard,rw,nofail 0 2
+UUID=11e9a37a-4816-468f-84dc-5baee53f53f5 /mnt/data ext4 defaults,auto,noatime,discard,rw,nofail 0 2
+```
+
+
+## Move /var to another partion
+```bash
+mkdir -p /mnt/var
+mkfs.ext4 /dev/sdaX
+mount /dev/sdaX /mnt/var
+
+lsblk -o NAME,UUID
+nano /etc/fstab
+# Add record to /etc/fstab
+# Stop high-iops services
+
+rsync -aqxP /var/* /mnt/var
+umount /mnt/var
+
+reboot
 ```
 
 

@@ -16,7 +16,6 @@
     mode: 0640
     backup: yes
 
-# /usr/sbin/sgdisk -n '1:0:0' -c '1:Linux LVM' -t '1:8e00' /dev/sdx
 - name: Deploy ceph-osd
   shell: "/usr/sbin/ceph-volume lvm prepare --data {{ item }}"
   with_items: "{{ ceph_disks | default([]) }}"

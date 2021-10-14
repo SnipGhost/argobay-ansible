@@ -11,12 +11,14 @@
 - hosts: ceph_mons
   order: sorted
   roles:
+    # Unsafe: -e ceph_unsafe_mode=yes
     - role: ceph-mon
       tags: ceph-mon
 
 - hosts: ceph_osds
   order: sorted
   roles:
+    # Unsafe: -e manage_disks=yes
     - role: ceph-osd
       tags: ceph-osd
 

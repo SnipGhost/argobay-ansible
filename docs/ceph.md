@@ -29,10 +29,10 @@ ceph osd crush rule create-replicated prod-rule prod-root osd ssd
 
 ceph osd crush set osd.0 0.060 root=prod-root datacenter=prod-home host=asuna
 ceph osd crush set osd.1 0.060 root=prod-root datacenter=prod-home host=itsuki
+ceph osd crush set osd.2 0.120 root=prod-root datacenter=prod-home host=rapunzel
+ceph osd crush set osd.3 0.060 root=prod-root datacenter=prod-home host=zelda
 
 ceph osd crush set osd.X 0.060 root=prod-root datacenter=prod-home host=ichika
-ceph osd crush set osd.Y 0.060 root=prod-root datacenter=prod-home host=zelda
-ceph osd crush set osd.Z 0.120 root=prod-root datacenter=prod-home host=rapunzel
 ```
 
 ## Create CephFS
@@ -50,7 +50,7 @@ Available only with module ceph in /lib/modules/
 Core: 5.10.27-v7l-ceph+
 
 ```bash
-mount -t ceph zelda:6789,asuna:6789,ichika:6789:/ /mnt/cephfs -o name=admin,secretfile=/etc/ceph/admin.secret,noatime
+mount -t ceph zelda:6789,asuna:6789,rapunzel:6789:/ /mnt/cephfs -o name=admin,secretfile=/etc/ceph/admin.secret,noatime
 ```
 
 ## Enable Ceph monitoring
@@ -64,3 +64,9 @@ ceph osd out ${id}
 systemctl stop ceph-osd@${id}
 ceph osd purge ${id} --yes-i-really-mean-it
 ```
+
+## Add MON
+Just run ceph-mon role without any variables
+
+## Add OSD
+Just run ceph-osd role with `manage_disks=yes`

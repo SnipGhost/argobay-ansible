@@ -22,6 +22,7 @@
   file:
     path: /tmp/ceph.mon.keyring
     state: absent
+  when: ceph_unsafe_mode | default(false) | bool
 
 # - name: Create keyring for ceph
 #   shell:
@@ -52,6 +53,11 @@
     "/bin/monmaptool --create --clobber \
       {% for host in server_names -%} --add {{ host }} {{ hostvars[host]['ansible_default_ipv4']['address'] }} {{ ' ' }} {%- endfor %}
       --fsid {{ ceph_fsid }} /tmp/monmap;"
+  when: ceph_unsafe_mode | default(false) | bool
+
+- name: Create monmap for local ceph-monitor
+  shell: "/usr/bin/ceph mon getmap -o /tmp/monmap"
+  when: not ceph_unsafe_mode | default(false) | bool
 
 - name: Move data to directory for local ceph-monitor
   shell:
@@ -83,6 +89,7 @@
   file:
     path: "/var/lib/ceph/mon/ceph-{{ ansible_fqdn }}/kv_backend"
     state: absent
+  when: ceph_unsafe_mode | default(false) | bool
 
 - name: Start and enable ceph-monitor and ceph-manager
   systemd:
@@ -92,6 +99,11 @@
   with_items:
     - ceph-mon
     - ceph-mgr
+
+- name: Change mgr keyring
+  shell:
+    /bin/ceph auth del mgr.{{ ansible_fqdn }} && 
+    /bin/ceph auth add mgr.{{ ansible_fqdn }} -i /var/lib/ceph/mgr/ceph-{{ ansible_fqdn }}/keyring;
 
 # Fix auth issues
 - name: Change client.bootstrap-osd

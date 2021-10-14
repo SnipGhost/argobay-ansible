@@ -13,7 +13,6 @@
   roles:
     - role: ceph-mon
       tags: ceph-mon
-      when: ceph_unsafe_mode | default(false) | bool
 
 - hosts: ceph_osds
   order: sorted

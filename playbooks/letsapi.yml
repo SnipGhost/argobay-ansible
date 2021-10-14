@@ -1,6 +1,7 @@
 ---
 - hosts: web_servers
   roles:
+    # Run script: --tags certs
     - name: letsapi
       tags:
         - letsapi

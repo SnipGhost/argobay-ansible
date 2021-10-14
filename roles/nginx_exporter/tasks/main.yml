@@ -1,42 +1,8 @@
 ---
-- name: Creating nginx_exporter user group
-  group: name="{{groupId}}"
+- include: install.yml
+- include: configure.yml
 
-- name: Creating nginx_exporter user
-  user:
-    name: "{{userId}}"
-    group: "{{groupId}}"
-    system: yes
-    shell: "/sbin/nologin"
-    comment: "{{userId}} nologin User"
-    createhome: "no"
-    state: present
+- name: Flush handlers
+  meta: flush_handlers
 
-- name: Install nginx_exporter binary
-  # Builded from sources for armv6l
-  copy:
-    src: nginx_exporter
-    dest: /usr/local/bin/nginx_exporter
-    mode: 0755
-  notify: nginx_exporter_restart
-
-- name: Install nginx_exporter systemd-unit
-  template:
-    src: nginx_exporter.service
-    dest: /etc/systemd/system/nginx_exporter.service
-    mode: 0644
-  notify: Reload systemd
-
-- meta: flush_handlers
-
-- name: Start nginx_exporter service
-  service:
-    name: nginx_exporter
-    state: started
-    enabled: yes
-
-- name: Check if nginx_exporter emits metrices
-  uri:
-    url: http://127.0.0.1:9113/metrics
-    method: GET
-    status_code: 200
+- include: check.yml

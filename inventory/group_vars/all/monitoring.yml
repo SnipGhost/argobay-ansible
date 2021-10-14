@@ -39,6 +39,7 @@ memcached_exporter_version: 0.8.0
 haproxy_exporter_version: 0.12.0
 redis_exporter_version: 1.17.1
 postgres_exporter_version: 0.10.0
+nginx_exporter_version: 0.9.0
 nginx_exporter_scrape_uri: http://127.0.0.1/stub_status
 
 # Payment_exporter

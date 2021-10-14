@@ -1,0 +1,13 @@
+[Unit]
+Description=Prometheus Nginx Exporter
+After=network.target nginx.service
+
+[Service]
+User={{ userId }}
+Group={{ groupId }}
+Restart=on-failure
+Type=simple
+ExecStart={{ exec_command }}
+
+[Install]
+WantedBy=multi-user.target

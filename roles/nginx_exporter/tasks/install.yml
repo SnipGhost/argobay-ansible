@@ -1,0 +1,56 @@
+---
+- name: Download prometheus nginx_exporter to local folder
+  become: false
+  get_url:
+    url: "{{ nginx_exporter_download_link }}"
+    dest: "/tmp/{{ nginx_exporter_pack_name }}.{{ nginx_exporter_pack_ext }}"
+  register: _download_archive
+  until: _download_archive is succeeded
+  retries: 3
+  delay: 2
+  run_once: true
+  delegate_to: localhost
+  check_mode: false
+
+- name: Create tmp folder
+  become: false
+  file:
+    path: "/tmp/{{ nginx_exporter_pack_name }}"
+    state: directory
+  run_once: true
+  delegate_to: localhost
+  check_mode: false
+
+- name: Unpack nginx_exporter binaries
+  become: false
+  unarchive:
+    src: "/tmp/{{ nginx_exporter_pack_name }}.{{ nginx_exporter_pack_ext }}"
+    dest: "/tmp/{{ nginx_exporter_pack_name }}/"
+    creates: "/tmp/{{ nginx_exporter_pack_name }}/nginx-prometheus-exporter"
+  run_once: true
+  delegate_to: localhost
+  check_mode: false
+
+- name: Creating nginx_exporter user group
+  group: name="{{groupId}}"
+  when: groupId != "root"
+
+- name: Creating nginx_exporter user
+  user:
+    name: "{{ userId }}"
+    group: "{{ groupId }}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{ userId }} nologin User"
+    createhome: "no"
+    state: present
+  when: userId != "root"
+
+- name: Copy nginx_exporter binaries
+  copy:
+    src: "/tmp/{{ nginx_exporter_pack_name }}/nginx-prometheus-exporter"
+    dest: "{{ nginx_exporter_bin_dir }}/nginx_exporter"
+    mode: 0755
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+  notify: restart nginx_exporter

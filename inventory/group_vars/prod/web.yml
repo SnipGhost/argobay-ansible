@@ -57,6 +57,16 @@ nginx_sites:
       size: 150%
       border_radius: 0
 
+  - name: victoria-metrics-unsecure
+    server_name: unsecure.vm.argobay.ml
+    addr: "{{ monitoring_vip_ip }}"
+    local: yes
+    port: "{{ victoria_metrics_port }}"
+    hosts: monitoring_servers
+    basic_auth: no
+    redirect: no
+    ssl: no
+
   - name: alertmanager
     server_name: alertmanager.argobay.ml
     addr: "{{ monitoring_vip_ip }}"

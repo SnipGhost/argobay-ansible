@@ -49,6 +49,7 @@ dnsmasq_hosts:
   - name: vm
     aliases:
       - prometheus
+      - unsecure.vm
     rec:
       - { ip: "{{monitoring_vip_ip}}", type: argobay.ml }
 

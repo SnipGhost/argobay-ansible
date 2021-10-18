@@ -50,6 +50,16 @@ ansible -mraw -a 'apt update' all
 ansible -mraw -a 'COMMAND' GROUP
 ```
 
+Or run as script on all servers:
+```bash
+./cmd.sh "apt update"
+```
+
+`GROUP` is optional, default `all`:
+```bash
+./cmd.sh "COMMAND" [GROUP]
+```
+
 ### All components
 
 To update all components on DEV:

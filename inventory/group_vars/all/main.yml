@@ -105,6 +105,7 @@ consul_log_level: INFO
 consul_version: 1.10.1
 consul_domain: compute
 consul_dc: main
+consul_acl: no
 consul_recursors:
   - "{{ service_vip_ip }}"
 consul_enable_local_script_checks: true

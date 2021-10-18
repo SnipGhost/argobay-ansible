@@ -8,3 +8,9 @@
   systemd:
     name: nginx
     state: restarted
+
+- name: restart certbot
+  systemd:
+    name: certbot
+    state: restarted
+    daemon_reload: yes

@@ -8,10 +8,27 @@
     - certbot
     - python-passlib # htpasswd module
 
-- name: Install certbot plugins
+- name: Install certbot plugins & new certbot lib
   pip:
-    name: "['{{ python_certbot_nginx_url }}', 'certbot-dns-freenom']"
+    name:
+      - "{{ python_certbot_nginx_url }}"
+      - certbot-dns-freenom
+      - certbot-nginx
+      - requests>=2.23.0
     executable: pip3
+
+- name: Copy certbot systemd unit
+  copy:
+    src: files/certbot.service
+    dest: /lib/systemd/system/certbot.service
+    mode: 0644
+  notify: restart certbot
+
+- name: Copy certbot cron unit
+  copy:
+    src: files/certbot.cron
+    dest: /etc/cron.d/certbot
+    mode: 0644
 
 - name: Creating nginx user group
   group: name="{{groupId}}"

@@ -1,6 +1,9 @@
 userId: assol
 groupId: assol
 app_name: dacrover
+dacrover_service_name: dacrover
+dacrover_consul_interval: 20s
+dacrover_consul_tags: "[\"omega\", \"dacrover\"]"
 
 dacrover_git: https://github.com/HoriFox/Dacrover.git
 dacrover_bind: 127.0.0.1

@@ -4,5 +4,13 @@
 	"host_mysql": "{{ mariadb_proxy_host }}",
 	"port_mysql": {{ mariadb_proxy_port }},
 	"database_mysql": "{{ dacrover_db_name }}",
-	"port_dacrover": "{{ dacrover_port }}"
+	"dacrover_host": "{{ dacrover_bind }}",
+	"dacrover_port": {{ dacrover_port }},
+	"consul_host": "127.0.0.1",
+	"consul_port": 8500,
+	"consul_interval": "{{ dacrover_consul_interval }}",
+	"consul_service_name": "{{ dacrover_service_name }}",
+	"consul_service_id": "{{ dacrover_service_name }}-{{ inventory_hostname }}",
+	"consul_tags": {{ dacrover_consul_tags }},
+	"consul_httpcheck": "http://{}:{}/healthcheck"
 }

@@ -1,3 +1,4 @@
 # Dacrover & Krionard options
 dacrover_connect_host: dacrover.dev-argobay.ml
 dacrover_auth: default
+dacrover_consul_tags: "[\"omega\", \"dacrover\", \"dev\"]"

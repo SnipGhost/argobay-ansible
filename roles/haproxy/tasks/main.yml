@@ -5,7 +5,9 @@
     state: present
   notify: restart haproxy
 
-- name: Generate mysqlchk config
+- include: checkers.yml
+
+- name: Generate haproxy systemd unit
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -14,25 +16,16 @@
     group: root
     backup: yes
   with_items:
-    - { src: mysqlchk.socket.j2, dest: /lib/systemd/system/mysqlchk.socket, mode: '0644' }
-    - { src: mysqlchk@.service.j2, dest: /lib/systemd/system/mysqlchk@.service, mode: '0644' }
-    - { src: clustercheck.conf.j2, dest: /etc/clustercheck.conf, mode: '0640' }
-  notify: restart mysqlchk.socket
+    - { src: haproxy.service.j2, dest: /lib/systemd/system/haproxy.service, mode: '0644' }
+  notify: restart haproxy
 
-- name: Copy clustercheck script
-  copy:
-    src: clustercheck
-    dest: /usr/bin/clustercheck
-    owner: root
-    group: root
-    mode: '0750'
-
-- name: Start and enable mysqlchk
-  systemd:
-    name: mysqlchk.socket
-    enabled: yes
-    state: started
-  when: mariadb_l7_check | default(true) | bool
+- name: Creates config directory
+  file: 
+    path: "/etc/haproxy/conf.d"
+    state: directory
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0755
 
 - name: Generate config
   vars:
@@ -46,13 +39,6 @@
     dest: /etc/haproxy/haproxy.cfg
     backup: yes
   notify: reload haproxy
-
-- name: Stop and disable mysqlchk
-  systemd:
-    name: mysqlchk.socket
-    enabled: no
-    state: stopped
-  when: not (mariadb_l7_check | default(true) | bool)
 
 - name: Start and enable HAProxy
   systemd:

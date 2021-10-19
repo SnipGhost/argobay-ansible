@@ -1,0 +1,36 @@
+---
+- name: Generate mysqlchk config
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    owner: root
+    group: root
+    backup: yes
+  with_items:
+    - { src: mysqlchk.socket.j2, dest: /lib/systemd/system/mysqlchk.socket, mode: '0644' }
+    - { src: mysqlchk@.service.j2, dest: /lib/systemd/system/mysqlchk@.service, mode: '0644' }
+    - { src: clustercheck.conf.j2, dest: /etc/clustercheck.conf, mode: '0640' }
+  notify: restart mysqlchk.socket
+
+- name: Copy clustercheck script
+  copy:
+    src: clustercheck
+    dest: /usr/bin/clustercheck
+    owner: root
+    group: root
+    mode: '0750'
+
+- name: Start and enable mysqlchk
+  systemd:
+    name: mysqlchk.socket
+    enabled: yes
+    state: started
+  when: mariadb_l7_check | default(true) | bool
+
+- name: Stop and disable mysqlchk
+  systemd:
+    name: mysqlchk.socket
+    enabled: no
+    state: stopped
+  when: not (mariadb_l7_check | default(true) | bool)

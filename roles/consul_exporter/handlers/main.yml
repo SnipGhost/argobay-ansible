@@ -1,0 +1,17 @@
+---
+- name: restart consul_exporter
+  systemd:
+    name: consul_exporter
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  register: consul_exporter_restarted
+  when: not consul_exporter_started.changed
+
+- name: reload consul_exporter
+  systemd:
+    name: consul_exporter
+    state: reloaded
+  when: 
+    - not consul_exporter_started.changed
+    - not (consul_exporter_restarted.changed | default(false))

@@ -1,0 +1,12 @@
+---
+serviceName: consul_exporter
+userId: consul
+groupId: consul
+
+consul_exporter_version: 0.7.1
+consul_exporter_pack_name: consul_exporter-{{ consul_exporter_version }}.linux-{{ proc_version }}
+consul_exporter_pack_ext: tar.gz
+consul_exporter_download_link: https://github.com/prometheus/consul_exporter/releases/download/v{{ consul_exporter_version }}/{{ consul_exporter_pack_name }}.{{ consul_exporter_pack_ext }}
+
+consul_exporter_bin_dir: /usr/local/bin
+exec_command: "{{ consul_exporter_bin_dir }}/consul_exporter"

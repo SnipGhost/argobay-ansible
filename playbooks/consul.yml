@@ -3,3 +3,5 @@
   roles:
     - name: consul
       tags: consul
+    - name: consul_exporter
+      tags: consul_exporter

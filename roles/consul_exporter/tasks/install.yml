@@ -1,0 +1,47 @@
+---
+- name: Download prometheus consul_exporter to local folder
+  become: false
+  get_url:
+    url: "{{ consul_exporter_download_link }}"
+    dest: "/tmp/{{ consul_exporter_pack_name }}.{{ consul_exporter_pack_ext }}"
+  register: _download_archive
+  until: _download_archive is succeeded
+  retries: 3
+  delay: 2
+  run_once: true
+  delegate_to: localhost
+  check_mode: false
+
+- name: Unpack consul_exporter binaries
+  become: false
+  unarchive:
+    src: "/tmp/{{ consul_exporter_pack_name }}.{{ consul_exporter_pack_ext }}"
+    dest: "/tmp/"
+    creates: "/tmp/{{ consul_exporter_pack_name }}/consul_exporter"
+  run_once: true
+  delegate_to: localhost
+  check_mode: false
+
+- name: Creating consul_exporter user group
+  group: name="{{groupId}}"
+  when: groupId != "root"
+
+- name: Creating consul_exporter user
+  user:
+    name: "{{userId}}"
+    group: "{{groupId}}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{userId}} nologin User"
+    createhome: "no"
+    state: present
+  when: userId != "root"
+
+- name: Copy consul_exporter binaries
+  copy:
+    src: "/tmp/{{ consul_exporter_pack_name }}/consul_exporter"
+    dest: "{{ consul_exporter_bin_dir }}/"
+    mode: 0755
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+  notify: restart consul_exporter

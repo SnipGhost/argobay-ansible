@@ -23,6 +23,7 @@ zelda
 rapunzel rsyslog_server=yes
 
 [prod:vars]
+env=prod
 private_group=private_hosts
 public_group=public_hosts
 db_group=prod_db_servers
@@ -40,6 +41,7 @@ itsuki
 rikka
 
 [dev:vars]
+env=dev
 private_group=dev_private_hosts
 public_group=dev_public_hosts
 db_group=dev_db_servers

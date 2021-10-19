@@ -103,7 +103,7 @@ letsapi_cert_renewers:
 # Consul
 consul_log_level: INFO
 consul_version: 1.10.1
-consul_domain: compute
+consul_domain: consul
 consul_dc: main
 consul_acl: no
 consul_recursors:

@@ -23,7 +23,7 @@ performance {
   raft_multiplier = {{ consul_raft_multiplier }}
 }
 node_meta {
-  groups="{{ group_names | join(',') }}"
+  groups="{{ env }}{% if "public_hosts" in group_names %},public_hosts{% endif %}{% if "private_hosts" in group_names %},private_hosts{% endif %}"
 }
 acl {
   enabled = {{ consul_acl | bool | string | lower }}

@@ -84,7 +84,19 @@ To change passwords run:
 ansible-playbook playbooks/all_hosts.yml --tags common -e "set_passwords=yes"
 ```
 
-To provision Raspberry Pi host:
+### Monitoring
+
+To add new monitoring jobs edit `inventory/group_vars/all/monitoring.yml` for example:
+```yaml
+prometheus_jobs:
+  - { name: node, port: 9100, group: all }
+```
+And run:
+```bash
+ansible-playbook playbooks/monitroing.yml --tags prometheus
+```
+
+### Provision Raspberry Pi host:
 ```bash
 # Update DNS before run to generate valid dhcpd.conf with provision.sh
 ansible-playbook playbooks/service.yml --tags dns
@@ -100,6 +112,8 @@ ansible-playbook playbooks/raspberry.yml -l rapunzel
 # And update monitoring configs
 ansible-playbook playbooks/monitroing.yml --tags prometheus
 ```
+
+### Other
 
 To update dns:
 ```bash

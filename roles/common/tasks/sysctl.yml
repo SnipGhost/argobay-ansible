@@ -14,3 +14,12 @@
     name: vm.max_map_count
     value: "{{ max_mem_lock }}"
     state: present
+
+- name: Manage route_localnet
+  sysctl:
+    sysctl_file: /etc/sysctl.d/99-sysctl.conf
+    sysctl_set: yes
+    name: net.ipv4.conf.all.route_localnet
+    value: '1'
+    state: present
+  when: redirect_local_traffic | default([]) | length > 0

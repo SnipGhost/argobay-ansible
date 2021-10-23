@@ -4,6 +4,7 @@ yotsuba
 
 [private_hosts]
 miku
+zelda
 asuna
 
 [prod_db_servers]
@@ -41,6 +42,7 @@ yotsuba
 
 [prod_dacrover]
 asuna
+zelda
 miku
 
 [prod_razumator_api]

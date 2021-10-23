@@ -4,6 +4,19 @@
     name: mariadb-client
     state: present
 
+- name: Creating app user group
+  group: name="{{groupId}}"
+
+- name: Creating app user
+  user:
+    name: "{{userId}}"
+    group: "{{groupId}}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{userId}} nologin User"
+    createhome: "no"
+    state: present
+
 - name: Clone repo
   git:
     repo: "{{ dacrover_git }}"
@@ -21,19 +34,6 @@
     group: "{{groupId}}"
     mode: u=rwX,g=rwX,o=rX
     recurse: yes
-
-- name: Creating app user group
-  group: name="{{groupId}}"
-
-- name: Creating app user
-  user:
-    name: "{{userId}}"
-    group: "{{groupId}}"
-    system: yes
-    shell: "/sbin/nologin"
-    comment: "{{userId}} nologin User"
-    createhome: "no"
-    state: present
 
 - name: Add admin users to app group
   user:

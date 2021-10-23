@@ -33,7 +33,7 @@ keepalived_vips:
   - id: "{{ private_vip_id }}"
     name: private_vip
     ip: "{{ private_vip_ip }}"
-    priority: 190
+    priority: 180
     state: BACKUP
     iface: eth0
     password: "{{ private_vip_password }}"

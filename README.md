@@ -37,6 +37,13 @@ apt install python-dnspython ansible
 ```
 
 
+## Placement
+
+[More about cluster](docs/cluster.md)
+
+![Placement diagram](docs/schemes/Placement.png)
+
+
 ## Use-cases
 
 ### Simple

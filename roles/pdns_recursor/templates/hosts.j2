@@ -1,0 +1,10 @@
+{% for host in dnsmasq_hosts %}
+{% for host_name in [ host.name ] + host.aliases | default([]) %}
+{% for rec in host.rec %}
+{% if rec.main | default('no') | bool %}
+{{ rec.ip }} {{ host_name }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+{% endfor %}

@@ -1,7 +1,7 @@
 {% for host in dnsmasq_hosts %}
 {% for host_name in [ host.name ] + host.aliases | default([]) %}
 {% for rec in host.rec %}
-{{ rec.ip }}{% if rec.main | default('no') | bool %} {{ host_name }} haproxy_{{ host_name }}.argobay.ml {{ host_name }}.argobay.ml {{ host_name }}.i{% endif %} {{ host_name }}.{{ rec.type }}
+{{ rec.ip }}{% if rec.main | default('no') | bool %} {{ host_name }}{% if rec.haproxy | default('false') | bool %} haproxy_{{ host_name }}.argobay.ml{% endif %} {{ host_name }}.argobay.ml {{ host_name }}.i{% endif %} {{ host_name }}.{{ rec.zone }}
 {% endfor %}
 {% endfor %}
 

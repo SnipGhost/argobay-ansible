@@ -21,6 +21,16 @@
     mode: 0640
   notify: restart pdns recursor
 
+- name: Configure hosts file
+  template:
+    src: hosts.j2
+    dest: "{{ pdns_hosts_file }}"
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    backup: yes
+    mode: 0640
+  notify: restart pdns recursor
+
 - name: Start PowerDNS service
   systemd:
     name: pdns-recursor

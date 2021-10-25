@@ -5,6 +5,7 @@ groupId: pdns
 
 pdns_log_dir: /var/log/powerdns
 pdns_conf_dir: /etc/powerdns
+pdns_hosts_file: /etc/cluster-hosts
 pdns_hint_file: /usr/share/dns/root.hints
 pdns_recursor_lua_config: /etc/powerdns/recursor.lua
 

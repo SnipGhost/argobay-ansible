@@ -3,6 +3,9 @@ daemon=yes
 setgid={{ userId }}
 setuid={{ groupId }}
 
+export-etc-hosts=yes
+etc-hosts-file={{ pdns_hosts_file }}
+
 {% for zone in pdns_forward_zones %}
 forward-zones{% if (not loop.first) %}+{% endif %}={{ zone.name }}={{ zone.host }}
 {% endfor %}

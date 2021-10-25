@@ -5,220 +5,220 @@ dnsmasq_hosts:
   # VIP records
   - name: public
     rec:
-      - { ip: "{{public_vip_ip}}", type: i }
-      - { ip: "{{dev_public_vip_ip}}", type: dev.i }
+      - { ip: "{{public_vip_ip}}", zone: i }
+      - { ip: "{{dev_public_vip_ip}}", zone: dev.i }
 
   - name: service
     aliases:
       - dns
     rec:
-      - { ip: "{{service_vip_ip}}", type: i }
+      - { ip: "{{service_vip_ip}}", zone: i }
 
   - name: private
     rec:
-      - { ip: "{{private_vip_ip}}", type: i }
-      - { ip: "{{dev_private_vip_ip}}", type: dev.i }
+      - { ip: "{{private_vip_ip}}", zone: i }
+      - { ip: "{{dev_private_vip_ip}}", zone: dev.i }
 
   - name: monitoring
     rec:
-      - { ip: "{{monitoring_vip_ip}}", type: i }
+      - { ip: "{{monitoring_vip_ip}}", zone: i }
 
   - name: research
     rec:
-      - { ip: "{{research_vip_ip}}", type: i }
+      - { ip: "{{research_vip_ip}}", zone: i }
 
   - name: rgw
     rec:
-      - { ip: "{{ rgw_lb_vip_ip }}", type: i }
+      - { ip: "{{ rgw_lb_vip_ip }}", zone: i }
 
   - name: consul
     rec:
-      - { ip: "{{consul_vip_ip}}", type: i }
+      - { ip: "{{consul_vip_ip}}", zone: i }
 
   #========================================================
   # Internal subdomain records
 
   - name: dev-argobay
     rec:
-      - { ip: "{{dev_public_vip_ip}}", type: ml }
+      - { ip: "{{dev_public_vip_ip}}", zone: ml }
 
   - name: dns
     rec:
-      - { ip: "{{service_vip_ip}}", type: argobay.ml }
+      - { ip: "{{service_vip_ip}}", zone: argobay.ml }
 
   - name: grafana
     rec:
-      - { ip: "{{public_vip_ip}}", type: argobay.ml }
+      - { ip: "{{public_vip_ip}}", zone: argobay.ml }
 
   - name: vm
     aliases:
       - prometheus
       - unsecure.vm
     rec:
-      - { ip: "{{monitoring_vip_ip}}", type: argobay.ml }
+      - { ip: "{{monitoring_vip_ip}}", zone: argobay.ml }
 
   - name: alertmanager
     rec:
-      - { ip: "{{monitoring_vip_ip}}", type: argobay.ml }
+      - { ip: "{{monitoring_vip_ip}}", zone: argobay.ml }
 
   - name: jupyter
     rec:
-      - { ip: "{{research_vip_ip}}", type: argobay.ml }
+      - { ip: "{{research_vip_ip}}", zone: argobay.ml }
 
   - name: consul
     rec:
-      - { ip: "{{consul_vip_ip}}", type: argobay.ml }
-      - { ip: "{{dev_private_vip_ip}}", type: dev-argobay.ml }
+      - { ip: "{{consul_vip_ip}}", zone: argobay.ml }
+      - { ip: "{{dev_private_vip_ip}}", zone: dev-argobay.ml }
 
   - name: razumator
     rec:
-      - { ip: "{{public_vip_ip}}", type: argobay.ml }
-      - { ip: "{{dev_public_vip_ip}}", type: dev-argobay.ml }
+      - { ip: "{{public_vip_ip}}", zone: argobay.ml }
+      - { ip: "{{dev_public_vip_ip}}", zone: dev-argobay.ml }
 
   - name: dacrover
     rec:
-      - { ip: "{{private_vip_ip}}", type: argobay.ml }
-      - { ip: "{{dev_private_vip_ip}}", type: dev-argobay.ml }
+      - { ip: "{{private_vip_ip}}", zone: argobay.ml }
+      - { ip: "{{dev_private_vip_ip}}", zone: dev-argobay.ml }
 
   - name: krionard
     aliases:
       - marusya
       - alice
     rec:
-      - { ip: "{{public_vip_ip}}", type: argobay.ml }
-      - { ip: "{{dev_public_vip_ip}}", type: dev-argobay.ml }
+      - { ip: "{{public_vip_ip}}", zone: argobay.ml }
+      - { ip: "{{dev_public_vip_ip}}", zone: dev-argobay.ml }
   
   - name: internal
     rec:
-      - { ip: "{{private_vip_ip}}", type: argobay.ml }
-      - { ip: "{{dev_private_vip_ip}}", type: dev-argobay.ml }
+      - { ip: "{{private_vip_ip}}", zone: argobay.ml }
+      - { ip: "{{dev_private_vip_ip}}", zone: dev-argobay.ml }
 
   - name: external
     rec:
-      - { ip: "{{public_vip_ip}}", type: argobay.ml }
-      - { ip: "{{dev_public_vip_ip}}", type: dev-argobay.ml }
+      - { ip: "{{public_vip_ip}}", zone: argobay.ml }
+      - { ip: "{{dev_public_vip_ip}}", zone: dev-argobay.ml }
 
   - name: swagger
     rec:
-      - { ip: "{{private_vip_ip}}", type: argobay.ml }
-      - { ip: "{{dev_private_vip_ip}}", type: dev-argobay.ml }
+      - { ip: "{{private_vip_ip}}", zone: argobay.ml }
+      - { ip: "{{dev_private_vip_ip}}", zone: dev-argobay.ml }
 
   - name: wiki
     rec:
-      - { ip: "{{public_vip_ip}}", type: argobay.ml }
-      - { ip: "{{dev_public_vip_ip}}", type: dev-argobay.ml }
+      - { ip: "{{public_vip_ip}}", zone: argobay.ml }
+      - { ip: "{{dev_public_vip_ip}}", zone: dev-argobay.ml }
 
   #========================================================
   # Network devices
 
   - name: router
     rec:
-      - { ip: 192.168.8.1, type: i, main: yes }
+      - { ip: 192.168.8.1, zone: i, main: yes }
 
   - name: switch-main
     rec:
-      - { ip: 192.168.8.2, type: i, main: yes }
+      - { ip: 192.168.8.2, zone: i, main: yes }
 
   - name: switch-cluster
     rec:
-      - { ip: 192.168.8.3, type: i, main: yes }
+      - { ip: 192.168.8.3, zone: i, main: yes }
 
   - name: switch-mak
     rec:
-      - { ip: 192.168.8.4, type: i, main: yes }
+      - { ip: 192.168.8.4, zone: i, main: yes }
 
   - name: switch-horifox
     rec:
-      - { ip: 192.168.8.5, type: i, main: yes }
+      - { ip: 192.168.8.5, zone: i, main: yes }
 
   - name: proxy.router
     rec:
-      - { ip: 192.168.8.6, type: i, main: yes }
+      - { ip: 192.168.8.6, zone: i, main: yes }
       
   #========================================================
   # IoT devices
 
   - name: printer
     rec:
-      - { ip: 192.168.8.8, type: i, main: yes}
-      - { ip: 192.168.8.8, type: argobay.ml }
+      - { ip: 192.168.8.8, zone: i, main: yes}
+      - { ip: 192.168.8.8, zone: argobay.ml }
 
   - name: nyanko
     rec:
-      - { ip: 192.168.8.121, type: i, main: yes }
-      - { ip: 192.168.8.121, type: argobay.ml }
+      - { ip: 192.168.8.121, zone: i, main: yes }
+      - { ip: 192.168.8.121, zone: argobay.ml }
 
   #========================================================
   # Servers interfaces
 
-  - name: asuna 
+  - name: asuna
     rec:
-      - { ip: 192.168.8.50, type: e, main: yes }
-      - { ip: 192.168.8.60, type: w }
+      - { ip: 192.168.8.50, zone: e, main: yes, haproxy: yes }
+      - { ip: 192.168.8.60, zone: w }
 
   - name: ichika
     rec:
-      - { ip: 192.168.8.51, type: e }
-      - { ip: 192.168.8.61, type: w, main: yes }
+      - { ip: 192.168.8.51, zone: e }
+      - { ip: 192.168.8.61, zone: w, main: yes, haproxy: yes }
 
   - name: nino
     rec:
-      - { ip: 192.168.8.52, type: e, main: yes }
-      - { ip: 192.168.8.62, type: w }
+      - { ip: 192.168.8.52, zone: e, main: yes, haproxy: yes }
+      - { ip: 192.168.8.62, zone: w }
 
   - name: miku
     rec:
-      - { ip: 192.168.8.53, type: e, main: yes }
-      - { ip: 192.168.8.63, type: w }
+      - { ip: 192.168.8.53, zone: e, main: yes, haproxy: yes }
+      - { ip: 192.168.8.63, zone: w }
 
   - name: yotsuba
     rec:
-      - { ip: 192.168.8.54, type: e, main: yes }
-      - { ip: 192.168.8.64, type: w }
+      - { ip: 192.168.8.54, zone: e, main: yes, haproxy: yes }
+      - { ip: 192.168.8.64, zone: w }
 
   - name: itsuki
     rec:
-      - { ip: 192.168.8.55, type: e, main: yes }
-      - { ip: 192.168.8.65, type: w }
+      - { ip: 192.168.8.55, zone: e, main: yes, haproxy: yes }
+      - { ip: 192.168.8.65, zone: w }
 
   - name: rikka
     rec:
-      - { ip: 192.168.8.56, type: e, main: yes }
-      - { ip: 192.168.8.66, type: w }
+      - { ip: 192.168.8.56, zone: e, main: yes, haproxy: yes }
+      - { ip: 192.168.8.66, zone: w }
 
   - name: metroid
     rec:
-      - { ip: 192.168.8.57, type: e, main: yes}
-      - { ip: 192.168.8.67, type: w }
+      - { ip: 192.168.8.57, zone: e, main: yes, haproxy: yes }
+      - { ip: 192.168.8.67, zone: w }
 
   - name: zelda
     rec:
-      - { ip: 192.168.8.58, type: e, main: yes }
-      - { ip: 192.168.8.68, type: w }
+      - { ip: 192.168.8.58, zone: e, main: yes, haproxy: yes }
+      - { ip: 192.168.8.68, zone: w }
 
   - name: rapunzel
     rec:
-      - { ip: 192.168.8.59, type: e, main: yes }
-      - { ip: 192.168.8.69, type: w }
+      - { ip: 192.168.8.59, zone: e, main: yes, haproxy: yes }
+      - { ip: 192.168.8.69, zone: w }
 
   - name: yukinon
     rec:
-      - { ip: 192.168.8.30, type: e }
-      - { ip: 192.168.8.40, type: w, main: yes }
+      - { ip: 192.168.8.30, zone: e }
+      - { ip: 192.168.8.40, zone: w, main: yes, haproxy: yes }
 
   - name: mai
     rec:
-      - { ip: 192.168.8.31, type: w, main: yes }
+      - { ip: 192.168.8.31, zone: w, main: yes, haproxy: yes }
 
   #========================================================
   # Workstations
 
   - name: mbp-mak-home
     rec:
-      - { ip: 192.168.8.250, type: i, main: yes }
+      - { ip: 192.168.8.250, zone: i, main: yes }
 
   - name: m-kucherenko
     aliases:
       - mbp-mak-work
     rec:
-      - { ip: 192.168.8.250, type: i, main: yes }
+      - { ip: 192.168.8.250, zone: i, main: yes }

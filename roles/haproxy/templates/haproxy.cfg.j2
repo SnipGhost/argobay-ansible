@@ -23,6 +23,24 @@ defaults
 	timeout server 1h
 
 
+{% if inventory_hostname in groups['dns_servers'] and docker_pdns_admin_subnet is defined %}
+listen galera_rw_docker
+	bind    {{ docker_pdns_admin_subnet | ipaddr('net') | ipaddr('1') | ipaddr('address') }}:{{ mariadb_proxy_port }}
+	balance first
+{% if mariadb_l7_check | default(true) | bool %}
+	option  httpchk
+
+	default-server inter 1s fastinter 1s downinter 3s rise 3 fall 3 port {{ mariadb_proxy_check_port }} on-marked-down shutdown-sessions on-marked-up shutdown-backup-sessions
+{% else %}
+
+	default-server inter 1s fastinter 1s downinter 3s rise 3 fall 3 on-marked-down shutdown-sessions on-marked-up shutdown-backup-sessions
+{% endif %}
+{% for host in mysql_server_names %}
+	server {{ host }} {{ lookup('dig', host + '.i', '@' + service_vip_ip) }}:{{ mariadb_port }} check{{ ' backup' if not hostvars[host]['db_master']|default(false) else '' }}
+{% endfor %}
+
+
+{% endif %}
 listen galera_rw
 	bind    {{ haproxy_bind_ip }}:{{ mariadb_proxy_port }}
 	balance first

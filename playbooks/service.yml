@@ -8,10 +8,21 @@
     - name: dnsmasq_exporter
       tags: dnsmasq_exporter
 
-    # - name: pdns_server
-    #   tags:
-    #     - pdns
-    #     - dns
+    - name: pdns_server
+      tags:
+        - pdns
+        - pdns_server
+        - dns
+    - name: docker
+      tags:
+        - pdns
+        - pdns_admin
+        - dns
+    - name: pdns_admin
+      tags:
+        - pdns
+        - pdns_admin
+        - dns
 
 - hosts: rsyncd_servers
   pre_tasks:

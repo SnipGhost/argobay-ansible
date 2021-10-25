@@ -35,6 +35,15 @@ ap_ssid: ssid_example
 ap_code: RU
 ap_pass: example
 
+# PowerDNS
+pdns_db_user: example
+pdns_db_pass: example
+pdns_db_name: example
+pdns_api_key: example
+pdns_admin_db_user: example
+pdns_admin_db_pass: example
+pdns_admin_db_name: example
+
 # Alertmanager bot
 alertmanager_bot_telegram_token: example
 

@@ -45,6 +45,12 @@ dnsmasq_exporter_enabled: no
 dnsmasq_logging: no
 dnsmasq_iface: eth0:{{ service_vip_id }}
 # DNS records in dns.yml
+pdns_allowed_hosts:
+  - 127.0.0.1/32
+  - 192.168.8.0/24
+  - "{{ docker_pdns_admin_subnet }}"
+pdns_api_port: 8181
+pdns_admin_port: 8787
 
 # Backup scripts
 backup_scripts:
@@ -121,14 +127,25 @@ jupyter_port: 8888
 # Docker
 docker_datapath: "{{ data_path }}/docker"
 docker_runner_bridge: br_runner
+docker_pdns_admin_bridge: br_pdns_admin
+docker_default_subnet: 172.17.0.0/16
 docker_runner_subnet: 172.100.0.0/16
+docker_pdns_admin_subnet: 172.101.0.0/16
 docker_bridges:
   - name: docker0
-    cidr: 172.17.0.0/16
+    cidr: "{{ docker_default_subnet }}"
     group: all
   - name: "{{ docker_runner_bridge }}"
     cidr: "{{ docker_runner_subnet }}"
     group: gitlab_runner
+  - name: "{{ docker_pdns_admin_bridge }}"
+    cidr: "{{ docker_pdns_admin_subnet }}"
+    group: dns_servers
+    accept_rules:
+      - proto: tcp
+        port: 3307
+      - proto: tcp
+        port: "{{ pdns_api_port }}"
 
 # GitLab Runner
 gitlab_runner_name: arm-runner

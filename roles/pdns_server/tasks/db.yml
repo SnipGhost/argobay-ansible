@@ -31,8 +31,17 @@
   changed_when: False
   run_once: yes
 
+- name: Configure PowerDNS schema
+  template:
+    src: schema.sql.j2
+    dest: /etc/powerdns/schema.sql
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    backup: yes
+    mode: 0640
+
 - name: Re-create db
-  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < {{ razumator_bin_dir }}/cfg/cluster_init.sql
+  shell: /usr/bin/mysql -u sst_user -p'{{ mariadb_sst_pass }}' --host {{ mariadb_proxy_host }} -P {{ mariadb_proxy_port }} < /etc/powerdns/schema.sql
   run_once: yes
   when: pdns_setup | default(false) | bool
   notify: restart pdns server

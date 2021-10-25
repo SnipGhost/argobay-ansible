@@ -9,3 +9,11 @@ gmysql-password={{ pdns_db_pass }}
 gmysql-dnssec=yes
 setgid={{ userId }}
 setuid={{ groupId }}
+
+webserver=yes
+webserver-address={{ ansible_default_ipv4['address'] }}
+webserver-port={{ pdns_api_port }}
+webserver-allow-from={{ pdns_allowed_hosts | join(',') }}
+
+api=yes
+api-key={{ pdns_api_key }}

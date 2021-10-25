@@ -16,6 +16,18 @@ nginx_rate_limits:
 
 # Get only names: nginx_sites | map(attribute='name') | flatten
 nginx_sites:
+  - name: powerdns-admin
+    server_name: "dns.argobay.ml"
+    addr: "{{ service_vip_ip }}"
+    local: yes
+    port: "{{ pdns_admin_port }}"
+    whitelist:
+      - external
+      - vpn
+    display:
+      name: DNS
+      icon: dns.png
+
   - name: grafana
     server_name: "{{ grafana_domain }}"
     addr: "{{ public_vip_ip }}"

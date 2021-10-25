@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  app:
+    image: {{ pdns_admin_image }}
+    container_name: {{ pdns_admin_name }}
+    ports:
+      - "{{ pdns_admin_port }}:80"
+    networks:
+      - pdns-admin-net
+    logging:
+      driver: json-file
+      options:
+        max-size: {{ pdns_admin_log_max_size }}
+    extra_hosts:
+      host.docker.internal: {{ docker_pdns_admin_subnet | ipaddr('net') | ipaddr('1') | ipaddr('address') }}
+    environment:
+      - SQLALCHEMY_DATABASE_URI=mysql://{{ pdns_admin_db_user }}:{{ pdns_admin_db_pass }}@host.docker.internal:{{ mariadb_proxy_port }}/{{ pdns_admin_db_name }}
+      - GUNICORN_TIMEOUT=60
+      - GUNICORN_WORKERS=2
+      - GUNICORN_LOGLEVEL=DEBUG
+      - OFFLINE_MODE=False
+
+networks:
+  pdns-admin-net:
+    driver: bridge
+    ipam:
+     driver: default
+     config:
+       - subnet: {{ docker_pdns_admin_subnet }}
+    driver_opts:
+      com.docker.network.bridge.name: {{ docker_pdns_admin_bridge }}

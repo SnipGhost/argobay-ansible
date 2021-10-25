@@ -1,0 +1,11 @@
+---
+pdns_admin_name: powerdns_admin
+pdns_admin_image: vlche/powerdns-admin:latest
+pdns_admin_install_dir: "/tmp/pdns-admin-{{ pdns_admin_name }}"
+
+pdns_admin_db_user: powerdns_admin
+# pdns_admin_db_pass: powerdns_admin
+pdns_admin_db_name: powerdns_admin
+
+pdns_admin_port: 8787
+pdns_admin_log_max_size: 50m

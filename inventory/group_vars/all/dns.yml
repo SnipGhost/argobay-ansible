@@ -42,6 +42,10 @@ dnsmasq_hosts:
     rec:
       - { ip: "{{dev_public_vip_ip}}", type: ml }
 
+  - name: dns
+    rec:
+      - { ip: "{{service_vip_ip}}", type: argobay.ml }
+
   - name: grafana
     rec:
       - { ip: "{{public_vip_ip}}", type: argobay.ml }

@@ -19,7 +19,7 @@
     group: "{{ groupId }}"
     backup: yes
     mode: 0640
-  notify: reload pdns server
+  notify: restart pdns server
 
 - name: Start PowerDNS service
   systemd:

@@ -45,6 +45,14 @@ COMMIT
 -A INPUT -j valid-states
 -A INPUT -p tcp -m tcp --dport 22 -j incoming-ssh
 
+{% for br in docker_bridges %}
+{% if inventory_hostname in groups[br.group | default('all')] %}
+{% for rule in br.accept_rules | default([]) %}
+-A INPUT -s {{ br.cidr }} -p {{ rule.proto }} -m {{ rule.proto }} --dport {{ rule.port }} -j ACCEPT
+{% endfor %}
+{% endif %}
+{% endfor %}
+
 -A INPUT -p tcp -m multiport --dports 80,443 -m comment --comment Web -j {% if external_connections | default('false') | bool %}incoming-external{% else %}incoming-local-wide{% endif %}{{ "" }}
 
 -A INPUT -p vrrp -m comment --comment VRRP -j incoming-local
@@ -71,6 +79,8 @@ COMMIT
 {% if dnsmasq_exporter_enabled | default(false) | bool %}
 -A INPUT -p tcp -m tcp --dport 9153 -m comment --comment dnsmasq_exporter -j incoming-local
 {% endif %}
+-A INPUT -p tcp -m tcp --dport {{ pdns_api_port }} -m comment --comment pdns_api -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ pdns_admin_port }} -m comment --comment pdns_metrics -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['monitoring_servers'] %}

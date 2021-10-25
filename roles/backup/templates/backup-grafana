@@ -1,3 +1,4 @@
 #!/bin/sh
+mkdir -p /mnt/data/backup/
 gzip -c {{ grafana_data_path | default("/var/lib/grafana/") }}grafana.db > /mnt/data/backup/grafana.db.$(date '+%d.%m.%Y-%H:%M:%S').gz
 find /mnt/data/backup/ -mtime +{{ item.retention }} -type f -iname "grafana.db.*.gz" -delete

@@ -86,12 +86,13 @@ pdns_forward_zones:
 backup_scripts:
   - tpl: backup-db
     interval: daily
-    group: monitoring_servers
+    group: prod_db_servers
     retention: 3
     important_databases:
       - dacrover
       - krionardtech
       - mysql
+      - powerdns
   - tpl: backup-grafana
     interval: daily
     group: monitoring_servers

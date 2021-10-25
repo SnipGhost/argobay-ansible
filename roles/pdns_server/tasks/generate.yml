@@ -1,0 +1,9 @@
+---
+- name: Generate script to create records
+  template:
+    src: generate.sh
+    dest: /root/generate-dns.sh
+    owner: root
+    group: root
+    mode: 0750
+  run_once: yes

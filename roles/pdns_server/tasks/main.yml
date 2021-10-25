@@ -5,3 +5,5 @@
 
 - name: Flush handlers
   meta: flush_handlers
+
+- include: generate.yml

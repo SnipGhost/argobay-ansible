@@ -1,4 +1,6 @@
 # DNS records generator
+# Deprecated! Only first level domain
+# See pdns_server/templates/generate.sh
 
 dnsmasq_hosts:
 

@@ -1,0 +1,30 @@
+---
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0755
+  loop:
+    - "{{ pdns_log_dir }}"
+    - "{{ pdns_conf_dir }}"
+  notify: restart pdns recursor
+
+- name: Configure PowerDNS
+  template:
+    src: recursor.conf.j2
+    dest: /etc/powerdns/recursor.conf
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    backup: yes
+    mode: 0640
+  notify: restart pdns recursor
+
+- name: Start PowerDNS service
+  systemd:
+    name: pdns-recursor
+    state: started
+    daemon_reload: yes
+    enabled: yes
+  register: pdns_recursor_started

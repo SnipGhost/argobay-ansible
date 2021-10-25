@@ -16,9 +16,7 @@
 - name: Install PowerDNS packages
   package:
     name:
-      - pdns-server
-      - pdns-tools
-      - pdns-backend-mysql
+      - pdns-recursor
     state: present
 
 - name: Create system group

@@ -1,0 +1,17 @@
+config-dir={{ pdns_conf_dir }}
+daemon=yes
+setgid={{ userId }}
+setuid={{ groupId }}
+
+{% for zone in pdns_forward_zones %}
+forward-zones{% if (not loop.first) %}+{% endif %}={{ zone.name }}={{ zone.host }}
+{% endfor %}
+
+quiet=yes
+hint-file={{ pdns_hint_file }}
+include-dir={{ pdns_conf_dir }}/recursor.d
+lua-config-file={{ pdns_recursor_lua_config }}
+
+local-address={{ pdns_recursor_local_addrs | join(',') }}
+local-port={{ pdns_recursor_port }}
+allow-from={{ pdns_allowed_hosts | join(',') }}

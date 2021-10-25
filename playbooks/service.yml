@@ -13,6 +13,11 @@
         - pdns
         - pdns_server
         - dns
+    - name: pdns_recursor
+      tags:
+        - pdns
+        - pdns_recursor
+        - dns
     - name: docker
       tags:
         - pdns

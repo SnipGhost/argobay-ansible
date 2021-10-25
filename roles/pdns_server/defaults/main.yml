@@ -1,5 +1,5 @@
 ---
-serviceName: pdns
+serviceName: powerdns
 userId: pdns
 groupId: pdns
 
@@ -9,7 +9,12 @@ pdns_db_user: powerdns
 # pdns_db_pass: powerdns
 pdns_db_name: powerdns
 
+pdns_dns_port: 5300
+pdns_dns_local_addrs:
+  - 127.0.0.1
 pdns_api_port: 8181
+pdns_api_local_addr: 127.0.0.1
+
 pdns_allowed_hosts:
   - 127.0.0.1/32
 

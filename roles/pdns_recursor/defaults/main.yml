@@ -1,0 +1,23 @@
+---
+serviceName: powerdns
+userId: pdns
+groupId: pdns
+
+pdns_log_dir: /var/log/powerdns
+pdns_conf_dir: /etc/powerdns
+pdns_hint_file: /usr/share/dns/root.hints
+pdns_recursor_lua_config: /etc/powerdns/recursor.lua
+
+pdns_recursor_port: 53
+
+# Only for pdns_forward_zones default
+pdns_dns_port: 5300
+
+pdns_recursor_local_addrs:
+  - 127.0.0.1
+pdns_allowed_hosts:
+  - 127.0.0.1/32
+
+pdns_forward_zones:
+  - name: i
+    host: 127.0.0.1:{{ pdns_dns_port }}

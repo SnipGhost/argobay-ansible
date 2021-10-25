@@ -1,5 +1,8 @@
 config-dir={{ pdns_conf_dir }}
 daemon=yes
+setgid={{ userId }}
+setuid={{ groupId }}
+
 launch=gmysql
 gmysql-host={{ mariadb_proxy_host }}
 gmysql-port={{ mariadb_proxy_port }}
@@ -7,11 +10,12 @@ gmysql-user={{ pdns_db_user }}
 gmysql-dbname={{ pdns_db_name }}
 gmysql-password={{ pdns_db_pass }}
 gmysql-dnssec=yes
-setgid={{ userId }}
-setuid={{ groupId }}
+
+local-address={{ pdns_dns_local_addrs | join(',') }}
+local-port={{ pdns_dns_port }}
 
 webserver=yes
-webserver-address={{ ansible_default_ipv4['address'] }}
+webserver-address={{ pdns_api_local_addr }}
 webserver-port={{ pdns_api_port }}
 webserver-allow-from={{ pdns_allowed_hosts | join(',') }}
 

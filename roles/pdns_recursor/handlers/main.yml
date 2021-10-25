@@ -1,0 +1,17 @@
+---
+- name: restart pdns recursor
+  systemd:
+    name: pdns-recursor
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  register: pdns_recursor_restarted
+  when: not pdns_recursor_started.changed
+
+- name: reload pdns recursor
+  systemd:
+    name: pdns-recursor
+    state: reloaded
+  when: 
+    - not pdns_recursor_started.changed
+    - not (pdns_recursor_restarted.changed | default(false))

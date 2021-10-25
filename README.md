@@ -100,6 +100,7 @@ ansible-playbook playbooks/monitroing.yml --tags prometheus
 ```bash
 # Update DNS before run to generate valid dhcpd.conf with provision.sh
 ansible-playbook playbooks/service.yml --tags dns
+# And go to https://dns.argobay.ml/ and add new .i/.w/.e records
 
 # Change hostname and IP
 ./provision.sh rapunzel 192.168.8.116
@@ -116,9 +117,7 @@ ansible-playbook playbooks/monitroing.yml --tags prometheus
 ### Other
 
 To update dns:
-```bash
-ansible-playbook playbooks/service.yml --tags dns
-```
+Go to [PowerDNS-Admin](https://dns.argobay.ml/)
 
 To update nginx:
 ```bash

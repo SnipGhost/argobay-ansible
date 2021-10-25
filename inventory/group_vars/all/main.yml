@@ -1,7 +1,7 @@
 # Main options
 
 # Summary
-project_version: v0.7e
+project_version: v0.8
 
 # Users with sudo
 admins:
@@ -39,12 +39,15 @@ ntpd_servers:
   - ntp1.mail.ru
   - ntp2.mail.ru
 
-# Local DNS via dnsmasq
-dnsmasq_records_file: /etc/cluster-hosts
-dnsmasq_exporter_enabled: no
-dnsmasq_logging: no
-dnsmasq_iface: eth0:{{ service_vip_id }}
+# Local DNS via dnsmasq. DEPRECATED!
+# dnsmasq_records_file: /etc/cluster-hosts
+# dnsmasq_exporter_enabled: no
+# dnsmasq_logging: no
+# dnsmasq_iface: eth0:{{ service_vip_id }}
 # DNS records in dns.yml
+
+# PowerDNS
+pdns_api_domain: dnsapi.argobay.ml
 pdns_dns_port: 5300
 pdns_api_port: 8181
 pdns_recursor_port: 53
@@ -55,16 +58,26 @@ pdns_api_local_addr: "{{ ansible_default_ipv4['address'] }}"
 pdns_recursor_local_addrs:
   - 127.0.0.1
   - "{{ ansible_default_ipv4['address'] }}"
+  - "{{ service_vip_ip }}"
 pdns_allowed_hosts:
   - 127.0.0.1/32
   - 192.168.8.0/24
+  - 192.168.9.0/24
   - "{{ docker_pdns_admin_subnet }}"
 pdns_forward_zones:
   - name: i
     host: 127.0.0.1:{{ pdns_dns_port }}
+  - name: e
+    host: 127.0.0.1:{{ pdns_dns_port }}
+  - name: w
+    host: 127.0.0.1:{{ pdns_dns_port }}
   - name: local
     host: 127.0.0.1:{{ pdns_dns_port }}
+  - name: dev-argobay.ml
+    host: 127.0.0.1:{{ pdns_dns_port }}
   - name: argobay.ml
+    host: 127.0.0.1:{{ pdns_dns_port }}
+  - name: 168.192.in-addr.arpa
     host: 127.0.0.1:{{ pdns_dns_port }}
   - name: "{{ consul_domain }}"
     host: "{{ consul_listen_addr | first }}:{{ consul_dns_port }}"
@@ -163,6 +176,10 @@ docker_bridges:
         port: 3307
       - proto: tcp
         port: "{{ pdns_api_port }}"
+      - proto: tcp
+        port: 80
+      - proto: tcp
+        port: 443
 
 # GitLab Runner
 gitlab_runner_name: arm-runner

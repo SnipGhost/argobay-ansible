@@ -19,7 +19,7 @@
       - pdns-server
       - pdns-tools
       - pdns-backend-mysql
-    state: present
+    state: latest
 
 - name: Create system group
   group:

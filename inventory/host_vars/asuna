@@ -5,6 +5,7 @@ max_mem_lock: "524288" # KiB
 
 redirect_local_traffic:
   - "{{ dacrover_port }}"
+  - "{{ pdns_api_port }}"
 
 disks:
   - /dev/sda

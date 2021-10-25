@@ -7,7 +7,7 @@
 :OUTPUT ACCEPT [0:0]
 -A POSTROUTING -m addrtype --src-type LOCAL --dst-type UNICAST -j MASQUERADE
 {% for port in redirect_local_traffic %}
--A OUTPUT -p tcp -m addrtype --src-type LOCAL --dst-type LOCAL -m tcp --dport {{ port }} -j DNAT --to-destination 192.168.8.50
+-A OUTPUT -p tcp -m addrtype --src-type LOCAL --dst-type LOCAL -m tcp --dport {{ port }} -j DNAT --to-destination {{ ansible_default_ipv4['address'] }}
 {% endfor %}
 COMMIT
 
@@ -75,7 +75,8 @@ COMMIT
 -A INPUT -m conntrack --ctstate RELATED,NEW,ESTABLISHED -j incoming-local
 {% else %}
 {% if inventory_hostname in groups['dns_servers'] %}
--A INPUT -p udp -m udp --dport 53 -m comment --comment DNS -j incoming-local-wide
+-A INPUT -p tcp -m tcp --dport 53 -m comment --comment DNS-TCP -j incoming-local-wide
+-A INPUT -p udp -m udp --dport 53 -m comment --comment DNS-UDP -j incoming-local-wide
 {% if dnsmasq_exporter_enabled | default(false) | bool %}
 -A INPUT -p tcp -m tcp --dport 9153 -m comment --comment dnsmasq_exporter -j incoming-local
 {% endif %}

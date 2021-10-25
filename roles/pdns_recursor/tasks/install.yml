@@ -17,7 +17,7 @@
   package:
     name:
       - pdns-recursor
-    state: present
+    state: latest
 
 - name: Create system group
   group:

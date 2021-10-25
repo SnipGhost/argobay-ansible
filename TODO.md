@@ -3,7 +3,6 @@
 ### Main
 - Repack mdwiki with external libs
 - Fix Golang install in common role
-- Fix dnsmasq main record generation
 - VictoriaMetrics HA with Zelda
 - Fix Prometheus*Slow alerts for Victoria Metrics
 - Add deb-package repo & pipelines

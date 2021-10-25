@@ -14,6 +14,7 @@ services:
         max-size: {{ pdns_admin_log_max_size }}
     extra_hosts:
       host.docker.internal: {{ docker_pdns_admin_subnet | ipaddr('net') | ipaddr('1') | ipaddr('address') }}
+      {{ pdns_api_domain }}: {{ service_vip_ip }}
     environment:
       - SQLALCHEMY_DATABASE_URI=mysql://{{ pdns_admin_db_user }}:{{ pdns_admin_db_pass }}@host.docker.internal:{{ mariadb_proxy_port }}/{{ pdns_admin_db_name }}
       - GUNICORN_TIMEOUT=60

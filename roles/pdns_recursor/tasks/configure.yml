@@ -31,6 +31,12 @@
     mode: 0640
   notify: restart pdns recursor
 
+- name: Stop dnsmasq service
+  systemd:
+    name: dnsmasq
+    state: stopped
+    enabled: no
+
 - name: Start PowerDNS service
   systemd:
     name: pdns-recursor

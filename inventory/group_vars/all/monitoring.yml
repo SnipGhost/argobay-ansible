@@ -32,6 +32,7 @@ prometheus_jobs:
   - { name: payment, port: 9999, group: payment_servers }
   - { name: dacrover, port: "{{ dacrover_port }}", group: dacrover }
   - { name: pdns, port: "{{ pdns_api_port }}", group: dns_servers }
+  - { name: pdns-rec, port: "{{ pdns_recursor_api_port }}", group: dns_servers }
   # - { name: esp, port: 80, group: esp_modules }
 
 # Prometheus exporter's options

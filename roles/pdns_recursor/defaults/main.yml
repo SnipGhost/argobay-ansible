@@ -10,10 +10,12 @@ pdns_hint_file: /usr/share/dns/root.hints
 pdns_recursor_lua_config: /etc/powerdns/recursor.lua
 
 pdns_recursor_port: 53
+pdns_recursor_api_port: 8182
 
 # Only for pdns_forward_zones default
 pdns_dns_port: 5300
 
+pdns_recursor_api_local_addr: 127.0.0.1
 pdns_recursor_local_addrs:
   - 127.0.0.1
 pdns_allowed_hosts:

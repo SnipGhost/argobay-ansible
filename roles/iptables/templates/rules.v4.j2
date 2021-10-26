@@ -81,6 +81,7 @@ COMMIT
 -A INPUT -p tcp -m tcp --dport 9153 -m comment --comment dnsmasq_exporter -j incoming-local
 {% endif %}
 -A INPUT -p tcp -m tcp --dport {{ pdns_api_port }} -m comment --comment pdns_api -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ pdns_recursor_api_port }} -m comment --comment pdns_recursor_api -j incoming-local
 -A INPUT -p tcp -m tcp --dport {{ pdns_admin_port }} -m comment --comment pdns_metrics -j incoming-local
 {% endif %}
 

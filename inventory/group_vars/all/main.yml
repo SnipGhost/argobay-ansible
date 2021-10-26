@@ -51,10 +51,12 @@ pdns_api_domain: dnsapi.argobay.ml
 pdns_dns_port: 5300
 pdns_api_port: 8181
 pdns_recursor_port: 53
+pdns_recursor_api_port: 8182
 pdns_admin_port: 8787
 pdns_dns_local_addrs:
   - 127.0.0.1
 pdns_api_local_addr: "{{ ansible_default_ipv4['address'] }}"
+pdns_recursor_api_local_addr: "{{ ansible_default_ipv4['address'] }}"
 pdns_recursor_local_addrs:
   - 127.0.0.1
   - "{{ ansible_default_ipv4['address'] }}"

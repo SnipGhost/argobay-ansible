@@ -25,6 +25,15 @@ nginx_sites:
     whitelist:
       - external
 
+  - name: powerdns-recursor-api
+    server_name: recursor-{{ pdns_api_domain }}
+    addr: "{{ service_vip_ip }}"
+    group: dns_servers
+    port: "{{ pdns_recursor_api_port }}"
+    hosts: dns_servers
+    whitelist:
+      - external
+
   - name: powerdns-admin
     server_name: "dns.argobay.ml"
     addr: "{{ service_vip_ip }}"

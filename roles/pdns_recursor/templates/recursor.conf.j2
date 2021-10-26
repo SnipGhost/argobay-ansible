@@ -18,3 +18,9 @@ lua-config-file={{ pdns_recursor_lua_config }}
 local-address={{ pdns_recursor_local_addrs | join(',') }}
 local-port={{ pdns_recursor_port }}
 allow-from={{ pdns_allowed_hosts | join(',') }}
+
+webserver=yes
+webserver-address={{ pdns_recursor_api_local_addr }}
+webserver-port={{ pdns_recursor_api_port }}
+webserver-allow-from={{ pdns_allowed_hosts | join(',') }}
+api-key={{ pdns_api_key }}

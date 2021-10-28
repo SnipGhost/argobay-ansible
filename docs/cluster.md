@@ -19,3 +19,12 @@
 
 ![Placement diagram](schemes/Placement.png)
 
+
+## DNS
+
+![DNS diagram](schemes/DNS.png)
+
+
+## User-side
+
+![User side](schemes/User-side.png)

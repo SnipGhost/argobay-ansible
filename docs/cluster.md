@@ -10,6 +10,11 @@
 ![Network](schemes/Net.png)
 
 
+## Monitoring
+
+![Monitoring](schemes/Monitoring.png)
+
+
 ## Placement
 
 ![Placement diagram](schemes/Placement.png)

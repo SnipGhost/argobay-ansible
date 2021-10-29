@@ -6,7 +6,7 @@ miku
 yotsuba
 itsuki
 rikka
-# metroid
+metroid
 zelda
 rapunzel
 
@@ -71,6 +71,9 @@ zelda
 [monitoring_servers]
 asuna
 # zelda
+
+[bastion]
+metroid
 
 [payment_servers]
 miku

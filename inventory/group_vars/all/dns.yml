@@ -208,9 +208,18 @@ dnsmasq_hosts:
       - { ip: 192.168.8.30, zone: e }
       - { ip: 192.168.8.40, zone: w, main: yes, haproxy: yes }
 
-  - name: mai
+  - name: emily # Raspberry Pi Zero WH
     rec:
-      - { ip: 192.168.8.31, zone: w, main: yes, haproxy: yes }
+      - { ip: 192.168.8.41, zone: w, main: yes, haproxy: yes }
+
+  - name: elsa
+    rec:
+      - { ip: 192.168.8.32, zone: e, main: yes, haproxy: yes }
+      - { ip: 192.168.8.42, zone: w }
+
+  - name: mai # Future Raspberry Pi Zero W 2
+    rec:
+      - { ip: 192.168.8.43, zone: w, main: yes, haproxy: yes }
 
   #========================================================
   # Workstations

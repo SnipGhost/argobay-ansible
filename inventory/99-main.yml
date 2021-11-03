@@ -9,9 +9,16 @@ rikka
 metroid
 zelda
 rapunzel
+elsa
+# emily
+# mai
 
 [notebooks]
 # yukinon
+
+[bastion]
+elsa
+metroid
 
 [prod]
 asuna
@@ -59,6 +66,7 @@ raspberry_pi
 notebooks
 prod
 dev
+bastion
 
 [research_hosts]
 ichika
@@ -71,9 +79,7 @@ zelda
 [monitoring_servers]
 asuna
 # zelda
-
-[bastion]
-metroid
+# rapunzel
 
 [payment_servers]
 miku

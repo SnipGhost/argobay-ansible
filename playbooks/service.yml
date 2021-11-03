@@ -22,12 +22,10 @@
       tags:
         - pdns
         - pdns_admin
-        - dns
     - name: pdns_admin
       tags:
         - pdns
         - pdns_admin
-        - dns
 
 - hosts: rsyncd_servers
   pre_tasks:

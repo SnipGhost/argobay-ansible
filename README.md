@@ -6,6 +6,16 @@
 1) Create [secrets files](docs/vault.md) for all, prod and dev
 2) `ansible-galaxy install -r requirements.yml`
 
+To run discovery.sh script you need:
+- arp-scan
+- timeout (coreutils on mac, only for -c option)
+- sshpass (only for -c option)
+
+For mac:
+```bash
+brew install coreutils arp-scan, sshpass
+```
+
 
 ## Add new service role checklist
 
@@ -103,19 +113,24 @@ And run:
 ansible-playbook playbooks/monitroing.yml --tags prometheus
 ```
 
-### Provision Raspberry Pi host:
+### Provision Raspberry Pi host (example):
 ```bash
-# Update DNS before run to generate valid dhcpd.conf with provision.sh
-ansible-playbook playbooks/service.yml --tags dns
-# And go to https://dns.argobay.ml/ and add new .i/.w/.e records
+# Find new raspberry with arp-scanner and check default creds:
+./discovery.sh -c
 
-# Change hostname and IP
+# Update DNS before run to generate valid dhcpd.conf with provision.sh!
+# Generate commands to create records:
+./add-dns.sh rapunzel -e 192.168.8.59 -w 192.168.8.69
+# Generate "plain" upper-level record (like rapunzel.):
+ansible-playbook playbooks/service.yml --tags dns
+
+# Change hostname, IP, locale, etc
 ./provision.sh rapunzel 192.168.8.116
 
-# Run common roles
+# Run common roles and set passwords
 ansible-playbook playbooks/all_hosts.yml -e "set_passwords=yes" -l rapunzel
 
-# Additional run raspberry pi specific roles
+# Additional: run Raspberry Pi specific roles
 ansible-playbook playbooks/raspberry.yml -l rapunzel
 # And update monitoring configs
 ansible-playbook playbooks/monitroing.yml --tags prometheus
@@ -123,8 +138,20 @@ ansible-playbook playbooks/monitroing.yml --tags prometheus
 
 ### Other
 
-To update dns:
+To update dns records:
 Go to [PowerDNS-Admin](https://dns.argobay.ml/)
+
+To create dns records:
+```bash
+./add-dns.sh rapunzel -e 192.168.8.59 -w 192.168.8.69
+./add-dns.sh emily -rw 192.168.8.41
+```
+
+To delete dns records:
+```bash
+./add-dns.sh rapunzel -d
+./add-dns.sh emily -d
+```
 
 To update nginx:
 ```bash

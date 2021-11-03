@@ -151,11 +151,11 @@ COMMIT
 -A INPUT -p tcp -m tcp --dport 5900 -m comment --comment "VNC server" -j incoming-local
 {% endif %}
 
-{% if inventory_hostname in groups[razumator_api_group] %}
+{% if razumator_api_group is defined and inventory_hostname in groups[razumator_api_group] %}
 -A INPUT -p tcp -m tcp --dport {{ razumator_api_port | default(10001) }} -m comment --comment "Razumator API" -j incoming-local
 {% endif %}
 
-{% if inventory_hostname in groups[razumator_core_group] %}
+{% if razumator_core_group is defined and inventory_hostname in groups[razumator_core_group] %}
 -A INPUT -p tcp -m tcp --dport {{ razumator_port | default(10000) }} -m comment --comment "Razumator Core" -j incoming-local
 -A INPUT -p tcp -m tcp --dport {{ razumator_proxy_port | default(10002) }} -m comment --comment "Razumator Core Proxy" -j incoming-local
 {% endif %}
@@ -213,14 +213,14 @@ COMMIT
 -A outgoing-services -j DROP
 
 {% if inventory_hostname in groups['gitlab_runner'] %}
-{% for br in docker_bridges %}
+{% for br in docker_bridges | default([]) %}
 {% if inventory_hostname in groups[br.group | default('all')] %}
 -A DOCKER-ISOLATION-STAGE-1 -i {{ br.name }} ! -o {{ br.name }} -j DOCKER-ISOLATION-STAGE-2
 {% endif %}
 {% endfor %}
 -A DOCKER-ISOLATION-STAGE-1 -j RETURN
 
-{% for br in docker_bridges %}
+{% for br in docker_bridges | default([]) %}
 {% if inventory_hostname in groups[br.group | default('all')] %}
 -A DOCKER-ISOLATION-STAGE-2 -o {{ br.name }} -j DROP
 {% endif %}

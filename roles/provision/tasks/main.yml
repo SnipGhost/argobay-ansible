@@ -22,12 +22,28 @@
     state: present
     password: "{{ '%s' | format(passwords[ansible_user]) | password_hash('sha512') }}"
 
-- name: Add ansible user to sudoers
+- name: Ensure groups wheel and remote exists
+  group:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - wheel
+    - remote
+
+- name: Add ansible user to wheel and remote
+  user:
+    name: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    groups: adm,wheel,remote,systemd-journal
+    append: yes
+    state: present
+
+- name: Add ansible user to sudoers via wheel group
   lineinfile:
     path: /etc/sudoers
     state: present
-    regexp: '^{{ ansible_user }}\s'
-    line: '{{ ansible_user }} ALL=(ALL) ALL'
+    regexp: '^%wheel\s'
+    line: '%wheel  ALL=(ALL:ALL) ALL'
 
 - name: Add public keys to authorized_key for ansible
   authorized_key:

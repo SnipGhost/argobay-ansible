@@ -3,8 +3,8 @@
 - import_playbook: playbooks/consul.yml
 - import_playbook: playbooks/service.yml
 - import_playbook: playbooks/letsapi.yml
-- import_playbook: playbooks/monitoring.yml
 - import_playbook: playbooks/raspberry.yml
+- import_playbook: playbooks/monitoring.yml
 - import_playbook: playbooks/storage.yml
 - import_playbook: playbooks/web.yml
 

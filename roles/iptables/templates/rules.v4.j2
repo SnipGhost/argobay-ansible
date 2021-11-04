@@ -149,6 +149,7 @@ COMMIT
 {% if inventory_hostname in groups['research_hosts'] %}
 -A INPUT -p tcp -m tcp --dport {{ jupyter_port | default(8888) }} -m comment --comment "Jupyter Notebook" -j incoming-local
 -A INPUT -p tcp -m tcp --dport 5900 -m comment --comment "VNC server" -j incoming-local
+-A INPUT -p tcp -m tcp --dport 4444 -m comment --comment "OmegaStation" -j incoming-local
 {% endif %}
 
 {% if razumator_api_group is defined and inventory_hostname in groups[razumator_api_group] %}

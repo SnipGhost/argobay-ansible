@@ -3,6 +3,7 @@
   roles:
     # - name: prometheus
     #   tags: prometheus
+    # To install victoria_metrics_install=yes
     - name: victoria_metrics
       tags:
         - victoria_metrics

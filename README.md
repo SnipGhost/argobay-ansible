@@ -133,7 +133,7 @@ ansible-playbook playbooks/all_hosts.yml -e "set_passwords=yes" -l rapunzel
 # Additional: run Raspberry Pi specific roles
 ansible-playbook playbooks/raspberry.yml -l rapunzel
 # And update monitoring configs
-ansible-playbook playbooks/monitroing.yml --tags prometheus
+ansible-playbook playbooks/monitoring.yml --tags prometheus
 ```
 
 ### Other

@@ -23,11 +23,12 @@
       tags: ntpd
     - name: keepalived
       tags: keepalived
-    - name: haproxy
-      tags: haproxy
-      when: inventory_hostname not in groups['bastion']
-    - name: haproxy_exporter
-      tags: haproxy_exporter
-      when: inventory_hostname not in groups['bastion']
     - name: node_exporter
       tags: node_exporter
+
+- hosts: all,!bastion
+  roles:
+    - name: haproxy
+      tags: haproxy
+    - name: haproxy_exporter
+      tags: haproxy_exporter

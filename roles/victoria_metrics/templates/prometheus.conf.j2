@@ -22,7 +22,9 @@ scrape_configs:
     static_configs:
     - targets:
 {% for host in groups[job.group] %}
+{% if job.except is not defined or host not in groups[job.except] %}
       - '{{ host }}:{{ job.port }}'
+{% endif %}
 {% endfor %}
 
 {% endfor %}

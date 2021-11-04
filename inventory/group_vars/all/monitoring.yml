@@ -1,5 +1,5 @@
 # Victoria Metrics
-victoria_metrics_version: 1.57.1
+victoria_metrics_version: 1.68.0
 victoria_metrics_retention: 3
 victoria_metrics_scrape_interval: 15s
 victoria_metrics_evaluation_interval: 15s
@@ -19,9 +19,9 @@ vmalert_port: 8880
 # Prometheus config drop-in replacement compatibility
 prometheus_jobs:
   - { name: node, port: 9100, group: all }
-  - { name: haproxy, port: 9101, group: all }
+  - { name: haproxy, port: 9101, group: all, except: bastion }
   - { name: mysql, port: 9104, group: db_servers }
-  - { name: consul, port: 9107, group: all }
+  - { name: consul, port: 9107, group: all, except: bastion }
   - { name: nginx, port: 9113, group: web_servers }
   - { name: redis, port: 9121, group: redis_servers }
   - { name: memcached, port: 9150, group: memcached_servers }

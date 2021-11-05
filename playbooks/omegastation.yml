@@ -1,0 +1,7 @@
+---
+- hosts: all
+  roles:
+    - name: atop
+      tags: atop
+    - name: node_exporter
+      tags: node_exporter

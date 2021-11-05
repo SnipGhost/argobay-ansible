@@ -1,6 +1,7 @@
 ## TODO list
 
 ### Main
+- Add auto-start for docker pdns-admin  container
 - Repack mdwiki with external libs
 - Fix Golang install in common role
 - VictoriaMetrics HA with Zelda

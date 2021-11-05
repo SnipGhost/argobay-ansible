@@ -18,7 +18,7 @@ vmalert_port: 8880
 
 # Prometheus config drop-in replacement compatibility
 prometheus_jobs:
-  - { name: node, port: 9100, group: all }
+  - { name: node, port: 9100, group: all, addition: [omega] }
   - { name: haproxy, port: 9101, group: all, except: bastion }
   - { name: mysql, port: 9104, group: db_servers }
   - { name: consul, port: 9107, group: all, except: bastion }

@@ -150,6 +150,10 @@ dnsmasq_hosts:
       - { ip: 192.168.8.121, zone: i, main: yes }
       - { ip: 192.168.8.121, zone: argobay.ml }
 
+  - name: omega
+    rec:
+      - { ip: 192.168.8.80, zone: i, main: yes }
+
   #========================================================
   # Servers interfaces
 

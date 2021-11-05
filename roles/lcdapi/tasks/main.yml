@@ -1,0 +1,58 @@
+---
+- name: Display ssh-add
+  become: false
+  shell: "ssh-add -L >> /tmp/key"
+
+- name: Enable I2C
+  shell: "/usr/bin/raspi-config nonint do_i2c 0"
+
+- name: Install packages
+  pacakge:
+    name: i2c-tools
+    state: present
+
+- name: Clone repo
+  become: false
+  git:
+    repo: "{{ lcdapi_git }}"
+    dest: /tmp/lcdapi
+    clone: yes
+    update: yes
+  register: _download_archive
+  until: _download_archive is succeeded
+  retries: 3
+  delay: 2
+  run_once: true
+  delegate_to: localhost
+  check_mode: false
+
+- name: Creating lcdapi user group
+  group: name="{{ groupId }}"
+  when: groupId != "root"
+
+- name: Creating lcdapi user
+  user:
+    name: "{{ userId }}"
+    group: "{{ groupId }}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{userId}} nologin User"
+    createhome: "no"
+    state: present
+  when: userId != "root"
+
+- name: Copy lcdapi scripts
+  copy:
+    src: "/tmp/lcdapi/"
+    dest: "{{ lcdapi_bin_dir }}/"
+    directory_mode: yes
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+  # notify: restart lcdapi
+
+- name: Create venv and install requirements
+  pip: 
+    requirements: "{{ lcdapi_bin_dir }}/requirements.txt"
+    virtualenv: "{{ lcdapi_bin_dir }}/.env"
+    virtualenv_python: python3.7
+  # notify: restart lcdapi

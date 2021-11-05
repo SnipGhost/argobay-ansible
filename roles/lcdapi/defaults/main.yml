@@ -1,0 +1,7 @@
+---
+userId: lcdapi
+groupId: lcdapi
+
+lcdapi_git: git@bmstu.codes:iu5/infrastructure/lcdapi.git
+
+lcdapi_bin_dir: /usr/local/bin/lcdapi

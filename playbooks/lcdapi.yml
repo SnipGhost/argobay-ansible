@@ -1,0 +1,5 @@
+---
+- hosts: metroid
+  roles:
+    - name: lcdapi
+      tags: lcdapi

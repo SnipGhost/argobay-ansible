@@ -1,0 +1,9 @@
+---
+- name: restart lcdapi
+  systemd:
+    name: lcdapi
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  register: lcdapi_restarted
+  when: not lcdapi_started.changed

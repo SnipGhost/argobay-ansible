@@ -146,7 +146,7 @@ COMMIT
 -A INPUT -p tcp -m tcp --dport {{ dacrover_port | default(4050) }} -m comment --comment "Dacrover" -j incoming-local
 {% endif %}
 
-{% if inventory_hostname in groups['research_hosts'] %}
+{% if inventory_hostname in groups['research_servers'] %}
 -A INPUT -p tcp -m tcp --dport {{ jupyter_port | default(8888) }} -m comment --comment "Jupyter Notebook" -j incoming-local
 -A INPUT -p tcp -m tcp --dport 5900 -m comment --comment "VNC server" -j incoming-local
 -A INPUT -p tcp -m tcp --dport 4444 -m comment --comment "OmegaStation" -j incoming-local

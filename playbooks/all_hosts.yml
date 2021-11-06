@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: cluster,bastion
   roles:
     - name: common
       tags: common
@@ -26,7 +26,7 @@
     - name: node_exporter
       tags: node_exporter
 
-- hosts: all,!bastion
+- hosts: cluster
   roles:
     - name: haproxy
       tags: haproxy

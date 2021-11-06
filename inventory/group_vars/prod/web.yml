@@ -246,7 +246,7 @@ nginx_sites:
   - name: jupyter
     server_name: jupyter.argobay.ml
     addr: "{{ research_vip_ip }}"
-    hosts: research_hosts
+    hosts: research_servers
     local: yes
     port: 8888
     whitelist:

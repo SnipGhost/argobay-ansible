@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: all,!omega_nodes
   tasks:
     - debug:
         msg: "{{ lookup('dig', item + '.i', '@' + service_vip_ip) }}"

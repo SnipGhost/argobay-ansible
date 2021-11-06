@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: omega_nodes
   roles:
     - name: atop
       tags: atop

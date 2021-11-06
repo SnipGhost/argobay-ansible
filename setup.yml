@@ -8,7 +8,7 @@
 - import_playbook: playbooks/storage.yml
 - import_playbook: playbooks/web.yml
 
-- import_playbook: playbooks/omega.yml
+- import_playbook: playbooks/omega_complex.yml
 - import_playbook: playbooks/razumator.yml
 
 - import_playbook: playbooks/runner.yml

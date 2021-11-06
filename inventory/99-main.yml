@@ -16,10 +16,6 @@ elsa
 [notebooks]
 # yukinon
 
-[bastion]
-elsa
-metroid
-
 [prod]
 asuna
 ichika
@@ -61,14 +57,14 @@ dacrover_group=dev_dacrover
 razumator_api_group=dev_razumator_api
 razumator_core_group=dev_razumator_core
 
-[all:children]
-raspberry_pi
-notebooks
+[cluster:children]
 prod
 dev
-bastion
 
-[research_hosts]
+[esp:children]
+esp_modules
+
+[research_servers]
 ichika
 
 [dns_servers]
@@ -122,7 +118,7 @@ dev_krionard
 prod_dacrover
 dev_dacrover
 
-[omega:children]
+[omega_complex:children]
 krionard
 dacrover
 

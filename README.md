@@ -170,12 +170,12 @@ ansible-playbook playbooks/storage.yml -e "mariadb_secure=yes mariadb_rejoin=yes
 
 To re-setup krionard [ATTENTION!]:
 ```bash
-ansible-playbook playbooks/omega.yml --tags krionard -e "krionard_setup=yes" -l dev
+ansible-playbook playbooks/omega_complex.yml --tags krionard -e "krionard_setup=yes" -l dev
 ```
 
 To re-setup dacrover [ATTENTION!]:
 ```bash
-ansible-playbook playbooks/omega.yml --tags dacrover -e "dacrover_setup=yes" -l dev
+ansible-playbook playbooks/omega_complex.yml --tags dacrover -e "dacrover_setup=yes" -l dev
 ```
 
 To re-setup razumator [ATTENTION!]:

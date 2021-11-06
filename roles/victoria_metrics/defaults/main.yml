@@ -47,7 +47,7 @@ exec_commands:
       -httpListenAddr={{ vmalert_host }}:{{ vmalert_port }}
 
 max_mem_lock: "65536"
-wait_wal_sec: 20
+wait_wal_sec: 10
 
 alertmanager_host: 127.0.0.1
 alertmanager_port: 9093

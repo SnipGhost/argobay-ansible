@@ -1,3 +1,4 @@
+{% set NS = namespace(items=0, env='unknown') %}
 {{ ansible_managed | comment }}
 
 global:
@@ -20,11 +21,23 @@ scrape_configs:
     scrape_timeout: {{ job.scrape_timeout }}
 {% endif %}
     static_configs:
-    - targets:
+{% for group in monitoring_groups %}
+{% set NS.items = 0 %}
+{% set NS.env = 'unknown' %}
 {% for host in groups[job.group] + job.addition | default([]) %}
-{% if job.except is not defined or host not in groups[job.except] %}
+{% if host in groups[group] and (job.except is not defined or host not in groups[job.except]) %}
+{% if NS.items == 0 %}
+    - targets:
+{% endif %}
+{% set NS.items = NS.items + 1 %}
+{% set NS.env = hostvars[host]['env'] %}
       - '{{ host }}:{{ job.port }}'
 {% endif %}
+{% if loop.last and NS.items > 0 %}
+      labels:
+        env: '{{ NS.env }}'
+{% endif %}
+{% endfor %}
 {% endfor %}
 
 {% endfor %}

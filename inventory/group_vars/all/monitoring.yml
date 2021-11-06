@@ -16,6 +16,13 @@ victoria_metrics_data_path: "{{ data_path }}/victoria-metrics/"
 vmalert_host: 127.0.0.1
 vmalert_port: 8880
 
+# Add labels to hosts groups
+monitoring_groups:
+  - prod
+  - dev
+  - bastion
+  - omega_nodes
+
 # Prometheus config drop-in replacement compatibility
 prometheus_jobs:
   - { name: node, port: 9100, group: all, except: esp_modules }

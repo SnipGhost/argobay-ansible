@@ -1,2 +1,5 @@
 [omega_nodes]
 omega
+
+[omega_nodes:vars]
+env=omega

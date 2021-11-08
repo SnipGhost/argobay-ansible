@@ -79,14 +79,16 @@ alertmanager_receivers:
     port: "{{ alertmanager_bot_port }}"
 
 # Alertmanager bot
-alertmanager_bot_version: 0.4.3
+alertmanager_bot_version: 0.4.3-m2
+alertmanager_bot_docs_url: "https://github.com/SnipGhost/alertmanager-bot/"
+alertmanager_bot_download_url: "https://github.com/SnipGhost/alertmanager-bot/releases/download/v{{ alertmanager_bot_version }}/{{ alertmanager_bot_file_name }}"
 alertmanager_bot_bind: 0.0.0.0
 alertmanager_bot_host: 127.0.0.1
 alertmanager_bot_port: 8007
 alertmanager_bot_log_level: "info"
-alertmanager_bot_conf_dir: /etc/am-bot
-alertmanager_bot_boltdir: /mnt/data/am-bot
-alertmanager_bot_bolt_path: "{{ alertmanager_bot_boltdir }}/am_bot.db"
+alertmanager_bot_conf_dir: /etc/alertmanager-bot
+alertmanager_bot_boltdir: /mnt/data/alertmanager-bot
+alertmanager_bot_bolt_path: "{{ alertmanager_bot_boltdir }}/storage.db"
 alertmanager_bot_telegram_admins:
   - 148129813 # @snipghost
   - 425226470 # @horifox

@@ -18,7 +18,7 @@
 - name: Copy systemd init file
   template:
     src: init.service.j2
-    dest: /etc/systemd/system/am-bot.service
+    dest: /etc/systemd/system/{{ service_name }}.service
     mode: 0640
   notify: restart alertmanager_bot
 
@@ -31,9 +31,17 @@
     mode: 0644
   notify: restart alertmanager_bot
 
+- name: Copy test script
+  template:
+    src: test_alerts.sh
+    dest: /root/test_alerts.sh
+    owner: root
+    group: root
+    mode: 0750
+
 - name: Start alertmanager_bot service
   systemd:
-    name: am-bot
+    name: "{{ service_name }}"
     state: started
     daemon_reload: yes
     enabled: yes

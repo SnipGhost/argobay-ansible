@@ -1,3 +1,7 @@
 - src: git@bmstu.codes:iu5/infrastructure/dashboards-role.git
   name: dashboards
   scm: git
+
+- src: git@bmstu.codes:iu5/infrastructure/format-tester-role.git
+  name: format_tester
+  scm: git

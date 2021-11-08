@@ -4,3 +4,4 @@ secret*.yml
 *.key
 *.crt
 roles/dashboards
+roles/format_tester

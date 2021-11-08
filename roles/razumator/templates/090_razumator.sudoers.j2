@@ -1,4 +1,4 @@
-Cmnd_Alias RAZUMATOR_CORE_OP = /usr/bin/systemctl stop razumator-core, /usr/bin/systemctl start razumator-core, /usr/bin/systemctl reload razumator-core, /usr/bin/systemctl restart razumator-core, /usr/bin/systemctl status razumator-core
-Cmnd_Alias RAZUMATOR_API_OP = /usr/bin/systemctl stop razumator-api, /usr/bin/systemctl start razumator-api, /usr/bin/systemctl reload razumator-api, /usr/bin/systemctl restart razumator-api, /usr/bin/systemctl status razumator-api
+Cmnd_Alias RAZUMATOR_CORE_OP = /usr/bin/systemctl stop razumator-core, /usr/bin/systemctl start razumator-core, /usr/bin/systemctl reload razumator-core, /usr/bin/systemctl restart razumator-core, /usr/bin/systemctl status razumator-core, /usr/bin/systemctl reset-failed razumator-core
+Cmnd_Alias RAZUMATOR_API_OP = /usr/bin/systemctl stop razumator-api, /usr/bin/systemctl start razumator-api, /usr/bin/systemctl reload razumator-api, /usr/bin/systemctl restart razumator-api, /usr/bin/systemctl status razumator-api, /usr/bin/systemctl reset-failed razumator-api
 
 %{{ groupId }} ALL=NOPASSWD: RAZUMATOR_CORE_OP, RAZUMATOR_API_OP

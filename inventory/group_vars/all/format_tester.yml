@@ -1,0 +1,14 @@
+---
+format_tester_git: https://github.com/RBizonDota/format_tester
+format_tester_bin_dir: /usr/local/bin/format_tester
+format_tester_conf_dir: /etc/format_tester
+format_tester_data_dir: /var/lib/format_tester
+
+format_tester_node_version: node_16.x
+format_tester_node_lsb_release: buster
+
+format_tester_exec_start_generator: "{{ format_tester_bin_dir }}/{{ format_tester_venv_dir }}/bin/python3 {{ format_tester_bin_dir }}/struct_gen.py"
+format_tester_exec_start_python: "{{ format_tester_bin_dir }}/{{ format_tester_venv_dir }}/bin/python3 {{ format_tester_bin_dir }}/python_test/main.py"
+format_tester_exec_start_node: "/usr/bin/node {{ format_tester_bin_dir }}/js_test/main.js"
+
+format_tester_batch: "10_04_2021__18_26_21"

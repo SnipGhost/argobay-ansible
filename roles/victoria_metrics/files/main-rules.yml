@@ -7,6 +7,7 @@ groups:
         for: 0m
         labels:
           severity: critical
+          module: infra
         annotations:
           summary: "Host systemd service crashed (instance {{ $labels.instance }})"
           description: "{{ $labels.name }} at {{ $labels.instance }} - state failed."
@@ -16,6 +17,7 @@ groups:
         for: 0m
         labels:
           severity: critical
+          module: infra
         annotations:
           summary: "Host OOM kill detected (instance {{ $labels.instance }})"
           description: "OOM kill detected at {{ $labels.instance }}, VALUE = {{ $value }}, LABELS: {{ $labels }}."
@@ -25,6 +27,7 @@ groups:
         for: 1m
         labels:
           severity: warning
+          module: infra
         annotations:
           summary: "Host {{ $labels.instance }} hight memory usage"
           description: "{{ $labels.instance }} has more than 70% of its memory used, VALUE = {{ $value }}, LABELS: {{ $labels }}."
@@ -34,6 +37,7 @@ groups:
         for: 0m
         labels:
           severity: warning
+          module: infra
         annotations:
           summary: "Host high CPU load (instance {{ $labels.instance }})"
           description: "{{ $labels.instance }} CPU load is > 70%, VALUE = {{ $value }}, LABELS: {{ $labels }}."
@@ -43,6 +47,7 @@ groups:
         for: 2m
         labels:
           severity: warning
+          module: infra
         annotations:
           summary: "Host out of disk space (instance {{ $labels.instance }})"
           description: "{{ $labels.instance }} disk is almost full (< 20% left), VALUE = {{ $value }}, LABELS: {{ $labels }}."
@@ -52,6 +57,7 @@ groups:
         for: 2m
         labels:
           severity: warning
+          module: infra
         annotations:
           summary: "Host Network Receive Errors (instance {{ $labels.instance }})"
           description: '{{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf "%.0f" $value }} receive errors in the last five minutes. VALUE = {{ $value }}.'
@@ -61,6 +67,7 @@ groups:
         for: 2m
         labels:
           severity: warning
+          module: infra
         annotations:
           summary: "Host Network Transmit Errors (instance {{ $labels.instance }})"
           description: '{{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf "%.0f" $value }} transmit errors in the last five minutes. VALUE = {{ $value }}.'
@@ -70,6 +77,7 @@ groups:
         for: 2m
         labels:
           severity: warning
+          module: infra
         annotations:
           summary: "Host clock skew (instance {{ $labels.instance }})"
           description: "Clock skew detected. Clock is out of sync. VALUE = {{ $value }}. LABELS: {{ $labels }}."
@@ -79,6 +87,7 @@ groups:
         for: 1m
         labels:
           severity: critical
+          module: infra
         annotations:
           summary: "Instance {{ $labels.instance }} down"
           description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute."
@@ -88,6 +97,7 @@ groups:
         for: 0m
         labels:
           severity: warning
+          module: infra
         annotations:
           summary: "Host EDAC Uncorrectable Errors detected (instance {{ $labels.instance }})"
           description: '{{ $labels.instance }} has had {{ printf "%.0f" $value }} uncorrectable memory errors reported by EDAC. VALUE = {{ $value }}. LABELS: {{ $labels }}.'
@@ -97,6 +107,7 @@ groups:
         for: 3m
         labels:
           severity: critical
+          module: infra
         annotations:
           summary: "Host physical component too hot (instance {{ $labels.instance }})"
           description: "Physical hardware component {{ $labels.instance }} too hot. VALUE = {{ $value }}."
@@ -106,6 +117,7 @@ groups:
       #   for: 5m
       #   labels:
       #     severity: warning
+      #     module: infra
       #   annotations:
       #     summary: "Prometheus rule evaluation slow (instance {{ $labels.instance }})"
       #     description: "Prometheus rule evaluation took more time than the scheduled interval. It indicates a slower storage backend access or too complex query. VALUE = {{ $value }}. LABELS: {{ $labels }}."
@@ -115,6 +127,7 @@ groups:
       #   for: 5m
       #   labels:
       #     severity: warning
+      #     module: infra
       #   annotations:
       #     summary: "Prometheus target scraping slow (instance {{ $labels.instance }})"
       #     description: "Prometheus is scraping exporters slowly. VALUE = {{ $value }}. LABELS: {{ $labels }}."

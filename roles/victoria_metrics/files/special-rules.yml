@@ -7,6 +7,7 @@ groups:
         for: 30s
         labels:
           severity: critical
+          module: infra
         annotations:
           summary: "RPi CPU overheat detected (instance {{ $labels.instance }})"
           description: "{{ $labels.instance }} CPU temperature > 60 deg.C for 30s, VALUE = {{ $value }}."
@@ -16,6 +17,7 @@ groups:
         for: 30s
         labels:
           severity: warning
+          module: uwsgi
         annotations:
           summary: "{{ $labels.name }} uWSGI app not running (instance {{ $labels.instance }})"
           description: "Python uWSGI app {{ $labels.name }} on {{ $labels.instance }} state = {{ $labels.state }}, type = {{ $labels.type }}."
@@ -25,6 +27,7 @@ groups:
         for: 30s
         labels:
           severity: warning
+          module: razumator
         annotations:
           summary: "{{ $labels.name }} uWSGI app not running (instance {{ $labels.instance }})"
           description: "Python uWSGI app {{ $labels.name }} on {{ $labels.instance }} state = {{ $labels.state }}, type = {{ $labels.type }}."
@@ -34,6 +37,7 @@ groups:
         for: 0m
         labels:
           severity: warning
+          module: mysql
         annotations:
           summary: "MySQL down (instance {{ $labels.instance }})"
           description: "MySQL instance is down on {{ $labels.instance }}. VALUE = {{ $value }}."
@@ -43,6 +47,7 @@ groups:
         for: 0m
         labels:
           severity: warning
+          module: mysql
         annotations:
           summary: "MySQL insufficient cluster size (instance {{ $labels.instance }})"
           description: "Cluster size < 2 on {{ $labels.instance }} for active wsrep, VALUE = {{ $value }}."
@@ -52,6 +57,7 @@ groups:
         for: 0m
         labels:
           severity: warning
+          module: payment
         annotations:
           summary: "Low balance for internet provider (instance {{ $labels.instance }})"
           description: "Account balance < (1.5 * month_cost), balance = {{ $value }} rub."
@@ -61,33 +67,17 @@ groups:
         for: 0m
         labels:
           severity: critical
+          module: payment
         annotations:
           summary: "Maryno.net account locked (instance {{ $labels.instance }})"
           description: "Maryno.net account locked, maryno_net_is_blocked > 0, value = {{ $value }}."
         
-      # - alert: NginxHighHttp5xxErrorRate
-      #   expr: sum(rate(nginx_http_requests_total{status=~"^5.."}[1m])) / sum(rate(nginx_http_requests_total[1m])) * 100 > 5
-      #   for: 1m
-      #   labels:
-      #     severity: warning
-      #   annotations:
-      #     summary: "Nginx high HTTP 5xx error rate (instance {{ $labels.instance }})"
-      #     description: "Too many HTTP requests with status 5xx (> 5%). VALUE = {{ $value }}. LABELS: {{ $labels }}."
-
-      # - alert: NginxHighHttp4xxErrorRate
-      #   expr: sum(rate(nginx_http_requests_total{status=~"^4.."}[1m])) / sum(rate(nginx_http_requests_total[1m])) * 100 > 5
-      #   for: 1m
-      #   labels:
-      #     severity: critical
-      #   annotations:
-      #     summary: "Nginx high HTTP 4xx error rate (instance {{ $labels.instance }})"
-      #     description: "Too many HTTP requests with status 4xx (> 5%). VALUE = {{ $value }}. LABELS: {{ $labels }}."
-
       - alert: ConsulServiceIsDown
         expr: sum by (node, service_id)(consul_catalog_service_node_healthy{instance!="rikka:9107", instance!="itsuki:9107"} == 0)
         for: 1m
         labels:
           severity: critical
+          module: consul
         annotations:
           summary: "Consul service check failed (service {{ $labels.service_id }})"
           description: "Health-check failed: consul_health_service_status > 0"

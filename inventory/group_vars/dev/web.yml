@@ -20,7 +20,7 @@ nginx_sites:
     hosts: dev_private_hosts
     display:
       name: Dacrover
-      icon: dacrover.svg
+      icon: dacrover.png
 
   - name: krionard
     server_name: krionard.dev-argobay.ml
@@ -31,7 +31,7 @@ nginx_sites:
     hosts: dev_public_hosts
     display:
       name: Krionard
-      icon: marusya.png
+      icon: krionard.png
 
   - name: razumator
     server_name: razumator.dev-argobay.ml

@@ -1,7 +1,7 @@
 # Main options
 
 # Summary
-project_version: v0.8
+project_version: v0.8b
 
 # Users with sudo
 admins:

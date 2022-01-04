@@ -59,7 +59,7 @@ groups:
           severity: warning
           module: payment
         annotations:
-          summary: "Low balance for internet provider (instance {{ $labels.instance }})"
+          summary: "Low balance for internet provider (instance {{ $labels.instance }}) visit https://lk.maryno.net/payments/cards"
           description: "Account balance < (1.5 * month_cost), balance = {{ $value }} rub."
       
       - alert: MarynoNetAccountLocked

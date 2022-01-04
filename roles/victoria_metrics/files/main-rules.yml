@@ -23,13 +23,13 @@ groups:
           description: "OOM kill detected at {{ $labels.instance }}, VALUE = {{ $value }}, LABELS: {{ $labels }}."
 
       - alert: HostOutOfMemory
-        expr: node_exporter:node_memory_free:memory_used_percents >= 70
+        expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes < 0.2s
         for: 1m
         labels:
           severity: warning
           module: infra
         annotations:
-          summary: "Host {{ $labels.instance }} hight memory usage"
+          summary: "Host {{ $labels.instance }} {{ $labels.env }} hight memory usage"
           description: "{{ $labels.instance }} has more than 70% of its memory used, VALUE = {{ $value }}, LABELS: {{ $labels }}."
 
       - alert: HostHighCpuLoad

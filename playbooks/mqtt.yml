@@ -1,0 +1,4 @@
+- hosts: mqtt_servers
+  roles:
+    - name: mosquitto
+      tags: mosquitto

@@ -134,6 +134,10 @@ COMMIT
 -A INPUT -p tcp -m tcp --dport 9121 -m comment --comment redis_exporter -j incoming-local
 {% endif %}
 
+{% if inventory_hostname in groups['mqtt_servers'] %}
+-A INPUT -p tcp -m tcp --dport 1883 -m comment --comment mqtt -j incoming-local
+{% endif %}
+
 {% if inventory_hostname in groups['raspberry_pi'] %}
 -A INPUT -p tcp -m tcp --dport 9243 -m comment --comment rpi_exporter -j incoming-local
 {% endif %}

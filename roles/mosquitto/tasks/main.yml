@@ -1,0 +1,41 @@
+---
+- name: Install mosquitto
+  package:
+    name:
+      - mosquitto
+      - mosquitto-clients
+    state: latest
+
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0755
+  loop:
+    - "{{ mosquitto_data_dir }}"
+  notify: restart mosquitto
+
+- name: Create config
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/mosquitto/{{ item }}"
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0640
+    backup: yes
+  loop:
+    - mosquitto.conf
+    - passwords
+  notify: restart mosquitto
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Start and enable mosquitto
+  systemd:
+    name: mosquitto
+    state: started
+    enabled: yes
+    daemon_reload: yes

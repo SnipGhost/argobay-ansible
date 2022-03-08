@@ -188,3 +188,12 @@ docker_bridges:
 gitlab_runner_name: arm-runner
 gitlab_runner_install_dir: "{{ data_path }}/runners/{{ gitlab_runner_name }}"
 gitlab_runner_reg_url: https://bmstu.codes/
+
+# MQTT Broker
+mosquitto_listeners:
+  - host: "{{ public_vip_ip }}"
+    port: 1883
+  - host: 127.0.0.1
+    port: 1883
+mosquitto_data_dir: /var/lib/mosquitto/
+mosquitto_password_file: /etc/mosquitto/passwords

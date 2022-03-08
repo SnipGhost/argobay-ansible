@@ -1,0 +1,17 @@
+{% for listener in mosquitto_listeners | default([]) %}
+listener {{ listener.port }} {{ listener.host }}
+{% endfor %}
+persistence true
+persistence_location {{ mosquitto_data_dir }}
+persistence_file mosquitto.db
+log_dest syslog
+log_dest stdout
+log_dest topic
+log_type error
+log_type warning
+log_type notice
+log_type information
+connection_messages true
+log_timestamp true
+allow_anonymous false
+password_file {{ mosquitto_password_file }}

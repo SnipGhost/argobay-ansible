@@ -108,6 +108,11 @@ ceph_mon_key: exampleexampleexampleexampleexampleexa==
 ceph_osd_key: exampleexampleexampleexampleexampleexa==
 ceph_mgr_key: exampleexampleexampleexampleexampleexa==
 ceph_mds_key: exampleexampleexampleexampleexampleexa==
+
+# MQTT Broker
+mosquitto_users:
+  - name: example
+    pass: example
 ```
 
 ## Use-cases

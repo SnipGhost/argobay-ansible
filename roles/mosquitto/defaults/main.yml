@@ -1,0 +1,10 @@
+---
+userId: mosquitto
+groupId: mosquitto
+
+mosquitto_listeners:
+  - host: 127.0.0.1
+    port: 1883
+
+mosquitto_data_dir: /var/lib/mosquitto/
+mosquitto_password_file: /etc/mosquitto/passwords

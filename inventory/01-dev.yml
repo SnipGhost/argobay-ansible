@@ -13,6 +13,9 @@ rikka
 [dev_redis_servers]
 itsuki redis_master=yes
 
+[dev_mqtt_servers]
+rikka
+
 [dev_web_servers]
 itsuki
 rikka

@@ -22,6 +22,10 @@ asuna redis_master=yes
 zelda
 rapunzel
 
+[prod_mqtt_servers]
+nino
+yotsuba
+
 [prod_web_servers]
 asuna
 zelda

@@ -99,6 +99,10 @@ dev_memcached_servers
 prod_redis_servers
 dev_redis_servers
 
+[mqtt_servers:children]
+prod_mqtt_servers
+dev_mqtt_servers
+
 [web_servers:children]
 prod_web_servers
 dev_web_servers

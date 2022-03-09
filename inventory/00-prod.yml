@@ -24,7 +24,7 @@ rapunzel
 
 [prod_mqtt_servers]
 nino
-yotsuba
+yotsuba mosquitto_master=yes
 
 [prod_web_servers]
 asuna

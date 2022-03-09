@@ -34,6 +34,7 @@
     memcached_server_names: "{{ groups[memcached_group] }}"
     redis_server_names: "{{ groups[redis_group] }}"
     razumator_server_names: "{{ groups[razumator_core_group] }}"
+    mqtt_server_names: "{{ groups[mqtt_group] }}"
   template:
     src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg

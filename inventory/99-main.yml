@@ -38,6 +38,7 @@ krionard_group=prod_krionard
 dacrover_group=prod_dacrover
 razumator_api_group=prod_razumator_api
 razumator_core_group=prod_razumator_core
+mqtt_group=prod_mqtt_servers
 
 [dev]
 itsuki
@@ -56,6 +57,7 @@ krionard_group=dev_krionard
 dacrover_group=dev_dacrover
 razumator_api_group=dev_razumator_api
 razumator_core_group=dev_razumator_core
+mqtt_group=prod_mqtt_servers
 
 [cluster:children]
 prod

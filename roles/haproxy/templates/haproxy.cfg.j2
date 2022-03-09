@@ -123,6 +123,34 @@ listen redis
 {% endfor %}
 
 
+listen mqtt
+	bind {{ haproxy_bind_ip }}:{{ mosquitto_proxy_port }}
+	balance first
+
+	stick on src
+	stick-table type ip size 1k expire 1h
+
+	default-server inter 5s fastinter 2s downinter 3s rise 3 fall 3
+{% for host in mqtt_server_names %}
+	server {{ host }} {{ lookup('dig', host + '.i', '@' + service_vip_ip) }}:{{ mosquitto_bind_port }} check{{ ' backup' if not hostvars[host]['mosquitto_master']|default(false) else '' }}
+{% endfor %}
+
+
+{% if inventory_hostname in groups['mqtt_servers'] %}
+listen mqtt_external
+	bind {{ mosquitto_proxy_host }}:{{ mosquitto_proxy_port }}
+	balance first
+
+	stick on src
+	stick-table type ip size 1k expire 1h
+
+	default-server inter 5s fastinter 2s downinter 3s rise 3 fall 3
+{% for host in mqtt_server_names %}
+	server {{ host }} {{ lookup('dig', host + '.i', '@' + service_vip_ip) }}:{{ mosquitto_bind_port }} check{{ ' backup' if not hostvars[host]['mosquitto_master']|default(false) else '' }}
+{% endfor %}
+{% endif %}
+
+
 listen razumator_core
 	bind {{ haproxy_bind_ip }}:{{ razumator_proxy_port }}
 	balance first

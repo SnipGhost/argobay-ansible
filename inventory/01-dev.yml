@@ -14,7 +14,7 @@ rikka
 itsuki redis_master=yes
 
 [dev_mqtt_servers]
-rikka
+rikka mosquitto_master=yes
 
 [dev_web_servers]
 itsuki

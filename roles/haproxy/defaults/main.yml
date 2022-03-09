@@ -33,3 +33,6 @@ redis_proxy_port: 6380
 
 razumator_port: 10000
 razumator_proxy_port: 10002
+
+mosquitto_bind_port: 1884
+mosquitto_proxy_port: 1883

@@ -135,7 +135,8 @@ COMMIT
 {% endif %}
 
 {% if inventory_hostname in groups['mqtt_servers'] %}
--A INPUT -p tcp -m tcp --dport 1883 -m comment --comment mqtt -j incoming-local
+-A INPUT -p tcp -m tcp --dport 1883 -m comment --comment "mqtt proxy" -j incoming-local
+-A INPUT -p tcp -m tcp --dport 1884 -m comment --comment mqtt -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['raspberry_pi'] %}

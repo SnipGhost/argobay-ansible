@@ -9,13 +9,13 @@
     path: /usr/share/atop/atop.daily
     regexp: '^LOGINTERVAL=[0-9]*(.*)$'
     line: 'LOGINTERVAL={{ atop_log_interval }}'
-  notify: atop_restart
+  notify: atop restart
 
 - lineinfile:
     path: /usr/share/atop/atop.daily
     regexp: '^LOGGENERATIONS=[0-9]*(.*)$'
     line: 'LOGGENERATIONS={{ atop_log_generations }}'
-  notify: atop_restart
+  notify: atop restart
 
 - meta: flush_handlers
 

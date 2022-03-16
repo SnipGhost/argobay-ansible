@@ -12,6 +12,11 @@ victoria_metrics_data_path: "{{ data_path }}/victoria-metrics/"
 # vmagent_port: 8429
 # vmagent_data_path: "{{ data_path }}/vmagent/"
 
+# Rules file
+victoria_metrics_rule_files:
+  - main-rules.yml
+  - special-rules.yml
+
 # VM Alert
 vmalert_host: 127.0.0.1
 vmalert_port: 8880

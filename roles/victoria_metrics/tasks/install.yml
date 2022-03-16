@@ -1,0 +1,90 @@
+---
+- name: Download VictoriaMetrics main binaries to local folder
+  become: false
+  get_url:
+    url: "{{ victoria_metrics_download_link }}/{{ victoria_metrics_main_pack_name }}.{{ victoria_metrics_main_pack_ext }}"
+    dest: "/tmp/{{ victoria_metrics_main_pack_name }}.{{ victoria_metrics_main_pack_ext }}"
+  register: _download_archive_main
+  until: _download_archive_main is succeeded
+  retries: 3
+  delay: 2
+  run_once: true
+  delegate_to: localhost
+  check_mode: false
+
+- name: Download VictoriaMetrics vmutils binaries to local folder
+  become: false
+  get_url:
+    url: "{{ victoria_metrics_download_link }}/{{ victoria_metrics_vmutils_pack_name }}.{{ victoria_metrics_vmutils_pack_ext }}"
+    dest: "/tmp/{{ victoria_metrics_vmutils_pack_name }}.{{ victoria_metrics_vmutils_pack_ext }}"
+  register: _download_archive_vmutils
+  until: _download_archive_vmutils is succeeded
+  retries: 3
+  delay: 2
+  run_once: true
+  delegate_to: localhost
+  check_mode: false
+
+- name: Create tmp folder
+  become: false
+  file:
+    path: "{{ victoria_metrics_tmp_dir }}"
+    state: directory
+  run_once: true
+  delegate_to: localhost
+  check_mode: false
+
+- name: Unpack VictoriaMetrics main binaries
+  become: false
+  unarchive:
+    src: "/tmp/{{ victoria_metrics_main_pack_name }}.{{ victoria_metrics_main_pack_ext }}"
+    dest: "{{ victoria_metrics_tmp_dir }}/"
+    creates: "{{ victoria_metrics_tmp_dir }}/victoria-metrics-prod"
+  run_once: true
+  delegate_to: localhost
+  check_mode: false
+
+- name: Unpack VictoriaMetrics vmutils binaries
+  become: false
+  unarchive:
+    src: "/tmp/{{ victoria_metrics_vmutils_pack_name }}.{{ victoria_metrics_vmutils_pack_ext }}"
+    dest: "{{ victoria_metrics_tmp_dir }}/"
+    creates: "{{ victoria_metrics_tmp_dir }}/vmalert-prod"
+  run_once: true
+  delegate_to: localhost
+  check_mode: false
+
+- name: Create system group
+  group:
+    name: "{{ groupId }}"
+    system: yes
+    state: present
+  when: groupId != 'root'
+
+- name: Create system user
+  user:
+    name: "{{ userId }}"
+    system: yes
+    shell: "/sbin/nologin"
+    group: "{{ groupId }}"
+    createhome: no
+    comment: "{{userId}} nologin user"
+  when: groupId != 'root'
+
+- name: Creates binaries directory
+  file: 
+    path: "{{ victoria_metrics_bin_dir }}"
+    state: directory
+
+- name: Copy VictoriaMetrics binaries
+  copy:
+    src: "{{ victoria_metrics_tmp_dir }}/{{ item }}-prod"
+    dest: "{{ victoria_metrics_bin_dir }}/"
+    mode: 0755
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+  with_items:
+    - victoria-metrics
+    - vmagent
+    - vmalert
+  notify: "{{ item }} restart"

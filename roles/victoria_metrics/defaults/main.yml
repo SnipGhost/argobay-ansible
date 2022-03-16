@@ -5,8 +5,12 @@ groupId: prometheus
 data_path: /data
 
 victoria_metrics_version: 1.57.1
-main_pack_name: victoria-metrics-{% if proc_version.startswith('arm') %}arm{% else %}{{ proc_version }}{% endif %}-v{{ victoria_metrics_version }}
-vmutils_pack_name: vmutils-{% if proc_version.startswith('arm') %}arm{% else %}{{ proc_version }}{% endif %}-v{{ victoria_metrics_version }}
+victoria_metrics_download_link: https://github.com/VictoriaMetrics/VictoriaMetrics/releases/download/v{{ victoria_metrics_version }}
+victoria_metrics_main_pack_name: victoria-metrics-{% if proc_version.startswith('arm') %}arm{% else %}{{ proc_version }}{% endif %}-v{{ victoria_metrics_version }}
+victoria_metrics_main_pack_ext: tar.gz
+victoria_metrics_vmutils_pack_name: vmutils-{% if proc_version.startswith('arm') %}arm{% else %}{{ proc_version }}{% endif %}-v{{ victoria_metrics_version }}
+victoria_metrics_vmutils_pack_ext: tar.gz
+victoria_metrics_tmp_dir: /tmp/victoria-metrics-{{ victoria_metrics_version }}
 
 victoria_metrics_retention: 3
 victoria_metrics_scrape_interval: 15s
@@ -19,31 +23,32 @@ vmagent_port: 8429
 vmalert_host: 127.0.0.1
 vmalert_port: 8880
 
+victoria_metrics_bin_dir: /usr/local/bin
 victoria_metrics_data_path: "{{ data_path }}/victoria-metrics/"
 vmagent_data_path: "{{ data_path }}/vmagent/"
 
 exec_commands:
-  victoria-metrics:
-    /usr/local/bin/victoria-metrics-prod
-      -promscrape.config=/etc/prometheus/victoria-metrics.conf
-      -storageDataPath={{ victoria_metrics_data_path }}
-      -retentionPeriod={{ victoria_metrics_retention }}
-      -search.latencyOffset={{ victoria_metrics_scrape_interval }}
+  victoria-metrics: |
+    {{ victoria_metrics_bin_dir }}/victoria-metrics-prod \
+      -promscrape.config=/etc/prometheus/victoria-metrics.conf \
+      -storageDataPath={{ victoria_metrics_data_path }} \
+      -retentionPeriod={{ victoria_metrics_retention }} \
+      -search.latencyOffset={{ victoria_metrics_scrape_interval }} \
       -httpListenAddr={{ victoria_metrics_host }}:{{ victoria_metrics_port }}
-  vmagent:
-    /usr/local/bin/vmagent-prod
-      -remoteWrite.tmpDataPath={{ vmagent_data_path }}
-      -promscrape.config=/etc/prometheus/victoria-metrics.conf
-      -remoteWrite.url=http://{{ victoria_metrics_host }}:{{ victoria_metrics_port }}/api/v1/write
+  vmagent: |
+    {{ victoria_metrics_bin_dir }}/vmagent-prod \
+      -remoteWrite.tmpDataPath={{ vmagent_data_path }} \
+      -promscrape.config=/etc/prometheus/victoria-metrics.conf \
+      -remoteWrite.url=http://{{ victoria_metrics_host }}:{{ victoria_metrics_port }}/api/v1/write \
       -httpListenAddr={{ vmagent_host }}:{{ vmagent_port }}
-  vmalert:
-    /usr/local/bin/vmalert-prod
-      -rule="/etc/prometheus/*-rules.yml"
-      -evaluationInterval={{ victoria_metrics_evaluation_interval }}
-      -datasource.url=http://{{ victoria_metrics_host }}:{{ victoria_metrics_port }}
-      -notifier.url=http://{{ alertmanager_host }}:{{ alertmanager_port }}
-      -remoteWrite.url=http://{{ victoria_metrics_host }}:{{ victoria_metrics_port }}
-      -remoteRead.url=http://{{ victoria_metrics_host }}:{{ victoria_metrics_port }}
+  vmalert: |
+    {{ victoria_metrics_bin_dir }}/vmalert-prod \
+      -rule="/etc/prometheus/*-rules.yml" \
+      -evaluationInterval={{ victoria_metrics_evaluation_interval }} \
+      -datasource.url=http://{{ victoria_metrics_host }}:{{ victoria_metrics_port }} \
+      -notifier.url=http://{{ alertmanager_host }}:{{ alertmanager_port }} \
+      -remoteWrite.url=http://{{ victoria_metrics_host }}:{{ victoria_metrics_port }} \
+      -remoteRead.url=http://{{ victoria_metrics_host }}:{{ victoria_metrics_port }} \
       -httpListenAddr={{ vmalert_host }}:{{ vmalert_port }}
 
 max_mem_lock: "65536"
@@ -51,3 +56,7 @@ wait_wal_sec: 10
 
 alertmanager_host: 127.0.0.1
 alertmanager_port: 9093
+
+victoria_metrics_vmagent_enabled: no
+victoria_metrics_rule_files:
+  - main-rules.yml

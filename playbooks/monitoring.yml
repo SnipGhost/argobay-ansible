@@ -3,10 +3,10 @@
   roles:
     # - name: prometheus
     #   tags: prometheus
-    # To install victoria_metrics_install=yes
     - name: victoria_metrics
       tags:
         - victoria_metrics
+        - victoria-metrics
         - prometheus
     - name: alertmanager
       tags: alertmanager
@@ -14,8 +14,3 @@
       tags: alertmanager_bot
     - name: grafana
       tags: grafana
-
-- hosts: payment_servers
-  roles:
-    - name: payment_exporter
-      tags: payment_exporter

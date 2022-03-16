@@ -1,0 +1,5 @@
+---
+- hosts: payment_servers
+  roles:
+    - name: payment_exporter
+      tags: payment_exporter

@@ -1,0 +1,19 @@
+---
+- name: Check if Victoria Metrics is accessible
+  uri:
+    url: http://127.0.0.1:{{ victoria_metrics_port }}/
+    method: GET
+    status_code: 200
+
+- name: Check if vmagent is accessible
+  uri:
+    url: http://127.0.0.1:{{ vmagent_port }}/
+    method: GET
+    status_code: 200
+  when: victoria_metrics_vmagent_enabled | default(false) | bool
+
+- name: Check if vmalert is accessible
+  uri:
+    url: http://127.0.0.1:{{ vmalert_port }}/
+    method: GET
+    status_code: 200

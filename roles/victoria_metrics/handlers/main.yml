@@ -1,31 +1,59 @@
 ---
-- name: Reload systemd
-  command: systemctl daemon-reload
-  listen: systemd_reload
-
-- name: Restart the Victoria Metrics service
-  service:
-    name: victoria-metrics
-    state: restarted
-  listen:
-    - victoria_metrics_restart
-    - victoria-metrics_restart
-
-- name: Restart the vmagent service
-  service:
-    name: vmagent
-    state: restarted
-  listen: vmagent_restart
-  
-- name: Restart the vmalert service
-  service:
-    name: vmalert
-    state: restarted
-  listen: vmalert_restart
-
 - name: Wait for reading write-ahead log
   pause:
     seconds: "{{ wait_wal_sec }}"
   listen:
-    - victoria_metrics_restart
-    - victoria-metrics_restart
+    - "victoria-metrics restart"
+
+- name: victoria-metrics service restart
+  service:
+    name: victoria-metrics
+    state: restarted
+    daemon_reload: yes
+  register: victoria_metrics_restarted
+  when: not victoria_metrics_started.changed
+  listen:
+    - "victoria-metrics restart"
+
+- name: victoria-metrics reload
+  systemd:
+    name: victoria-metrics
+    state: reloaded
+  when: 
+    - not victoria_metrics_started.changed
+    - not (victoria_metrics_restarted.changed | default(false))
+
+- name: vmagent restart
+  service:
+    name: vmagent
+    state: restarted
+    daemon_reload: yes
+  register: vmagent_restarted
+  when:
+    - victoria_metrics_vmagent_enabled | default(false) | bool
+    - not vmagent_started.changed
+
+- name: vmagent reload
+  systemd:
+    name: vmagent
+    state: reloaded
+  when: 
+    - victoria_metrics_vmagent_enabled | default(false) | bool
+    - not vmagent_started.changed
+    - not (vmagent_restarted.changed | default(false))
+
+- name: vmalert restart
+  service:
+    name: vmalert
+    state: restarted
+    daemon_reload: yes
+  register: vmalert_restarted
+  when: not vmalert_started.changed
+
+- name: vmalert reload
+  systemd:
+    name: vmalert
+    state: reloaded
+  when: 
+    - not vmalert_started.changed
+    - not (vmalert_restarted.changed | default(false))

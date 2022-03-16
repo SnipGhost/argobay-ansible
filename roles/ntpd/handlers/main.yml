@@ -3,3 +3,4 @@
   systemd:
     name: chronyd
     state: restarted
+    daemon_reload: yes

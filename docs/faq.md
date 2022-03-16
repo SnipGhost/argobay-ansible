@@ -115,6 +115,7 @@ At root of boot sd-card:
 touch ssh
 
 # For WiFi setup:
+# [ATTENTION]: Use 2G network for Raspberry Pi Zero 1/2 W
 cat > wpa_supplicant.conf <<EOF
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1

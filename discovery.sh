@@ -45,17 +45,19 @@ fi
 
 if [ -z "$OPTIONS" ]; then
 	# Arp-scanner arguments
-	OPTIONS="--localnet"
+	OPTIONS="--localnet --retry=3"
 fi
 
 echo "Run ARP-scanner..." 1>&2
 scanned=$(arp-scan $OPTIONS |  tail -n +3 | tail -r | tail -n +3 | tail -r | grep -E "$OUI")
+#scanned=$(cat test.file) # Debug
 
 echo "Found devices:" 1>&2
 #printf "$scanned" # Debug
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
 NC='\033[0m'       # No color (reset color)
 MAXSIZE='20'       # Max whitespace padding to display hostname
 
@@ -64,16 +66,23 @@ default_user='pi'
 default_pass='raspberry'
 
 candidates=''
+all_ips=''
 while IFS= read -r line
 do
 	ip=$(echo $line | cut -f1 -d\ )
-	hostname=$(dig +short -x $ip)    # Resolve via PTR-records
-	if [ -z "$hostname" ]
+	if echo "$all_ips" | grep -q "$ip"
 	then
-		printf "${RED}%-${MAXSIZE}s\t${line}${NC}\n" "No PTR-record" 1>&2
-		candidates+="$ip "
-	else
-		printf "${GREEN}%-${MAXSIZE}s\t${line}${NC}\n" "$hostname" 1>&2
+		printf "${YELLOW}%-${MAXSIZE}s\t${line}${NC}\n" "Duplicate IP" 1>&2
+	else 
+		hostname=$(dig +short -x $ip)    # Resolve via PTR-records
+		if [ -z "$hostname" ]
+		then
+			printf "${RED}%-${MAXSIZE}s\t${line}${NC}\n" "No PTR-record" 1>&2
+			candidates+="$ip "
+		else
+			printf "${GREEN}%-${MAXSIZE}s\t${line}${NC}\n" "$hostname" 1>&2
+		fi
+		all_ips+="$ip "
 	fi
 done <<< "$scanned"
 
@@ -101,10 +110,10 @@ if [ ! -z "$check_candidates" ]; then
 		fi
 	done
 
-	if [ "$candidate" != "" ]; then
-		printf "\nPossible candidates for a new host found\n" 1>&2
-		echo $valid_candidates
+	if [ "$valid_candidates" != "" ]; then
+		printf "\nPossible candidates for a new host found:\n" 1>&2
+		echo $valid_candidates && echo
 	else
-		printf "\nNo possible candidates for a new host\n" 1>&2
+		printf "\nNo possible candidates for a new host\n\n" 1>&2
 	fi
 fi

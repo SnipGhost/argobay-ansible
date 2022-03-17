@@ -17,6 +17,11 @@ brew install coreutils arp-scan, sshpass
 ```
 
 
+## IU5 DevOps
+
+Manual for [BMSTU IU5](docs/iu5.md)
+
+
 ## Add new service role checklist
 
 - Pull binary/script application

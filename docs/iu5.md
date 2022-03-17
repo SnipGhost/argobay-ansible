@@ -1,5 +1,24 @@
 # Решение для кафедры ИУ5
 
+## Практика
+
+Подготовка секретов кафедры:
+```bash
+ansible-vault edit inventory_iu5/group_vars/all/secrets.yml
+```
+
+Настройка кафедрального сервера:
+```bash
+ansible-playbook -i inventory_iu5 playbooks/iu5.yml
+```
+
+Прокатка только VictoriaMetrics (Prometheus):
+```bash
+ansible-playbook -i inventory_iu5 playbooks/iu5.yml --tags victoria-metrics
+```
+
+## Теория планов на будущее
+
 Далее буду рассматривать все существующие и планирующиеся среды в такой терминологии:
 - **Dev** - разработка на рабочих станциях студентов
 - **Stage** - тестирование и обкатка новых технологий

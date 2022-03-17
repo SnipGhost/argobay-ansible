@@ -58,6 +58,7 @@ alertmanager_bot_bolt_path: "{{ alertmanager_bot_boltdir }}/storage.db"
 alertmanager_bot_telegram_admins:
   - 148129813 # @snipghost
   - 425226470 # @horifox
+  - 341650938 # @grisha_svch
 
 # Grafana
 grafana_domain: grafana.doc-iu5.local.bmstu.ru

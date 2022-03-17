@@ -22,6 +22,8 @@
     - name: alertmanager
       tags: alertmanager
     - name: alertmanager_bot
-      tags: alertmanager_bot
+      tags:
+        - alertmanager_bot
+        - alertmanager-bot
     - name: grafana
       tags: grafana

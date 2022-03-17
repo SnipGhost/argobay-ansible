@@ -13,9 +13,17 @@ kill_session() {
 create_session() {
 	echo "Create new session '$session'"
 	first=$(echo $inventory | tr -s ' ' | cut -f1 -d\ )
-	tmux new-session -d -s $session -n "$first" "ssh $name@$first"
+	if [ "$first" = "localhost" ]; then
+		tmux new-session -d -s $session -n "$(hostname)"
+	else
+		tmux new-session -d -s $session -n "$first" "ssh $name@$first"
+	fi
 	for host in $(echo $inventory | tr -s ' ' | cut -f2- -d\ ); do
-		tmux new-window -t ${session}: -n "$host" "ssh $name@$host"
+		if [ "$host" = "localhost" ]; then
+			tmux new-window -t ${session}: -n "$(hostname)"
+		else
+			tmux new-window -t ${session}: -n "$host" "ssh $name@$host"
+		fi
 	done
 	tmux select-window -t ${session}:0
 }
@@ -53,7 +61,7 @@ if [ -z "$name" ]; then
 	name=$(whoami)
 fi
 if [ -z "$inventory" ]; then
-	inventory="asuna ichika nino miku yotsuba itsuki rikka metroid zelda rapunzel mai yukinon"
+	inventory="localhost"
 fi
 
 # Check if the session is already exists
@@ -78,4 +86,4 @@ if [ -z "$new_session_created" ] && ! [ -z "$unique_inventory" ]; then
 fi
 
 # And attach to session
-tmux attach-session -t $session
+tmux attach-session -t "$session"

@@ -1,0 +1,8 @@
+data_path: /hdd/data
+
+atop_log_interval: 600
+atop_log_generations: 28
+
+ntpd_servers:
+  - ntp1.mail.ru
+  - ntp2.mail.ru

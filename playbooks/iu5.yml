@@ -1,0 +1,27 @@
+---
+- hosts: all
+  roles:
+    - name: common-iu5
+      tags:
+        - common
+        - common-iu5
+    - name: atop
+      tags: atop
+    - name: ntpd
+      tags: ntpd
+    - name: node_exporter
+      tags: node_exporter
+
+- hosts: monitoring_servers
+  roles:
+    - name: victoria_metrics
+      tags:
+        - victoria_metrics
+        - victoria-metrics
+        - prometheus
+    - name: alertmanager
+      tags: alertmanager
+    - name: alertmanager_bot
+      tags: alertmanager_bot
+    - name: grafana
+      tags: grafana

@@ -1,0 +1,8 @@
+[monitoring_servers]
+doc-iu5.local.bmstu.ru
+
+[iu5:children]
+monitoring_servers
+
+[iu5:vars]
+env=iu5

@@ -10,7 +10,7 @@ victoria_metrics_main_pack_name: victoria-metrics-{% if proc_version.startswith(
 victoria_metrics_main_pack_ext: tar.gz
 victoria_metrics_vmutils_pack_name: vmutils-{% if proc_version.startswith('arm') %}arm{% else %}{{ proc_version }}{% endif %}-v{{ victoria_metrics_version }}
 victoria_metrics_vmutils_pack_ext: tar.gz
-victoria_metrics_tmp_dir: /tmp/victoria-metrics-{{ victoria_metrics_version }}
+victoria_metrics_tmp_dir: /tmp/victoria-metrics-{{ proc_version }}-{{ victoria_metrics_version }}
 
 victoria_metrics_retention: 3
 victoria_metrics_scrape_interval: 15s

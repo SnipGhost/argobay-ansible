@@ -1,0 +1,22 @@
+---
+- name: Copy config file
+  template:
+    src: grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
+  notify: restart grafana
+
+- name: Creates data directory
+  file: 
+    path: "{{ grafana_data_path }}"
+    state: directory
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+    mode: 0755
+
+- name: Start Grafana service
+  service:
+    name: grafana-server
+    state: started
+    daemon_reload: yes
+    enabled: yes
+  register: grafana_started

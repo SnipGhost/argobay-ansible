@@ -1,6 +1,12 @@
-[bastion]
-elsa
-metroid
+[bastion:children]
+vpn_servers
+overseer_servers
 
 [bastion:vars]
 env=bastion
+
+[vpn_servers]
+elsa
+
+[overseer_servers]
+metroid

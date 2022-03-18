@@ -1,0 +1,17 @@
+---
+# Add route in iptables role
+openvpn_enabled: yes
+
+# OpenVPN clients network
+openvpn_server_subnet: 192.168.10.0   # The subnet you want to use for the OpenVPN clients
+openvpn_server_netmask: 255.255.255.0 # The netmask for the OpenVPN client subnet
+openvpn_server_tun0: 192.168.10.1     # The IP for the OpenVPN tunnel interface
+openvpn_server_tun0_ptp: 192.168.10.2 # The IP for the OpenVPN tunnel point-to-point alias
+
+# Real network
+openvpn_remote_address: 188.244.6.41                           # Remote external address
+openvpn_local_address: "{{ vpn_vip_ip }}"                      # The default local IP address
+openvpn_local_subnet: "{{ ansible_default_ipv4['network'] }}"  # The local subnet where the Raspberry Pi is connected
+openvpn_local_netmask: "{{ ansible_default_ipv4['netmask'] }}" # The local netmask for the Raspberry Pi subnet
+openvpn_interface: "{{ ansible_default_ipv4['interface'] }}"   # The local interface for the Raspberry Pi
+openvpn_dns_ip: "{{ service_vip_ip }}"

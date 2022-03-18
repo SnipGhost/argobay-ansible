@@ -1,0 +1,34 @@
+---
+# Certificate options
+easyrsa_key_size: 2048
+easyrsa_req_country: "RU"
+easyrsa_req_province: "Moscow"
+easyrsa_req_city: "Moscow"
+easyrsa_req_org: "BMSTU"
+easyrsa_req_email: "makucherenko@list.ru"
+easyrsa_req_ou: "IU5"
+easyrsa_common_name: "argobay.ml"
+
+# OpenVPN options
+openvpn_protocol: udp
+openvpn_port: 1194
+
+# Install ssmtp to send credentials via emails
+openvpn_smtp_enabled: yes
+openvpn_smtp_from: "Admin ArgoBay <{{ smtp_from }}>"
+openvpn_smtp_subject: "ArgoBay VPN credentials"
+
+# Fix for mutt connection
+smtp_host: smtp.mail.ru:25
+
+# OpenVPN clients list
+openvpn_name: argobay.ml
+openvpn_clients:
+  - username: mak
+    email: "makucherenko@list.ru"
+
+# Iptables
+external_connections_vpn: yes
+accept_ssh_via_local_vpn: yes
+redirect_vpn_trraffic: yes
+snat_vpn_trraffic: no

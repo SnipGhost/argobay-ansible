@@ -39,13 +39,6 @@ ntpd_servers:
   - ntp1.mail.ru
   - ntp2.mail.ru
 
-# Local DNS via dnsmasq. DEPRECATED!
-# dnsmasq_records_file: /etc/cluster-hosts
-# dnsmasq_exporter_enabled: no
-# dnsmasq_logging: no
-# dnsmasq_iface: eth0:{{ service_vip_id }}
-# DNS records in dns.yml
-
 # PowerDNS
 pdns_api_domain: dnsapi.argobay.ml
 pdns_dns_port: 5300
@@ -65,6 +58,7 @@ pdns_allowed_hosts:
   - 127.0.0.1/32
   - 192.168.8.0/24
   - 192.168.9.0/24
+  - 192.168.10.0/24
   - "{{ docker_pdns_admin_subnet }}"
 pdns_forward_zones:
   - name: i

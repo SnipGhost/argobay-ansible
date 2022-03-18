@@ -5,6 +5,12 @@
       - iptables-persistent
     state: present
 
+- name: Install additional route
+  template:
+    src: vpn-routes.j2
+    dest: /lib/dhcpcd/dhcpcd-hooks/40-router
+  notify: dhcpcd restart
+
 - name: Create rules files
   template:
     src: "{{ item }}.j2"

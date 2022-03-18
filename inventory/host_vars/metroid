@@ -1,2 +1,4 @@
 proc_version: armv6
 has_fan: no
+
+accept_ssh_via_local_vpn: yes

@@ -5,11 +5,14 @@
 - import_playbook: playbooks/letsapi.yml
 - import_playbook: playbooks/raspberry.yml
 - import_playbook: playbooks/monitoring.yml
+- import_playbook: playbooks/payment.yml
 - import_playbook: playbooks/storage.yml
 - import_playbook: playbooks/web.yml
 
 - import_playbook: playbooks/omega_complex.yml
 - import_playbook: playbooks/razumator.yml
+
+- import_playbook: playbooks/vpn.yml
 
 - import_playbook: playbooks/runner.yml
 - import_playbook: playbooks/post_install.yml

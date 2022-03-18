@@ -1,2 +1,14 @@
 proc_version: armv7
 has_fan: yes
+
+accept_ssh_via_local_vpn: yes
+
+keepalived_vips:
+
+  - id: "{{ vpn_vip_id }}"
+    name: vpn_vip
+    ip: "{{ vpn_vip_ip }}"
+    priority: 200
+    state: MASTER
+    iface: eth0
+    password: "{{ vpn_vip_password }}"

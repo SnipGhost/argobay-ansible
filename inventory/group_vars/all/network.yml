@@ -39,3 +39,7 @@ rgw_lb_vip_ip: 192.168.8.18
 consul_vip_id: 9
 consul_vip_ip: 192.168.8.20
 # DEV Consul VIP == DEV private VIP
+
+# VPN VIP
+vpn_vip_id: 10
+vpn_vip_ip: 192.168.8.21

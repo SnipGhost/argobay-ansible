@@ -5,3 +5,7 @@
 - src: git@bmstu.codes:iu5/infrastructure/format-tester-role.git
   name: format_tester
   scm: git
+
+- src: git@github.com:SnipGhost/ansible-role-pi-openvpn.git
+  name: openvpn
+  scm: git

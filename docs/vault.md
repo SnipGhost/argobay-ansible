@@ -113,6 +113,10 @@ ceph_mds_key: exampleexampleexampleexampleexampleexa==
 mosquitto_users:
   - name: example
     pass: example
+
+# onetimesecret.com
+onetimesecret_token: "example@example.com:exampleexampleexample"
+onetimesecret_passphrase: example
 ```
 
 ## Use-cases

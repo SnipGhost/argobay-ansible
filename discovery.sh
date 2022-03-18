@@ -98,6 +98,7 @@ if [ ! -z "$check_candidates" ]; then
 										-o "ServerAliveInterval=10" \
 										-o "ConnectTimeout=3" \
 										-o "ConnectionAttempts=3" \
+										-o "PreferredAuthentications=password" \
 										pi@${candidate} "uname -a" > /dev/null 2>&1
 			if [ $? -eq 0 ]; then
 				printf "Logged in successfully with default creds ($default_user:$default_pass) on ${GREEN}${candidate}${NC}\n" 1>&2

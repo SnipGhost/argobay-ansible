@@ -4,6 +4,8 @@
 
 ![Hardware diagram](schemes/Hardware.png)
 
+![PSU](schemes/PSU.png)
+
 
 ## Network
 
@@ -28,3 +30,5 @@
 ## User-side
 
 ![User side](schemes/User-side.png)
+
+![User connect](schemes/User-connect.png)

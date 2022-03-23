@@ -1,0 +1,6 @@
+---
+# Backup scripts
+backup_scripts:
+  - tpl: backup-grafana
+    interval: daily
+    retention: 3

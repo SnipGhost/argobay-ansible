@@ -6,3 +6,12 @@ atop_log_generations: 28
 ntpd_servers:
   - ntp1.mail.ru
   - ntp2.mail.ru
+
+# Backup scripts
+backup_scripts:
+  - tpl: backup-dir
+    name: backup-hdd
+    interval: daily
+    retention: 3            # days
+    backup_src: /hdd
+    backup_dir: /backup/hdd

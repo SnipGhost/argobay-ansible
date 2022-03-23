@@ -1,0 +1,11 @@
+---
+# Backup scripts
+backup_scripts:
+  - tpl: backup-db
+    interval: daily
+    retention: 3
+    important_databases:
+      - dacrover
+      - krionardtech
+      - mysql
+      - powerdns

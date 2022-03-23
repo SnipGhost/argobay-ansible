@@ -18,4 +18,4 @@ alermanager_group_wait: 30s
 alermanager_group_interval: 30s
 alermanager_repeat_interval: 1h
 
-exec_command: "{{ alertmanager_bin_dir }}/alertmanager --config.file={{ alertmanager_conf_dir }}/alertmanager.conf --web.external-url http://{{ alertmanager_bind }}:{{ alertmanager_port }}"
+exec_command: "{{ alertmanager_bin_dir }}/alertmanager --config.file={{ alertmanager_conf_dir }}/alertmanager.conf --web.external-url http://{{ alertmanager_bind }}:{{ alertmanager_port }} --cluster.advertise-address={{ alertmanager_bind }}:{{ alertmanager_port }}"

@@ -5,6 +5,8 @@
       tags:
         - common
         - common-iu5
+    - name: backup
+      tags: backup
     - name: atop
       tags: atop
     - name: ntpd

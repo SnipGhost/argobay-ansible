@@ -16,5 +16,5 @@ else
 fi
 
 export ANSIBLE_HOST_KEY_CHECKING=False
-ansible-playbook playbooks/provision.yml -e "HOSTNAME=${HOSTNAME} rpi_disable_wireless=${DISABLE_WIRELESS}" -i ${IP_ADDRESS}, -i inventory/ -l ${IP_ADDRESS}
+ansible-playbook playbooks/provision.yml --ssh-common-args "-o PubkeyAuthentication=no" -e "HOSTNAME=${HOSTNAME} rpi_disable_wireless=${DISABLE_WIRELESS}" -i ${IP_ADDRESS}, -i inventory/ -l ${IP_ADDRESS}
 unset ANSIBLE_HOST_KEY_CHECKING

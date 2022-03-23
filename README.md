@@ -119,6 +119,26 @@ ansible-playbook playbooks/monitroing.yml --tags prometheus
 ```
 
 ### Provision Raspberry Pi host (example):
+
+Setup Raspberry Pi without monitor. At root of boot sd-card:
+```bash
+# Enable ssh - create empty "ssh" file
+touch ssh
+
+# For WiFi setup:
+# [ATTENTION]: Use 2G network for Raspberry Pi Zero 1/2 W
+cat > wpa_supplicant.conf <<EOF
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=RU
+
+network={
+        ssid="${WIFI_SSID}"
+        psk="${WIFI_PASS}"
+}
+EOF
+```
+
 ```bash
 # Find new raspberry with arp-scanner and check default creds:
 ./discovery.sh -c
@@ -126,11 +146,15 @@ ansible-playbook playbooks/monitroing.yml --tags prometheus
 # Update DNS before run to generate valid dhcpd.conf with provision.sh!
 # Generate commands to create records:
 ./add-dns.sh rapunzel -e 192.168.8.59 -w 192.168.8.69
+# OR for Zero (only wireless):
+./add-dns.sh mai -rw 192.168.8.43
 # Generate "plain" upper-level record (like rapunzel.):
 ansible-playbook playbooks/service.yml --tags dns
 
 # Change hostname, IP, locale, etc
 ./provision.sh rapunzel 192.168.8.116
+# OR for ex. Zero:
+./provision.sh mai 192.168.8.177 no
 
 # Run common roles and set passwords
 ansible-playbook playbooks/all_hosts.yml -e "set_passwords=yes" -l rapunzel

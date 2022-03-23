@@ -1,6 +1,7 @@
 [bastion:children]
 vpn_servers
 overseer_servers
+stage_servers
 
 [bastion:vars]
 env=bastion
@@ -10,3 +11,8 @@ elsa
 
 [overseer_servers]
 metroid
+
+[stage_servers]
+emily
+mai
+violet

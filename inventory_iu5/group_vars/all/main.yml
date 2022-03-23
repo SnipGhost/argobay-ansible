@@ -9,9 +9,9 @@ ntpd_servers:
 
 # Backup scripts
 backup_scripts:
-  - tpl: backup-dir
-    name: backup-hdd
-    interval: daily
+  - tpl: backup-dir         # template from role
+    name: backup-hdd        # name for script
+    interval: daily         # cron.daily
     retention: 3            # days
-    backup_src: /hdd
-    backup_dir: /backup/hdd
+    backup_src: /hdd        # src dir
+    backup_dir: /backup/hdd # dst dir

@@ -2,7 +2,7 @@
 {% for host_name in [ host.name ] + host.aliases | default([]) %}
 {% for rec in host.rec %}
 {% if rec.main | default('no') | bool %}
-{{ rec.ip }} {{ host_name }}
+{{ rec.ip }} {{ host_name }} {{ host_name }}.i
 {% endif %}
 {% endfor %}
 {% endfor %}

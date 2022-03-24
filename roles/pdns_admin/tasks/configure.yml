@@ -1,0 +1,31 @@
+---
+- name: Create app directory
+  file:
+    path: "{{ pdns_admin_install_dir }}"
+    state: directory
+    owner: "{{ userId }}"
+    group: "{{ userId }}"
+    mode: 0750
+
+- name: Copy docker-compose file to remote hosts
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ pdns_admin_install_dir }}/docker-compose.yml"
+    owner: "{{ userId }}"
+    group: "{{ userId }}"
+    mode: 0640
+  notify: restart pdns-admin
+
+- name: Create systemd unit
+  template:
+    src: service.j2
+    dest: "/lib/systemd/system/pdns-admin.service"
+  notify: restart pdns-admin
+
+- name: Start pdns-admin
+  systemd:
+    name: pdns-admin
+    state: started
+    daemon_reload: yes
+    enabled: yes
+  register: pdns_admin_started

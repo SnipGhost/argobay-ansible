@@ -1,4 +1,8 @@
 ---
+serviceName: pdns-admin
+userId: pdns
+groupId: pdns
+
 pdns_admin_name: powerdns_admin
 pdns_admin_image: vlche/powerdns-admin:latest
 pdns_admin_install_dir: "/tmp/pdns-admin-{{ pdns_admin_name }}"

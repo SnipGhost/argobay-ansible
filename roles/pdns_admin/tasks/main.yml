@@ -1,6 +1,6 @@
 ---
 - include: db.yml
-- include: container.yml
+- include: configure.yml
 
 - name: Flush handlers
   meta: flush_handlers

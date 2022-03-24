@@ -77,22 +77,7 @@ pdns_forward_zones:
     host: 127.0.0.1:{{ pdns_dns_port }}
   - name: "{{ consul_domain }}"
     host: "{{ consul_listen_addr | first }}:{{ consul_dns_port }}"
-
-# Backup scripts
-backup_scripts:
-  - tpl: backup-db
-    interval: daily
-    group: prod_db_servers
-    retention: 3
-    important_databases:
-      - dacrover
-      - krionardtech
-      - mysql
-      - powerdns
-  - tpl: backup-grafana
-    interval: daily
-    group: monitoring_servers
-    retention: 3
+pdns_admin_install_dir: /usr/local/bin/pdns-admin
 
 # rsyncd
 rsync_users:

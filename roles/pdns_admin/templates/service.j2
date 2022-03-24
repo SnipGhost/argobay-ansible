@@ -1,0 +1,20 @@
+[Unit]
+Description={{ serviceName }} service with docker compose
+Requires=docker.service
+After=docker.service
+
+[Service]
+SyslogIdentifier={{ serviceName }}
+Type=simple
+Restart=on-failure
+RestartSec=2
+StartLimitBurst=3
+StartLimitIntervalSec=30
+
+WorkingDirectory={{ pdns_admin_install_dir }}
+Environment="RUNNER_NAME={{ pdns_admin_name }}"
+ExecStart=/usr/bin/docker-compose up
+ExecStop=/usr/bin/docker-compose down --volumes
+
+[Install]
+WantedBy=multi-user.target

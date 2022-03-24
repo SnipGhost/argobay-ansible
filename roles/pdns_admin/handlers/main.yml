@@ -1,0 +1,9 @@
+---
+- name: restart pdns-admin
+  systemd:
+    name: pdns-admin
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  register: pdns_admin_restarted
+  when: not pdns_admin_started.changed

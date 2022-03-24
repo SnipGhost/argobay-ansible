@@ -1,11 +1,9 @@
 ## TODO list
 
 ### Main
-- Add auto-start for docker pdns-admin  container
 - Repack mdwiki with external libs
 - Fix Golang install in common role
 - VictoriaMetrics HA with Zelda
-- Fix Prometheus*Slow alerts for Victoria Metrics
 - Add deb-package repo & pipelines
 - Add redis password auth
 - Install OIDC-Provider
@@ -23,6 +21,7 @@
 - Suggest to use 1.x version of Prometheus - extremely outdated configuration
 
 ### Rejected
+- Fix Prometheus*Slow alerts for Victoria Metrics - No time
 - Suggest to use the nginx-lua-prometheus exporter - Additional workload with minimal benefit.
 - Add keepalived_exporter - It is enough to control the presence of the process.
 - Remake dnsmasq_exporter - It was decided to move to a more powerful DNS server in the future.

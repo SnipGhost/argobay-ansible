@@ -1,12 +1,15 @@
 #!/bin/sh
 BACKUP_SRC={{ item.backup_src }}
 BACKUP_DIR={{ item.backup_dir }}
+BACKUP_TMP=${BACKUP_DIR}/tmp-$(tr -dc A-Za-z0-9 < /dev/urandom | head -c 10)
 BACKUP_EXT={{ item.backup_ext | default('tar.bz2') }}
 BACKUP_OPTS={{ item.opts | default('cfj') }}
 
 mkdir -p $BACKUP_DIR
-tar $BACKUP_OPTS ${BACKUP_DIR}/$(date '+%d.%m.%Y-%H:%M:%S').${BACKUP_EXT} ${BACKUP_SRC}/
+rsync -Ra $BACKUP_SRC $BACKUP_TMP
+tar $BACKUP_OPTS ${BACKUP_DIR}/$(date '+%d.%m.%Y-%H:%M:%S').${BACKUP_EXT} -C ${BACKUP_TMP}/ .
 find ${BACKUP_DIR}/ -mtime +{{ item.retention }} -type f -iname "*.${BACKUP_EXT}" -delete
+rm -rf $BACKUP_TMP
 
-# To restore archive.tar.bz2 to real path run:
+# To decompress archive.tar.bz2 to backup tmp dir:
 # tar xfvj archive.tar.bz2 -C /

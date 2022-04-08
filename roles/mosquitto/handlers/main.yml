@@ -4,3 +4,8 @@
     name: mosquitto
     state: restarted
     daemon_reload: yes
+
+- name: reload mosquitto
+  systemd:
+    name: mosquitto
+    state: reloaded

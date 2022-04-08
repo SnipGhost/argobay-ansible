@@ -66,6 +66,10 @@ COMMIT
 
 -A INPUT -p tcp -m multiport --dports 80,443 -m comment --comment Web -j {% if external_connections | default('false') | bool %}incoming-external{% else %}incoming-local-wide{% endif %}{{ "" }}
 
+{% if inventory_hostname in groups['mqtt_servers'] %}
+-A INPUT -p tcp -m tcp --dport 1883 -m comment --comment MQTT -j {% if external_connections | default('false') | bool %}incoming-external{% else %}incoming-local-wide{% endif %}{{ "" }}
+{% endif %}
+
 -A INPUT -p vrrp -m comment --comment VRRP -j incoming-local
 -A INPUT -p icmp -m comment --comment ICMP -j incoming-local-wide
 

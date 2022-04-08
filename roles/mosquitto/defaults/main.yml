@@ -7,4 +7,6 @@ mosquitto_listeners:
     port: 1883
 
 mosquitto_data_dir: /var/lib/mosquitto/
+mosquitto_config_file: /etc/mosquitto/mosquitto.conf
+mosquitto_acl_file: /etc/mosquitto/main.acl
 mosquitto_password_file: /etc/mosquitto/passwords

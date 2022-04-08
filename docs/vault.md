@@ -110,9 +110,19 @@ ceph_mgr_key: exampleexampleexampleexampleexampleexa==
 ceph_mds_key: exampleexampleexampleexampleexampleexa==
 
 # MQTT Broker
+mosquitto_exporter_user: example
+mosquitto_exporter_pass: example
 mosquitto_users:
   - name: example
-    pass: example
+    pass: exampleexample
+    acl:
+      - topic: exampletopic
+        access: readwrite
+  - name: "{{ mosquitto_exporter_user }}"
+    pass: "{{ mosquitto_exporter_pass }}"
+    acl:
+      - topic: "#"
+        access: read
 
 # onetimesecret.com
 onetimesecret_token: "example@example.com:exampleexampleexample"

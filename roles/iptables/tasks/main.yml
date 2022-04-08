@@ -10,6 +10,7 @@
     src: vpn-routes.j2
     dest: /lib/dhcpcd/dhcpcd-hooks/40-router
   notify: dhcpcd restart
+  when: openvpn_enabled | default('false') | bool
 
 - name: Create rules files
   template:

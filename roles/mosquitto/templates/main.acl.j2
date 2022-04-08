@@ -1,0 +1,6 @@
+{% for user in mosquitto_users | default([]) %}
+user {{ user.name }}
+{% for acl in user.acl | default([]) %}
+{{ acl.type | default("pattern") }} {{ acl.access }} {{ acl.topic }}
+{% endfor %}
+{% endfor %}

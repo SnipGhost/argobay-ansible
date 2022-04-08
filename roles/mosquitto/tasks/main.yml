@@ -19,16 +19,49 @@
 
 - name: Create config
   template:
-    src: "{{ item }}.j2"
-    dest: "/etc/mosquitto/{{ item }}"
-    owner: "{{ userId }}"
-    group: "{{ groupId }}"
-    mode: 0640
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner | default(userId) }}"
+    group: "{{ item.group | default(groupId) }}"
+    mode: "{{ item.mode | default('0640') }}"
     backup: yes
   loop:
-    - mosquitto.conf
-    - passwords
+    - src: mosquitto.conf.j2
+      dest: "{{ mosquitto_config_file }}"
+    - src: main.acl.j2
+      dest: "{{ mosquitto_acl_file }}"
+    - src: service.j2
+      dest: /lib/systemd/system/mosquitto.service
+      owner: root
+      group: root
+      mode: 0644
   notify: restart mosquitto
+
+- name: Make sure the password file exists
+  file:
+    path: "{{ mosquitto_password_file }}"
+    state: file
+    owner: root
+    group: "{{ groupId }}"
+    mode: 0640
+
+- name: Check current list of user entries
+  command: awk -F ':' '{print $1}' {{ mosquitto_password_file }}
+  register: mosquitto__register_passwd
+  changed_when: False
+  check_mode: False
+
+- name: Remove user/password entries
+  command: 'mosquitto_passwd -D {{ mosquitto_password_file }} {{ item.name }}'
+  with_items: '{{ mosquitto_users }}'
+  notify: reload mosquitto
+
+- name: Create user/password entries
+  environment:
+    MOSQUITTO_PASSWORD: '{{ item.pass }}'
+  command: 'mosquitto_passwd -b {{ mosquitto_password_file }} {{ item.name }} ${MOSQUITTO_PASSWORD}'
+  with_items: '{{ mosquitto_users }}'
+  notify: reload mosquitto
 
 - name: Flush handlers
   meta: flush_handlers

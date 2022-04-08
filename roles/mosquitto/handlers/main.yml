@@ -4,8 +4,14 @@
     name: mosquitto
     state: restarted
     daemon_reload: yes
+    enabled: yes
+  register: mosquitto_restarted
+  when: not mosquitto_started.changed
 
 - name: reload mosquitto
   systemd:
     name: mosquitto
     state: reloaded
+  when: 
+    - not mosquitto_started.changed
+    - not (mosquitto_restarted.changed | default(false))

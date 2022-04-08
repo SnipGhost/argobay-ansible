@@ -1,0 +1,7 @@
+---
+- name: Install mosquitto
+  package:
+    name:
+      - mosquitto
+      - mosquitto-clients
+    state: latest

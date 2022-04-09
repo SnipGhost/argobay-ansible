@@ -23,6 +23,9 @@ COMMIT
 :incoming-local - [0:0]
 :incoming-local-wide - [0:0]
 :incoming-external - [0:0]
+{% if inventory_hostname in groups['mqtt_servers'] %}
+:incoming-external-mqtt - [0:0]
+{% endif %}
 :valid-states - [0:0]
 :outgoing-services - [0:0]
 :docker-bridges - [0:0]
@@ -67,7 +70,7 @@ COMMIT
 -A INPUT -p tcp -m multiport --dports 80,443 -m comment --comment Web -j {% if external_connections | default('false') | bool %}incoming-external{% else %}incoming-local-wide{% endif %}{{ "" }}
 
 {% if inventory_hostname in groups['mqtt_servers'] %}
--A INPUT -p tcp -m tcp --dport 1883 -m comment --comment MQTT -j {% if external_connections | default('false') | bool %}incoming-external{% else %}incoming-local-wide{% endif %}{{ "" }}
+-A INPUT -p tcp -m tcp --dport 1883 -m comment --comment MQTT -j {% if external_connections | default('false') | bool %}incoming-external-mqtt{% else %}incoming-local-wide{% endif %}{{ "" }}
 {% endif %}
 
 -A INPUT -p vrrp -m comment --comment VRRP -j incoming-local
@@ -237,6 +240,13 @@ COMMIT
 {% endfor %}
 -A incoming-external -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 -A incoming-external -j DROP
+
+{% if inventory_hostname in groups['mqtt_servers'] %}
+{% for cidr in external_whitelist | default([]) %}
+-A incoming-external-mqtt -s {{ cidr }} -j ACCEPT
+{% endfor %}
+-A incoming-external-mqtt -j DROP
+{% endif %}
 
 -A valid-states -p tcp -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A valid-states -p udp -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT

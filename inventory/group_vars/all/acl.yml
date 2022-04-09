@@ -15,3 +15,12 @@ external_blacklist:
   - 52.42.79.222/32     # try wordpress/wp-login
   - 222.186.136.150/32  # filtered by regexp
   - 192.241.218.199/32  # try /owa/auth/logon.aspx
+
+# Affect Mosquitto MQTT broker & iptables
+external_whitelist:
+  - 192.168.8.0/24
+  - 192.168.9.0/24
+  - 192.168.10.0/24
+  - 91.107.49.44/32  # Lubertsy
+  - 188.244.6.41/32  # Bratislavskaya
+  - 81.88.216.249/32 # Maryno

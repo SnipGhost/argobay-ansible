@@ -1,0 +1,17 @@
+---
+serviceName: mosquitto_exporter
+userId: mosquitto_exporter
+groupId: mosquitto_exporter
+
+mosquitto_exporter_file: files/mosquitto_exporter.linux-{{ proc_version }}
+
+mosquitto_exporter_bin_dir: /usr/local/bin
+mosquitto_env_file: /etc/mosquitto_exporter.conf
+exec_command: "{{ mosquitto_exporter_bin_dir }}/mosquitto_exporter"
+
+mosquitto_exporter_host: 0.0.0.0
+mosquitto_exporter_port: 9234
+
+mosquitto_proxy_host_local: 127.0.0.1
+mosquitto_proxy_port_local: 1883
+mosquitto_endpoint: "tcp://{{ mosquitto_proxy_host_local }}:{{ mosquitto_proxy_port_local }}"

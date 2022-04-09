@@ -164,6 +164,7 @@ COMMIT
 # MQTT broker
 -A INPUT -p tcp -m tcp --dport 1883 -m comment --comment "mqtt proxy" -j incoming-local
 -A INPUT -p tcp -m tcp --dport 1884 -m comment --comment mqtt -j incoming-local
+-A INPUT -p tcp -m tcp --dport {{ mosquitto_exporter_port | default(9234) }} -m comment --comment mosquitto_exporter -j incoming-local
 {% endif %}
 
 {% if inventory_hostname in groups['raspberry_pi'] %}

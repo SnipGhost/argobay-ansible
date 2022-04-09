@@ -1,0 +1,24 @@
+---
+- name: Creating mosquitto_exporter user group
+  group: name="{{ groupId }}"
+  when: groupId != "root"
+
+- name: Creating mosquitto_exporter user
+  user:
+    name: "{{ userId }}"
+    group: "{{ groupId }}"
+    system: yes
+    shell: "/sbin/nologin"
+    comment: "{{ userId }} nologin User"
+    createhome: "no"
+    state: present
+  when: userId != "root"
+
+- name: Copy mosquitto_exporter binaries
+  copy:
+    src: "files/mosquitto_exporter.linux-{{ proc_version }}"
+    dest: "{{ mosquitto_exporter_bin_dir }}/mosquitto_exporter"
+    mode: 0755
+    owner: "{{ userId }}"
+    group: "{{ groupId }}"
+  notify: restart mosquitto_exporter

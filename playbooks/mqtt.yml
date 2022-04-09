@@ -1,4 +1,10 @@
 - hosts: mqtt_servers
   roles:
     - name: mosquitto
-      tags: mosquitto
+      tags:
+        - mosquitto
+        - mqtt
+    - name: mosquitto_exporter
+      tags:
+        - mosquitto_exporter
+        - mqtt_exporter

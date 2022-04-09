@@ -39,6 +39,7 @@ prometheus_jobs:
   - { name: memcached, port: 9150, group: memcached_servers }
   # - { name: dnsmasq, port: 9153, group: dns_servers }
   - { name: postgres, port: 9187, group: db_servers }
+  - { name: mosquitto, port: "{{ mosquitto_exporter_port }}", group: mqtt_servers }
   - { name: rpi, port: 9243, group: raspberry_pi }
   - { name: ceph, port: 9283, group: ceph_mons }
   - { name: payment, port: 9999, group: payment_servers }

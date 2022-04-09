@@ -1,0 +1,6 @@
+---
+- name: Check if mosquitto_exporter emits metrices
+  uri:
+    url: "http://127.0.0.1:{{ mosquitto_exporter_port }}/metrics"
+    method: GET
+    status_code: 200

@@ -179,3 +179,8 @@ mosquitto_listeners:
     port: "{{ mosquitto_bind_port }}"
 mosquitto_data_dir: /var/lib/mosquitto/
 mosquitto_password_file: /etc/mosquitto/passwords
+# Mosquitto exporter
+mosquitto_proxy_host_local: 127.0.0.1
+mosquitto_proxy_port_local: "{{ mosquitto_bind_port }}"
+mosquitto_exporter_host: 0.0.0.0
+mosquitto_exporter_port: 9234

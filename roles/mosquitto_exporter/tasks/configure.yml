@@ -1,0 +1,20 @@
+---
+- name: Copy systemd init file
+  template:
+    src: init.service.j2
+    dest: /etc/systemd/system/mosquitto_exporter.service
+  notify: restart mosquitto_exporter
+
+- name: Copy env file
+  template:
+    src: env_file.j2
+    dest: "{{ mosquitto_env_file }}"
+  notify: restart mosquitto_exporter
+
+- name: Start mosquitto_exporter service
+  systemd:
+    name: mosquitto_exporter
+    state: started
+    daemon_reload: yes
+    enabled: yes
+  register: mosquitto_exporter_started

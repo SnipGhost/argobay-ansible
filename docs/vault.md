@@ -123,6 +123,8 @@ mosquitto_users:
     acl:
       - topic: "#"
         access: read
+      - topic: "$SYS/#"
+        access: read
 
 # onetimesecret.com
 onetimesecret_token: "example@example.com:exampleexampleexample"

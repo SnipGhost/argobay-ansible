@@ -24,3 +24,4 @@ external_whitelist:
   - 91.107.49.44/32  # Lubertsy
   - 188.244.6.41/32  # Bratislavskaya
   - 81.88.216.249/32 # Maryno
+  - 37.190.63.41/32  # Shipilovskaya

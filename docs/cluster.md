@@ -32,3 +32,9 @@
 ![User side](schemes/User-side.png)
 
 ![User connect](schemes/User-connect.png)
+
+## Overmind
+
+![Overmind-request](schemes/Overmind-request.png)
+
+![Overmind-components](schemes/Overmind-components.png)

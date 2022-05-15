@@ -1,0 +1,12 @@
+[monitoring_servers]
+monitoring.infra.corpcloud.devmail.ru
+
+[worker_servers]
+worker.infra.corpcloud.devmail.ru ansible_host=10.10.57.64 ansible_port=22
+
+[corpcloud:children]
+monitoring_servers
+worker_servers
+
+[corpcloud:vars]
+env=corpcloud

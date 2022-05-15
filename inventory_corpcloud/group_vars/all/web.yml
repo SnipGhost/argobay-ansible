@@ -1,0 +1,66 @@
+# Nginx options
+default_cert:     "{{ cert_path }}/monitoring.infra.corpcloud.devmail.ru.crt"
+default_cert_key: "{{ cert_path }}/device.key"
+nginx_enable_default: yes
+
+# Nginx limits
+nginx_conn_limits:
+  - name: conn_limit_per_ip
+    field: "$binary_remote_addr"
+    max_conn: 40 # default value
+nginx_rate_limits:
+  - name: req_limit_per_ip
+    field: "$binary_remote_addr"
+    rate:  150r/s
+    burst: 50    # default value
+
+# Get only names: nginx_sites | map(attribute='name') | flatten
+nginx_sites:
+  - name: grafana
+    server_name: "{{ grafana_domain }}"
+    addr: "{{ ansible_default_ipv4['address'] }}"
+    group: monitoring_servers
+    local: yes
+    port: 3000
+    hosts: monitoring_servers
+    whitelist:
+      - external
+
+  - name: victoria-metrics
+    server_name: vm.monitoring.infra.corpcloud.devmail.ru
+    addr: "{{ ansible_default_ipv4['address'] }}"
+    local: yes
+    port: "{{ victoria_metrics_port }}"
+    hosts: monitoring_servers
+    basic_auth: yes
+    whitelist:
+      - external
+
+  - name: victoria-metrics-unsecure
+    server_name: unsecure.vm.monitoring.infra.corpcloud.devmail.ru
+    addr: "{{ ansible_default_ipv4['address'] }}"
+    local: yes
+    port: "{{ victoria_metrics_port }}"
+    hosts: monitoring_servers
+    basic_auth: no
+    redirect: no
+    ssl: no
+
+  - name: alertmanager
+    server_name: alertmanager.monitoring.infra.corpcloud.devmail.ru
+    addr: "{{ ansible_default_ipv4['address'] }}"
+    local: yes
+    port: "{{ alertmanager_port }}"
+    hosts: monitoring_servers
+    basic_auth: yes
+    whitelist:
+      - external
+
+  - name: mysuperapp
+    server_name: mysuperapp.worker.infra.corpcloud.devmail.ru
+    addr: "{{ ansible_default_ipv4['address'] }}"
+    local: yes
+    port: 8080
+    hosts: worker_servers
+    whitelist:
+      - external

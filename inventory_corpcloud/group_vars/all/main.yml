@@ -1,0 +1,20 @@
+data_path: /mnt/data
+
+atop_log_interval: 600
+atop_log_generations: 28
+
+ntpd_servers:
+  - ntp1.mail.ru
+  - ntp2.mail.ru
+
+# Backup scripts
+backup_scripts:
+  - tpl: backup-dir         # template from role
+    name: backup-data       # name for script
+    interval: daily         # cron.daily
+    retention: 3            # days
+    backup_src: /mnt/data   # src dir
+    backup_dir: /mnt/backup # dst dir
+
+letsapi_path: /etc/letsapi
+cert_path: "{{ letsapi_path }}/live"

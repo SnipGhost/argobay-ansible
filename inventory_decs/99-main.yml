@@ -1,0 +1,8 @@
+[monitoring_servers]
+overmind ansible_host=176.118.165.146 ansible_port=2222
+
+[all:children]
+monitoring_servers
+
+[all:vars]
+env=decs
